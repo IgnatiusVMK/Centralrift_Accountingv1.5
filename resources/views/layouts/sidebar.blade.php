@@ -49,7 +49,7 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/expenditures')}}">Daily Expenditures</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/salaries')}}">Salaries</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Advances</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/advance')}}">Advances</a></li>
               </ul>
             </div>
           </li>

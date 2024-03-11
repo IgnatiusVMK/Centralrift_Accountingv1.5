@@ -138,7 +138,25 @@ class AccountController extends Controller
         //
     }
 
-public function payOut($amount, $Fin_Id_Id)
+    public function payOut($amount, $Fin_Id_Id)
+{
+    // Calculate the balance
+    $lastAccount = Account::latest()->first();
+    $balance = $lastAccount ? $lastAccount->Bal : 0;
+    $balance -= $amount;
+
+    // Create a new record in the accounts table
+    Account::create([
+        'Description' => $Fin_Id_Id,
+        'Crd_Amnt' => 0,
+        'Dbt_Amt' => $amount,
+        'Bal' => $balance,
+        'Crd_Dbt_Date' => now(),
+        'Date_Created' => now(),
+    ]);
+}
+
+/* public function payOut($amount, $Fin_Id_Id)
 {
     // Calculate the balance
     $lastAccount = Account::latest()->first();
@@ -155,24 +173,38 @@ public function payOut($amount, $Fin_Id_Id)
         'Date_Created' => now(),
     ]);
 }
-/* public function payIn($amount, $Fin_Id_Id)
-{
-    $lastAccount = Account::latest()->first();
-    $balance = $lastAccount ? $lastAccount->Bal : 0;
-    $balance += $amount;
 
-    Account::create([
-        'Description' => $Fin_Id_Id,,
-        'Crd_Amnt' => 0,
-        'Dbt_Amt' => $amount,
-        'Bal' => $balance,
-        'Crd_Dbt_Date' => now(),
-        'Date_Created' => now(),
+ */
+
+/* public function summary()
+{
+    $totalCredit = Account::sum('Crd_Amnt');
+    $totalDebit = Account::sum('Dbt_Amt');
+    $balance = $totalCredit - $totalDebit;
+
+    return response()->json([
+        'total_credit' => $totalCredit,
+        'total_debit' => $totalDebit,
+        'balance' => $balance,
+    ]);
+} */
+
+public function summary()
+{
+    $totalCredit = Account::sum('Crd_Amnt');
+    $totalDebit = Account::sum('Dbt_Amt');
+    
+    
+      // Get the value of the Bal column from the last row
+      $balance = Account::latest('id')->value('Bal');
+
+    return view('dashboard', [
+        'totalCredit' => $totalCredit,
+        'totalDebit' => $totalDebit,
+        'balance' => $balance
     ]);
 }
-public function credits()
-    {
-        return $this->hasMany(Credit::class);
-} */
+
+
 
 }

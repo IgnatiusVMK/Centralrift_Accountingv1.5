@@ -64,9 +64,17 @@
                             <div>{{$role->email}}</div><br>
                             <div>712345678</div>
                           </td>
-                          @foreach ($role->departments as $dep)
+                          <td>
+                            @foreach ($role->departments as $index => $dep)
+                                {{ $dep->department_name }}
+                                @if ($index < count($role->departments) - 1)
+                                    , <!-- Add a comma if there are more departments -->
+                                @endif
+                            @endforeach
+                        </td>
+                          {{-- @foreach ($role->departments as $dep)
                           <td>{{$dep->department_name}}</td>
-                          @endforeach
+                          @endforeach --}}
                           <td>{{$role->role}}</td>
                           <td>{{$role->created_at}}</td>
                           <td>

@@ -26,7 +26,7 @@
                             ID
                           </th>
                           <th>
-                            Reason
+                            Name
                           </th>
                           <th>
                             Description

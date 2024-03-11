@@ -96,11 +96,11 @@
                           <div class="col-md-6 col-lg-12 grid-margin stretch-card">
                             <div class="card bg-primary card-rounded">
                               <div class="card-body pb-0">
-                                <h4 class="card-title card-title-dash text-white mb-4">Status Summary</h4>
+                                <h4 class="card-title card-title-dash text-white mb-4">Sales Summary</h4>
                                 <div class="row">
                                   <div class="col-sm-4">
-                                    <p class="status-summary-ight-white mb-1">Closed Value</p>
-                                    <h2 class="text-info">357</h2>
+                                    <p class="status-summary-ight-white mb-1">Closed Sales</p>
+                                    <h2 class="text-info">(int)</h2>
                                   </div>
                                   <div class="col-sm-8">
                                     <div class="status-summary-chart-wrapper pb-4">
@@ -200,11 +200,11 @@
                               <div class="card-body">
                                 <div class="d-sm-flex justify-content-between align-items-start">
                                   <div>
-                                    <h4 class="card-title card-title-dash">Pending Requests</h4>
-                                   <p class="card-subtitle card-subtitle-dash">You have 50+ new requests</p>
+                                    <h4 class="card-title card-title-dash">Pending Harvest Orders</h4>
+                                   <p class="card-subtitle card-subtitle-dash">You have + new orders</p>
                                   </div>
                                   <div>
-                                    <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new member</button>
+                                    <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new Orders</button>
                                   </div>
                                 </div>
                                 <div class="table-responsive  mt-1">
@@ -400,16 +400,16 @@
                           <div class="col-md-6 col-lg-6 grid-margin stretch-card">
                             <div class="card card-rounded">
                               <div class="card-body card-rounded">
-                                <h4 class="card-title  card-title-dash">Recent Events</h4>
+                                <h4 class="card-title  card-title-dash">Recent Harvests</h4>
                                 <div class="list align-items-center border-bottom py-2">
                                   <div class="wrapper w-100">
                                     <p class="mb-2 font-weight-medium">
-                                      Change in Directors
+                                      Basil >> Export
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                       <div class="d-flex align-items-center">
                                         <i class="mdi mdi-calendar text-muted me-1"></i>
-                                        <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                        <p class="mb-0 text-small text-muted">Feb 29, 2024</p>
                                       </div>
                                     </div>
                                   </div>
@@ -417,12 +417,12 @@
                                 <div class="list align-items-center border-bottom py-2">
                                   <div class="wrapper w-100">
                                     <p class="mb-2 font-weight-medium">
-                                      Other Events
+                                      Capsicum >> Keitt
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                       <div class="d-flex align-items-center">
                                         <i class="mdi mdi-calendar text-muted me-1"></i>
-                                        <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                        <p class="mb-0 text-small text-muted">January 05, 2024</p>
                                       </div>
                                     </div>
                                   </div>
@@ -430,12 +430,12 @@
                                 <div class="list align-items-center border-bottom py-2">
                                   <div class="wrapper w-100">
                                     <p class="mb-2 font-weight-medium">
-                                      Quarterly Report
+                                      Bell Peppers >> Local Market
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                       <div class="d-flex align-items-center">
                                         <i class="mdi mdi-calendar text-muted me-1"></i>
-                                        <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                        <p class="mb-0 text-small text-muted">January 08, 2024</p>
                                       </div>
                                     </div>
                                   </div>
@@ -443,12 +443,25 @@
                                 <div class="list align-items-center border-bottom py-2">
                                   <div class="wrapper w-100">
                                     <p class="mb-2 font-weight-medium">
-                                      Change in Directors
+                                      Red Onions >> Local Market
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                       <div class="d-flex align-items-center">
                                         <i class="mdi mdi-calendar text-muted me-1"></i>
-                                        <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                        <p class="mb-0 text-small text-muted">January 12, 2024</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="list align-items-center border-bottom py-2">
+                                  <div class="wrapper w-100">
+                                    <p class="mb-2 font-weight-medium">
+                                      Waltham Butternut >> Export Market
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <div class="d-flex align-items-center">
+                                        <i class="mdi mdi-calendar text-muted me-1"></i>
+                                        <p class="mb-0 text-small text-muted">January 12, 2024</p>
                                       </div>
                                     </div>
                                   </div>
@@ -603,9 +616,10 @@
                                 <div class="row">
                                   <div class="col-lg-12">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                      <h4 class="card-title card-title-dash">Type By Amount</h4>
+                                      <h4 class="card-title card-title-dash">Money In/Money Out</h4>
                                     </div>
-                                    <canvas class="my-auto" id="doughnutChart" height="200"></canvas>
+                                    <canvas id="myChart" width="400" height="400"></canvas>
+                                    {{-- <canvas class="my-auto" id="doughnutChart" height="200"></canvas> --}}
                                     <div id="doughnut-chart-legend" class="mt-5 text-center"></div>
                                   </div>
                                 </div>
@@ -650,7 +664,7 @@
                                   <div class="col-lg-12">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                       <div>
-                                        <h4 class="card-title card-title-dash">Top Performer</h4>
+                                        <h4 class="card-title card-title-dash">Top Product</h4>
                                       </div>
                                     </div>
                                     <div class="mt-3">
@@ -726,7 +740,33 @@
                   </div>
                 </div>
               </div>
-            <!-- </div>
-          </div>
-        </div> -->
+              <script>
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Total Credit Amount', 'Total Debit Amount', 'Balance'],
+                        datasets: [{
+                            label: 'Amount',
+                            data: [{!! $totalCredit !!}, {!! $totalDebit !!}, {!! $balance !!}],
+                            backgroundColor: [
+                              'rgba(0, 0, 255, 0.8)', 
+                              'rgba(255, 0, 0, 0.8)', 
+                              'rgba(0, 180, 0, 0.8)'
+                            ]
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 20,
+                                fontStyle: 'bold'
+                            }
+                        }
+                    }
+                });
+            </script>
+                
 @endsection

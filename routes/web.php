@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,12 +20,18 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $accountController = new AccountController();
+    return $accountController->summary();
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::get('role', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('users');
 Route::get('role/create', [App\Http\Controllers\UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('users');
 Route::post('role/create', [App\Http\Controllers\UsersController::class, 'store'])->middleware(['auth', 'verified'])->name('users');
+Route::get('role/{id}/edit', [App\Http\Controllers\UsersController::class, 'edit'])->middleware(['auth', 'verified'])->name('users');
+Route::put('role/{id}/edit', [App\Http\Controllers\UsersController::class, 'update'])->middleware(['auth', 'verified'])->name('users');
+Route::get('role/{id}/delete', [App\Http\Controllers\UsersController::class, 'destroy'])->middleware(['auth', 'verified'])->name('users');
 
 
 Route::get('departments', [App\Http\Controllers\DepartmentsController::class,'index'])->middleware(['auth', 'verified'])->name('users');
@@ -51,6 +58,10 @@ Route::post('financials/expenditures/create', [App\Http\Controllers\Expenditures
 Route::get('financials/salaries', [App\Http\Controllers\SalaryController::class,'index'])->middleware(['auth', 'verified'])->name('users');
 Route::get('financials/salaries/create', [App\Http\Controllers\SalaryController::class, 'create'])->middleware(['auth', 'verified'])->name('users');
 Route::post('financials/salaries/create', [App\Http\Controllers\SalaryController::class, 'store'])->middleware(['auth', 'verified'])->name('users');
+
+Route::get('financials/advance', [App\Http\Controllers\AdvanceController::class,'index'])->middleware(['auth', 'verified'])->name('users');
+Route::get('financials/advance/create', [App\Http\Controllers\AdvanceController::class, 'create'])->middleware(['auth', 'verified'])->name('users');
+Route::post('financials/advance/create', [App\Http\Controllers\AdvanceController::class, 'store'])->middleware(['auth', 'verified'])->name('users');
 
 
 Route::get('products', [App\Http\Controllers\ProductController::class,'index'])->middleware(['auth', 'verified'])->name('users');

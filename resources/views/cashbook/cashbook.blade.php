@@ -44,7 +44,7 @@
                       <tbody>
                         @foreach ($cashbook as $cbk )
                         <tr>
-                          <td>{{$cbk->Id}}</td>
+                          <td>{{$cbk->id}}</td>
                           <td>{{$cbk->Transaction_Id}}</td>
                           <td>{{$cbk->Description}}</td>
                           <td>Ksh {{$cbk->Crd_Amnt}}</td>
