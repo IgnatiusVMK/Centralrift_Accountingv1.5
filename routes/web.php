@@ -19,11 +19,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
+/* Route::get('/dashboard', function () {
     $accountController = new AccountController();
     return $accountController->summary();
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard'); */
 
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class,'index'])->name('dashboard');
+
+Route::get('/add-order', function () {
+    return view('add-order');
+})->name('add-order');
 
 
 Route::get('role', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('users');

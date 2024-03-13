@@ -176,20 +176,8 @@ class AccountController extends Controller
 
  */
 
+
 /* public function summary()
-{
-    $totalCredit = Account::sum('Crd_Amnt');
-    $totalDebit = Account::sum('Dbt_Amt');
-    $balance = $totalCredit - $totalDebit;
-
-    return response()->json([
-        'total_credit' => $totalCredit,
-        'total_debit' => $totalDebit,
-        'balance' => $balance,
-    ]);
-} */
-
-public function summary()
 {
     $totalCredit = Account::sum('Crd_Amnt');
     $totalDebit = Account::sum('Dbt_Amt');
@@ -204,7 +192,21 @@ public function summary()
         'balance' => $balance
     ]);
 }
+ */
 
+
+ public function summary()
+    {
+        $totalCredit = Account::sum('Crd_Amnt');
+        $totalDebit = Account::sum('Dbt_Amt');
+        $balance = Account::latest('id')->value('Bal');
+
+        return [
+            'totalCredit' => $totalCredit,
+            'totalDebit' => $totalDebit,
+            'balance' => $balance
+        ];
+    }
 
 
 }

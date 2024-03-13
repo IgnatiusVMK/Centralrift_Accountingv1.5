@@ -17,7 +17,10 @@
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">{{ Auth::user()->name }}</span></h1>
+            <h1 class="welcome-text">
+              <span id="greeting"></span>
+              <span class="text-black fw-bold">{{ Auth::user()->name }}</span>
+            </h1>
             <h3 class="welcome-sub-text">Your performance summary this week </h3>
           </li>
         </ul>
@@ -177,3 +180,21 @@
         </button>
       </div>
     </nav>
+
+    <script>
+    // Get the current hour
+    var hour = new Date().getHours();
+    var greeting;
+
+    // Set the greeting based on the time of day
+    if (hour >= 5 && hour < 12) {
+        greeting = "Good Morning";
+    } else if (hour >= 12 && hour < 18) {
+        greeting = "Good Afternoon";
+    } else {
+        greeting = "Good Evening";
+    }
+
+    // Display the greeting
+    document.getElementById("greeting").textContent = greeting + "," /* {{ Auth::user()->name }}" */;
+</script>
