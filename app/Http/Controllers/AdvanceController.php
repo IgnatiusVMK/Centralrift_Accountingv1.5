@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class AdvanceController extends Controller
 {
     public function index(){
-        $financials = Financial::where('type', 'advance')->paginate(2);
+        $financials = Financial::where('type', 'advance')->simplePaginate(5);
         return view('financials.advance.financials', compact('financials'))
         ->with('create', true);;
     }
@@ -22,7 +22,8 @@ class AdvanceController extends Controller
             'Fin_Id_Id' => 'required|max:255|string',
             'Reason' => 'required|max:255|string',
             'Description' => 'required|max:255|string',
-            'Amount' => 'required|integer|max:1000000'
+            'Amount' => 'required|integer|max:1000000',
+            'Date' => 'required|date'
         ]);
 
         $data = $request->all();

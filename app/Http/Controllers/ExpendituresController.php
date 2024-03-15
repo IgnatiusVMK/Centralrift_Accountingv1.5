@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 class ExpendituresController extends Controller
 {
     public function index(){
-        $financials = Financial::where('type', 'expenditure')->paginate(2);/* ->get(); */
+        /* $financials = Financial::where('type', 'expenditure')->get(); */
+        $financials = Financial::where('type', 'expenditure')->simplePaginate(5);
         return view('financials.expenditures.financials', compact('financials'))
         ->with('create', true);;
     }
@@ -22,7 +23,8 @@ class ExpendituresController extends Controller
             'Fin_Id_Id' => 'required|max:255|string',
             'Reason' => 'required|max:255|string',
             'Description' => 'required|max:255|string',
-            'Amount' => 'required|integer|max:1000000'
+            'Amount' => 'required|integer|max:1000000',
+            'Date' => 'required|date'
         ]);
 
         $data = $request->all();

@@ -59,7 +59,7 @@
                         @endforeach
                       </tbody>
                     </table>
-                    <div class="pagination-container">
+                    <div class="pagination-container float-end">
                       {{ $financials->links() }}
                     </div>
                   </div>

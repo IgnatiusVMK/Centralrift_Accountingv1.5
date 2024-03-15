@@ -13,7 +13,8 @@ class CashBookController extends Controller
      */
     public function index()
     {
-        $cashbook = Account::get();
+        /* $cashbook = Account::get(); */
+        $cashbook = Account::simplePaginate(15);
         return view("cashbook.cashbook", compact('cashbook'));
     }
 

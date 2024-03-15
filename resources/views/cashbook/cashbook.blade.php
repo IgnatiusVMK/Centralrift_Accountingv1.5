@@ -34,10 +34,10 @@
                             Amount
                           </th>
                           <th>
-                            Date
+                            Balance Estimate
                           </th>
                           <th>
-                            Actions
+                            Recorded On
                           </th>
                         </tr>
                       </thead>
@@ -51,14 +51,17 @@
                           <td>Ksh {{$cbk->Dbt_Amt}}</td>
                           <td>Ksh {{$cbk->Bal}}</td>
                           <td>{{$cbk->created_at}}</td>
-                          <td>
-                            <a href="{{ url('financials/salaries/'.$cbk->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
+                          {{-- <td> --}}
+                            {{-- <a href="{{ url('financials/salaries/'.$cbk->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a> --}}
                             {{-- <a href="{{ url('financials/salaries/'.$cbk->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a> --}}
-                          </td>
+                          {{-- </td> --}}
                         </tr>
                         @endforeach
                       </tbody>
                     </table>
+                    <div class="pagination-container float-end">
+                      {{ $cashbook->links() }}
+                    </div>
                   </div>
                 </div>
               </div>

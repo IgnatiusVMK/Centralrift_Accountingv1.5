@@ -45,7 +45,7 @@
                       <tbody>
                         @foreach ($credits as $cred )
                         <tr>
-                          <td>{{$cred->Id}}</td>
+                          <td>{{$cred->id}}</td>
                           <td>{{$cred->Credit_Id}}</td>
                           <td>{{$cred->Source}}</td>
                           <td>{{$cred->Description}}</td>

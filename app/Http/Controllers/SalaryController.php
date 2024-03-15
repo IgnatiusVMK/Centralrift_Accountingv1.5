@@ -9,7 +9,8 @@ use App\Models\Account;
 class SalaryController extends Controller
 {
     public function index(){
-        $salaries = Financial::where('type', 'salary')->get();
+        $salaries = Financial::where('type', 'salary')->simplePaginate(5);
+        /* $salaries = Financial::where('type', 'salary')->get(); */
         return view('financials.salaries.financials', compact('salaries'))
         ->with('create', true);;
     }
@@ -22,7 +23,8 @@ class SalaryController extends Controller
             'Fin_Id_Id' => 'required|max:255|string',
             'Reason' => 'required|max:255|string',
             'Description' => 'required|max:255|string',
-            'Amount' => 'required|integer|max:1000000'
+            'Amount' => 'required|integer|max:1000000',
+            'Date' => 'required|date'
         ]);
 
 

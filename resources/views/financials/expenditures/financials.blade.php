@@ -38,8 +38,11 @@
                             Date
                           </th>
                           <th>
-                            Actions
+                            Date Created
                           </th>
+                          {{-- <th>
+                            Actions
+                          </th> --}}
                         </tr>
                       </thead>
                       <tbody>
@@ -50,16 +53,17 @@
                           <td>{{$fin->Reason}}</td>
                           <td>{{$fin->Description}}</td>
                           <td>Ksh {{$fin->Amount}}</td>
+                          <td>{{$fin->Date}}</td>
                           <td>{{$fin->created_at}}</td>
-                          <td>
-                            <a href="{{ url('financials/expenditures/'.$fin->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
+                          {{-- <td>
+                            <a href="{{ url('financials/expenditures/'.$fin->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a> --}}
                             {{-- <a href="{{ url('financials/expenditures/'.$fin->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a> --}}
-                          </td>
+                          {{-- </td> --}}
                         </tr>
                         @endforeach
                       </tbody>
                     </table>
-                    <div class="pagination-container">
+                    <div class="pagination-container float-end">
                       {{ $financials->links() }}
                     </div>
                   </div>

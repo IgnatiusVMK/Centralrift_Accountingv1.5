@@ -45,7 +45,11 @@
                       <input type="number" name="Amount" class="form-control" value="{{ old ('Amount') }}" />
                       @error('Amount') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
-                    
+                    <div class="mb-3">
+                      <label>Date</label>
+                      <input type="date" name="Date" class="form-control" value="{{ old ('Date') }}" />
+                      @error('Date') <span class="text-danger">{{ $message}}</span> @enderror
+                    </div>
                     <div class="mb-3">
                       <button type="submit"  class="btn btn-success text-center">Save</button>
                     </div>
