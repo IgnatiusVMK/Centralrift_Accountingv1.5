@@ -119,7 +119,7 @@ $currentDate= new DateTime();
                                         <div id="totalVisitors" class="progressbar-js-circle pr-2"></div>
                                       </div>
                                       <div>
-                                        <p class="text-small mb-2">Total Visitors</p>
+                                        <p class="text-small mb-2">Total Sales</p>
                                         <h4 class="mb-0 fw-bold">26.80%</h4>
                                       </div>
                                     </div>
@@ -130,8 +130,8 @@ $currentDate= new DateTime();
                                         <div id="visitperday" class="progressbar-js-circle pr-2"></div>
                                       </div>
                                       <div>
-                                        <p class="text-small mb-2">Visits per day</p>
-                                        <h4 class="mb-0 fw-bold">9065</h4>
+                                        <p class="text-small mb-2">Total Orders</p>
+                                        <h4 class="mb-0 fw-bold">{{$countOrders}}</h4>
                                       </div>
                                     </div>
                                   </div>
@@ -202,7 +202,7 @@ $currentDate= new DateTime();
                                    {{-- <p class="card-subtitle card-subtitle-dash">You have + new orders</p> --}}
                                   </div>
                                   <div>
-                                    <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button" onclick="window.location='{{ route('add-order') }}'">
+                                    <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button" onclick="window.location='{{'add-order'}}'">
                                       <i class="mdi mdi-account-plus"></i>Add new Orders
                                     </button>
                                   </div>
@@ -227,6 +227,7 @@ $currentDate= new DateTime();
                                     </thead>
                                     <tbody>
                                       <tr>
+                                        @foreach($harvestOrders as $harvest)
                                         <td>
                                           <div class="form-check form-check-flat mt-0">
                                             <label class="form-check-label">
@@ -234,7 +235,6 @@ $currentDate= new DateTime();
                                           </div>
                                         </td>
                                         <td>
-                                          @foreach($harvestOrders as $harvest)
                                           <div class="d-flex ">
                                             <img src="images/faces/face1.jpg" alt="">
                                             <div>
@@ -244,9 +244,9 @@ $currentDate= new DateTime();
                                           </div>
                                         </td>
                                         <td>
-                                            <div>
-                                              <h6>{{ $harvest->product_name}}</h6>
-                                            </div>
+                                          <div>
+                                            <h6>{{ $harvest->product_name}}</h6>
+                                          </div>
                                         </td>
                                         <td>
                                           <div>
@@ -278,7 +278,7 @@ $currentDate= new DateTime();
                                                 aria-valuemin="0"
                                                 aria-valuemax="100">
                                             </div>
-                                        </div>
+                                          </div>
                                         </td>
                                         <td>
                                           @if ($harvest->progress['percentage'] == 0)
@@ -303,76 +303,30 @@ $currentDate= new DateTime();
                             <div class="card card-rounded">
                               <div class="card-body card-rounded">
                                 <h4 class="card-title  card-title-dash">Recent Harvests</h4>
-                                @foreach ($completedHarvestOrders as $completed)
-                                <div class="list align-items-center border-bottom py-2">
-                                  <div class="wrapper w-100">
-                                    <div class="badge badge-opacity-success float-end">Completed</div>
-                                    <p class="mb-2 font-weight-medium">
-                                      {{$completed->company_name}} >> {{$completed->product_name}}
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                      <div class="d-flex align-items-center">
-                                        <i class="mdi mdi-calendar text-muted me-1"></i>
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th>Company Name</th>
+                                      <th>Product Name</th>
+                                      <th>Status</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    @foreach ($completedHarvestOrders as $completed)
+                                    <tr>
+                                      <td>
+                                        {{$completed->company_name}}
+                                        <br>
                                         <p class="mb-0 text-small text-muted">Harvested On: {{$completed->harvest_date}}</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                @endforeach
-                                
-                                {{-- <div class="list align-items-center border-bottom py-2">
-                                  <div class="wrapper w-100">
-                                    <p class="mb-2 font-weight-medium">
-                                      Capsicum >> Keitt
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                      <div class="d-flex align-items-center">
-                                        <i class="mdi mdi-calendar text-muted me-1"></i>
-                                        <p class="mb-0 text-small text-muted">January 05, 2024</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="list align-items-center border-bottom py-2">
-                                  <div class="wrapper w-100">
-                                    <p class="mb-2 font-weight-medium">
-                                      Bell Peppers >> Local Market
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                      <div class="d-flex align-items-center">
-                                        <i class="mdi mdi-calendar text-muted me-1"></i>
-                                        <p class="mb-0 text-small text-muted">January 08, 2024</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="list align-items-center border-bottom py-2">
-                                  <div class="wrapper w-100">
-                                    <p class="mb-2 font-weight-medium">
-                                      Red Onions >> Local Market
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                      <div class="d-flex align-items-center">
-                                        <i class="mdi mdi-calendar text-muted me-1"></i>
-                                        <p class="mb-0 text-small text-muted">January 12, 2024</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="list align-items-center border-bottom py-2">
-                                  <div class="wrapper w-100">
-                                    <p class="mb-2 font-weight-medium">
-                                      Waltham Butternut >> Export Market
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                      <div class="d-flex align-items-center">
-                                        <i class="mdi mdi-calendar text-muted me-1"></i>
-                                        <p class="mb-0 text-small text-muted">January 12, 2024</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div> --}}
-                                
+                                      </td>
+                                      <td>{{$completed->product_name}}</td>
+                                      <td>
+                                        <div class="badge badge-opacity-success float-end">Completed</div>
+                                      </td>
+                                    </tr>
+                                    @endforeach
+                                  </tbody>
+                                </table>                              
                                 <div class="list align-items-center pt-3">
                                   <div class="wrapper w-100">
                                     <p class="mb-0">
@@ -462,51 +416,20 @@ $currentDate= new DateTime();
                                     </div>
                                     <div class="list-wrapper">
                                       <ul class="todo-list todo-list-rounded">
+                                        @foreach($harvestOrders as $harvest)
                                         <li class="d-block">
                                           <div class="form-check w-100">
                                             <label class="form-check-label">
-                                              <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
+                                              <input class="checkbox" type="checkbox"> Product Harvesting for : {{$harvest->company_name}} <i class="input-helper rounded"></i>
                                             </label>
                                             <div class="d-flex mt-2">
-                                              <div class="ps-4 text-small me-3">24 June 2020</div>
-                                              <div class="badge badge-opacity-warning me-3">Due tomorrow</div>
+                                              <div class="ps-4 text-small me-3">Product: {{$harvest->product_name}}</div>
+                                              <div class="badge badge-opacity-warning me-3">Due: {{ $harvest->harvest_date }}</div>
                                               <i class="mdi mdi-flag ms-2 flag-color"></i>
                                             </div>
                                           </div>
                                         </li>
-                                        <li class="d-block">
-                                          <div class="form-check w-100">
-                                            <label class="form-check-label">
-                                              <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
-                                            </label>
-                                            <div class="d-flex mt-2">
-                                              <div class="ps-4 text-small me-3">23 June 2020</div>
-                                              <div class="badge badge-opacity-success me-3">Done</div>
-                                            </div>
-                                          </div>
-                                        </li>
-                                        <li>
-                                          <div class="form-check w-100">
-                                            <label class="form-check-label">
-                                              <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
-                                            </label>
-                                            <div class="d-flex mt-2">
-                                              <div class="ps-4 text-small me-3">24 June 2020</div>
-                                              <div class="badge badge-opacity-success me-3">Done</div>
-                                            </div>
-                                          </div>
-                                        </li>
-                                        <li class="border-bottom-0">
-                                          <div class="form-check w-100">
-                                            <label class="form-check-label">
-                                              <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text of the printing <i class="input-helper rounded"></i>
-                                            </label>
-                                            <div class="d-flex mt-2">
-                                              <div class="ps-4 text-small me-3">24 June 2020</div>
-                                              <div class="badge badge-opacity-danger me-3">Expired</div>
-                                            </div>
-                                          </div>
-                                        </li>
+                                        @endforeach
                                       </ul>
                                     </div>
                                   </div>

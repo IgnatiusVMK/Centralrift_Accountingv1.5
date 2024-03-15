@@ -13,9 +13,9 @@
                     @if (session('status'))
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
-                  <h4 class="card-title">Create New Department
-                    <a href="{{ url('departments') }}" class="btn btn-danger float-end">{{-- Back --}} <i class="mdi mdi-close"></i></a>
-                  </h4>
+                    <h4 class="card-title">Create New Department
+                      <a href="{{ url('departments') }}" class="btn btn-danger float-end">{{-- Back --}} <i class="mdi mdi-close"></i></a>
+                    </h4>
                   </div>
                   <form action="{{ url('departments/create')}}" method="post">
                     @csrf

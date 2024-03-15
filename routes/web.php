@@ -26,9 +26,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class,'index'])->name('dashboard');
 
-Route::get('/add-order', function () {
-    return view('add-order');
-})->name('add-order');
+Route::get('/add-order', [App\Http\Controllers\DashboardController::class,'create'])->name('add-order');
+Route::post('/add-order/create', [App\Http\Controllers\DashboardController::class,'store'])->name('add-order');
 
 
 Route::get('role', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('users');
