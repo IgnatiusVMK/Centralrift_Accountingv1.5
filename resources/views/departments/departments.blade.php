@@ -25,22 +25,23 @@
                             Department Name
                           </th>
                           <th>
-                            Actions
+                            Created On
                           </th>
+                          {{-- <th>
+                            Actions
+                          </th> --}}
                         </tr>
                       </thead>
                       <tbody>
                         @foreach ($departments as $dep )
                         <tr>
                           <td>{{$dep->id}}</td>
-                          {{-- <td class="py-1">
-                            <img src="{{ asset('/images/marley.png')}}" alt="image"/>
-                          </td> --}}
                           <td>{{$dep->department_name}}</td>
-                          <td>
+                          <td>{{$dep->created_at}}</td>
+                          {{-- <td>
                             <a href="{{ url('departments/'.$dep->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
                             <a href="{{ url('departments/'.$dep->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a>
-                          </td>
+                          </td> --}}
                         </tr>
                         @endforeach
                       </tbody>

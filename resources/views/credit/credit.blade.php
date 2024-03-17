@@ -12,7 +12,7 @@
                     @endif
                   <div class="card-header">
                   <h4 class="card-title">Creditors/Credit
-                    <a href="{{ url('credit/credit/create') }}" class="btn btn-primary float-end">+ Record New Credit</a>
+                    <a href="{{ url('credit/create') }}" class="btn btn-primary float-end">+ Record New Credit</a>
                   </h4>
                   </div>
                   <div class="table-responsive">
@@ -36,9 +36,6 @@
                           </th>
                           <th>
                             Date
-                          </th>
-                          <th>
-                            Actions
                           </th>
                         </tr>
                       </thead>

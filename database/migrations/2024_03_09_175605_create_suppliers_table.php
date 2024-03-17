@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('Supplier_Name');
             $table->string('Contact_Name')->nullable();
             $table->string('Address')->nullable();
-            $table->integer('Phone')->nullable();
+            $table->string('Phone')->nullable();
             $table->string('Email')->nullable();
             $table->dateTime('Created_Date');
             $table->timestamps();

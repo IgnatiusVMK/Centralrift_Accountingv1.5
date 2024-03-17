@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -11,7 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return view("products/products", compact("products"));
     }
 
     /**
@@ -19,7 +23,12 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $suppliers = Supplier::all();
+        return view("products/create", [
+            "categories"=> $categories,
+            "suppliers"=> $suppliers
+        ]);
     }
 
     /**
@@ -27,7 +36,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Product_Name' => 'required|max:255|string',
+            'Description' => 'required|max:255|string',
+            'Price' => 'required|integer',
+            'Category_Id' => 'required|integer',
+            'Supplier_Id' => 'required|integer',
+            'Created_Date' => 'required|date'
+            ]);
+    
+        Product::create([
+            'Product_Name' => $request->Product_Name,
+            'Description' => $request->Description,
+            'Price' => $request->Price,
+            'Category_Id' => $request->Category_Id,
+            'Supplier_Id' => $request->Supplier_Id,
+            'Created_Date' => $request->Created_Date,
+        ]);
+    
+        return redirect('products/create')->with('status','New Product Created');
+
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -11,7 +12,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        $suppliers = Supplier::all();
+        return view('suppliers.suppliers', compact('suppliers'));
     }
 
     /**
@@ -19,7 +21,8 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('suppliers.create');
     }
 
     /**
@@ -27,7 +30,25 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Supplier_Name' => 'required|max:255|string',
+            'Contact_Name' => 'required|max:255|string',
+            'Address' => 'required|max:255|string',
+            'Phone' => 'required|max:255|string',
+            'Email' => 'required|max:255|string',
+            'Created_Date' => 'required|date'
+            ]);
+    
+            Supplier::create([
+                'Supplier_Name' => $request->Supplier_Name,
+                'Contact_Name' => $request->Contact_Name,
+                'Address' => $request->Address,
+                'Phone' => $request->Phone,
+                'Email' => $request->Email,
+                'Created_Date' => $request->Created_Date,
+            ]);
+    
+            return redirect('suppliers/create')->with('status','New Supplier Registered');
     }
 
     /**

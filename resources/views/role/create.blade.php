@@ -65,16 +65,6 @@
                       <input type="checkbox" name="is_active" {{ old ('is_active') == true ? 'checked': '' }} />
                       @error('is_active') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
-                    {{-- <div class="mb-3">
-                      <label>Contact</label>
-                      <input type="text" name="Contact" class="form-control" value="{{ old ('Contact') }}" />
-                      @error('Contact') <span class="text-danger">{{ $message}}</span> @enderror
-                    </div> --}}
-                    {{-- <div class="mb-3">
-                      <label>Address</label>
-                      <input type="text" name="Address" class="form-control" value="{{ old ('Address') }}" />
-                      @error('Address') <span class="text-danger">{{ $message}}</span> @enderror
-                    </div> --}}
                     <div class="mb-3">
                       <button type="submit"  class="btn btn-success text-center">Save</button>
                     </div>

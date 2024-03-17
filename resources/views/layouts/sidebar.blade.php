@@ -32,8 +32,8 @@
             <div class="collapse" id="master">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{('/customers')}}">Customers</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Suppliers</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{('/credit/credit')}}">Creditors</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{('/suppliers')}}">Suppliers</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{('/credit')}}">Creditors</a></li>
               </ul>
             </div>
           </li>
@@ -63,8 +63,8 @@
             </a>
             <div class="collapse" id="products-services">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#">Products Creation</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Products Categories</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/products')}}">Products Creation</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/products-categories')}}">Products Categories</a></li>
               </ul>
             </div>
           </li>

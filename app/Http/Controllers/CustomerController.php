@@ -38,25 +38,22 @@ class CustomerController extends Controller
         return redirect('customers/create')->with('status','Customer Created');
     }
 
-    public function edit(int $id){
-        $customer = Customers::findOrFail($id);
-        /* return $customer; */
+    public function edit(int $Customer_Id){
+        $customer = Customers::findOrFail($Customer_Id);
         return view('customers.edit', compact('customer'));
 
     }
     public function update(Request $request,int $id)
     {
         $request->validate([
-            'Customer_Id' => 'required|max:255|string',
             'Customer_Fname' => 'required|max:255|string',	
-            'Custome_rLname' => 'required|max:255|string',	
+            'Customer_Lname' => 'required|max:255|string',	
             'Email' => 'required|max:255|string',
             'Contact' => 'required|max:255|string',
             'Address' => 'required|max:255|string',
             'is_active' => 'sometimes'
         ]);
         Customers::findOrFail($id)->update([
-            'Customer_Id' => $request->Customer_Id,
             'Customer_Fname' => $request->Customer_Fname,
             'Customer_Lname' => $request->Customer_Lname,
             'Email' => $request->Email,

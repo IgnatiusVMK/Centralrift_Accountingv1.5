@@ -17,24 +17,24 @@
                     <a href="{{ url('customers') }}" class="btn btn-primary float-end">Back</a>
                   </h4>
                   </div>
-                  <form action="{{ url('customers/'.$customer->id.'/edit') }}" method="POST">
+                  <form action="{{ url('customers/'.$customer->Customer_Id.'/edit') }}" method="POST">
                   @csrf
                   @method('PUT')
 
                     <div class="mb-3">
                       <label>Customer ID</label>
-                      <input type="text" name="CustomerId" class="form-control" value="{{ $customer->CustomerId }}" readonly/>
-                      @error('CustomerId') <span class="text-danger">{{ $message}}</span> @enderror
+                      <input type="text" name="Customer_Id" class="form-control" value="{{ $customer->Customer_Id }}" readonly/>
+                      @error('Customer_Id') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
                       <label>First Name</label>
-                      <input type="text" name="CustomerFname" class="form-control" value="{{ $customer->CustomerFname }}" />
-                      @error('CustomerFname') <span class="text-danger">{{ $message}}</span> @enderror
+                      <input type="text" name="Customer_Fname" class="form-control" value="{{ $customer->Customer_Fname }}" />
+                      @error('Customer_Fname') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
                       <label>Last Name</label>
-                      <input type="text" name="CustomerLname" class="form-control" value="{{$customer->CustomerLname }}" />
-                      @error('CustomerLname') <span class="text-danger">{{ $message}}</span> @enderror
+                      <input type="text" name="Customer_Lname" class="form-control" value="{{$customer->Customer_Lname }}" />
+                      @error('Customer_Lname') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
                       <label>Email</label>
