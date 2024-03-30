@@ -47,6 +47,7 @@
             </a>
             <div class="collapse" id="finance">
               <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/finances')}}">Finances</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/expenditures')}}">Daily Expenditures</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/salaries')}}">Salaries</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/advance')}}">Advances</a></li>
@@ -109,7 +110,7 @@
             <div class="collapse" id="financial-statements">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/cashbook')}}">Cash Book</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Profit & Loss</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/profit-loss')}}">Profit & Loss</a></li>
               </ul>
             </div>
           </li>

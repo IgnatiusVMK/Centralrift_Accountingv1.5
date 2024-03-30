@@ -17,50 +17,63 @@ class CashBookController extends Controller
      */
     public function index()
     {
-        /* $cashbook = Account::get(); */
-        $cashbook = Account::simplePaginate(15);
-        return view("cashbook.cashbook", compact('cashbook'));
+        // Calculate the summary
+    $totalCredit = Account::sum('Crd_Amnt');
+    $totalDebit = Account::sum('Dbt_Amt');
+    $balance = Account::orderBy('id', 'desc')->value('Bal');
+
+    $cashbook = Account::simplePaginate(15);
+
+    return view('cashbook.cashbook', [
+        'cashbook'=> $cashbook,
+        'totalCredit' => $totalCredit,
+        'totalDebit' => $totalDebit,
+        'balance' => $balance,
+    ]);
+    
+        
     }
 
     public function exportPdf()
-{
-    $cashbook = Account::all(); // Get all entries without pagination
-    $dompdf = new Dompdf();
-    $options = new Options();
-    $options->set('isHtml5ParserEnabled', true);
-    $dompdf->setOptions($options);
+    {
 
-    $now = Carbon::now();
+         // Calculate the summary
+        $totalCredit = Account::sum('Crd_Amnt');
+        $totalDebit = Account::sum('Dbt_Amt');
+        $balance = Account::orderBy('id', 'desc')->value('Bal');
 
-    $now = Carbon::now('Africa/Nairobi');
-    $pdfName = 'CB-' . $now->format('Y-m-d-H:i:s') . '.pdf';
+        $cashbook = Account::all();
+    
+        $dompdf = new Dompdf();
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf->setOptions($options);
+    
+        $now = Carbon::now('Africa/Nairobi');
+        $pdfName = 'CB-' . $now->format('Y-m-d-H:i:s') . '.pdf';
 
-    // Accumulate PDF content for all entries
-    $allPagesContent = '';
-
-    $data = [
-        'cashbook' => $cashbook
-    ];
-
-    $html = view('cashbook.pdf', $data)->render();
-    $dompdf->loadHtml($html);
-    $dompdf->setPaper('A4', 'portrait');
-    $dompdf->render();
-
-    // Set headers for PDF download
-    header('Content-Type: application/pdf');
-    header('Content-Disposition: attachment; filename="' . $pdfName . '"');
-    header('Content-Length: ' . strlen($dompdf->output()));
-
-    // Output the entire PDF content
-    echo $dompdf->output();
-
-    // Exit to prevent further output
-    exit();
-}
-
-
-
+        $data = compact('cashbook', 'totalCredit', 'totalDebit', 'balance');
+    
+        // Pass data to the view
+        /* $data = [
+            'cashbook' => $cashbook,
+            'totalCredit' => $summary['totalCredit'],
+            'totalDebit' => $summary['totalDebit'],
+            'balance' => $summary['balance'],
+        ]; */
+    
+        // Render the view to HTML
+        $html = view('cashbook.pdf', $data)->render();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+    
+        // Return the PDF as a download
+        return response($dompdf->output())
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="' . $pdfName . '"')
+            ->header('Content-Length', strlen($dompdf->output()));
+    }
 
     
 

@@ -61,6 +61,8 @@ Route::get('credit/create', [App\Http\Controllers\CreditController::class, 'crea
 Route::post('credit/create', [App\Http\Controllers\CreditController::class, 'store'])->middleware(['auth', 'verified'])->name('credit.store');
 
 
+Route::get('finances', [App\Http\Controllers\FinanceController::class,'index'])->middleware(['auth', 'verified'])->name('finances');
+
 Route::get('financials/expenditures', [App\Http\Controllers\ExpendituresController::class,'index'])->middleware(['auth', 'verified'])->name('expenditures');
 Route::get('financials/expenditures/create', [App\Http\Controllers\ExpendituresController::class, 'create'])->middleware(['auth', 'verified'])->name('expenditures.create');
 Route::post('financials/expenditures/create', [App\Http\Controllers\ExpendituresController::class, 'store'])->middleware(['auth', 'verified'])->name('expenditures.store');
@@ -95,5 +97,9 @@ Route::get('/generate-pdf', [PdfController::class, 'generatePdf']);
 
 Route::get('/cashbook/export-pdf', [CashBookController::class, 'exportPdf']);
 
+
+Route::get('/profit-loss', function ()  {
+    return view('finance.profit-loss');
+});
 
 require __DIR__.'/auth.php';
