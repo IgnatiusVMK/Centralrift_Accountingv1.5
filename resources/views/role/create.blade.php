@@ -43,7 +43,7 @@
                     <div class="mb-3">
                       <label>Department</label>
                       <select name="department_id" class="form-control">
-                        <option value="6" selected> -- SELECT DEPARTMENT --</option>
+                        <option value="7" selected> -- SELECT DEPARTMENT --</option>
                         @foreach ($departments as $department)
                             <option value="{{ $department->id }}">{{ $department->department_name }}</option>
                         @endforeach

@@ -9,7 +9,7 @@
           <!--Users & Roles-->
           <li class="nav-item nav-category">Users & Roles</li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="users">
               <i class="menu-icon mdi mdi mdi-security"></i>
               <span class="menu-title">Manage Users</span>
               <i class="menu-arrow"></i> 
@@ -24,7 +24,7 @@
           <!--Master-->
           <li class="nav-item nav-category">Master</li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#master" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-bs-toggle="collapse" href="#master" aria-expanded="false" aria-controls="master">
               <i class="menu-icon mdi mdi-apps"></i>
               <span class="menu-title">Master Operations</span>
               <i class="menu-arrow"></i> 
@@ -40,7 +40,7 @@
           <!--Finance-->
           <li class="nav-item nav-category">Finance</li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#finance" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-bs-toggle="collapse" href="#finance" aria-expanded="false" aria-controls="finance">
               <i class="menu-icon mdi mdi-cash-multiple"></i>
               <span class="menu-title">Finance Operations</span>
               <i class="menu-arrow"></i> 
@@ -56,7 +56,7 @@
           <!--Products & Services-->
           <li class="nav-item nav-category">Products & Services</li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#products-services" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-bs-toggle="collapse" href="#products-services" aria-expanded="false" aria-controls="products-services">
               <i class="menu-icon mdi mdi-flower"></i>
               <span class="menu-title">Products</span>
               <i class="menu-arrow"></i> 
@@ -71,7 +71,7 @@
           <!--Purchases-->
           <li class="nav-item nav-category">Purchase</li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#purchases" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-bs-toggle="collapse" href="#purchases" aria-expanded="false" aria-controls="purchases">
               <i class="menu-icon mdi mdi-cart-plus"></i>
               <span class="menu-title">Purchases</span>
               <i class="menu-arrow"></i> 
@@ -86,7 +86,7 @@
           <!--Sales-->
           <li class="nav-item nav-category">Sales</li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#sales" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-bs-toggle="collapse" href="#sales" aria-expanded="false" aria-controls="sales">
               <i class="menu-icon mdi mdi-square-inc-cash"></i>
               <span class="menu-title">Sales</span>
               <i class="menu-arrow"></i> 
@@ -101,7 +101,7 @@
           <!--Financial Statements-->
           <li class="nav-item nav-category">Financial Statements</li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#financial-statements" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-bs-toggle="collapse" href="#financial-statements" aria-expanded="false" aria-controls="financial-statements">
               <i class="menu-icon mdi mdi-factory"></i>
               <span class="menu-title">Financials</span>
               <i class="menu-arrow"></i> 
@@ -116,7 +116,7 @@
           <!--Reports-->
           <li class="nav-item nav-category">Generate Reports</li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="reports">
               <i class="menu-icon mdi mdi-file-chart"></i>
               <span class="menu-title">Reports</span>
               <i class="menu-arrow"></i> 
