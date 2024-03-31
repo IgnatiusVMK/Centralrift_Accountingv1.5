@@ -37,6 +37,9 @@
                             Contact Email
                           </th>
                           <th>
+                            Address
+                          </th>
+                          <th>
                             Created Date
                           </th>
                           {{-- <th>
@@ -51,27 +54,13 @@
                         <tr>
                           <td>{{$supplier->Supplier_Id}}</td>
                           <td>{{$supplier->Supplier_Name}}</td>
-                          <td>
-                            <div>{{$supplier->Contact_Name}}</div>
-                          </td>
-                          <td>{{$supplier->Phone}}</td>
-                          <td>{{$supplier->Email}}</td>
-                          <td>{{$supplier->Created_Date}}</td>
-                          {{-- <td>
-                            @if ($supplier->is_instock)
-                              <button class="btn btn-success">
-                                Instock
-                              </button>    
-                            @else
-                              <button class="btn btn-danger">
-                                Out-of-stock
-                              </button>
-                            @endif
-                          </td> --}}
-                          {{-- <td>
-                            <a href="{{ url('suppliers/'.$supplier->Product_Id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
-                            <a href="{{ url('suppliers/'.$supplier->Product_Id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a>
-                          </td> --}}
+                          @foreach($suppliercontacts->where('Supplier_Id', $supplier->Supplier_Id) as $contact)
+                            <td>{{ $contact->Contact_Name }}</td>
+                            <td>{{ $contact->Phone }}</td>
+                            <td>{{ $contact->Email }}</td>
+                            <td>{{ $contact->Address }}</td>
+                            <td>{{ $contact->Created_Date }}</td>
+                          @endforeach
                         </tr>
                         @endforeach
                       </tbody>

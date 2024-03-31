@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales', function (Blueprint $table) {
-            $table->id('Sales_Id');
-            $table->unsignedBigInteger('Customer_Id');
+        Schema::create('financials', function (Blueprint $table) {
+            $table->id('Financial_Id');
+            $table->string('Fin_Id_Id');
+            $table->string('type');
+            $table->string('Reason');
+            $table->string('Description');
+            $table->integer('Amount');
             $table->unsignedBigInteger('Cycle_Id');
-            $table->dateTime('Sale_Date');
-            $table->integer('Quantity');
-            $table->decimal('Total_Price', 10, 2);
-            $table->string('Payment_Method');
-            $table->string('Payment_Status');
+            $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sales');
+        Schema::dropIfExists('financials');
     }
 };

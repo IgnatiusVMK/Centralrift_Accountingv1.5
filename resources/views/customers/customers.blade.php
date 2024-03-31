@@ -39,9 +39,6 @@
                             Address
                           </th>
                           <th>
-                            Is Active
-                          </th>
-                          <th>
                             Actions
                           </th>
                         </tr>
@@ -54,20 +51,11 @@
                             <img src="{{ asset('/images/marley.png')}}" alt="image"/>
                           </td>
                           <td>{{$cust->Customer_Fname}}</td>
-                          <td>{{$cust->Contact}}</td>
-                          <td>{{$cust->Email}}</td>
-                          <td>{{$cust->Address}}</td>
-                          <td>
-                            @if ($cust->is_active)
-                              <button class="btn btn-success">
-                                Active
-                              </button>    
-                            @else
-                              <button class="btn btn-danger">
-                                In-active
-                              </button>
-                            @endif
-                          </td>
+                          @foreach($customercontacts->where('Customer_Id', $cust->Customer_Id) as $contact)
+                            <td>{{ $contact->Contact }}</td>
+                            <td>{{ $contact->Email }}</td>
+                            <td>{{ $contact->Address }}</td>
+                          @endforeach
                           <td>
                             <a href="{{ url('customers/'.$cust->Customer_Id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
                             <a href="{{ url('customers/'.$cust->Customer_Id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a>

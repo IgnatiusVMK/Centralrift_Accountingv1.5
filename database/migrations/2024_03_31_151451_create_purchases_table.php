@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id('Purchase_Id');
-            $table->foreignId('Supplier_Id')->constrained('suppliers', 'Supplier_Id');
+            $table->unsignedBigInteger('Supplier_Id');
+            $table->unsignedBigInteger('Cycle_Id');
             $table->dateTime('Created_Date');
             $table->string('Quantity');
             $table->integer('Total_Price');
             $table->boolean('Payment_Status');
+            $table->foreign('Supplier_Id')->references('Supplier_Id')->on('suppliers');
+            $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
             $table->timestamps();
         });
     }

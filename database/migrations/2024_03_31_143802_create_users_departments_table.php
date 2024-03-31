@@ -6,19 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('users_departments', function (Blueprint $table) {
             $table->id('user_department_id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('department_id')->default(6);
+            $table->unsignedBigInteger('user_id'); // Use unsignedBigInteger to match the users table
+            $table->unsignedBigInteger('Department_Id')->default(6);
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('department_id')->references('department_id')->on('departments');
+            $table->foreign('Department_Id')->references('id')->on('departments');
             $table->timestamps();
-
         });
     }
 
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users_departments');
+        Schema::dropIfExists('user_department');
     }
 };

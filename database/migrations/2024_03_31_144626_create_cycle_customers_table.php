@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('financials', function (Blueprint $table) {
-            $table->id('Financial_Id');
-            $table->string('Fin_Id_Id');
-            $table->string('type');
-            $table->string('Reason');
-            $table->string('Description');
-            $table->integer('Amount');
+        Schema::create('cycle_customers', function (Blueprint $table) {
+            $table->id();
+            $table->integer('Cycle_Id');
+            $table->integer('Customer_Id');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('financials');
+        Schema::dropIfExists('cycle_customers');
     }
 };

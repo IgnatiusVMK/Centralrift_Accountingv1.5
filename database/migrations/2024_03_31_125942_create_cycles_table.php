@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->integer('Customer_Id')->primary();
-            $table->string('Customer_Fname', 255);
-            $table->string('Customer_Lname', 255);
+        Schema::create('cycles', function (Blueprint $table) {
+            $table->id('Cycle_Id');
+            $table->unsignedInteger('Block_Id');
+            $table->string('Cycle_Name');
+            $table->dateTime('Created_Date');
             $table->timestamps();
+
+            $table->foreign('Block_Id')->references('Block_Id')->on('blocks');
         });
     }
 
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('cycles');
     }
 };

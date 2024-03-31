@@ -11,19 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-            Schema::create('departments', function (Blueprint $table) {
-                $table->id('id');
-                $table->string('department_name');
-                $table->dateTime('Created_Date');
-                $table->timestamps();
-            });
-        }
+        Schema::create('chemicals', function (Blueprint $table) {
+            $table->id('Chemical_Id');
+            $table->string('Chemical_Name');
+            $table->decimal('Quantity');
+            $table->integer('Cycle_Id');
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('chemicals');
     }
 };

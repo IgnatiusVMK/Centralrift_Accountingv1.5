@@ -18,13 +18,15 @@ return new class extends Migration
             $table->decimal('Unit_Price', 10, 2);
             $table->dateTime('Supply_Date');
             $table->integer('Quantity');
+            $table->unsignedBigInteger('Cycle_Id');
             $table->dateTime('Created_Date');
-            $table->timestamps();
-        
+            
             $table->foreign('Product_Id')->references('Product_Id')->on('products');
             $table->foreign('Supplier_Id')->references('Supplier_Id')->on('suppliers');
+            $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
+            
+            $table->timestamps();
         });
-        
     }
 
     /**

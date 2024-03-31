@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use App\Models\SupplierContacts;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -13,7 +14,11 @@ class SupplierController extends Controller
     public function index()
     {
         $suppliers = Supplier::all();
-        return view('suppliers.suppliers', compact('suppliers'));
+        $suppliercontacts = SupplierContacts::all();
+        return view('suppliers.suppliers', [
+            'suppliers'=> $suppliers,
+            'suppliercontacts'=> $suppliercontacts
+        ]);
     }
 
     /**

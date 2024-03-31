@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-            Schema::create('departments', function (Blueprint $table) {
-                $table->id('id');
-                $table->string('department_name');
-                $table->dateTime('Created_Date');
-                $table->timestamps();
-            });
-        }
+        Schema::create('blocks', function (Blueprint $table) {
+            $table->increments('Block_Id');
+            $table->string('Block_Name');
+            $table->dateTime('Created_Date');
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('blocks');
     }
 };

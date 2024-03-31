@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerContacts;
 use App\Models\Customers;
 use Illuminate\Http\Request;
 
@@ -9,8 +10,11 @@ class CustomerController extends Controller
 {
     public function index(){
         $customers = Customers::get();
-        /* return $customers; */
-        return view('customers.customers', compact('customers'));
+        $customercontacts = CustomerContacts::get();
+        return view('customers.customers', [
+            'customers'=> $customers,
+            'customercontacts'=> $customercontacts,
+        ]);
     }
     public function create(){
         return view('customers.create');

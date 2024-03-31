@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id('Category_Id');
-            $table->string('Category_Name');
-            $table->string('Description')->nullable();
+            $table->string('Category_Name', 255);
+            $table->string('Description', 255);
             $table->dateTime('Created_Date');
             $table->timestamps();
-        });        
+        });    
     }
 
     /**
