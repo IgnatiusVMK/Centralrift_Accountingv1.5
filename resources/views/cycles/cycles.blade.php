@@ -12,8 +12,8 @@
                       <div class="alert alert-danger text-center">{{session('status')}}</div>
                     @endif
                     <div class="card-header">
-                      <h4 class="card-title">Users & Roles
-                      <a href="{{ url('role/create') }}" class="btn btn-primary float-end">+ New User</a>
+                      <h4 class="card-title">Cycles
+                      <a href="{{ url('cycles/create') }}" class="btn btn-primary float-end">+ New Cycle</a>
                       </h4>
                     </div>
                   
@@ -22,28 +22,19 @@
                       <thead>
                         <tr>
                           <th>
-                            User ID
+                            SN No.
                           </th>
                           <th>
-                            User
+                            Cycle ID
                           </th>
                           <th>
-                            Name
+                            Cycle Name
                           </th>
                           <th>
-                            Contact
+                            Start of Cycle
                           </th>
                           <th>
-                            Department
-                          </th>
-                          <th>
-                            Role
-                          </th>
-                          <th>
-                            Date Added
-                          </th>
-                          <th>
-                            Status
+                            End of Cycle
                           </th>
                           <th>
                             Actions
@@ -51,34 +42,29 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($role as $role)
-                        
-                        
+                        @foreach ($cycles as $cyc)
                         <tr>
-                          <td>{{$role->id}}</td>
+                          <td>{{$cyc->id}}</td>
                           <td class="py-1">
                             <img src="{{ asset('/images/marley.png')}}" alt="image"/>
                           </td>
-                          <td>{{$role->name}}</td>
+                          <td>{{$cyc->name}}</td>
                           <td>
-                            <div>{{$role->email}}</div><br>
+                            <div>{{$cyc->email}}</div><br>
                             <div>712345678</div>
                           </td>
                           <td>
-                            @foreach ($role->departments as $index => $dep)
+                            {{-- @foreach ($cyc->departments as $index => $dep)
                                 {{ $dep->department_name }}
-                                @if ($index < count($role->departments) - 1)
+                                @if ($index < count($cyc->departments) - 1)
                                     , <!-- Add a comma if there are more departments -->
                                 @endif
-                            @endforeach
+                            @endforeach --}}
                         </td>
-                          {{-- @foreach ($role->departments as $dep)
-                          <td>{{$dep->department_name}}</td>
-                          @endforeach --}}
-                          <td>{{$role->role}}</td>
-                          <td>{{$role->created_at}}</td>
+                          <td>{{$cyc->role}}</td>
+                          <td>{{$cyc->created_at}}</td>
                           <td>
-                            @if ($role->is_active)
+                            @if ($cyc->is_active)
                               <button class="btn btn-success">
                                 Active
                               </button>    
@@ -89,8 +75,7 @@
                             @endif
                           </td>
                           <td>
-                            <a href="{{ url('role/'.$role->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
-                            {{-- <a href="{{ url('role/'.$role->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a> --}}
+                            <a href="{{ url('cycles/'.$cyc->Cycle_Id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
                           </td>
                         </tr>
                         @endforeach

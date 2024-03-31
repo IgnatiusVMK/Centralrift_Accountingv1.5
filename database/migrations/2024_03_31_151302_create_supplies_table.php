@@ -19,7 +19,6 @@ return new class extends Migration
             $table->dateTime('Supply_Date');
             $table->integer('Quantity');
             $table->unsignedBigInteger('Cycle_Id');
-            $table->dateTime('Created_Date');
             
             $table->foreign('Product_Id')->references('Product_Id')->on('products');
             $table->foreign('Supplier_Id')->references('Supplier_Id')->on('suppliers');

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('Address', 255);
             $table->string('Phone', 255);
             $table->string('Email', 255);
-            $table->dateTime('Created_Date');
             $table->timestamps();
 
             $table->foreign('Supplier_Id')->references('Supplier_Id')->on('suppliers');

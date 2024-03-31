@@ -39,9 +39,6 @@
                           <th>
                             Address
                           </th>
-                          <th>
-                            Created Date
-                          </th>
                           {{-- <th>
                             Actions
                           </th> --}}
@@ -59,7 +56,6 @@
                             <td>{{ $contact->Phone }}</td>
                             <td>{{ $contact->Email }}</td>
                             <td>{{ $contact->Address }}</td>
-                            <td>{{ $contact->Created_Date }}</td>
                           @endforeach
                         </tr>
                         @endforeach

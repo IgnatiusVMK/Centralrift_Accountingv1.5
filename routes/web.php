@@ -26,11 +26,16 @@ Route::get('/', function () {
     return $accountController->summary();
 })->middleware(['auth', 'verified'])->name('dashboard'); */
 
-Route::get('/dashboard', [App\Http\Controllers\DashboardController::class,'index'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/add-order', [App\Http\Controllers\DashboardController::class,'create'])->name('add-order');
-Route::post('/add-order/create', [App\Http\Controllers\DashboardController::class,'store'])->name('add-order.create');
+Route::get('/add-order', [App\Http\Controllers\DashboardController::class,'create'])->middleware(['auth', 'verified'])->name('add-order');
+Route::post('/add-order/create', [App\Http\Controllers\DashboardController::class,'store'])->middleware(['auth', 'verified'])->name('add-order.create');
 
+/* Route::get('/planting-cycles', function () {
+    return view('cycles.cycles');
+})->name('cycles'); */
+
+Route::get('/planting-cycles', [App\Http\Controllers\CyclesController::class,'index'])->middleware(['auth', 'verified'])->name('cycles');
 
 Route::get('role', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('role');
 Route::get('role/create', [App\Http\Controllers\UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('role.create');

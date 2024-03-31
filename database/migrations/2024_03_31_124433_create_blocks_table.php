@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('blocks', function (Blueprint $table) {
             $table->increments('Block_Id');
             $table->string('Block_Name');
-            $table->dateTime('Created_Date');
             $table->timestamps();
         });
     }

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('Purchase_Id');
             $table->unsignedBigInteger('Supplier_Id');
             $table->unsignedBigInteger('Cycle_Id');
-            $table->dateTime('Created_Date');
             $table->string('Quantity');
             $table->integer('Total_Price');
             $table->boolean('Payment_Status');

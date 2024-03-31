@@ -15,7 +15,6 @@ class BlocksTableSeeder extends Seeder
         foreach ($blocks as $block) {
             DB::table('blocks')->insert([
                 'Block_Name' => 'Block ' . $block,
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

@@ -18,7 +18,6 @@ class ProductsTableSeeder extends Seeder
                 'Price' => 00.00,
                 'Category_Id' => 2,
                 'Supplier_Id' => 2,
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -29,7 +28,6 @@ class ProductsTableSeeder extends Seeder
                 'Price' => 00.00,
                 'Category_Id' => 2,
                 'Supplier_Id' => 2,
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -40,7 +38,6 @@ class ProductsTableSeeder extends Seeder
                 'Price' => 00.00,
                 'Category_Id' => 2,
                 'Supplier_Id' => 2,
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -51,7 +48,6 @@ class ProductsTableSeeder extends Seeder
                 'Price' => 00.00,
                 'Category_Id' => 2,
                 'Supplier_Id' => 2,
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -62,7 +58,6 @@ class ProductsTableSeeder extends Seeder
                 'Price' => 00.00,
                 'Category_Id' => 2,
                 'Supplier_Id' => 2,
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -73,7 +68,6 @@ class ProductsTableSeeder extends Seeder
                 'Price' => 00.00,
                 'Category_Id' => 1,
                 'Supplier_Id' => 2,
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -84,7 +78,6 @@ class ProductsTableSeeder extends Seeder
                 'Price' => 00.00,
                 'Category_Id' => 1,
                 'Supplier_Id' => 2,
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -95,7 +88,6 @@ class ProductsTableSeeder extends Seeder
                 'Price' => 00.00,
                 'Category_Id' => 1,
                 'Supplier_Id' => 2,
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -106,7 +98,6 @@ class ProductsTableSeeder extends Seeder
                 'Price' => 00.00,
                 'Category_Id' => 1,
                 'Supplier_Id' => 2,
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -117,7 +108,6 @@ class ProductsTableSeeder extends Seeder
                 'Price' => 00.00,
                 'Category_Id' => 1,
                 'Supplier_Id' => 2,
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],

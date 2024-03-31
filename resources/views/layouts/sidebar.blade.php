@@ -37,13 +37,28 @@
               </ul>
             </div>
           </li>
+          <!--Cycles-->
+          <li class="nav-item nav-category">Cycles</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#cycles" aria-expanded="false" aria-controls="cycles">
+              <i class="menu-icon mdi mdi-calendar-clock"></i>
+              <span class="menu-title">Planting Cycles</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="cycles">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/planting-cycles')}}">All Cycles</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{-- {{ ('/financials/expenditures')}} --}}">New Cycle</a></li>
+              </ul>
+            </div>
+          </li>
           <!--Finance-->
-          <li class="nav-item nav-category">Finance</li>
+          <li class="nav-item nav-category">Expenses</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#finance" aria-expanded="false" aria-controls="finance">
               <i class="menu-icon mdi mdi-cash-multiple"></i>
-              <span class="menu-title">Finance Operations</span>
-              <i class="menu-arrow"></i> 
+              <span class="menu-title">Monthly Expenses</span>
+              <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="finance">
               <ul class="nav flex-column sub-menu">

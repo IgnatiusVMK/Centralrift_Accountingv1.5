@@ -18,7 +18,6 @@ class SupplierContactsTableSeeder extends Seeder
                 'Address' => '123 Main St',
                 'Phone' => 254712345678,
                 'Email' => 'john.allianceagrovets@domain.org',
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -29,7 +28,6 @@ class SupplierContactsTableSeeder extends Seeder
                 'Address' => '456 Elm St',
                 'Phone' => 254712345678,
                 'Email' => 'jane.empress@domain.org',
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -40,7 +38,6 @@ class SupplierContactsTableSeeder extends Seeder
                 'Address' => '456 Elm St',
                 'Phone' => 254712345678,
                 'Email' => 'jane.farmersdesk@domain.org',
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -51,7 +48,6 @@ class SupplierContactsTableSeeder extends Seeder
                 'Address' => '456 Elm St',
                 'Phone' => 254712345678,
                 'Email' => 'jane.afrodrip@domain.org',
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -62,7 +58,6 @@ class SupplierContactsTableSeeder extends Seeder
                 'Address' => '456 Elm St',
                 'Phone' => 254712345678,
                 'Email' => 'jane.jimpackaging@domain.org',
-                'Created_Date' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ],

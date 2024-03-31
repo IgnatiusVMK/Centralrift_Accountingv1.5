@@ -24,9 +24,6 @@
                           <th>
                             Department Name
                           </th>
-                          <th>
-                            Created On
-                          </th>
                           {{-- <th>
                             Actions
                           </th> --}}
@@ -37,7 +34,6 @@
                         <tr>
                           <td>{{$dep->id}}</td>
                           <td>{{$dep->department_name}}</td>
-                          <td>{{$dep->Created_Date}}</td>
                           {{-- <td>
                             <a href="{{ url('departments/'.$dep->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
                             <a href="{{ url('departments/'.$dep->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a>

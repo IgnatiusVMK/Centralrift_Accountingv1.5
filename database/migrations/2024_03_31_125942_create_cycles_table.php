@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id('Cycle_Id');
             $table->unsignedInteger('Block_Id');
             $table->string('Cycle_Name');
-            $table->dateTime('Created_Date');
+            $table->dateTime('Cycle_Start');
+            $table->dateTime('Cycle_End');
             $table->timestamps();
 
             $table->foreign('Block_Id')->references('Block_Id')->on('blocks');

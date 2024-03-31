@@ -40,9 +40,6 @@
                             Product Supplier ID
                           </th>
                           <th>
-                            Created Date
-                          </th>
-                          <th>
                             Stock Availability
                           </th>
                           {{-- <th>
@@ -64,7 +61,6 @@
                           <td>Ksh. {{$product->Price}} /=</td>
                           <td>{{$product->Category_Id}}</td>
                           <td>{{$product->Supplier_Id}}</td>
-                          <td>{{$product->Created_Date}}</td>
                           <td>
                             {{-- @if ($product->is_instock) --}}
                               {{-- <button class="btn btn-success">

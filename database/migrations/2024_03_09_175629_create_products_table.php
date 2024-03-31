@@ -18,7 +18,6 @@ return new class extends Migration
             $table->decimal('Price', 10, 2);
             $table->unsignedBigInteger('Category_Id');
             $table->unsignedBigInteger('Supplier_Id');
-            $table->dateTime('Created_Date');
             $table->timestamps();
         
             $table->foreign('Category_Id')->references('Category_Id')->on('categories');
