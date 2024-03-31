@@ -50,7 +50,7 @@
                           <td class="py-1">
                             <img src="{{ asset('/images/marley.png')}}" alt="image"/>
                           </td>
-                          <td>{{$cust->Customer_Fname}}</td>
+                          <td>{{$cust->Customer_Fname .' ' . $cust->Customer_Lname }}</td>
                           @foreach($customercontacts->where('Customer_Id', $cust->Customer_Id) as $contact)
                             <td>{{ $contact->Contact }}</td>
                             <td>{{ $contact->Email }}</td>
