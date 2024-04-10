@@ -10,11 +10,23 @@ class BlocksTableSeeder extends Seeder
 {
     public function run()
     {
-        $blocks = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'];
+        $blocks = [
+            'NULL',
+            'Block A1',
+            'Block A2', 
+            'Block A3', 
+            'Block A4', 
+            'Block A5', 
+            'Block A6',
+            'House 1',
+            'House 2',
+            'House 3',
+            'House 4',
+        ];
 
         foreach ($blocks as $block) {
             DB::table('blocks')->insert([
-                'Block_Name' => 'Block ' . $block,
+                'Block_Name' => $block,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

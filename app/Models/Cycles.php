@@ -12,8 +12,17 @@ class Cycles extends Model
     protected $table = 'cycles';
 
     protected $fillable = [
+        'Cycle_Id',
         'Block_Id',
         'Cycle_Name',
-        'Created_Date',
+        'Cycle_Start',
+        'Cycle_End',
     ];
+
+    public function block()
+    {
+        return $this->belongsTo(Blocks::class, 'Block_Id', 'Block_Id');
+    }
+    
+
 }

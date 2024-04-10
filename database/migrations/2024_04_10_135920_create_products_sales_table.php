@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('Products_Sales_Id');
             $table->unsignedBigInteger('Product_Id');
             $table->unsignedBigInteger('Sales_Id');
-            $table->unsignedBigInteger('Cycle_Id');
+            $table->string('Cycle_Id');
 
             $table->foreign('Product_Id')->references('Product_Id')->on('products');
             $table->foreign('Sales_Id')->references('Sales_Id')->on('sales');

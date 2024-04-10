@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('Reason');
             $table->string('Description');
             $table->integer('Amount');
-            $table->unsignedBigInteger('Cycle_Id');
+            $table->string('Cycle_Id');
             $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
             $table->timestamps();
         });

@@ -12,11 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('chemicals', function (Blueprint $table) {
-            $table->id('Chemical_Id');
+            $table->bigIncrements('Chemical_Id');
             $table->string('Chemical_Name');
-            $table->decimal('Quantity');
-            $table->integer('Cycle_Id');
+            $table->decimal('Quantity', 10, 2);
+            $table->string('Cycle_Id');
             $table->timestamps();
+
+            $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
         });
     }
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id('Purchase_Id');
             $table->unsignedBigInteger('Supplier_Id');
-            $table->unsignedBigInteger('Cycle_Id');
+            $table->string('Cycle_Id');
             $table->string('Quantity');
             $table->integer('Total_Price');
             $table->boolean('Payment_Status');

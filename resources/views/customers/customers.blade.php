@@ -46,12 +46,12 @@
                       <tbody>
                         @foreach ($customers as $cust )
                         <tr>
-                          <td>{{$cust->Customer_Id}}</td>
+                          <td>{{$cust->id}}</td>
                           <td class="py-1">
                             <img src="{{ asset('/images/marley.png')}}" alt="image"/>
                           </td>
                           <td>{{$cust->Customer_Fname .' ' . $cust->Customer_Lname }}</td>
-                          @foreach($customercontacts->where('Customer_Id', $cust->Customer_Id) as $contact)
+                          @foreach($customercontacts->where('id', $cust->id) as $contact)
                             <td>{{ $contact->Contact }}</td>
                             <td>{{ $contact->Email }}</td>
                             <td>{{ $contact->Address }}</td>

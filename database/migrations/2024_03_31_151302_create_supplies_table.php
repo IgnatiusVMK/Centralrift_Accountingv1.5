@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('Unit_Price', 10, 2);
             $table->dateTime('Supply_Date');
             $table->integer('Quantity');
-            $table->unsignedBigInteger('Cycle_Id');
+            $table->string('Cycle_Id');
             
             $table->foreign('Product_Id')->references('Product_Id')->on('products');
             $table->foreign('Supplier_Id')->references('Supplier_Id')->on('suppliers');

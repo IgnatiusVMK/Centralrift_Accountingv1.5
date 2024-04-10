@@ -13,7 +13,7 @@ class FinanceController extends Controller
         $expuniqueCode = $this->generateUniqueCode('expenditure');
         $advuniqueCode = $this->generateUniqueCode('advance');
         $saluniqueCode = $this->generateUniqueCode('salaries');
-        return view('financials.finances', [
+        return view('cycles.finances', [
             'expuniqueCode' => $expuniqueCode,
             'advuniqueCode' => $advuniqueCode,
             'saluniqueCode' => $saluniqueCode,

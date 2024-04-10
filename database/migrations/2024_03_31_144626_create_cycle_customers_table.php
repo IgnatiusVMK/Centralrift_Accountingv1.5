@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('cycle_customers', function (Blueprint $table) {
             $table->id();
-            $table->integer('Cycle_Id');
-            $table->integer('Customer_Id');
+            $table->string('Cycle_Id');
+            $table->unsignedBigInteger('Customer_Id');
             $table->timestamps();
+
+            $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
+            $table->foreign('Customer_Id')->references('id')->on('customers');
         });
     }
 

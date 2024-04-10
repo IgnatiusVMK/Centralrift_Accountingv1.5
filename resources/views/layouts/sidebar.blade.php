@@ -47,8 +47,8 @@
             </a>
             <div class="collapse" id="cycles">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ ('/planting-cycles')}}">All Cycles</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{-- {{ ('/financials/expenditures')}} --}}">New Cycle</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/cycles')}}">All Cycles</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/cycles/new')}}">New Cycle</a></li>
               </ul>
             </div>
           </li>

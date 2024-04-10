@@ -35,7 +35,9 @@ Route::post('/add-order/create', [App\Http\Controllers\DashboardController::clas
     return view('cycles.cycles');
 })->name('cycles'); */
 
-Route::get('/planting-cycles', [App\Http\Controllers\CyclesController::class,'index'])->middleware(['auth', 'verified'])->name('cycles');
+Route::get('/cycles', [App\Http\Controllers\CyclesController::class,'index'])->middleware(['auth', 'verified'])->name('cycles');
+Route::get('/cycles/new', [App\Http\Controllers\CyclesController::class,'create'])->middleware(['auth', 'verified'])->name('cycles.create');
+Route::post('/cycles/create', [App\Http\Controllers\CyclesController::class,'store'])->middleware(['auth', 'verified'])->name('cycles.store');
 
 Route::get('role', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('role');
 Route::get('role/create', [App\Http\Controllers\UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('role.create');

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cycles', function (Blueprint $table) {
-            $table->id('Cycle_Id');
+            $table->string('Cycle_Id')->primary();
             $table->unsignedInteger('Block_Id');
             $table->string('Cycle_Name');
             $table->dateTime('Cycle_Start');

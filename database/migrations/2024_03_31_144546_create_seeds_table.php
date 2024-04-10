@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('Seed_Id');
             $table->string('Seed_Name');
             $table->decimal('Quantity');
-            $table->integer('Cycle_Id');
+            /* $table->string('Cycle_Id'); */
             $table->timestamps();
         });
     }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('customer_contacts', function (Blueprint $table) {
             $table->id();
-            $table->integer('Customer_Id');
-            $table->foreign('Customer_Id')->references('Customer_Id')->on('customers')->onDelete('cascade');
+            $table->unsignedBigInteger('Customer_Id');
+            $table->foreign('Customer_Id')->references('id')->on('customers')->onDelete('cascade');
             $table->string('Email', 255);
             $table->string('Contact', 255);
             $table->string('Address', 255);
