@@ -38,6 +38,7 @@ Route::post('/add-order/create', [App\Http\Controllers\DashboardController::clas
 Route::get('/cycles', [App\Http\Controllers\CyclesController::class,'index'])->middleware(['auth', 'verified'])->name('cycles');
 Route::get('/cycles/new', [App\Http\Controllers\CyclesController::class,'create'])->middleware(['auth', 'verified'])->name('cycles.create');
 Route::post('/cycles/create', [App\Http\Controllers\CyclesController::class,'store'])->middleware(['auth', 'verified'])->name('cycles.store');
+Route::get('cycles/{Cycle_Id}', [App\Http\Controllers\CycleDetailsController::class,'index'])->middleware(['auth', 'verified'])->name('cycles.details.index');
 
 Route::get('role', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('role');
 Route::get('role/create', [App\Http\Controllers\UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('role.create');

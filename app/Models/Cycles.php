@@ -14,6 +14,7 @@ class Cycles extends Model
     protected $fillable = [
         'Cycle_Id',
         'Block_Id',
+        'Crop',
         'Cycle_Name',
         'Cycle_Start',
         'Cycle_End',

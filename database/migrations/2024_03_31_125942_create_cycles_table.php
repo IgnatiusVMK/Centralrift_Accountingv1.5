@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cycles', function (Blueprint $table) {
             $table->string('Cycle_Id')->primary();
             $table->unsignedInteger('Block_Id');
+            $table->string('Crop');
             $table->string('Cycle_Name');
             $table->dateTime('Cycle_Start');
             $table->dateTime('Cycle_End');

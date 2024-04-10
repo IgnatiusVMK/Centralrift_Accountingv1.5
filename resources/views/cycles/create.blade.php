@@ -23,7 +23,7 @@
                     @if (session('status'))
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
-                  <h4 class="card-title">Create New Planting Cycle
+                  <h4 class="card-title">New Planting Cycle
                     <a href="{{ url('cycles') }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>
@@ -39,6 +39,16 @@
                           @endforeach
                         </select>
                       @error('Block_Id') <span class="text-danger">{{ $message}}</span> @enderror
+                    </div>
+                    <div class="mb-3">
+                      <label>Crop</label>
+                        <select name="Crop" class="form-control">
+                          <option value="" selected> -- SELECT BLOCK --</option>
+                          @foreach ($crops as $crop)
+                              <option value="{{ $crop->Product_Name}}">{{ $crop->Product_Name }}</option>
+                          @endforeach
+                        </select>
+                      @error('Crop') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
                       <label>Cycle Name</label>
