@@ -13,6 +13,7 @@ class HarvestOrder extends Model
     protected $table = 'harvest_orders';
 
     protected $fillable = [
+        'product_name',
         'company_name',
         'order_date',
         'planting_date',

@@ -13,7 +13,7 @@
                     @endif
                     <div class="card-header">
                       <h4 class="card-title">Cycles
-                      <a href="{{ url('cycles/new') }}" class="btn btn-primary float-end">+ New Cycle</a>
+                      {{-- <a href="{{ url('cycles/new') }}" class="btn btn-primary float-end">+ New Cycle</a> --}}
                       </h4>
                     </div>
                   
