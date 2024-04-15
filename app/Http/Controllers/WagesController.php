@@ -4,19 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Financial;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 
-class CycleDetailsController extends Controller
+class WagesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-
-        $financials = Financial::where('type', 'expenditure')->simplePaginate(5);/* 
-        return view('financials.expenditures.financials', compact('financials'))
-        ->with('create', true); */
         $Cycle_Id = $request->route('Cycle_Id');
         $expuniqueCode = $this->generateUniqueCode('wages');
         $advuniqueCode = $this->generateUniqueCode('advance');
@@ -24,8 +19,7 @@ class CycleDetailsController extends Controller
         $elecuniqueCode = $this->generateUniqueCode('electricty');
         $tranuniqueCode = $this->generateUniqueCode('transport');
         $chemuniqueCode = $this->generateUniqueCode('chemicals');
-        return view('cycles.expenses', [
-            'financials'=> $financials,
+        return view('financials.expenditures.create', [
             'Cycle_Id'=> $Cycle_Id,
             'expuniqueCode' => $expuniqueCode,
             'advuniqueCode' => $advuniqueCode,
@@ -94,7 +88,7 @@ class CycleDetailsController extends Controller
         $lastNumber = intval(substr(strrchr($lastCode, "-"), 1)); // Extracts the number after the last dash
 
         // Generate a new unique code
-        $prefix = strtoupper(substr($type, 0, 4)); // Get the first three letters of the type
+        $prefix = strtoupper(substr($type, 0, 3)); // Get the first three letters of the type
         $newNumber = $lastNumber + 1;
         $uniqueCode = $prefix . '-' . date('Ymd') . '-' . $newNumber;
 

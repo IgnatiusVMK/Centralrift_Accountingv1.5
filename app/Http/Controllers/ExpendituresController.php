@@ -10,21 +10,35 @@ class ExpendituresController extends Controller
 {
     public function index(){
         /* $financials = Financial::where('type', 'expenditure')->get(); */
-        $financials = Financial::where('type', 'expenditure')->simplePaginate(5);
+        $financials = Financial::where('type', 'expenditure')->simplePaginate(10);
         return view('financials.expenditures.financials', compact('financials'))
         ->with('create', true);;
     }
-    public function create(){
-        $uniqueCode = $this->generateUniqueCode('expenditure');
-        return view('financials.expenditures.create', ['uniqueCode' => $uniqueCode]);
-    }
+    /* public function create(){
+        $Cycle_Id = $request->route('Cycle_Id');
+        $expuniqueCode = $this->generateUniqueCode('wages');
+        $advuniqueCode = $this->generateUniqueCode('advance');
+        $saluniqueCode = $this->generateUniqueCode('salaries');
+        $elecuniqueCode = $this->generateUniqueCode('electricty');
+        $tranuniqueCode = $this->generateUniqueCode('transport');
+        $chemuniqueCode = $this->generateUniqueCode('chemicals');
+        return view('financials.expenditures.create', [
+            'Cycle_Id'=> $Cycle_Id,
+            'expuniqueCode' => $expuniqueCode,
+            'advuniqueCode' => $advuniqueCode,
+            'saluniqueCode' => $saluniqueCode,
+            'elecuniqueCode' => $elecuniqueCode,
+            'tranuniqueCode' => $tranuniqueCode,
+            'chemuniqueCode' => $chemuniqueCode,
+        ]);
+    } */
     public function store(Request $request){
         $request->validate([
             'Fin_Id_Id' => 'required|max:255|string',
             'Reason' => 'required|max:255|string',
             'Description' => 'required|max:255|string',
             'Amount' => 'required|integer|max:1000000',
-            'Date' => 'required|date'
+            'Cycle_Id' => 'required|max:255|string',
         ]);
 
         $data = $request->all();

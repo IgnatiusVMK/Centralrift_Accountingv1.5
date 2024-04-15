@@ -23,6 +23,9 @@
                             Sn No.
                           </th>
                           <th>
+                            Cycle
+                          </th>
+                          <th>
                             ID
                           </th>
                           <th>
@@ -35,30 +38,20 @@
                             Amount
                           </th>
                           <th>
-                            Date
-                          </th>
-                          <th>
                             Date Created
                           </th>
-                          {{-- <th>
-                            Actions
-                          </th> --}}
                         </tr>
                       </thead>
                       <tbody>
                         @foreach ($financials as $fin )
                         <tr>
                           <td>{{$fin->Financial_Id}}</td>
+                          <td>{{$fin->Cycle_Id}}</td>
                           <td>{{$fin->Fin_Id_Id}}</td>
                           <td>{{$fin->Reason}}</td>
                           <td>{{$fin->Description}}</td>
                           <td>Ksh {{$fin->Amount}}</td>
-                          <td>{{$fin->Date}}</td>
                           <td>{{$fin->created_at}}</td>
-                          {{-- <td>
-                            <a href="{{ url('financials/expenditures/'.$fin->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a> --}}
-                            {{-- <a href="{{ url('financials/expenditures/'.$fin->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a> --}}
-                          {{-- </td> --}}
                         </tr>
                         @endforeach
                       </tbody>

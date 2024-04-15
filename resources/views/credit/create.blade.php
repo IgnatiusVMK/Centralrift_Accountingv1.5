@@ -14,10 +14,10 @@
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
                   <h4 class="card-title">Credit/Creditors
-                    <a href="{{ url('credit') }}" class="btn btn-danger float-end">{{-- Back --}} <i class="mdi mdi-close"></i></a>
+                    <a href="{{ url('credit') }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>
-                  <form action="{{ url('credit/create')}}" method="post">
+                  <form action="{{ route('credit.store')}}" method="POST">
                     @csrf
 
                     <div class="mb-3">

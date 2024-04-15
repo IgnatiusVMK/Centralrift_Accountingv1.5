@@ -17,6 +17,6 @@ class Financial extends Model
         'Reason',	
         'Description',
         'Amount',
-        'Date',
+        'Cycle_Id',
     ];
 }

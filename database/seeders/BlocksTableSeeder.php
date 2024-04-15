@@ -11,7 +11,6 @@ class BlocksTableSeeder extends Seeder
     public function run()
     {
         $blocks = [
-            'NULL',
             'Block A1',
             'Block A2', 
             'Block A3', 
@@ -22,6 +21,7 @@ class BlocksTableSeeder extends Seeder
             'House 2',
             'House 3',
             'House 4',
+            'NOT ASSIGNED',
         ];
 
         foreach ($blocks as $block) {

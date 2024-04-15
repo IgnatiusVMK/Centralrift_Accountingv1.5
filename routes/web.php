@@ -40,6 +40,8 @@ Route::get('/cycles/new', [App\Http\Controllers\CyclesController::class,'create'
 Route::post('/cycles/create', [App\Http\Controllers\CyclesController::class,'store'])->middleware(['auth', 'verified'])->name('cycles.store');
 Route::get('cycles/{Cycle_Id}', [App\Http\Controllers\CycleDetailsController::class,'index'])->middleware(['auth', 'verified'])->name('cycles.details.index');
 
+Route::get('cycles/{Cycle_Id}/expenditures/create', [App\Http\Controllers\WagesController::class, 'index'])->middleware(['auth', 'verified'])->name('cycle.wages.create');
+
 Route::get('role', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('role');
 Route::get('role/create', [App\Http\Controllers\UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('role.create');
 Route::post('role/create', [App\Http\Controllers\UsersController::class, 'store'])->middleware(['auth', 'verified'])->name('role.store');
@@ -72,7 +74,6 @@ Route::post('credit/create', [App\Http\Controllers\CreditController::class, 'sto
 Route::get('finances', [App\Http\Controllers\FinanceController::class,'index'])->middleware(['auth', 'verified'])->name('finances');
 
 Route::get('financials/expenditures', [App\Http\Controllers\ExpendituresController::class,'index'])->middleware(['auth', 'verified'])->name('expenditures');
-Route::get('financials/expenditures/create', [App\Http\Controllers\ExpendituresController::class, 'create'])->middleware(['auth', 'verified'])->name('expenditures.create');
 Route::post('financials/expenditures/create', [App\Http\Controllers\ExpendituresController::class, 'store'])->middleware(['auth', 'verified'])->name('expenditures.store');
 
 Route::get('financials/salaries', [App\Http\Controllers\SalaryController::class,'index'])->middleware(['auth', 'verified'])->name('salaries');
