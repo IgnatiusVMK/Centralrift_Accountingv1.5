@@ -39,7 +39,7 @@ class CreditController extends Controller
         
         Credit::create($data);
 
-        $this->payIn($request->Amount, $request->Description);
+        $this->payIn($request->Amount, $request->Credit_Id);
 
         return redirect('credit/create')->with('status','Credit Recorded');
     }

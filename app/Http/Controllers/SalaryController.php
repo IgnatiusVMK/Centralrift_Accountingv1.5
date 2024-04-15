@@ -14,17 +14,17 @@ class SalaryController extends Controller
         return view('financials.salaries.financials', compact('salaries'))
         ->with('create', true);;
     }
-    public function create(){
+    /* public function create(){
         $uniqueCode = $this->generateUniqueCode('salary');
         return view('financials.salaries.create', ['uniqueCode' => $uniqueCode]);
-    }
+    } */
     public function store(Request $request){
         $request->validate([
             'Fin_Id_Id' => 'required|max:255|string',
             'Reason' => 'required|max:255|string',
             'Description' => 'required|max:255|string',
             'Amount' => 'required|integer|max:1000000',
-            'Date' => 'required|date'
+            'Cycle_Id' => 'required|max:255|string',
         ]);
 
 
@@ -33,12 +33,12 @@ class SalaryController extends Controller
 
         Financial::create($data);
 
-        $this->payOut($request->Amount, $request->Description);
+        $this->payOut($request->Amount, $request->Cycle_Id, $request->Reason.' '. $request->Description);
 
         return redirect('financials/salaries/create')->with('status','Record Created');
     }
 
-    public function payOut($amount, $Description)
+    public function payOut($amount, $Cycle,  $Description)
     {
         $transactionId = $this->getNextTransactionId();
     
@@ -48,6 +48,7 @@ class SalaryController extends Controller
     
         Account::create([
             'Transaction_Id' => $transactionId,
+            'Cycle_Id'=> $Cycle,
             'Description' => $Description,
             'Crd_Amnt' => 0,
             'Dbt_Amt' => $amount,

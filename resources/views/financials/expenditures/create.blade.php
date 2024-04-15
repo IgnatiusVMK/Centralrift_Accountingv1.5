@@ -17,7 +17,7 @@
                     <a href="{{ url('cycles/'.$Cycle_Id ) }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>
-                  <form action="{{ route('expenditures.store') }}" method="POST">
+                  <form action="{{ route('expenditures.store') }}" method="post">
                     @csrf
                         <div class="mb-3">
                           <label>Cycle</label>

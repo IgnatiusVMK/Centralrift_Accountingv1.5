@@ -252,8 +252,9 @@ $currentDateTime = $day . ', ' . $date . '/' . $month . '/' . $year . '<br>' . $
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            {{-- <th>Sn No.</th> --}}
-                                            <th>ID</th>
+                                            <th>Sn No.</th>
+                                            <th>Transaction ID</th>
+                                            <th>Cycle</th>
                                             <th>Reason</th>
                                             <th>Description</th>
                                             <th>Amount</th>
@@ -264,8 +265,9 @@ $currentDateTime = $day . ', ' . $date . '/' . $month . '/' . $year . '<br>' . $
                                     <tbody>
                                         @foreach ($cashbook as $cbk)
                                         <tr>
-                                            {{-- <td>{{$cbk->id}}</td> --}}
+                                            <td>{{$cbk->id}}</td>
                                             <td>{{$cbk->Transaction_Id}}</td>
+                                            <td>{{$cbk->Cycle_Id}}</td>
                                             <td>{{$cbk->Description}}</td>
                                             <td>Ksh {{$cbk->Crd_Amnt}}</td>
                                             <td>Ksh {{$cbk->Dbt_Amt}}</td>

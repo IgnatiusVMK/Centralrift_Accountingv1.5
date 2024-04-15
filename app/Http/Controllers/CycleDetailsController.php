@@ -14,18 +14,20 @@ class CycleDetailsController extends Controller
     public function index(Request $request)
     {
 
-        $financials = Financial::where('type', 'expenditure')->simplePaginate(5);/* 
-        return view('financials.expenditures.financials', compact('financials'))
-        ->with('create', true); */
+        $wages = Financial::where('type', 'expenditure')->simplePaginate(10);
+        $salaries = Financial::where('type', 'salary')->simplePaginate(10);
+        $advance = Financial::where('type', 'advance')->simplePaginate(10);
         $Cycle_Id = $request->route('Cycle_Id');
         $expuniqueCode = $this->generateUniqueCode('wages');
         $advuniqueCode = $this->generateUniqueCode('advance');
-        $saluniqueCode = $this->generateUniqueCode('salaries');
+        $saluniqueCode = $this->generateUniqueCode('salary');
         $elecuniqueCode = $this->generateUniqueCode('electricty');
         $tranuniqueCode = $this->generateUniqueCode('transport');
         $chemuniqueCode = $this->generateUniqueCode('chemicals');
         return view('cycles.expenses', [
-            'financials'=> $financials,
+            'wages'=> $wages,
+            'salaries'=> $salaries,
+            'advance'=> $advance,
             'Cycle_Id'=> $Cycle_Id,
             'expuniqueCode' => $expuniqueCode,
             'advuniqueCode' => $advuniqueCode,

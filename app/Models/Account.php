@@ -11,6 +11,7 @@ class Account extends Model
 
     protected $fillable = [
         'Transaction_Id',
+        'Cycle_Id',
         'Description',
         'Crd_Amnt',
         'Dbt_Amt',
@@ -23,7 +24,7 @@ class Account extends Model
 
 public function financial()
 {
-    return $this->hasOne(Financial::class, 'Transaction_Id', 'Description');
+    return $this->hasOne(Financial::class, 'Transaction_Id', 'Cycle_Id');
 }
 
 public function sale()
@@ -38,7 +39,7 @@ public function purchase()
 
 public function credit()
 {
-    return $this->hasOne(Credit::class, 'Transaction_Id', 'Description');
+    return $this->hasOne(Credit::class, 'Transaction_Id', 'Credit_Id');
 }
 
 }

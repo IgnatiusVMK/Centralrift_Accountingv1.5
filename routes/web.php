@@ -40,7 +40,9 @@ Route::get('/cycles/new', [App\Http\Controllers\CyclesController::class,'create'
 Route::post('/cycles/create', [App\Http\Controllers\CyclesController::class,'store'])->middleware(['auth', 'verified'])->name('cycles.store');
 Route::get('cycles/{Cycle_Id}', [App\Http\Controllers\CycleDetailsController::class,'index'])->middleware(['auth', 'verified'])->name('cycles.details.index');
 
-Route::get('cycles/{Cycle_Id}/expenditures/create', [App\Http\Controllers\WagesController::class, 'index'])->middleware(['auth', 'verified'])->name('cycle.wages.create');
+Route::get('cycles/{Cycle_Id}/expenditures/create', [App\Http\Controllers\CyclesWagesController::class, 'index'])->middleware(['auth', 'verified'])->name('cycle.wages.create');
+Route::get('cycles/{Cycle_Id}/salaries/create', [App\Http\Controllers\CyclesSalaryController::class, 'index'])->middleware(['auth', 'verified'])->name('cycle.wages.create');
+Route::get('cycles/{Cycle_Id}/advance/create', [App\Http\Controllers\CyclesAdvancesController::class, 'index'])->middleware(['auth', 'verified'])->name('advance.create');
 
 Route::get('role', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('role');
 Route::get('role/create', [App\Http\Controllers\UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('role.create');
@@ -77,11 +79,9 @@ Route::get('financials/expenditures', [App\Http\Controllers\ExpendituresControll
 Route::post('financials/expenditures/create', [App\Http\Controllers\ExpendituresController::class, 'store'])->middleware(['auth', 'verified'])->name('expenditures.store');
 
 Route::get('financials/salaries', [App\Http\Controllers\SalaryController::class,'index'])->middleware(['auth', 'verified'])->name('salaries');
-Route::get('financials/salaries/create', [App\Http\Controllers\SalaryController::class, 'create'])->middleware(['auth', 'verified'])->name('salaries.create');
 Route::post('financials/salaries/create', [App\Http\Controllers\SalaryController::class, 'store'])->middleware(['auth', 'verified'])->name('salaries.store');
 
 Route::get('financials/advance', [App\Http\Controllers\AdvanceController::class,'index'])->middleware(['auth', 'verified'])->name('advance');
-Route::get('financials/advance/create', [App\Http\Controllers\AdvanceController::class, 'create'])->middleware(['auth', 'verified'])->name('advance.create');
 Route::post('financials/advance/create', [App\Http\Controllers\AdvanceController::class, 'store'])->middleware(['auth', 'verified'])->name('advance.store');
 
 

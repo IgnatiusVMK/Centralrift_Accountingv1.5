@@ -50,7 +50,10 @@
                       <tbody>
                         @foreach ($cycles as $cyc)
                         <tr>
-                          <td>{{$cyc->Cycle_Id}}</td>
+                           <td>
+                            <a href="{{ url('cycles/'.$cyc->Cycle_Id)}}" class=""><i class="mdi mdi-border-color"></i> {{$cyc->Cycle_Id}}</a>
+                           </td>
+                         {{-- {{$cyc->Cycle_Id}}</td> --}}
                           <td>{{$cyc->Cycle_Name}}</td>
                           <td>{{$cyc->Crop}}</td>
                           <td>{{$cyc->block->Block_Name}}</td>
@@ -61,7 +64,7 @@
                             <div>{{$cyc->Cycle_End}}</div>
                           </td>
                           <td>
-                            <a href="{{ url('cycles/'.$cyc->Cycle_Id)}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
+                            <a href="{{ url('cycles/'.$cyc->Cycle_Id)}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i>Update</a>
                           </td>
                         </tr>
                         @endforeach

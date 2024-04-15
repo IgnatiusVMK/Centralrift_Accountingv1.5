@@ -14,54 +14,58 @@
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
                   <h4 class="card-title">Record Advances
-                    <a href="{{ url('financials/advance') }}" class="btn btn-danger float-end">{{-- Back --}} <i class="mdi mdi-close"></i></a>
+                    <a href="{{ url('cycles/'.$Cycle_Id) }}" class="btn btn-danger float-end">{{-- Back --}} <i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>
                   <form action="{{ url('financials/advance/create')}}" method="post">
                     @csrf
-
-                    <div class="mb-3">
-                      <label>Financial ID</label>
-                      <input type="text" name="Fin_Id_Id" class="form-control" value="{{ $uniqueCode }}" readonly/>
-                      @error('Fin_Id_Id') <span class="text-danger">{{ $message}}</span> @enderror
-                    </div>
-                    <div class="mb-3">
-                      <label>Type</label>
-                      <input type="text" name="type" class="form-control" value="advance" readonly/>
-                      @error('type') <span class="text-danger">{{ $message}}</span> @enderror
-                    </div>
-                    <div class="mb-3">
-                      <label>Name</label>
-                      <input type="text" name="Reason" class="form-control" value="{{ old ('Reason') }}" />
-                      @error('Reason') <span class="text-danger">{{ $message}}</span> @enderror
-                    </div>
-                    <div class="mb-3">
-                      <label>Description</label>
-                      <select id="Description" name="Description" class="form-control" required>
-                        <option value="NULL" selected>-- SELECT MONTH --
-                          @foreach(range(1, 12) as $month)
-                              <option value="{{ \Carbon\Carbon::create(null, $month, 1)->format('F Y') }}">
-                                  {{ \Carbon\Carbon::create(null, $month, 1)->format('F Y') }}
-                              </option>
-                          @endforeach
-                      </select>
-                      @error('Description') <span class="text-danger">{{ $message}}</span> @enderror
-                    </div>
-                    <div class="mb-3">
-                      <label>Amount</label>
-                      <input type="number" name="Amount" class="form-control" value="{{ old ('Amount') }}" />
-                      @error('Amount') <span class="text-danger">{{ $message}}</span> @enderror
-                    </div>
-                    <div class="mb-3">
-                      <label>Date</label>
-                      <input type="date" name="Date" class="form-control" value="{{ old ('Date') }}" />
-                      @error('Date') <span class="text-danger">{{ $message}}</span> @enderror
-                    </div>
-                    <div class="mb-3">
-                      <button type="submit"  class="btn btn-success text-center">Save</button>
-                    </div>
-
-                  </form>
+                      <div class="mb-3">
+                        <label>Cycle</label>
+                        <input type="text" name="Cycle_Id" class="form-control" value="{{ $Cycle_Id }}" readonly/>
+                        @error('Cycle_Id') <span class="text-danger">{{ $message}}</span> @enderror
+                      </div>
+                      <div class="mb-3">
+                        <label>Financial ID</label>
+                        <input type="text" name="Fin_Id_Id" class="form-control" value="{{ $advuniqueCode }}" readonly/>
+                        @error('Fin_Id_Id') <span class="text-danger">{{ $message}}</span> @enderror
+                      </div>
+                      <div class="mb-3">
+                        <label>Type</label>
+                        <input type="text" name="type" class="form-control" value="advance" readonly/>
+                        @error('type') <span class="text-danger">{{ $message}}</span> @enderror
+                      </div>
+                      <div class="mb-3">
+                        <label>Name</label>
+                        <input type="text" name="Reason" class="form-control" value="{{ old ('Reason') }}" />
+                        @error('Reason') <span class="text-danger">{{ $message}}</span> @enderror
+                      </div>
+                      <div class="mb-3">
+                        <label>Description</label>
+                        <select id="Description" name="Description" class="form-control" required>
+                          <option value="NULL" selected>-- SELECT MONTH --
+                            @foreach(range(1, 12) as $month)
+                                <option value="{{ \Carbon\Carbon::create(null, $month, 1)->format('F Y') }}">
+                                    {{ \Carbon\Carbon::create(null, $month, 1)->format('F Y') }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('Description') <span class="text-danger">{{ $message}}</span> @enderror
+                      </div>
+                      <div class="mb-3">
+                        <label>Amount</label>
+                        <input type="number" name="Amount" class="form-control" value="{{ old ('Amount') }}" />
+                        @error('Amount') <span class="text-danger">{{ $message}}</span> @enderror
+                      </div>
+                      <div class="mb-3">
+                        <label>Date</label>
+                        <input type="date" name="Date" class="form-control" value="{{ old ('Date') }}" />
+                        @error('Date') <span class="text-danger">{{ $message}}</span> @enderror
+                      </div>
+                      <div class="mb-3">
+                        <button type="submit"  class="btn btn-success text-center">Save</button>
+                      </div>
+      
+                    </form>
                 </div>
               </div>
             </div>

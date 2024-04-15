@@ -41,16 +41,22 @@
                             Sn No.
                           </th>
                           <th>
-                            ID
+                            Transaction ID
                           </th>
                           <th>
-                            Reason
+                            Cycle ID
                           </th>
+                          {{-- <th>
+                            Reason
+                          </th> --}}
                           <th>
                             Description
                           </th>
                           <th>
-                            Amount
+                            Credit Amount
+                          </th>
+                          <th>
+                            Debit Amount
                           </th>
                           <th>
                             Balance Estimate
@@ -65,6 +71,7 @@
                         <tr>
                           <td>{{$cbk->id}}</td>
                           <td>{{$cbk->Transaction_Id}}</td>
+                          <td>{{$cbk->Cycle_Id}}</td>
                           <td>{{$cbk->Description}}</td>
                           <td>Ksh {{$cbk->Crd_Amnt}}</td>
                           <td>Ksh {{$cbk->Dbt_Amt}}</td>

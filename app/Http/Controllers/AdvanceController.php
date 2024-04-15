@@ -23,7 +23,8 @@ class AdvanceController extends Controller
             'Reason' => 'required|max:255|string',
             'Description' => 'required|max:255|string',
             'Amount' => 'required|integer|max:1000000',
-            'Date' => 'required|date'
+            'Date' => 'required|date',
+            'Cycle_Id' => 'required|max:255|string',
         ]);
 
         $data = $request->all();
@@ -31,11 +32,11 @@ class AdvanceController extends Controller
 
         Financial::create($data);
 
-        $this->payOut($request->Amount, $request->Description);
+        $this->payOut($request->Amount, $request->Cycle_Id , $request->type.' for '.$request->Reason.' '.$request->Description);
 
         return redirect('financials/advance/create')->with('status','Record Created');
     }
-    public function payOut($amount, $Description)
+    public function payOut($amount, $Cycle, $Description)
     {
         $transactionId = $this->getNextTransactionId();
     
@@ -45,6 +46,7 @@ class AdvanceController extends Controller
     
         Account::create([
             'Transaction_Id' => $transactionId,
+            'Cycle_Id'=> $Cycle,
             'Description' => $Description,
             'Crd_Amnt' => 0,
             'Dbt_Amt' => $amount,
