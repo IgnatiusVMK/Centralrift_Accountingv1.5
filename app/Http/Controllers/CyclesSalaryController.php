@@ -13,20 +13,10 @@ class CyclesSalaryController extends Controller
     public function index(Request $request)
     {
         $Cycle_Id = $request->route('Cycle_Id');
-        $expuniqueCode = $this->generateUniqueCode('wages');
-        $advuniqueCode = $this->generateUniqueCode('advance');
         $saluniqueCode = $this->generateUniqueCode('salaries');
-        $elecuniqueCode = $this->generateUniqueCode('electricty');
-        $tranuniqueCode = $this->generateUniqueCode('transport');
-        $chemuniqueCode = $this->generateUniqueCode('chemicals');
         return view('financials.salaries.create', [
             'Cycle_Id'=> $Cycle_Id,
-            'expuniqueCode' => $expuniqueCode,
-            'advuniqueCode' => $advuniqueCode,
             'saluniqueCode' => $saluniqueCode,
-            'elecuniqueCode' => $elecuniqueCode,
-            'tranuniqueCode' => $tranuniqueCode,
-            'chemuniqueCode' => $chemuniqueCode,
         ]);
     }
 

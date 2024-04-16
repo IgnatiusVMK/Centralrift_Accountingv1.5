@@ -12,7 +12,7 @@
                     @endif
                   <div class="card-header">
                   <h4 class="card-title">Daily Expenditures
-                    <a href="{{ url('financials/expenditures/create') }}" class="btn btn-primary float-end">+ Record New Expenditure</a>
+                    {{-- <a href="{{ url('financials/expenditures/create') }}" class="btn btn-primary float-end">+ Record New Expenditure</a> --}}
                   </h4>
                   </div>
                   <div class="table-responsive">

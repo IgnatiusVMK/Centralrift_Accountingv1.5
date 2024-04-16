@@ -33,7 +33,7 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{('/customers')}}">Customers</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{('/suppliers')}}">Suppliers</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{('/credit')}}">Creditors</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{('/credit')}}">Credit</a></li>
               </ul>
             </div>
           </li>
@@ -62,10 +62,14 @@
             </a>
             <div class="collapse" id="finance">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ ('/finances')}}">Finances</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/expenditures')}}">Daily Expenditures</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/salaries')}}">Salaries</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/advance')}}">Advances</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/transport')}}">Transport</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/capital-expenses')}}">Capital Expenses</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/capital-withdrawal')}}">Capital Withdrawal</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/electricity')}}">Electricity</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/maintenance')}}">Maintenance</a></li>
               </ul>
             </div>
           </li>
@@ -94,8 +98,10 @@
             </a>
             <div class="collapse" id="purchases">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#">Purchase Orders</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Purchase Invoice</a></li>
+                {{-- <li class="nav-item"> <a class="nav-link" href="#">Purchase Orders</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">Purchase Invoice</a></li> --}}
+                <li class="nav-item"> <a class="nav-link" href="#">Chemicals</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">Seeds</a></li>
               </ul>
             </div>
           </li>

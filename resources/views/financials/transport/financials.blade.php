@@ -37,30 +37,23 @@
                           <th>
                             Date
                           </th>
-                          {{-- <th>
-                            Actions
-                          </th> --}}
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($salaries as $sal )
+                        @foreach ($transport as $tran )
                         <tr>
-                          <td>{{$sal->Financial_Id}}</td>
-                          <td>{{$sal->Fin_Id_Id}}</td>
-                          <td>{{$sal->Reason}}</td>
-                          <td>{{$sal->Description}}</td>
-                          <td>Ksh {{$sal->Amount}}</td>
-                          <td>{{$sal->created_at}}</td>
-                          {{-- <td>
-                            <a href="{{ url('financials/salaries/'.$sal->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
-                            <a href="{{ url('financials/salaries/'.$sal->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a>
-                          </td> --}}
+                          <td>{{$tran->Financial_Id}}</td>
+                          <td>{{$tran->Fin_Id_Id}}</td>
+                          <td>{{$tran->Reason}}</td>
+                          <td>{{$tran->Description}}</td>
+                          <td>Ksh {{$tran->Amount}}</td>
+                          <td>{{$tran->created_at}}</td>
                         </tr>
                         @endforeach
                       </tbody>
                     </table>
                     <div class="pagination-container float-end">
-                      {{ $salaries->links() }}
+                      {{ $transport->links() }}
                     </div>
                   </div>
                 </div>

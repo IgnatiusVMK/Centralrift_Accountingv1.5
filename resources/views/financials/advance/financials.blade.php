@@ -12,7 +12,7 @@
                     @endif
                   <div class="card-header">
                   <h4 class="card-title">Salary Advances
-                    <a href="{{ url('financials/advance/create') }}" class="btn btn-primary float-end">+ Record Advances</a>
+                    {{-- <a href="{{ url('financials/advance/create') }}" class="btn btn-primary float-end">+ Record Advances</a> --}}
                   </h4>
                   </div>
                   <div class="table-responsive">

@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('financials', function (Blueprint $table) {
-            $table->id('Financial_Id');
-            $table->string('Fin_Id_Id');
-            $table->string('type');
-            $table->string('Reason');
+        Schema::create('capital_withdrawal', function (Blueprint $table) {
+            $table->id();
+            $table->string('Capt_Withdraw_Id');
             $table->string('Description');
             $table->integer('Amount');
-            $table->string('Cycle_Id')->nullable();
-            $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('financials');
+        Schema::dropIfExists('capital_withdrawal');
     }
 };

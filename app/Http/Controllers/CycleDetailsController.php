@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CapitalWithdrawal;
 use App\Models\Financial;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -17,17 +18,26 @@ class CycleDetailsController extends Controller
         $wages = Financial::where('type', 'expenditure')->simplePaginate(10);
         $salaries = Financial::where('type', 'salary')->simplePaginate(10);
         $advance = Financial::where('type', 'advance')->simplePaginate(10);
+        $transport = Financial::where('type', 'transport')->simplePaginate(10);
+        $electricity = Financial::where('type', 'electricity')->simplePaginate(10);
+        $maintenance = Financial::where('type', 'maintenance')->simplePaginate(10);
+        $withdrawals = CapitalWithdrawal::simplePaginate(10);
         $Cycle_Id = $request->route('Cycle_Id');
         $expuniqueCode = $this->generateUniqueCode('wages');
         $advuniqueCode = $this->generateUniqueCode('advance');
         $saluniqueCode = $this->generateUniqueCode('salary');
-        $elecuniqueCode = $this->generateUniqueCode('electricty');
+        $elecuniqueCode = $this->generateUniqueCode('electricity');
         $tranuniqueCode = $this->generateUniqueCode('transport');
         $chemuniqueCode = $this->generateUniqueCode('chemicals');
+        $maintuniqueCode = $this->generateUniqueCode('maintenance');
         return view('cycles.expenses', [
             'wages'=> $wages,
             'salaries'=> $salaries,
             'advance'=> $advance,
+            'transport'=> $transport,
+            'electricity'=> $electricity,
+            'withdrawal'=> $withdrawals,
+            'maintenance'=> $maintenance,
             'Cycle_Id'=> $Cycle_Id,
             'expuniqueCode' => $expuniqueCode,
             'advuniqueCode' => $advuniqueCode,
@@ -35,6 +45,7 @@ class CycleDetailsController extends Controller
             'elecuniqueCode' => $elecuniqueCode,
             'tranuniqueCode' => $tranuniqueCode,
             'chemuniqueCode' => $chemuniqueCode,
+            'maintuniqueCode' => $maintuniqueCode,
         ]);
     }
 

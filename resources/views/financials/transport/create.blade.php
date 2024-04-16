@@ -13,11 +13,11 @@
                     @if (session('status'))
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
-                  <h4 class="card-title">Record Salaries
+                  <h4 class="card-title">Record Transport
                     <a href="{{ url('cycles/'.$Cycle_Id) }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>
-                  <form action="{{ url('financials/salaries/create')}}" method="post">
+                  <form action="{{ url('financials/transport/create')}}" method="post">
                     @csrf
                     <div class="mb-3">
                       <label>Cycle</label>
@@ -26,12 +26,12 @@
                     </div>
                     <div class="mb-3">
                       <label>Financial ID</label>
-                      <input type="text" name="Fin_Id_Id" class="form-control" value="{{ $saluniqueCode }}" readonly/>
+                      <input type="text" name="Fin_Id_Id" class="form-control" value="{{ $tranuniqueCode }}" readonly/>
                       @error('Fin_Id_Id') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
                       <label>Type</label>
-                      <input type="text" name="type" class="form-control" value="salaries" readonly/>
+                      <input type="text" name="type" class="form-control" value="transport" readonly/>
                       @error('type') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">

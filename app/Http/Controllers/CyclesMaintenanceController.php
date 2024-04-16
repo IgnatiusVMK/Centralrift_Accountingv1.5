@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Financial;
 use Illuminate\Http\Request;
 
-class CyclesWagesController extends Controller
+class CyclesMaintenanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,10 +13,10 @@ class CyclesWagesController extends Controller
     public function index(Request $request)
     {
         $Cycle_Id = $request->route('Cycle_Id');
-        $expuniqueCode = $this->generateUniqueCode('wages');
-        return view('financials.expenditures.create', [
+        $maintuniqueCode = $this->generateUniqueCode('mntenance');
+        return view('financials.maintenance.create', [
             'Cycle_Id'=> $Cycle_Id,
-            'expuniqueCode' => $expuniqueCode,
+            'maintuniqueCode' => $maintuniqueCode,
         ]);
     }
 

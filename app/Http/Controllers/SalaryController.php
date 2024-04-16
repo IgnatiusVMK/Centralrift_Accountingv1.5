@@ -9,8 +9,7 @@ use App\Models\Account;
 class SalaryController extends Controller
 {
     public function index(){
-        $salaries = Financial::where('type', 'salary')->simplePaginate(5);
-        /* $salaries = Financial::where('type', 'salary')->get(); */
+        $salaries = Financial::where('type', 'salary')->simplePaginate(15);
         return view('financials.salaries.financials', compact('salaries'))
         ->with('create', true);;
     }
@@ -35,7 +34,7 @@ class SalaryController extends Controller
 
         $this->payOut($request->Amount, $request->Cycle_Id, $request->Reason.' '. $request->Description);
 
-        return redirect('financials/salaries/create')->with('status','Record Created');
+        return redirect()->route('cycle.salaries.create', ['Cycle_Id' => $request->Cycle_Id])->with('status', 'Record Created');
     }
 
     public function payOut($amount, $Cycle,  $Description)

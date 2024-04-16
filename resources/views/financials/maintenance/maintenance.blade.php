@@ -1,6 +1,6 @@
 @extends('layouts.app')
-
 @section('content')
+@include('layouts.export')
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
@@ -11,8 +11,8 @@
                       <div class="alert alert-danger text-center">{{session('status')}}</div>
                     @endif
                   <div class="card-header">
-                  <h4 class="card-title">Monthly Salaries
-                    {{-- <a href="{{ url('financials/salaries/create') }}" class="btn btn-primary float-end">+ Record Salaries</a> --}}
+                  <h4 class="card-title">Daily Expenditures
+                    {{-- <a href="{{ url('financials/expenditures/create') }}" class="btn btn-primary float-end">+ Record New Expenditure</a> --}}
                   </h4>
                   </div>
                   <div class="table-responsive">
@@ -23,10 +23,13 @@
                             Sn No.
                           </th>
                           <th>
+                            Cycle
+                          </th>
+                          <th>
                             ID
                           </th>
                           <th>
-                            Name
+                            Reason
                           </th>
                           <th>
                             Description
@@ -35,32 +38,26 @@
                             Amount
                           </th>
                           <th>
-                            Date
+                            Date Created
                           </th>
-                          {{-- <th>
-                            Actions
-                          </th> --}}
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($salaries as $sal )
+                        @foreach ($maintenance as $maint )
                         <tr>
-                          <td>{{$sal->Financial_Id}}</td>
-                          <td>{{$sal->Fin_Id_Id}}</td>
-                          <td>{{$sal->Reason}}</td>
-                          <td>{{$sal->Description}}</td>
-                          <td>Ksh {{$sal->Amount}}</td>
-                          <td>{{$sal->created_at}}</td>
-                          {{-- <td>
-                            <a href="{{ url('financials/salaries/'.$sal->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
-                            <a href="{{ url('financials/salaries/'.$sal->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a>
-                          </td> --}}
+                          <td>{{$maint->Financial_Id}}</td>
+                          <td>{{$maint->Cycle_Id}}</td>
+                          <td>{{$maint->Fin_Id_Id}}</td>
+                          <td>{{$maint->Reason}}</td>
+                          <td>{{$maint->Description}}</td>
+                          <td>Ksh {{$maint->Amount}}</td>
+                          <td>{{$maint->created_at}}</td>
                         </tr>
                         @endforeach
                       </tbody>
                     </table>
                     <div class="pagination-container float-end">
-                      {{ $salaries->links() }}
+                      {{ $maintenance->links() }}
                     </div>
                   </div>
                 </div>

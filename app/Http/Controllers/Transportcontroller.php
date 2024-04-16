@@ -6,37 +6,49 @@ use App\Models\Account;
 use App\Models\Financial;
 use Illuminate\Http\Request;
 
-class AdvanceController extends Controller
+class Transportcontroller extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index(){
-        $financials = Financial::where('type', 'advance')->simplePaginate(5);
-        return view('financials.advance.financials', compact('financials'))
+        $transport = Financial::where('type', 'transport')->simplePaginate(10);
+        return view('financials.transport.financials', compact('transport'))
         ->with('create', true);;
     }
-    public function create(){
-        $uniqueCode = $this->generateUniqueCode('advance');
-        return view('financials.advance.create', ['uniqueCode' => $uniqueCode]);
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request){
         $request->validate([
             'Fin_Id_Id' => 'required|max:255|string',
             'Reason' => 'required|max:255|string',
             'Description' => 'required|max:255|string',
             'Amount' => 'required|integer|max:1000000',
-            'Date' => 'required|date',
             'Cycle_Id' => 'required|max:255|string',
         ]);
 
+
         $data = $request->all();
-        $data['type'] = 'advance';
+        $data['type'] = 'transport';
 
         Financial::create($data);
 
-        $this->payOut($request->Amount, $request->Cycle_Id , $request->type.' for '.$request->Reason.' '.$request->Description);
+        $this->payOut($request->Amount, $request->Cycle_Id , $request->Reason.' '.$request->type.' '.$request->Description);
 
-        return redirect()->route('cycle.advance.create', ['Cycle_Id' => $request->Cycle_Id])->with('status', 'Record Created');
+        return redirect()->route('cycle.transport.create', ['Cycle_Id' => $request->Cycle_Id])->with('status', 'Transport-Record Created');
     }
-    public function payOut($amount, $Cycle, $Description)
+
+    public function payOut($amount, $Cycle,  $Description)
     {
         $transactionId = $this->getNextTransactionId();
     
@@ -55,6 +67,7 @@ class AdvanceController extends Controller
             'Date_Created' => now(),
         ]);
     }
+    
     public function getNextTransactionId()
     {
         $lastAccount = Account::latest()->first();
@@ -67,6 +80,7 @@ class AdvanceController extends Controller
     
         return $newTransactionId;
     }
+
     /**
      * Display the specified resource.
      */
@@ -98,27 +112,4 @@ class AdvanceController extends Controller
     {
         //
     }
-    private function generateUniqueCode($type)
-{
-    // Get the last row for the given type in the advance table
-    $lastAdvance = Financial::where('type', $type)->latest()->first();
-
-    // Extract the last unique code and incrementing number
-    $lastCode = $lastAdvance ? $lastAdvance->unique_code : '';
-    $lastNumber = intval(substr(strrchr($lastCode, "-"), 1)); // Extracts the number after the last dash
-
-    // Generate a new unique code
-    $prefix = strtoupper(substr($type, 0, 3)); // Get the first three letters of the type
-    $newNumber = $lastNumber + 1;
-    $uniqueCode = $prefix . '-' . date('Ymd') . '-' . $newNumber;
-
-    // Check if the generated code already exists in the table, if so, increment the number until a unique code is found
-    while (Financial::where('Fin_Id_Id', $uniqueCode)->exists()) {
-        $newNumber++;
-        $uniqueCode = $prefix . '-' . date('Ymd') . '-' . $newNumber;
-    }
-
-    return $uniqueCode;
-}
-
 }
