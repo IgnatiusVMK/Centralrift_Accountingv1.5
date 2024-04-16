@@ -66,7 +66,7 @@
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/salaries')}}">Salaries</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/advance')}}">Advances</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/transport')}}">Transport</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/capital-expenses')}}">Capital Expenses</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/capital-expenses')}}">Capital Expenses</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/capital-withdrawal')}}">Capital Withdrawal</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/electricity')}}">Electricity</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/financials/maintenance')}}">Maintenance</a></li>

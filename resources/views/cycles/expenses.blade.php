@@ -485,8 +485,61 @@
                 </div>
 
                 <div class="tab-pane fade" id="CapitalExpenses" role="tabpanel" aria-labelledby="CapitalExpenses-tab">
-                    <!-- CapitalExpenses form content here -->
-                    <p>CapitalExpenses</p>
+                  <div class="card-body">
+                    @if (session('status'))
+                      <div class="alert alert-danger text-center">{{session('status')}}</div>
+                    @endif
+                    <div class="card-header">
+                      <h4 class="card-title">Capital Expenses
+                        <a href="{{ url('cycles/'.$Cycle_Id.'/capital-expenses/create') }}" class="btn btn-primary float-end">+ Record New Expenses</a>
+                      </h4>
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>
+                              Sn No.
+                            </th>
+                            <th>
+                              Cycle
+                            </th>
+                            <th>
+                              Payment ID
+                            </th>
+                            <th>
+                              Reason
+                            </th>
+                            <th>
+                              Description
+                            </th>
+                            <th>
+                              Amount
+                            </th>
+                            <th>
+                              Date Created
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($cpexpenses->where('Cycle_Id', $Cycle_Id) as $cpexpe)
+                          <tr>
+                            <td>{{$cpexpe->Financial_Id}}</td>
+                            <td>{{$cpexpe->Cycle_Id}}</td>
+                            <td>{{$cpexpe->Fin_Id_Id}}</td>
+                            <td>{{$cpexpe->Reason}}</td>
+                            <td>{{$cpexpe->Description}}</td>
+                            <td>Ksh {{$cpexpe->Amount}}</td>
+                            <td>{{$cpexpe->created_at}}</td>
+                          </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+                        <div class="pagination-container float-end">
+                           {{ $cpexpenses->links() }}
+                        </div>
+                    </div> 
+                  </div>
                 </div>
 
                 <div class="tab-pane fade" id="Others" role="tabpanel" aria-labelledby="Others-tab">

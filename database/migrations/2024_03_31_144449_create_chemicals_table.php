@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('Chemical_Id');
             $table->string('Chemical_Name');
             $table->decimal('Quantity', 10, 2);
-            $table->string('Cycle_Id');
+            $table->string('Cycle_Id')->nullable();
             $table->timestamps();
 
             $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');

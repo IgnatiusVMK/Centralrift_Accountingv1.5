@@ -51,6 +51,11 @@
                       @error('Crop') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
+                      <label>Customer Name</label>
+                      <input type="text" name="Client_Name" class="form-control" value="{{ old ('Client_Name') }}" />
+                      @error('Client_Name') <span class="text-danger">{{ $message}}</span> @enderror
+                    </div>
+                    <div class="mb-3">
                       <label>Cycle Name</label>
                       <input type="text" name="Cycle_Name" class="form-control" value="{{ old ('Cycle_Name') }}" />
                       @error('Cycle_Name') <span class="text-danger">{{ $message}}</span> @enderror

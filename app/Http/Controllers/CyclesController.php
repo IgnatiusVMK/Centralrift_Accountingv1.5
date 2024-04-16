@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blocks;
 use App\Models\Cycles;
+use App\Models\HarvestOrder;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -43,6 +44,7 @@ class CyclesController extends Controller
         $request->validate([
             'Block_Id' => 'required|max:255|integer',
             'Crop' => 'required|max:255|string',
+            'Client_Name' => 'required|max:255|string',
             'Cycle_Name' => 'required|max:255|string',
             'Cycle_Start' => 'required|date',
             'Cycle_End' => 'required|date'
@@ -52,9 +54,19 @@ class CyclesController extends Controller
             'Cycle_Id'=> $CycleCode,
             'Block_Id' => $request->Block_Id,
             'Crop' => $request->Crop,
+            'Client_Name' => $request->Client_Name,
             'Cycle_Name' => $request->Cycle_Name,
             'Cycle_Start' => $request->Cycle_Start,
             'Cycle_End' => $request->Cycle_End,
+        ]);
+
+        HarvestOrder::create([
+            'Cycle_Id' => $CycleCode,
+            'company_name' => $request->Client_Name,
+            'order_date' => now(),
+            'planting_date' => $request->Cycle_Start,
+            'harvest_date' => $request->Cycle_End,
+            'product_name' => $request->Crop,
         ]);
     
         return redirect('cycles/new')->with('status','New Cycle Created');

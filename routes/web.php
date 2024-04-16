@@ -49,6 +49,7 @@ Route::get('cycles/{Cycle_Id}/seeds/create', [App\Http\Controllers\CyclesSalaryC
 Route::get('cycles/{Cycle_Id}/capital-expenses/create', [App\Http\Controllers\CyclesAdvancesController::class, 'index'])->middleware(['auth', 'verified'])->name('cycle.capital-expenses.create');
 Route::get('cycles/{Cycle_Id}/maintenance/create', [App\Http\Controllers\CyclesMaintenanceController::class, 'index'])->middleware(['auth', 'verified'])->name('cycle.maintenance.create');
 Route::get('cycles/{Cycle_Id}/capital-withdrawal/create', [App\Http\Controllers\CapitalWithdrawalController::class, 'create'])->middleware(['auth', 'verified'])->name('cycle.capital-withdrawal.create');
+Route::get('cycles/{Cycle_Id}/capital-expenses/create', [App\Http\Controllers\CapitalExpensesController::class, 'create'])->middleware(['auth', 'verified'])->name('cycle.capital-expenses.create');
 Route::get('cycles/{Cycle_Id}/electricity/create', [App\Http\Controllers\ElectrictyController::class, 'create'])->middleware(['auth', 'verified'])->name('cycle.electricity.create');
 
 Route::get('role', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('role');
@@ -102,6 +103,10 @@ Route::post('financials/maintenance/create', [App\Http\Controllers\MaintenanceCo
 Route::get('capital-withdrawal', [App\Http\Controllers\CapitalWithdrawalController::class,'index'])->middleware(['auth', 'verified'])->name('capital-withdrawal');
 Route::get('capital-withdrawal/create', [App\Http\Controllers\CapitalWithdrawalController::class, 'create'])->middleware(['auth', 'verified'])->name('capital-withdrawal.create');
 Route::post('capital-withdrawal/{Cycle_Id}/create', [App\Http\Controllers\CapitalWithdrawalController::class, 'store'])->middleware(['auth', 'verified'])->name('capital-withdrawal.store');
+
+Route::get('capital-expenses', [App\Http\Controllers\CapitalExpensesController::class,'index'])->middleware(['auth', 'verified'])->name('capital-expenses');
+Route::get('capital-expenses/create', [App\Http\Controllers\CapitalExpensesController::class, 'create'])->middleware(['auth', 'verified'])->name('capital-expenses.create');
+Route::post('capital-expenses/create', [App\Http\Controllers\CapitalExpensesController::class, 'store'])->middleware(['auth', 'verified'])->name('capital-expenses.store');
 
 Route::get('electricity', [App\Http\Controllers\ElectrictyController::class,'index'])->middleware(['auth', 'verified'])->name('electricity');
 Route::get('electricity/create', [App\Http\Controllers\ElectrictyController::class, 'create'])->middleware(['auth', 'verified'])->name('electricity.create');

@@ -238,7 +238,7 @@ $currentDate= new DateTime();
                                           <div class="d-flex ">
                                             <img src="images/faces/face1.jpg" alt="">
                                             <div>
-                                              <h6>{{ $harvest->company_name }}</h6>
+                                              <h6>{{ $harvest->Cycle_Id }}</h6>
                                               <p>{{ $harvest->order_date }}</p>
                                             </div>
                                           </div>
@@ -315,7 +315,7 @@ $currentDate= new DateTime();
                                     @foreach ($completedHarvestOrders as $completed)
                                     <tr>
                                       <td>
-                                        {{$completed->company_name}}
+                                        {{$completed->Cycle_Id}}
                                         <br>
                                         <p class="mb-0 text-small text-muted">Harvested On: {{$completed->harvest_date}}</p>
                                       </td>
@@ -420,7 +420,7 @@ $currentDate= new DateTime();
                                         <li class="d-block">
                                           <div class="form-check w-100">
                                             <label class="form-check-label">
-                                              <input class="checkbox" type="checkbox"> Product Harvesting for : {{$harvest->company_name}} <i class="input-helper rounded"></i>
+                                              <input class="checkbox" type="checkbox"> Product Harvest for : <b>{{$harvest->company_name}} ( {{$harvest->Cycle_Id}} )</b> <i class="input-helper rounded"></i>
                                             </label>
                                             <div class="d-flex mt-2">
                                               <div class="ps-4 text-small me-3">Product: {{$harvest->product_name}}</div>

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('Cycle_Id')->primary();
             $table->unsignedInteger('Block_Id');
             $table->string('Crop');
+            $table->string('Client_Name');
             $table->string('Cycle_Name');
             $table->dateTime('Cycle_Start');
             $table->dateTime('Cycle_End');

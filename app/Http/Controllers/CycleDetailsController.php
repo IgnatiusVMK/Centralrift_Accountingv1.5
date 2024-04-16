@@ -21,6 +21,7 @@ class CycleDetailsController extends Controller
         $transport = Financial::where('type', 'transport')->simplePaginate(10);
         $electricity = Financial::where('type', 'electricity')->simplePaginate(10);
         $maintenance = Financial::where('type', 'maintenance')->simplePaginate(10);
+        $cpexpenses = Financial::where('type', 'Capital Expenses')->simplePaginate(10);
         $withdrawals = CapitalWithdrawal::simplePaginate(10);
         $Cycle_Id = $request->route('Cycle_Id');
         $expuniqueCode = $this->generateUniqueCode('wages');
@@ -30,6 +31,7 @@ class CycleDetailsController extends Controller
         $tranuniqueCode = $this->generateUniqueCode('transport');
         $chemuniqueCode = $this->generateUniqueCode('chemicals');
         $maintuniqueCode = $this->generateUniqueCode('maintenance');
+        $cpexpeuniqueCode = $this->generateUniqueCode('maintenance');
         return view('cycles.expenses', [
             'wages'=> $wages,
             'salaries'=> $salaries,
@@ -37,6 +39,7 @@ class CycleDetailsController extends Controller
             'transport'=> $transport,
             'electricity'=> $electricity,
             'withdrawal'=> $withdrawals,
+            'cpexpenses'=> $cpexpenses,
             'maintenance'=> $maintenance,
             'Cycle_Id'=> $Cycle_Id,
             'expuniqueCode' => $expuniqueCode,
@@ -46,6 +49,7 @@ class CycleDetailsController extends Controller
             'tranuniqueCode' => $tranuniqueCode,
             'chemuniqueCode' => $chemuniqueCode,
             'maintuniqueCode' => $maintuniqueCode,
+            'cpexpeuniqueCode' => $cpexpeuniqueCode,
         ]);
     }
 

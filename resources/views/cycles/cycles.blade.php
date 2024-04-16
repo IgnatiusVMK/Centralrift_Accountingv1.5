@@ -28,6 +28,9 @@
                             Cycle ID
                           </th>
                           <th>
+                            Customer
+                          </th>
+                          <th>
                             Cycle Name
                           </th>
                           <th>
@@ -53,7 +56,7 @@
                            <td>
                             <a href="{{ url('cycles/'.$cyc->Cycle_Id)}}" class=""><i class="mdi mdi-border-color"></i> {{$cyc->Cycle_Id}}</a>
                            </td>
-                         {{-- {{$cyc->Cycle_Id}}</td> --}}
+                          <td>{{$cyc->Client_Name}}</td>
                           <td>{{$cyc->Cycle_Name}}</td>
                           <td>{{$cyc->Crop}}</td>
                           <td>{{$cyc->block->Block_Name}}</td>

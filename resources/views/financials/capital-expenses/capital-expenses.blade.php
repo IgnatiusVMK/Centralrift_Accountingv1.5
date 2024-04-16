@@ -11,7 +11,7 @@
                       <div class="alert alert-danger text-center">{{session('status')}}</div>
                     @endif
                   <div class="card-header">
-                  <h4 class="card-title">Daily Expenditures
+                  <h4 class="card-title">Capital Expenses
                   </h4>
                   </div>
                   <div class="table-responsive">
@@ -25,7 +25,7 @@
                             Cycle
                           </th>
                           <th>
-                            ID
+                            Payment ID
                           </th>
                           <th>
                             Reason
@@ -42,21 +42,21 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($financials as $fin )
+                        @foreach ($cpexpenses as $cpexpe )
                         <tr>
-                          <td>{{$fin->Financial_Id}}</td>
-                          <td>{{$fin->Cycle_Id}}</td>
-                          <td>{{$fin->Fin_Id_Id}}</td>
-                          <td>{{$fin->Reason}}</td>
-                          <td>{{$fin->Description}}</td>
-                          <td>Ksh {{$fin->Amount}}</td>
-                          <td>{{$fin->created_at}}</td>
+                          <td>{{$cpexpe->Financial_Id}}</td>
+                          <td>{{$cpexpe->Cycle_Id}}</td>
+                          <td>{{$cpexpe->Fin_Id_Id}}</td>
+                          <td>{{$cpexpe->Reason}}</td>
+                          <td>{{$cpexpe->Description}}</td>
+                          <td>Ksh {{$cpexpe->Amount}}</td>
+                          <td>{{$cpexpe->created_at}}</td>
                         </tr>
                         @endforeach
                       </tbody>
                     </table>
                     <div class="pagination-container float-end">
-                      {{ $financials->links() }}
+                      {{ $cpexpenses->links() }}
                     </div>
                   </div>
                 </div>

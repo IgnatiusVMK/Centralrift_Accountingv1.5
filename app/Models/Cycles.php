@@ -15,6 +15,7 @@ class Cycles extends Model
         'Cycle_Id',
         'Block_Id',
         'Crop',
+        'Client_Name',
         'Cycle_Name',
         'Cycle_Start',
         'Cycle_End',

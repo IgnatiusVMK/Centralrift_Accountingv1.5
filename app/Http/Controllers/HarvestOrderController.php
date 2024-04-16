@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cycles;
 use App\Models\HarvestOrder;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ class HarvestOrderController extends Controller
 {
     public function index()
     {
-        $harvestOrders = HarvestOrder::all();
+        $harvestOrders = Cycles::all();
 
         return view('dashboard', compact('harvestOrders'));
     }
