@@ -36,7 +36,7 @@ $currentDate= new DateTime();
                       <div class="col-sm-12">
                         <div class="statistics-details d-flex align-items-center justify-content-between">
                           <div>
-                            <p class="statistics-title">Bounce Rate</p>
+                            <p class="statistics-title">Today's Date</p>
                             <h3 class="rate-percentage">{{$currentDate->format('Y-m-d')}}</h3>
                             <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.5%</span></p>
                           </div>
@@ -186,7 +186,7 @@ $currentDate= new DateTime();
                                   <h3 class="text-white upgrade-info mb-0">
                                     Enhance your <span class="fw-bold">Campaign</span> for better outreach
                                   </h3>
-                                  <a href="#" class="btn btn-info upgrade-btn">Upgrade Account!</a>
+                                  <a href="#" class="btn btn-info upgrade-btn">Market Your Business with Us!</a>
                                 </div>
                               </div>
                             </div>
@@ -198,13 +198,7 @@ $currentDate= new DateTime();
                               <div class="card-body">
                                 <div class="d-sm-flex justify-content-between align-items-start">
                                   <div>
-                                    <h4 class="card-title card-title-dash">Pending Harvest Orders</h4>
-                                   {{-- <p class="card-subtitle card-subtitle-dash">You have + new orders</p> --}}
-                                  </div>
-                                  <div>
-                                    <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button" onclick="window.location='{{'add-order'}}'">
-                                      <i class="mdi mdi-account-plus"></i>Add new Orders
-                                    </button>
+                                    <h4 class="card-title card-title-dash">Pending Harvests</h4>
                                   </div>
                                 </div>
                                 <div class="table-responsive  mt-1">
@@ -302,7 +296,7 @@ $currentDate= new DateTime();
                           <div class="col-md-6 col-lg-6 grid-margin stretch-card">
                             <div class="card card-rounded">
                               <div class="card-body card-rounded">
-                                <h4 class="card-title  card-title-dash">Recent Harvests</h4>
+                                <h4 class="card-title card-title-dash">Recent Harvests</h4>
                                 <table class="table">
                                   <thead>
                                     <tr>
@@ -315,11 +309,14 @@ $currentDate= new DateTime();
                                     @foreach ($completedHarvestOrders as $completed)
                                     <tr>
                                       <td>
-                                        {{$completed->Cycle_Id}}
+                                        {{$completed->company_name}}
                                         <br>
+                                        <p class="mb-0 text-small text-muted">{{$completed->Cycle_Id}}</p>
+                                      </td>
+                                      <td>
+                                        {{$completed->product_name}}
                                         <p class="mb-0 text-small text-muted">Harvested On: {{$completed->harvest_date}}</p>
                                       </td>
-                                      <td>{{$completed->product_name}}</td>
                                       <td>
                                         <div class="badge badge-opacity-success float-end">Completed</div>
                                       </td>
@@ -327,13 +324,13 @@ $currentDate= new DateTime();
                                     @endforeach
                                   </tbody>
                                 </table>                              
-                                <div class="list align-items-center pt-3">
+                                {{-- <div class="list align-items-center pt-3">
                                   <div class="wrapper w-100">
                                     <p class="mb-0">
                                       <a href="#" class="fw-bold text-primary">Show all <i class="mdi mdi-arrow-right ms-2"></i></a>
                                     </p>
                                   </div>
-                                </div>
+                                </div> --}}
                               </div>
                             </div>
                           </div>
@@ -492,70 +489,24 @@ $currentDate= new DateTime();
                                   <div class="col-lg-12">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                       <div>
-                                        <h4 class="card-title card-title-dash">Top Product</h4>
+                                        <h4 class="card-title card-title-dash">Top Product</h4><hr>
                                       </div>
                                     </div>
                                     <div class="mt-3">
-                                      <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                        <div class="d-flex">
-                                          <img class="img-sm rounded-10" src="images/faces/face1.jpg" alt="profile">
-                                          <div class="wrapper ms-3">
-                                            <p class="ms-1 mb-1 fw-bold">Brandon Washington</p>
-                                            <small class="text-muted mb-0">162543</small>
+                                      @foreach($cyclesByProduct as $cycle)
+                                        <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                          <div class="d-flex">
+                                            {{-- <img class="img-sm rounded-10" src="images/faces/face1.jpg" alt="profile"> --}}
+                                            <div class="wrapper ms-3">
+                                                <p class="ms-1 mb-1 fw-bold">Product/Crop: {{ $cycle->product_name }}</p>
+                                                <small class="text-muted mb-0">Number of Cycles: {{ $cycle->cycle_count }}</small>
+                                            </div>
+                                          </div>
+                                          <div class="text-muted text-small">
+                                            1h ago
                                           </div>
                                         </div>
-                                        <div class="text-muted text-small">
-                                          1h ago
-                                        </div>
-                                      </div>
-                                      <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                        <div class="d-flex">
-                                          <img class="img-sm rounded-10" src="images/faces/face2.jpg" alt="profile">
-                                          <div class="wrapper ms-3">
-                                            <p class="ms-1 mb-1 fw-bold">Wayne Murphy</p>
-                                            <small class="text-muted mb-0">162543</small>
-                                          </div>
-                                        </div>
-                                        <div class="text-muted text-small">
-                                          1h ago
-                                        </div>
-                                      </div>
-                                      <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                        <div class="d-flex">
-                                          <img class="img-sm rounded-10" src="images/faces/face3.jpg" alt="profile">
-                                          <div class="wrapper ms-3">
-                                            <p class="ms-1 mb-1 fw-bold">Katherine Butler</p>
-                                            <small class="text-muted mb-0">162543</small>
-                                          </div>
-                                        </div>
-                                        <div class="text-muted text-small">
-                                          1h ago
-                                        </div>
-                                      </div>
-                                      <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                        <div class="d-flex">
-                                          <img class="img-sm rounded-10" src="images/faces/face4.jpg" alt="profile">
-                                          <div class="wrapper ms-3">
-                                            <p class="ms-1 mb-1 fw-bold">Matthew Bailey</p>
-                                            <small class="text-muted mb-0">162543</small>
-                                          </div>
-                                        </div>
-                                        <div class="text-muted text-small">
-                                          1h ago
-                                        </div>
-                                      </div>
-                                      <div class="wrapper d-flex align-items-center justify-content-between pt-2">
-                                        <div class="d-flex">
-                                          <img class="img-sm rounded-10" src="images/faces/face5.jpg" alt="profile">
-                                          <div class="wrapper ms-3">
-                                            <p class="ms-1 mb-1 fw-bold">Rafell John</p>
-                                            <small class="text-muted mb-0">Alaska, USA</small>
-                                          </div>
-                                        </div>
-                                        <div class="text-muted text-small">
-                                          1h ago
-                                        </div>
-                                      </div>
+                                      @endforeach
                                     </div>
                                   </div>
                                 </div>

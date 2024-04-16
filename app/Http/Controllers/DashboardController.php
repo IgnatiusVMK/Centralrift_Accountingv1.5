@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\HarvestOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -22,7 +23,10 @@ class DashboardController extends Controller
         $accountController = new AccountController();
         $summary = $accountController->summary();
 
+        $cyclesByProduct = $this->listCyclesByProduct();
+
         return view('dashboard', [
+            'cyclesByProduct'=> $cyclesByProduct,
             'countOrders'=> $countOrders,
             'harvestOrders' => $harvestOrders,
             'completedHarvestOrders' => $completedHarvestOrders,
@@ -37,6 +41,16 @@ class DashboardController extends Controller
         $countOrders = HarvestOrder::count();
         return $countOrders;
     }
+    public function listCyclesByProduct()
+{
+    $cyclesByProduct = DB::table('harvest_orders')
+        ->select('product_name', DB::raw('COUNT(DISTINCT cycle_id) as cycle_count'))
+        ->groupBy('product_name')
+        ->orderByDesc('cycle_count')
+        ->get();
+
+    return $cyclesByProduct;
+}
     /**
      * Show the form for creating a new resource.
      */

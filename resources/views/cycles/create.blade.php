@@ -43,7 +43,7 @@
                     <div class="mb-3">
                       <label>Crop</label>
                         <select name="Crop" class="form-control">
-                          <option value="" selected> -- SELECT BLOCK --</option>
+                          <option value="" selected> -- SELECT CROP --</option>
                           @foreach ($crops as $crop)
                               <option value="{{ $crop->Product_Name}}">{{ $crop->Product_Name }}</option>
                           @endforeach
