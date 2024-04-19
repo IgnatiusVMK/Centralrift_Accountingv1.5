@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Users extends Model
 {
@@ -20,8 +21,8 @@ class Users extends Model
     ];
 
     public function departments()
-{
-    return $this->belongsToMany(Departments::class, 'users_departments', 'user_id', 'department_id');
-}
+    {
+        return $this->belongsToMany(\App\Models\Departments::class, 'users_departments', 'user_id', 'department_id');
+    }
 
 }

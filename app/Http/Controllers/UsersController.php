@@ -80,7 +80,7 @@ class UsersController extends Controller
         'name' => 'required|max:255|string',    
         'email' => 'required|max:255|string',
         'role' => 'required|max:255|string',
-        'password' => 'required|max:255|string',
+       /*  'password' => 'required|max:255|string', */
         'is_active' => 'sometimes'
     ]);
 
@@ -90,7 +90,7 @@ class UsersController extends Controller
         'name' => $request->name,
         'email' => $request->email,
         'role' => $request->role,
-        'password' => Hash::make($request->password),
+        /* 'password' => Hash::make($request->password), */
         'is_active' => $request->is_active == true ? 1 : 0,
     ]);
 

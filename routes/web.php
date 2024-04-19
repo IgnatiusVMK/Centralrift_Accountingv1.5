@@ -21,24 +21,34 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/* Route::get('/dashboard', function () {
-    $accountController = new AccountController();
-    return $accountController->summary();
-})->middleware(['auth', 'verified'])->name('dashboard'); */
+Route::get('/no-access', function () {
+    return view('no-access');
+})->middleware(['auth', 'verified'])->name('no-access');
 
-Route::get('/dashboard', [App\Http\Controllers\DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class,'index'])
+->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
-Route::get('/add-order', [App\Http\Controllers\DashboardController::class,'create'])->middleware(['auth', 'verified'])->name('add-order');
-Route::post('/add-order/create', [App\Http\Controllers\DashboardController::class,'store'])->middleware(['auth', 'verified'])->name('add-order.create');
+Route::get('/add-order', [App\Http\Controllers\DashboardController::class,'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('add-order');
 
-/* Route::get('/planting-cycles', function () {
-    return view('cycles.cycles');
-})->name('cycles'); */
+Route::post('/add-order/create', [App\Http\Controllers\DashboardController::class,'store'])
+    ->middleware(['auth', 'verified'])
+    ->name('add-order.create');
 
-Route::get('/cycles', [App\Http\Controllers\CyclesController::class,'index'])->middleware(['auth', 'verified'])->name('cycles');
-Route::get('/cycles/new', [App\Http\Controllers\CyclesController::class,'create'])->middleware(['auth', 'verified'])->name('cycles.create');
-Route::post('/cycles/create', [App\Http\Controllers\CyclesController::class,'store'])->middleware(['auth', 'verified'])->name('cycles.store');
-Route::get('cycles/{Cycle_Id}', [App\Http\Controllers\CycleDetailsController::class,'index'])->middleware(['auth', 'verified'])->name('cycles.details.index');
+Route::get('/cycles', [App\Http\Controllers\CyclesController::class,'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('cycles');
+Route::get('/cycles/new', [App\Http\Controllers\CyclesController::class,'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('cycles.create');
+Route::post('/cycles/create', [App\Http\Controllers\CyclesController::class,'store'])
+    ->middleware(['auth', 'verified'])
+    ->name('cycles.store');
+Route::get('cycles/{Cycle_Id}', [App\Http\Controllers\CycleDetailsController::class,'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('cycles.details.index');
 
 Route::get('cycles/{Cycle_Id}/expenditures/create', [App\Http\Controllers\CyclesWagesController::class, 'index'])->middleware(['auth', 'verified'])->name('cycle.wages.create');
 Route::get('cycles/{Cycle_Id}/salaries/create', [App\Http\Controllers\CyclesSalaryController::class, 'index'])->middleware(['auth', 'verified'])->name('cycle.salaries.create');
@@ -69,7 +79,7 @@ Route::get('customers', [App\Http\Controllers\CustomerController::class, 'index'
 Route::get('customers/create', [App\Http\Controllers\CustomerController::class, 'create'])->middleware(['auth', 'verified'])->name('customers.create');
 Route::post('customers/create', [App\Http\Controllers\CustomerController::class, 'store'])->middleware(['auth', 'verified'])->name('customers.store');
 Route::get('customers/{id}/edit', [App\Http\Controllers\CustomerController::class, 'edit'])->middleware(['auth', 'verified'])->name('customers.edit');
-Route::put('customers/{id}/edit', [App\Http\Controllers\CustomerController::class, 'update'])->middleware(['auth', 'verified'])->name('ucustomers.update');
+Route::put('customers/{id}/edit', [App\Http\Controllers\CustomerController::class, 'update'])->middleware(['auth', 'verified'])->name('customers.update');
 Route::get('customers/{id}/delete', [App\Http\Controllers\CustomerController::class, 'destroy'])->middleware(['auth', 'verified'])->name('customers.destroy');
 
 Route::get('suppliers', [App\Http\Controllers\SupplierController::class,'index'])->middleware(['auth', 'verified'])->name('suppliers');

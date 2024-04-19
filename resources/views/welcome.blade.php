@@ -37,7 +37,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg rounded-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-4 py-2 start-6 end-6 mx-auto flex justify-center items-center"> 
                 <div class="container-fluid"> 
-                    <a class="navbar-brand font-weight-bolder mx-auto" href="#"> VIMAK INFOTECH SYSTEMS </a> 
+                    <a class="navbar-brand font-weight-bolder mx-auto" href="#"> Centralrift Kenya LTD.</a> 
                 </div> 
             </nav>
             <!-- End Navbar -->
@@ -47,23 +47,13 @@
         <section>
             <div class="page-header min-vh-75">
                 <div class="container">
-                    <!-- <div class="row">
-                        <div>
-                            <div>
-                                <div>
-                                    <h3 class="font-weight-bold text-info ">Welcome back</h3>
-                                    <p class="mb-0">Sign In to Continue.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
 
                     <!--Welcome Logo-->
                     <div class="max-w-7xl mx-auto p-6 lg:p-8">
                         <div class="flex items-center"> 
                             <img src="{{ asset('images/marley.png') }}" alt="HOM\_Logo"> 
                             <div class="border-l-2 h-12 border-gray-400"></div> 
-                            <div class="text-xl font-bold text-gray-800">VIMAK INFOTECH SYSTEMS</div> 
+                            <div class="text-xl font-bold text-gray-800">Centralrift Kenya LTD.</div> 
                         </div>
                     </div>
                     <!--Welcome Logo-->

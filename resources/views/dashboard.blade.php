@@ -230,7 +230,7 @@ $currentDate= new DateTime();
                                         </td>
                                         <td>
                                           <div class="d-flex ">
-                                            <img src="images/faces/face1.jpg" alt="">
+                                            {{-- <img src="images/faces/face1.jpg" alt=""> --}}
                                             <div>
                                               <h6>{{ $harvest->Cycle_Id }}</h6>
                                               <p>{{ $harvest->order_date }}</p>

@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
 
         UsersDepartments::create([
             'user_id' => $user->id,
-            'department_id' => 6, // Default department_id
+            'department_id' => 2, // Default department_id
         ]);
 
         event(new Registered($user));

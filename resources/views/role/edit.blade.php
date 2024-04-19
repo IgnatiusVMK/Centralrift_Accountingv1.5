@@ -24,7 +24,7 @@
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
                   <h4 class="card-title">Edit User
-                    <a href="{{ url('role') }}" class="btn btn-danger float-end">{{-- Back --}} <i class="mdi mdi-close"></i></a>
+                    <a href="{{ url('role') }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>
                   <form action="{{ url('role/'.$role->id.'/edit')}}" method="post">
@@ -58,11 +58,11 @@
                       <input type="text" name="role" class="form-control" value="{{ $role->role }}" />
                       @error('role') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                       <label>Default Password</label>
                       <input type="password" name="password" class="form-control" value="{{ old ('password') }}" />
                       @error('password') <span class="text-danger">{{ $message}}</span> @enderror
-                    </div>
+                    </div> --}}
                     <div class="mb-3">
                       <label>Is Active</label>
                       <input type="checkbox" name="is_active" {{ $role->is_active  == true ? 'checked': '' }} />

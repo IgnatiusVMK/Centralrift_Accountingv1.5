@@ -51,7 +51,7 @@
                                     <img src="{{ asset('images/marley.png') }}" alt="HOM\_Logo"> 
                                 </a>
                                 <div class="border-l-2 h-12 border-gray-400"></div> 
-                                <div class="text-xl font-bold text-gray-800">VIMAK INFOTECH SYSTEMS</div> 
+                                <div class="text-xl font-bold text-gray-800">Centralrift Kenya LTD</div> 
                             </div>
                         </div>
                         <!--Welcome Logo-->
