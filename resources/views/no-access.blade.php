@@ -1,4 +1,4 @@
-@extends('layouts.navbar')
+@extends('layouts.app')
 
 @section('content')
 <h1 class="welcome-text">

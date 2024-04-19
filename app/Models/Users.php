@@ -22,7 +22,7 @@ class Users extends Model
 
     public function departments()
     {
-        return $this->belongsToMany(\App\Models\Departments::class, 'users_departments', 'user_id', 'department_id');
+        return $this->belongsToMany(Departments::class, 'users_departments', 'user_id', 'department_id');
     }
 
 }
