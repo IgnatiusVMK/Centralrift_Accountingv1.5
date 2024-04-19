@@ -21,7 +21,7 @@ class CheckUserRole
 
             if($userRole === 'None'){
                 Auth::logout();
-                abort(403, 'Access Denied! Please Contact the System Administrator.');
+                abort(403, 'Resorce Access Denied!');
             }
         }
         return $next($request);
