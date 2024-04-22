@@ -162,7 +162,13 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#"> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href="#"> Account Profile </a></li>
+                <li class="nav-item"> 
+                  <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                  </form>
+              </li>              
               </ul>
             </div>
           </li>

@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CashBookController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfitLossController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -145,8 +146,12 @@ Route::get('/generate-pdf', [PdfController::class, 'generatePdf']);
 Route::get('/cashbook/export-pdf', [CashBookController::class, 'exportPdf']);
 
 
-Route::get('/profit-loss', function ()  {
-    return view('finance.profit-loss');
-});
+/* Route::get('/profit-loss', [App\Http\Controllers\ProfitLossController::class,'index'])->middleware(['auth','verified'])->name('profit-loss'); */
+Route::get('/profit-loss', [App\Http\Controllers\ProfitLossController::class, 'index'])->middleware(['auth', 'verified'])->name('profit-loss');
+Route::get('/profit-loss/{Cycle_Id}', [App\Http\Controllers\ProfitLossController::class, 'show'])->middleware(['auth', 'verified'])->name('profit-loss.show');
+/* Route::post('/profit-loss/compare', [App\Http\Controllers\ProfitLossController::class, 'compare'])->name('profit-loss.compare'); */
+
+
+
 
 require __DIR__.'/auth.php';
