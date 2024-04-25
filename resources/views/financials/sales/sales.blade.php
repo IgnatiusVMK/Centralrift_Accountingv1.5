@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 @include('layouts.export')
       <div class="main-panel">
@@ -12,8 +11,7 @@
                       <div class="alert alert-danger text-center">{{session('status')}}</div>
                     @endif
                   <div class="card-header">
-                  <h4 class="card-title">Existing Customers
-                    <a href="{{ url('customers/create') }}" class="btn btn-primary float-end">+ Add Customer</a>
+                  <h4 class="card-title">Daily Expenditures
                   </h4>
                   </div>
                   <div class="table-responsive">
@@ -24,50 +22,52 @@
                             Sn No.
                           </th>
                           <th>
+                            Sales ID
+                          </th>
+                          <th>
+                            Cycle
+                          </th>
+                          <th>
                             Customer
                           </th>
-                          {{-- <th>
-                            First Name
-                          </th> --}}
                           <th>
-                            Contact
+                            Sales Date
                           </th>
                           <th>
-                            Email
+                            Quantity
                           </th>
                           <th>
-                            Address
+                            Total Price
                           </th>
                           <th>
-                            Actions
+                            Payment Type
+                          </th>
+                          <th>
+                            Payment Status
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($customers as $cust )
+                        @foreach ($sales as $sale)
                         <tr>
-                          <td>{{$cust->Customer_Id}}</td>
-                          {{-- <td class="py-1">
-                            <img src="{{ asset('/images/marley.png')}}" alt="image"/>
-                          </td> --}}
-                          <td>
-                            <a href="{{ url('customers/'.$cust->Customer_Fname)}}">
-                              {{$cust->Customer_Fname .' ' . $cust->Customer_Lname }}
-                            </a>
-                          </td>
-                          @foreach($customercontacts->where('id', $cust->Customer_Id) as $contact)
-                            <td>{{ $contact->Contact }}</td>
-                            <td>{{ $contact->Email }}</td>
-                            <td>{{ $contact->Address }}</td>
-                          @endforeach
-                          <td>
-                            <a href="{{ url('customers/'.$cust->Customer_Id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
-                            <a href="{{ url('customers/'.$cust->Customer_Id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a>
-                          </td>
+                          <td>{{$sale->id}}</td>
+                          <td>{{$sale->Sales_Id}}</td>
+                          <td>{{$sale->Cycle_Id}}</td>
+                          <td>{{$sale->customer->Customer_Fname}}</td>
+                          <td>{{$sale->Sale_Date}}</td>
+                          <td>{{$sale->Quantity}} Kg</td>
+                          <td>Ksh {{$sale->Total_Price}}</td>
+                          <td>{{$sale->Payment_Method}}</td>
+                          <td class="@if($sale->Payment_Status == 'Un-paid') text-danger @elseif($sale->Payment_Status == 'Paid') text-success @else text-warning @endif">
+                            {{$sale->Payment_Status}}
+                          </td> 
                         </tr>
                         @endforeach
                       </tbody>
                     </table>
+                      <div class="pagination-container float-end">
+                         {{ $sales->links() }}
+                      </div>
                   </div>
                 </div>
               </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\HarvestOrder;
+use App\Models\Sales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,6 +18,7 @@ class DashboardController extends Controller
      public function index()
     {
         $countOrders =  HarvestOrder::count();
+        $countSales = Sales::count();
         $harvestOrders = HarvestOrder::whereDate('harvest_date', '>', now())->get();
         $completedHarvestOrders = HarvestOrder::whereDate('harvest_date', '<', now())->get();
 
@@ -28,6 +30,7 @@ class DashboardController extends Controller
         return view('dashboard', [
             'cyclesByProduct'=> $cyclesByProduct,
             'countOrders'=> $countOrders,
+            'countSales'=> $countSales,
             'harvestOrders' => $harvestOrders,
             'completedHarvestOrders' => $completedHarvestOrders,
             'summary' => $summary,

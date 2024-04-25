@@ -62,6 +62,7 @@ Route::get('cycles/{Cycle_Id}/maintenance/create', [App\Http\Controllers\CyclesM
 Route::get('cycles/{Cycle_Id}/capital-withdrawal/create', [App\Http\Controllers\CapitalWithdrawalController::class, 'create'])->middleware(['auth', 'verified'])->name('cycle.capital-withdrawal.create');
 Route::get('cycles/{Cycle_Id}/capital-expenses/create', [App\Http\Controllers\CapitalExpensesController::class, 'create'])->middleware(['auth', 'verified'])->name('cycle.capital-expenses.create');
 Route::get('cycles/{Cycle_Id}/electricity/create', [App\Http\Controllers\ElectrictyController::class, 'create'])->middleware(['auth', 'verified'])->name('cycle.electricity.create');
+Route::get('cycles/{Cycle_Id}/sales/create', [App\Http\Controllers\SalesController::class, 'create'])->middleware(['auth', 'verified'])->name('cycle.sales.create');
 
 Route::get('role', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('role');
 Route::get('role/create', [App\Http\Controllers\UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('role.create');
@@ -82,6 +83,9 @@ Route::post('customers/create', [App\Http\Controllers\CustomerController::class,
 Route::get('customers/{id}/edit', [App\Http\Controllers\CustomerController::class, 'edit'])->middleware(['auth', 'verified'])->name('customers.edit');
 Route::put('customers/{id}/edit', [App\Http\Controllers\CustomerController::class, 'update'])->middleware(['auth', 'verified'])->name('customers.update');
 Route::get('customers/{id}/delete', [App\Http\Controllers\CustomerController::class, 'destroy'])->middleware(['auth', 'verified'])->name('customers.destroy');
+
+Route::get('customers/{Customer_Fname}', [App\Http\Controllers\CustomerSalesController::class, 'index'])->middleware(['auth', 'verified'])->name('customer.sales');
+
 
 Route::get('suppliers', [App\Http\Controllers\SupplierController::class,'index'])->middleware(['auth', 'verified'])->name('suppliers');
 Route::get('suppliers/create', [App\Http\Controllers\SupplierController::class, 'create'])->middleware(['auth', 'verified'])->name('suppliers.create');
@@ -131,6 +135,9 @@ Route::post('products/create', [App\Http\Controllers\ProductController::class, '
 Route::get('/products-categories', [App\Http\Controllers\CategoryController::class,'index'])->middleware(['auth', 'verified'])->name('products-catgories');
 Route::get('/products-categories/create', [App\Http\Controllers\CategoryController::class, 'create'])->middleware(['auth', 'verified'])->name('products-categories.create');
 Route::post('/products-categories/create', [App\Http\Controllers\CategoryController::class, 'store'])->middleware(['auth', 'verified'])->name('products-categories.store');
+
+Route::get('sales', [App\Http\Controllers\SalesController::class,'index'])->middleware(['auth', 'verified'])->name('sales');
+Route::post('sales/{Cycle_Id}/create', [App\Http\Controllers\SalesController::class, 'store'])->middleware(['auth', 'verified'])->name('sales.store');
 
 Route::get('cashbook', [App\Http\Controllers\CashBookController::class,'index'])->middleware(['auth', 'verified'])->name('cashbook');
 

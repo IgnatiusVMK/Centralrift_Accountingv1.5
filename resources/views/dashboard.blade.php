@@ -41,7 +41,7 @@ $currentDate= new DateTime();
                             <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.5%</span></p>
                           </div>
                           <div>
-                            <p class="statistics-title">Page Views</p>
+                            <p class="statistics-title">Last Login</p>
                             <h3 class="rate-percentage">7,682</h3>
                             <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+0.1%</span></p>
                           </div>
@@ -120,7 +120,7 @@ $currentDate= new DateTime();
                                       </div>
                                       <div>
                                         <p class="text-small mb-2">Total Sales</p>
-                                        <h4 class="mb-0 fw-bold">26.80%</h4>
+                                        <h4 class="mb-0 fw-bold">{{$countSales}}</h4>
                                       </div>
                                     </div>
                                   </div>
@@ -130,7 +130,7 @@ $currentDate= new DateTime();
                                         <div id="visitperday" class="progressbar-js-circle pr-2"></div>
                                       </div>
                                       <div>
-                                        <p class="text-small mb-2">Total Orders</p>
+                                        <p class="text-small mb-2">Total Cycles</p>
                                         <h4 class="mb-0 fw-bold">{{$countOrders}}</h4>
                                       </div>
                                     </div>

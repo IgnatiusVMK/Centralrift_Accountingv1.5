@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CapitalWithdrawal;
 use App\Models\Financial;
+use App\Models\Sales;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 
@@ -15,15 +16,18 @@ class CycleDetailsController extends Controller
     public function index(Request $request)
     {
 
-        $wages = Financial::where('type', 'expenditure')->simplePaginate(10);
-        $salaries = Financial::where('type', 'salary')->simplePaginate(10);
-        $advance = Financial::where('type', 'advance')->simplePaginate(10);
-        $transport = Financial::where('type', 'transport')->simplePaginate(10);
-        $electricity = Financial::where('type', 'electricity')->simplePaginate(10);
-        $maintenance = Financial::where('type', 'maintenance')->simplePaginate(10);
-        $cpexpenses = Financial::where('type', 'Capital Expenses')->simplePaginate(10);
-        $withdrawals = CapitalWithdrawal::simplePaginate(10);
+        $wages = Financial::where('type', 'expenditure')->simplePaginate(15);
+        $salaries = Financial::where('type', 'salary')->simplePaginate(15);
+        $advance = Financial::where('type', 'advance')->simplePaginate(15);
+        $transport = Financial::where('type', 'transport')->simplePaginate(15);
+        $electricity = Financial::where('type', 'electricity')->simplePaginate(15);
+        $maintenance = Financial::where('type', 'maintenance')->simplePaginate(15);
+        $cpexpenses = Financial::where('type', 'Capital Expenses')->simplePaginate(15);
+        $withdrawals = CapitalWithdrawal::simplePaginate(15);
+        $sales = Sales::simplePaginate(15);
+
         $Cycle_Id = $request->route('Cycle_Id');
+
         $expuniqueCode = $this->generateUniqueCode('wages');
         $advuniqueCode = $this->generateUniqueCode('advance');
         $saluniqueCode = $this->generateUniqueCode('salary');
@@ -32,6 +36,7 @@ class CycleDetailsController extends Controller
         $chemuniqueCode = $this->generateUniqueCode('chemicals');
         $maintuniqueCode = $this->generateUniqueCode('maintenance');
         $cpexpeuniqueCode = $this->generateUniqueCode('maintenance');
+        $saleuniqueCode = $this->generateUniqueCode('sales');
         return view('cycles.expenses', [
             'wages'=> $wages,
             'salaries'=> $salaries,
@@ -41,6 +46,7 @@ class CycleDetailsController extends Controller
             'withdrawal'=> $withdrawals,
             'cpexpenses'=> $cpexpenses,
             'maintenance'=> $maintenance,
+            'sales'=> $sales,
             'Cycle_Id'=> $Cycle_Id,
             'expuniqueCode' => $expuniqueCode,
             'advuniqueCode' => $advuniqueCode,
@@ -50,6 +56,7 @@ class CycleDetailsController extends Controller
             'chemuniqueCode' => $chemuniqueCode,
             'maintuniqueCode' => $maintuniqueCode,
             'cpexpeuniqueCode' => $cpexpeuniqueCode,
+            'saleuniqueCode' => $saleuniqueCode,
         ]);
     }
 

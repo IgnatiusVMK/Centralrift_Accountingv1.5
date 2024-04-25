@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('Cycle_Id');
 
             $table->foreign('Product_Id')->references('Product_Id')->on('products');
-            $table->foreign('Sales_Id')->references('Sales_Id')->on('sales');
+            $table->foreign('Sales_Id')->references('id')->on('sales');
             $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
         });
     }

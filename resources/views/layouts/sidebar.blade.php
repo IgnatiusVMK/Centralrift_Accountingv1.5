@@ -115,7 +115,7 @@
             </a>
             <div class="collapse" id="sales">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#">Sales Orders</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/sales')}}">Sales</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">Sales Invoice</a></li>
               </ul>
             </div>

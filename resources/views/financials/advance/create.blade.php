@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+{{-- @php
+    dd([ 
+      "Cycle" => $Cycle_Id,
+      "Advance ID" => $advuniqueCode,
+
+    ])->toArray()
+@endphp --}}
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
@@ -14,14 +21,14 @@
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
                   <h4 class="card-title">Record Advances
-                    <a href="{{ url('cycles/'.$Cycle_Id) }}" class="btn btn-danger float-end">{{-- Back --}} <i class="mdi mdi-close"></i></a>
+                    <a href="{{ url('cycles/'.$Cycle_Id) }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>
                   <form action="{{ url('financials/advance/create')}}" method="post">
                     @csrf
                       <div class="mb-3">
                         <label>Cycle</label>
-                        <input type="text" name="Cycle_Id" class="form-control" value="{{ $Cycle_Id }}" readonly/>
+                        <input type="hidden" name="Cycle_Id" class="form-control" value="{{ $Cycle_Id }}" readonly/>
                         @error('Cycle_Id') <span class="text-danger">{{ $message}}</span> @enderror
                       </div>
                       <div class="mb-3">

@@ -14,17 +14,12 @@
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
                   <h4 class="card-title">Create Customers
-                    <a href="{{ url('customers') }}" class="btn btn-danger float-end">{{-- Back --}} <i class="mdi mdi-close"></i></a>
+                    <a href="{{ url('customers') }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>
                   <form action="{{ url('customers/create')}}" method="post">
                     @csrf
 
-                    <div class="mb-3">
-                      <label>Customer ID</label>
-                      <input type="text" name="Customer_Id" class="form-control" value="{{ old ('Customer_Id') }}" />
-                      @error('Customer_Id') <span class="text-danger">{{ $message}}</span> @enderror
-                    </div>
                     <div class="mb-3">
                       <label>First Name</label>
                       <input type="text" name="Customer_Fname" class="form-control" value="{{ old ('Customer_Fname') }}" />

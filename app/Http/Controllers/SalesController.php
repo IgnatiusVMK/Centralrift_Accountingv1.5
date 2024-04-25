@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
+use App\Models\Customers;
 use App\Models\ProductsSales;
 use App\Models\Sales;
 use Illuminate\Http\Request;
@@ -13,47 +15,54 @@ class SalesController extends Controller
      */
     public function index()
     {
-        //
+        $sales = Sales::orderBy("Sale_Date","desc")->paginate(15);
+        return view('financials.sales.sales', [
+            'sales' => $sales,
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
+    public function create(Request $request){
+
+        $Cycle_Id = $request->route('Cycle_Id');
+        $Customers = Customers::get();
+        $SaleuniqueCode = $this->generateUniqueCode('Sales');
+        return view('financials.sales.create', [
+            'Cycle_Id' => $Cycle_Id,
+            'Customers' => $Customers,
+            'SaleuniqueCode' => $SaleuniqueCode,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'Customer_Id' => 'required|exists:customers,Customer_Id',
+    public function store(Request $request){
+        $request->validate([
+            'Sales_Id' => 'required|max:255|string',
+            'Customer_Id' => 'required|max:255|string',
+            'Cycle_Id' => 'required|max:255|string',
             'Sale_Date' => 'required|date',
-            'Quantity' => 'required|integer|min:1',
-            'Total_Price' => 'required|numeric|min:0',
-            'Payment_Method' => 'required|string',
-            'Payment_Status' => 'required|string',
-            'products' => 'required|array',
-            'products.*.Product_Id' => 'required|exists:products,Product_Id',
-            'products.*.Quantity' => 'required|integer|min:1',
-            'products.*.Unit_Price' => 'required|numeric|min:0',
+            'Quantity' => 'required|integer|max:1000000',
+            'Total_Price' => 'required|integer|max:1000000',
+            /* 'Payment_Method' => 'required|max:255|string', */
+            'Payment_Status' => 'required|max:255|string',
         ]);
 
-        // Create the sale
-        $sale = Sales::create([
-            'Customer_Id' => $validatedData['Customer_Id'],
-            'Sale_Date' => $validatedData['Sale_Date'],
-            'Quantity' => $validatedData['Quantity'],
-            'Total_Price' => $validatedData['Total_Price'],
-            'Payment_Method' => $validatedData['Payment_Method'],
-            'Payment_Status' => $validatedData['Payment_Status'],
+        Sales::create([
+            'Sales_Id' => $request->Sales_Id,
+            'Customer_Id' => $request->Customer_Id,
+            'Cycle_Id' => $request->Cycle_Id,
+            'Sale_Date' => $request->Sale_Date,
+            'Quantity' => $request->Quantity,
+            'Total_Price' => $request->Total_Price,
+            /* 'Payment_Method' => $request->Payment_Method, */
+            'Payment_Status' => $request->Payment_Status,
         ]);
+
+        $this->payIn($request->Total_Price, $request->Cycle_Id, $request->Sales_Id);
 
         // Update or create records in products_sales table
-        foreach ($validatedData['products'] as $product) {
+        /* foreach ($request->products'] as $product) {
             ProductsSales::updateOrCreate(
                 [
                     'Product_Id' => $product['Product_Id'],
@@ -64,9 +73,43 @@ class SalesController extends Controller
                     'Unit_Price' => $product['Unit_Price'],
                 ]
             );
-        }
+        } */
 
-        return redirect()->route('sales.index')->with('success', 'Sale created successfully.');
+        $Cycle_Id = $request->route('Cycle_Id');
+        return redirect()->route('cycle.sales.create', ['Cycle_Id' => $Cycle_Id])->with('status', 'Sale Recorded.');
+    }
+
+    public function payIn($amount, $Cycle, $Description)
+    {
+        $transactionId = $this->getNextTransactionId();
+    
+        $lastAccount = Account::latest()->first();
+        $balance = $lastAccount ? $lastAccount->Bal : 0;
+        $balance += $amount;
+    
+        Account::create([
+            'Transaction_Id' => $transactionId,
+            'Cycle_Id'=> $Cycle,
+            'Description' => $Description,
+            'Crd_Amnt' => $amount,
+            'Dbt_Amt' => 0,
+            'Bal' => $balance,
+            'Crd_Dbt_Date' => now(),
+            'Date_Created' => now(),
+        ]);
+    }
+
+    public function getNextTransactionId()
+    {
+        $lastAccount = Account::latest()->first();
+        $lastTransactionId = $lastAccount ? $lastAccount->Transaction_Id : 'Txd-' . date('nY') . '-0';
+        $lastNumber = intval(substr(strrchr($lastTransactionId, "-"), 1));
+        $newNumber = $lastNumber + 1;
+    
+
+        $newTransactionId = 'Txd-' . date('nY') . '-' . $newNumber;
+    
+        return $newTransactionId;
     }
 
 
@@ -100,5 +143,25 @@ class SalesController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    private function generateUniqueCode($type)
+    {
+
+        $lastCredit = Sales::latest()->first();
+    
+        $lastCode = $lastCredit ? $lastCredit->unique_code : '';
+        $lastNumber = intval(substr(strrchr($lastCode, "-"), 1)); 
+    
+        $prefix = strtoupper(substr($type, 0, 4));
+        $newNumber = $lastNumber + 1;
+        $uniqueCode = $prefix . '-' . date('Ymd') . '-' . $newNumber;
+    
+        while (Sales::where('Sales_Id', $uniqueCode)->exists()) {
+            $newNumber++;
+            $uniqueCode = $prefix . '-' . date('Ymd') . '-' . $newNumber;
+        }
+    
+        return $uniqueCode;
     }
 }

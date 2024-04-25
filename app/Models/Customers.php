@@ -24,6 +24,6 @@ class Customers extends Model
 
     public function sales()
     {
-        return $this->hasMany(Sales::class, 'Customer_Id');
+        return $this->hasMany(Sales::class, 'Customer_Id', 'Customer_Id');
     }
 }

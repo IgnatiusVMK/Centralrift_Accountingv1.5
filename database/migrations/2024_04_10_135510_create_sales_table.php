@@ -13,17 +13,18 @@ return new class extends Migration
     {
         if (!Schema::hasTable('sales')) {
             Schema::create('sales', function (Blueprint $table) {
-                $table->id('Sales_Id');
+                $table->id();
+                $table->string('Sales_Id');
                 $table->unsignedBigInteger('Customer_Id');
                 $table->string('Cycle_Id');
-                $table->dateTime('Sale_Date');
+                $table->date('Sale_Date');
                 $table->integer('Quantity');
                 $table->decimal('Total_Price', 10, 2);
-                $table->string('Payment_Method');
+                $table->string('Payment_Method')->nullable();
                 $table->string('Payment_Status');
                 $table->timestamps();
     
-                $table->foreign('Customer_Id')->references('id')->on('customers');
+                $table->foreign('Customer_Id')->references('Customer_Id')->on('customers');
                 $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
             });
         }

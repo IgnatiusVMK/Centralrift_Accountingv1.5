@@ -15,14 +15,14 @@ class CustomersTableSeeder extends Seeder
     {
         $customers = [
             [
-                'id' => 1,
-                'Customer_Fname' => 'Keitt',
+                'Customer_Id' => 1,
+                'Customer_Fname' => 'Keitt Fresh',
                 'Customer_Lname' => 'Limited',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'id' => 2,
+                'Customer_Id' => 2,
                 'Customer_Fname' => 'Romwa',
                 'Customer_Lname' => 'Ltd',
                 'created_at' => now(),
