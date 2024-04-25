@@ -255,11 +255,11 @@ $currentDateTime = $day . ', ' . $date . '/' . $month . '/' . $year . '<br>' . $
                                             <th>Sn No.</th>
                                             <th>Transaction ID</th>
                                             <th>Cycle</th>
-                                            <th>Reason</th>
                                             <th>Description</th>
-                                            <th>Amount</th>
+                                            <th>Credit Amount</th>
+                                            <th>Debit Amount</th>
                                             <th>Balance Estimate</th>
-                                            <th>Recorded On</th>
+                                            <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
