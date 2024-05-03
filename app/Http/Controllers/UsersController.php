@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\Hash;
 class UsersController extends Controller
 {
     public function index(){
-        $role = Users::with('departments')->get();
-        return view('role.role', compact('role'));
+        $users = Users::with('departments')->get();
+        return view('users.users', compact('users'));
     }
     public function create(){
         $departments = Departments::all();
-        return view('role.create', compact('departments'));
+        return view('users.create', compact('departments'));
     }
     public function store(Request $request){
         $request->validate([
@@ -29,7 +29,7 @@ class UsersController extends Controller
             'is_active' => 'sometimes'
         ]);
 
-        $role = Users::create([
+        $users = Users::create([
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
@@ -38,14 +38,14 @@ class UsersController extends Controller
         ]);
 
         // Attach the user to the department
-        $role->departments()->attach($request->input('department_id'));
+        $users->departments()->attach($request->input('department_id'));
 
-        return redirect('role/create')->with('status','User Created');
+        return redirect('users/create')->with('status','User Created');
     }
     public function edit(int $id){
-        $role = Users::findOrFail($id);
+        $users = Users::findOrFail($id);
         $departments = Departments::all();
-        return view('role.edit', compact('role','departments'));
+        return view('users.edit', compact('users','departments'));
 
     }
    /*  public function update(Request $request,int $id)
@@ -67,15 +67,15 @@ class UsersController extends Controller
             'is_active' => $request->is_active == true ? 1:0,
         ]);
 
-        $role = Users::findOrFail($id);
+        $users = Users::findOrFail($id);
 
         // Attach the user to the department
-        $role->departments()->sync($request->input('department_id'));
+        $users->departments()->sync($request->input('department_id'));
 
         return redirect()->back()->with('status','User Updated');
     } */
     public function update(Request $request, $id)
-{
+    {
     $request->validate([
         'name' => 'required|max:255|string',    
         'email' => 'required|max:255|string',
@@ -98,7 +98,7 @@ class UsersController extends Controller
     $user->departments()->sync($request->input('departments'));
 
     return redirect()->back()->with('status', 'User Updated');
-}
+    }
     public function destroy(int $id){
         $user = Users::findOrFail($id);
         $user->departments()->detach();

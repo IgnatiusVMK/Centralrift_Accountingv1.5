@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             ProductsTableSeeder::class,
             UsersTableSeeder::class,
             UserDepartmentSeeder::class,
+            RolesSeeder::class,
+            PermissionsSeeder::class,
         ]);
     }
 }

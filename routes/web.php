@@ -22,29 +22,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/no-access', function () {
+Route::get('no-access', function () {
     return view('no-access');
 })->middleware(['auth', 'verified'])->name('no-access');
 
-Route::get('/dashboard', [App\Http\Controllers\DashboardController::class,'index'])
+Route::get('dashboard', [App\Http\Controllers\DashboardController::class,'index'])
 ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/add-order', [App\Http\Controllers\DashboardController::class,'create'])
+Route::get('add-order', [App\Http\Controllers\DashboardController::class,'create'])
     ->middleware(['auth', 'verified'])
     ->name('add-order');
 
-Route::post('/add-order/create', [App\Http\Controllers\DashboardController::class,'store'])
+Route::post('add-order/create', [App\Http\Controllers\DashboardController::class,'store'])
     ->middleware(['auth', 'verified'])
     ->name('add-order.create');
 
-Route::get('/cycles', [App\Http\Controllers\CyclesController::class,'index'])
+Route::get('cycles', [App\Http\Controllers\CyclesController::class,'index'])
     ->middleware(['auth', 'verified'])
     ->name('cycles');
-Route::get('/cycles/new', [App\Http\Controllers\CyclesController::class,'create'])
+Route::get('new/cycle', [App\Http\Controllers\CyclesController::class,'create'])
     ->middleware(['auth', 'verified'])
-    ->name('cycles.create');
-Route::post('/cycles/create', [App\Http\Controllers\CyclesController::class,'store'])
+    ->name('cycle.create');
+Route::post('cycles/create', [App\Http\Controllers\CyclesController::class,'store'])
     ->middleware(['auth', 'verified'])
     ->name('cycles.store');
 Route::get('cycles/{Cycle_Id}', [App\Http\Controllers\CycleDetailsController::class,'index'])
@@ -64,12 +64,36 @@ Route::get('cycles/{Cycle_Id}/capital-expenses/create', [App\Http\Controllers\Ca
 Route::get('cycles/{Cycle_Id}/electricity/create', [App\Http\Controllers\ElectrictyController::class, 'create'])->middleware(['auth', 'verified'])->name('cycle.electricity.create');
 Route::get('cycles/{Cycle_Id}/sales/create', [App\Http\Controllers\SalesController::class, 'create'])->middleware(['auth', 'verified'])->name('cycle.sales.create');
 
-Route::get('role', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('role');
-Route::get('role/create', [App\Http\Controllers\UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('role.create');
-Route::post('role/create', [App\Http\Controllers\UsersController::class, 'store'])->middleware(['auth', 'verified'])->name('role.store');
-Route::get('role/{id}/edit', [App\Http\Controllers\UsersController::class, 'edit'])->middleware(['auth', 'verified'])->name('role.edit');
-Route::put('role/{id}/edit', [App\Http\Controllers\UsersController::class, 'update'])->middleware(['auth', 'verified'])->name('role.update');
-Route::get('role/{id}/delete', [App\Http\Controllers\UsersController::class, 'destroy'])->middleware(['auth', 'verified'])->name('role.delete');
+Route::get('users', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('users');
+Route::get('users/create', [App\Http\Controllers\UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('users.create');
+Route::post('users/create', [App\Http\Controllers\UsersController::class, 'store'])->middleware(['auth', 'verified'])->name('users.store');
+Route::get('users/{id}/edit', [App\Http\Controllers\UsersController::class, 'edit'])->middleware(['auth', 'verified'])->name('users.edit');
+Route::put('users/{id}/edit', [App\Http\Controllers\UsersController::class, 'update'])->middleware(['auth', 'verified'])->name('users.update');
+Route::get('users/{id}/delete', [App\Http\Controllers\UsersController::class, 'destroy'])->middleware(['auth', 'verified'])->name('users.delete');
+
+Route::get('users-roles-permissions/{id}', [App\Http\Controllers\UserRolePermissionsController::class,'index'])->middleware(['auth', 'verified'])->name('users');
+Route::get('users/create', [App\Http\Controllers\UserRolePermissionsController::class, 'create'])->middleware(['auth', 'verified'])->name('users.create');
+Route::post('users/create', [App\Http\Controllers\UserRolePermissionsController::class, 'store'])->middleware(['auth', 'verified'])->name('users.store');
+Route::get('users/{id}/edit', [App\Http\Controllers\UserRolePermissionsController::class, 'edit'])->middleware(['auth', 'verified'])->name('users.edit');
+Route::put('users/{id}/edit', [App\Http\Controllers\UserRolePermissionsController::class, 'update'])->middleware(['auth', 'verified'])->name('users.update');
+Route::get('users/{id}/delete', [App\Http\Controllers\UserRolePermissionsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('users.delete');
+
+Route::get('roles', [App\Http\Controllers\RolesController::class,'index'])->middleware(['auth', 'verified'])->name('roles');
+Route::get('roles/create', [App\Http\Controllers\RolesController::class, 'create'])->middleware(['auth', 'verified'])->name('roles.create');
+Route::post('roles/create', [App\Http\Controllers\RolesController::class, 'store'])->middleware(['auth', 'verified'])->name('roles.store');
+Route::get('roles/{id}/edit', [App\Http\Controllers\RolesController::class, 'edit'])->middleware(['auth', 'verified'])->name('roles.edit');
+Route::put('roles/{id}/edit', [App\Http\Controllers\RolesController::class, 'update'])->middleware(['auth', 'verified'])->name('roles.update');
+Route::get('roles/{id}/delete', [App\Http\Controllers\RolesController::class, 'destroy'])->middleware(['auth', 'verified'])->name('roles.delete');
+
+Route::get('permissions', [App\Http\Controllers\PermissionsController::class,'index'])->middleware(['auth', 'verified'])->name('permissions');
+Route::get('permissions/create', [App\Http\Controllers\PermissionsController::class, 'create'])->middleware(['auth', 'verified'])->name('permissions.create');
+Route::post('permissions/create', [App\Http\Controllers\PermissionsController::class, 'store'])->middleware(['auth', 'verified'])->name('permissions.store');
+Route::get('permissions/{id}/edit', [App\Http\Controllers\PermissionsController::class, 'edit'])->middleware(['auth', 'verified'])->name('permissions.edit');
+Route::put('permissions/{id}/edit', [App\Http\Controllers\PermissionsController::class, 'update'])->middleware(['auth', 'verified'])->name('permissions.update');
+Route::get('permissions/{id}/delete', [App\Http\Controllers\PermissionsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('permissions.delete');
+
+Route::get('password-reset', [App\Http\Controllers\PasswordResetController::class,'index'])->middleware(['auth', 'verified'])->name('password-reset');
+Route::get('password-reset/create', [App\Http\Controllers\PasswordResetController::class, 'create'])->middleware(['auth', 'verified'])->name('password-reset.create');
 
 
 Route::get('departments', [App\Http\Controllers\DepartmentsController::class,'index'])->middleware(['auth', 'verified'])->name('departments');
@@ -132,9 +156,9 @@ Route::get('products', [App\Http\Controllers\ProductController::class,'index'])-
 Route::get('products/create', [App\Http\Controllers\ProductController::class, 'create'])->middleware(['auth', 'verified'])->name('products.create');
 Route::post('products/create', [App\Http\Controllers\ProductController::class, 'store'])->middleware(['auth', 'verified'])->name('products.store');
 
-Route::get('/products-categories', [App\Http\Controllers\CategoryController::class,'index'])->middleware(['auth', 'verified'])->name('products-catgories');
-Route::get('/products-categories/create', [App\Http\Controllers\CategoryController::class, 'create'])->middleware(['auth', 'verified'])->name('products-categories.create');
-Route::post('/products-categories/create', [App\Http\Controllers\CategoryController::class, 'store'])->middleware(['auth', 'verified'])->name('products-categories.store');
+Route::get('products-categories', [App\Http\Controllers\CategoryController::class,'index'])->middleware(['auth', 'verified'])->name('products-catgories');
+Route::get('products-categories/create', [App\Http\Controllers\CategoryController::class, 'create'])->middleware(['auth', 'verified'])->name('products-categories.create');
+Route::post('products-categories/create', [App\Http\Controllers\CategoryController::class, 'store'])->middleware(['auth', 'verified'])->name('products-categories.store');
 
 Route::get('sales', [App\Http\Controllers\SalesController::class,'index'])->middleware(['auth', 'verified'])->name('sales');
 Route::post('sales/{Cycle_Id}/create', [App\Http\Controllers\SalesController::class, 'store'])->middleware(['auth', 'verified'])->name('sales.store');

@@ -25,4 +25,18 @@ class Users extends Model
         return $this->belongsToMany(Departments::class, 'users_departments', 'user_id', 'department_id');
     }
 
+    public function roles(){
+        return $this->belongsToMany(Roles::class,'user_roles',);
+    }
+
+    public function permissions(){
+        return $this->belongsToMany(Permissions::class,'user_permissions');
+    }
+
+    public function hasRole($roles){
+        return $this->roles()->where('Name', $roles)->exists();
+    }
+    public function hasPermission($permissions){
+        return $this->permissions()->where('Name', $permissions)->exists();
+    }
 }

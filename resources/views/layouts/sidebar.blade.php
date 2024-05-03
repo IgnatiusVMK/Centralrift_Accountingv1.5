@@ -10,14 +10,17 @@
           <li class="nav-item nav-category">Users & Roles</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="users">
-              <i class="menu-icon mdi mdi mdi-security"></i>
+              <i class="menu-icon mdi mdi-security"></i>
               <span class="menu-title">Manage Users</span>
               <i class="menu-arrow"></i> 
             </a>
             <div class="collapse" id="users">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ ('/role')}}">Users</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ ('/departments')}}">Departments</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{('/users')}}">Users</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{('/departments')}}">Departments</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{('/roles')}}">Roles</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{('/permissions')}}">Permissions</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{('/password-reset')}}">Password Reset</a></li>
               </ul>
             </div>
           </li>
@@ -41,14 +44,14 @@
           <li class="nav-item nav-category">Cycles</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#cycles" aria-expanded="false" aria-controls="cycles">
-              <i class="menu-icon mdi mdi-calendar-clock"></i>
-              <span class="menu-title">Planting Cycles</span>
-              <i class="menu-arrow"></i>
+                <i class="menu-icon mdi mdi-calendar-clock"></i>
+                <span class="menu-title">Planting Cycles</span>
+                <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="cycles">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ ('/cycles')}}">All Cycles</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ ('/cycles/new')}}">New Cycle</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('cycles') }}">All Cycles</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('cycle.create') }}">New Cycles</a></li>       
               </ul>
             </div>
           </li>
@@ -105,6 +108,7 @@
               </ul>
             </div>
           </li>
+          @can('view-sales')
           <!--Sales-->
           <li class="nav-item nav-category">Sales</li>
           <li class="nav-item">
@@ -120,6 +124,7 @@
               </ul>
             </div>
           </li>
+          @endcan
           <!--Financial Statements-->
           <li class="nav-item nav-category">Financial Statements</li>
           <li class="nav-item">
@@ -162,7 +167,7 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#"> Account Profile </a></li>
+                <li class="nav-item"> <a class="nav-link" href="#"> User Profile </a></li>
                 <li class="nav-item"> 
                   <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
