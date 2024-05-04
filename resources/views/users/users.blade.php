@@ -13,10 +13,12 @@
                     @endif
                     <div class="card-header">
                       <h4 class="card-title">Users & Roles
-                      <a href="{{ url('users/create') }}" class="btn btn-primary float-end">+ New User</a>
+                        @can('create-users')
+                          <a href="{{ url('users/create') }}" class="btn btn-primary float-end">+ New User</a>
+                        @endcan
                       </h4>
                     </div>
-                  
+                  {{-- @can('view-users') --}}
                   <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
@@ -45,9 +47,11 @@
                           <th>
                             Status
                           </th>
+                          @can('edit-users')
                           <th>
                             Actions
                           </th>
+                          @endcan
                         </tr>
                       </thead>
                       <tbody>
@@ -72,15 +76,11 @@
                                 @endif
                             @endforeach
                         </td>
-                          {{-- @foreach ($user->departments as $dep)
-                          <td>{{$dep->department_name}}</td>
-                          @endforeach --}}
                           <td>
-                            <a href="{{ url('users-roles-permissions/'.$user->id)}}"><i class="mdi mdi-border-color"></i>
+                            <a href="{{ url('users-roles-permissions/'.$user->id.'/create')}}"><i class="mdi mdi-border-color"></i>
                               {{$user->role}}
                             </a>
                           </td>
-                          {{-- <td>{{$user->role}}</td> --}}
                           <td>{{$user->created_at}}</td>
                           <td>
                             @if ($user->is_active)
@@ -94,7 +94,9 @@
                             @endif
                           </td>
                           <td>
-                            <a href="{{ url('users/'.$user->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
+                            @can('edit-users')
+                              <a href="{{ url('users/'.$user->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
+                            @endcan
                             {{-- <a href="{{ url('users/'.$user->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a> --}}
                           </td>
                         </tr>
@@ -102,6 +104,7 @@
                       </tbody>
                     </table>
                   </div>
+                  {{-- @endcan --}}
                 </div>
               </div>
             </div>
@@ -114,6 +117,5 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
-
 
 @endsection

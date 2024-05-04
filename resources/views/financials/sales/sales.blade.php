@@ -14,6 +14,7 @@
                   <h4 class="card-title">Daily Expenditures
                   </h4>
                   </div>
+                  @can('view-sales')
                   <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
@@ -69,6 +70,7 @@
                          {{ $sales->links() }}
                       </div>
                   </div>
+                  @endcan
                 </div>
               </div>
             </div>

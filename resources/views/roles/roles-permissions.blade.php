@@ -23,23 +23,23 @@
                     @if (session('status'))
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
-                  <h4 class="card-title">Edit User-Roles for  <b>{{ $user->name }}</b>:
-                    <a href="{{ url('users') }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
+                  <h4 class="card-title">Edit Role permissions</b>
+                    <a href="{{ url('roles') }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>
-                  <form action="{{ url('users-roles-permissions/'.$user->id.'/create')}}" method="post">
+                  <form action="{{ url('roles/'.$role->id.'/permissions')}}" method="post">
                     @csrf
 
                       <div class="mb-3">
-                        {{-- <label>User ID</label> --}}
-                        <input type="hidden" name="user_id" class="form-control" value="{{ $user->id }}" readonly />
-                        @error('user_id') <span class="text-danger">{{ $message}}</span> @enderror
+                        <label>Role ID</label>
+                        <input type="text" name="roles_id" class="form-control" value="{{ $role->id }}" readonly />
+                        @error('roles_id') <span class="text-danger">{{ $message}}</span> @enderror
                       </div>
 
-                      @foreach ($roles as $role)
+                      @foreach ($permissions as $permission)
                           <div class="form-check ps-4">
-                              <input type="checkbox" class="form-check-input" id="role_{{ $role->id }}" name="roles[]" value="{{ $role->role_id }}" @if ($user->roles->contains('role_id', $role->role_id)) checked @endif>
-                              <label class="form-check-label" for="role_{{ $role->id }}">{{ $role->Name }}</label>
+                              <input type="checkbox" class="form-check-input" id="permission_{{ $permission->id }}" name="permissions[]" value="{{ $permission->permissions_id }}" @if ($role->permissions->contains('permissions_id', $permission->permissions_id)) checked @endif>
+                              <label class="form-check-label" for="permissions_{{ $permission->id }}">{{ $permission->Name }}</label>
                           </div>
                       @endforeach
 

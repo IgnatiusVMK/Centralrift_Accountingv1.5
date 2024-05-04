@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class PermissionsSeeder extends Seeder
+class PermissionsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,87 +15,84 @@ class PermissionsSeeder extends Seeder
     {
         $permissions = [
             [
+                'Name'=> 'access_users',
+            ],
+            [
                 'Name'=> 'view_users',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'create_users',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'modify_users',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'delete_users',
-                'created_at' => now(),
-                'updated_at' => now(),
+            ],
+
+            [
+                'Name'=> 'access_cycles',
+            ],
+            [
+                'Name'=> 'view_cycles',
+            ],
+            [
+                'Name'=> 'create_cycles',
             ],
 
             [
                 'Name'=> 'view_finance',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'create_finance',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'modify_finance',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'delete_finance',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             [
+                'Name'=> 'access_sales',
+            ],
+            [
                 'Name'=> 'view_sales',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'create_sales',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'modify_sales',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'delete_sales',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             [
                 'Name'=> 'view_operations',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'create_operations',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'modify_operations',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'Name'=> 'delete_operations',
-                'created_at' => now(),
-                'updated_at' => now(),
+            ],
+
+            [
+                'Name'=> 'view_reports',
+            ],
+            [
+                'Name'=> 'create_reports',
+            ],
+            [
+                'Name'=> 'modify_reports',
+            ],
+            [
+                'Name'=> 'delete_reports',
             ],
             
             

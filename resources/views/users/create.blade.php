@@ -24,10 +24,10 @@
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
                   <h4 class="card-title">Create New User
-                    <a href="{{ url('role') }}" class="btn btn-danger float-end">{{-- Back --}} <i class="mdi mdi-close"></i></a>
+                    <a href="{{ url('users') }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>
-                  <form action="{{ url('role/create')}}" method="post">
+                  <form action="{{ url('users/create')}}" method="post">
                     @csrf
 
                     <div class="mb-3">

@@ -41,10 +41,14 @@
                         
                         <tr>
                           <td>{{$role->id}}</td>
-                          <td>{{$role->Name}}</td>
+                          <td>
+                            <a href="{{ url('roles/'.$role->id.'/permissions')}}"><i class="mdi mdi-border-color"></i>
+                              {{$role->Name}}
+                            </a>
+                          </td>
                           <td>{{$role->created_at}}</td>
                           <td>
-                            <a href="{{ url('roles/'.$role->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
+                            <a href="{{-- {{ url('roles/'.$role->id.'/edit')}} --}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
                             {{-- <a href="{{ url('roles/'.$role->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a> --}}
                           </td>
                         </tr>

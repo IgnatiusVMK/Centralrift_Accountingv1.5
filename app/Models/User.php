@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,7 +22,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
+        'is_active',
+        'role',
+        'password'
     ];
 
     /**
@@ -42,4 +46,42 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function departments()
+    {
+        return $this->belongsToMany(Departments::class, 'users_departments', 'user_id', 'department_id');
+    }
+
+    public function roles(){
+        return $this->belongsToMany(Roles::class, 'role_user', 'user_id', 'role_id');
+    }
+    
+
+    public function permissions()
+    {
+        return $this->hasManyThrough(Permissions::class, Roles::class);
+    }
+
+    public function hasRole($role)
+{
+    $hasRole = $this->roles()->where('Name', $role)->exists();
+/*     dd($role, $hasRole); // Check role name and whether the user has the role
+ */    return $hasRole;
+}
+
+public function hasPermission($permission)
+{
+    foreach ($this->roles as $role) {
+        $hasPermission = $role->permissions->contains('Name', $permission);
+        /* dd($permission, $hasPermission);  */// Check permission name and whether the role has the permission
+        if ($hasPermission) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+
 }

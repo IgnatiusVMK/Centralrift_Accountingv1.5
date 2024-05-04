@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departments;
-use App\Models\Users;
+use App\Models\User;
 use App\Models\UsersDepartments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,12 +12,16 @@ use Illuminate\Support\Facades\Hash;
 class UsersController extends Controller
 {
     public function index(){
-        $users = Users::with('departments')->get();
+
+
+        $this->authorize('access-users');
+
+        $users = User::with('departments')->get();
         return view('users.users', compact('users'));
     }
     public function create(){
         $departments = Departments::all();
-        return view('users.create', compact('departments'));
+        return view('user.create', compact('departments'));
     }
     public function store(Request $request){
         $request->validate([
@@ -29,7 +33,7 @@ class UsersController extends Controller
             'is_active' => 'sometimes'
         ]);
 
-        $users = Users::create([
+        $users = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
@@ -43,7 +47,7 @@ class UsersController extends Controller
         return redirect('users/create')->with('status','User Created');
     }
     public function edit(int $id){
-        $users = Users::findOrFail($id);
+        $users = User::findOrFail($id);
         $departments = Departments::all();
         return view('users.edit', compact('users','departments'));
 
@@ -84,7 +88,7 @@ class UsersController extends Controller
         'is_active' => 'sometimes'
     ]);
 
-    $user = Users::findOrFail($id);
+    $user = User::findOrFail($id);
 
     $user->update([
         'name' => $request->name,
@@ -100,7 +104,7 @@ class UsersController extends Controller
     return redirect()->back()->with('status', 'User Updated');
     }
     public function destroy(int $id){
-        $user = Users::findOrFail($id);
+        $user = User::findOrFail($id);
         $user->departments()->detach();
         $user->delete();
 

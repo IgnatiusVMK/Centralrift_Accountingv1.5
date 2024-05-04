@@ -13,7 +13,7 @@
                     @endif
                     <div class="card-header">
                       <h4 class="card-title">Users-Roles & Permissions 
-                      <a href="{{ url('users/create') }}" class="btn btn-primary float-end">+ New Role</a>
+                      <a href="{{-- {{ url('users/create') }} --}}" class="btn btn-primary float-end">+ New Permission</a>
                       </h4>
                     </div>
                   
@@ -27,12 +27,12 @@
                           <th>
                             Permission
                           </th>
-                          <th>
+                          {{-- <th>
                             Date Added
-                          </th>
-                          <th>
+                          </th> --}}
+                          {{-- <th>
                             Actions
-                          </th>
+                          </th> --}}
                         </tr>
                       </thead>
                       <tbody>
@@ -42,9 +42,9 @@
                         <tr>
                           <td>{{$permission->id}}</td>
                           <td>{{$permission->Name}}</td>
-                          <td>{{$permission->created_at}}</td>
+                          {{-- <td>{{$permission->created_at}}</td> --}}
                           <td>
-                            <a href="{{ url('permissions/'.$permission->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
+                            {{-- <a href="{{ url('permissions/'.$permission->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a> --}}
                             {{-- <a href="{{ url('permissions/'.$role->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a> --}}
                           </td>
                         </tr>

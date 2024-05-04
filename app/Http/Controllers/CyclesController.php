@@ -26,6 +26,9 @@ class CyclesController extends Controller
      */
     public function create()
     {
+
+        $this->authorize('create-cycles');
+
         $blocks  = Blocks::get();
         $crops = Product::get();
         return view('cycles.create', [
@@ -69,7 +72,7 @@ class CyclesController extends Controller
             'product_name' => $request->Crop,
         ]);
     
-        return redirect('cycles/new')->with('status','New Cycle Created');
+        return redirect('new/cycle')->with('status','New Cycle Created');
     }
 
     /**

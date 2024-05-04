@@ -45,16 +45,22 @@
                           <th>
                             End of Cycle
                           </th>
+                          @can('view-cycles')
                           <th>
                             Actions
                           </th>
+                          @endcan
                         </tr>
                       </thead>
                       <tbody>
                         @foreach ($cycles as $cyc)
                         <tr>
                            <td>
-                            <a href="{{ url('cycles/'.$cyc->Cycle_Id)}}" class=""><i class="mdi mdi-border-color"></i> {{$cyc->Cycle_Id}}</a>
+                            @can('view-cycles')
+                              <a href="{{ url('cycles/'.$cyc->Cycle_Id)}}" class="">
+                                <i class="mdi mdi-border-color"></i> 
+                            @endcan
+                            {{$cyc->Cycle_Id}}</a>
                            </td>
                           <td>{{$cyc->Client_Name}}</td>
                           <td>{{$cyc->Cycle_Name}}</td>
@@ -67,7 +73,9 @@
                             <div>{{$cyc->Cycle_End}}</div>
                           </td>
                           <td>
-                            <a href="{{ url('cycles/'.$cyc->Cycle_Id)}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i>Update</a>
+                            @can('view-cycles')
+                              <a href="{{ url('cycles/'.$cyc->Cycle_Id)}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i>Update</a>
+                            @endcan
                           </td>
                         </tr>
                         @endforeach

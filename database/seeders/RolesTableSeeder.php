@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RolesSeeder extends Seeder
+class RolesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,38 +16,43 @@ class RolesSeeder extends Seeder
         $roles = [
             [
                 'Name'=> 'Admin',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at'=> now(),
+                'updated_at'=> now(),
+            ],
+            [
+                'Name'=> 'Management',
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
             [
                 'Name'=> 'Finance Manager',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
             [
                 'Name'=> 'Finance Officer',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
             [
                 'Name'=> 'Sales Manager',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
             [
                 'Name'=> 'Sales Officer',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
             [
                 'Name'=> 'Operations Manager',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
             [
                 'Name'=> 'Operations Officer',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
             
         ];

@@ -71,12 +71,11 @@ Route::get('users/{id}/edit', [App\Http\Controllers\UsersController::class, 'edi
 Route::put('users/{id}/edit', [App\Http\Controllers\UsersController::class, 'update'])->middleware(['auth', 'verified'])->name('users.update');
 Route::get('users/{id}/delete', [App\Http\Controllers\UsersController::class, 'destroy'])->middleware(['auth', 'verified'])->name('users.delete');
 
-Route::get('users-roles-permissions/{id}', [App\Http\Controllers\UserRolePermissionsController::class,'index'])->middleware(['auth', 'verified'])->name('users');
-Route::get('users/create', [App\Http\Controllers\UserRolePermissionsController::class, 'create'])->middleware(['auth', 'verified'])->name('users.create');
-Route::post('users/create', [App\Http\Controllers\UserRolePermissionsController::class, 'store'])->middleware(['auth', 'verified'])->name('users.store');
-Route::get('users/{id}/edit', [App\Http\Controllers\UserRolePermissionsController::class, 'edit'])->middleware(['auth', 'verified'])->name('users.edit');
+Route::get('users-roles-permissions/{id}/create', [App\Http\Controllers\UserRolePermissionsController::class,'index'])->middleware(['auth', 'verified'])->name('users-roles-permissions');
+Route::post('users-roles-permissions/{id}/create', [App\Http\Controllers\UserRolePermissionsController::class, 'store'])->middleware(['auth', 'verified'])->name('users-roles-permissions.store');
+/* Route::get('users/{id}/edit', [App\Http\Controllers\UserRolePermissionsController::class, 'edit'])->middleware(['auth', 'verified'])->name('users.edit');
 Route::put('users/{id}/edit', [App\Http\Controllers\UserRolePermissionsController::class, 'update'])->middleware(['auth', 'verified'])->name('users.update');
-Route::get('users/{id}/delete', [App\Http\Controllers\UserRolePermissionsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('users.delete');
+Route::get('users/{id}/delete', [App\Http\Controllers\UserRolePermissionsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('users.delete'); */
 
 Route::get('roles', [App\Http\Controllers\RolesController::class,'index'])->middleware(['auth', 'verified'])->name('roles');
 Route::get('roles/create', [App\Http\Controllers\RolesController::class, 'create'])->middleware(['auth', 'verified'])->name('roles.create');
@@ -84,6 +83,9 @@ Route::post('roles/create', [App\Http\Controllers\RolesController::class, 'store
 Route::get('roles/{id}/edit', [App\Http\Controllers\RolesController::class, 'edit'])->middleware(['auth', 'verified'])->name('roles.edit');
 Route::put('roles/{id}/edit', [App\Http\Controllers\RolesController::class, 'update'])->middleware(['auth', 'verified'])->name('roles.update');
 Route::get('roles/{id}/delete', [App\Http\Controllers\RolesController::class, 'destroy'])->middleware(['auth', 'verified'])->name('roles.delete');
+
+Route::get('roles/{id}/permissions', [App\Http\Controllers\RoleUserController::class, 'index'])->middleware(['auth', 'verified'])->name('roles-permissions.edit');
+
 
 Route::get('permissions', [App\Http\Controllers\PermissionsController::class,'index'])->middleware(['auth', 'verified'])->name('permissions');
 Route::get('permissions/create', [App\Http\Controllers\PermissionsController::class, 'create'])->middleware(['auth', 'verified'])->name('permissions.create');
@@ -160,7 +162,7 @@ Route::get('products-categories', [App\Http\Controllers\CategoryController::clas
 Route::get('products-categories/create', [App\Http\Controllers\CategoryController::class, 'create'])->middleware(['auth', 'verified'])->name('products-categories.create');
 Route::post('products-categories/create', [App\Http\Controllers\CategoryController::class, 'store'])->middleware(['auth', 'verified'])->name('products-categories.store');
 
-Route::get('sales', [App\Http\Controllers\SalesController::class,'index'])->middleware(['auth', 'verified'])->name('sales');
+Route::get('sales', [App\Http\Controllers\SalesController::class,'index'])->middleware(['auth', 'verified', /* 'can:view-sales' */])->name('sales');
 Route::post('sales/{Cycle_Id}/create', [App\Http\Controllers\SalesController::class, 'store'])->middleware(['auth', 'verified'])->name('sales.store');
 
 Route::get('cashbook', [App\Http\Controllers\CashBookController::class,'index'])->middleware(['auth', 'verified'])->name('cashbook');

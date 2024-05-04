@@ -15,6 +15,9 @@ class SalesController extends Controller
      */
     public function index()
     {
+
+        $this->authorize('view-sales');
+
         $sales = Sales::orderBy("Sale_Date","desc")->paginate(15);
         return view('financials.sales.sales', [
             'sales' => $sales,

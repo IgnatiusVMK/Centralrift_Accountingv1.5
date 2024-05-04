@@ -7,6 +7,7 @@
             </a>
           </li>
           <!--Users & Roles-->
+          @can('access-users')
           <li class="nav-item nav-category">Users & Roles</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="users">
@@ -20,11 +21,13 @@
                 <li class="nav-item"> <a class="nav-link" href="{{('/departments')}}">Departments</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{('/roles')}}">Roles</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{('/permissions')}}">Permissions</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{('/password-reset')}}">Password Reset</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{-- {{('/password-reset')}} --}}">Password Reset</a></li>
               </ul>
             </div>
           </li>
+          @endcan
           <!--Master-->
+          @can('view-master')
           <li class="nav-item nav-category">Master</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#master" aria-expanded="false" aria-controls="master">
@@ -40,7 +43,9 @@
               </ul>
             </div>
           </li>
+          @endcan
           <!--Cycles-->
+          @can('access-cycles')
           <li class="nav-item nav-category">Cycles</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#cycles" aria-expanded="false" aria-controls="cycles">
@@ -51,11 +56,15 @@
             <div class="collapse" id="cycles">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{ route('cycles') }}">All Cycles</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('cycle.create') }}">New Cycles</a></li>       
+                @can('create-cycles')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('cycle.create') }}">New Cycles</a></li>
+                @endcan    
               </ul>
             </div>
           </li>
+          @endcan
           <!--Finance-->
+          @can('view-finance')
           <li class="nav-item nav-category">Expenses</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#finance" aria-expanded="false" aria-controls="finance">
@@ -76,6 +85,7 @@
               </ul>
             </div>
           </li>
+          @endcan
           <!--Products & Services-->
           <li class="nav-item nav-category">Products & Services</li>
           <li class="nav-item">
@@ -92,6 +102,7 @@
             </div>
           </li>
           <!--Purchases-->
+          @can('view-purchases')
           <li class="nav-item nav-category">Purchase</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#purchases" aria-expanded="false" aria-controls="purchases">
@@ -108,8 +119,9 @@
               </ul>
             </div>
           </li>
-          @can('view-sales')
+          @endcan
           <!--Sales-->
+          @can('view-sales')
           <li class="nav-item nav-category">Sales</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#sales" aria-expanded="false" aria-controls="sales">
@@ -126,6 +138,7 @@
           </li>
           @endcan
           <!--Financial Statements-->
+          @can('view-financials')
           <li class="nav-item nav-category">Financial Statements</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#financial-statements" aria-expanded="false" aria-controls="financial-statements">
@@ -140,7 +153,9 @@
               </ul>
             </div>
           </li>
+          @endcan
           <!--Reports-->
+          @can('view-reports')
           <li class="nav-item nav-category">Generate Reports</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="reports">
@@ -157,6 +172,7 @@
               </ul>
             </div>
           </li>
+          @endcan
           <!--Profile-->
           <li class="nav-item nav-category">PROFILE</li>
           <li class="nav-item">
