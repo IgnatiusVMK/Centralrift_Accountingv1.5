@@ -18,7 +18,7 @@
                         @endcan
                       </h4>
                     </div>
-                  {{-- @can('view-users') --}}
+                  @can('view-users')
                   <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
@@ -113,7 +113,7 @@
                       </tbody>
                     </table>
                   </div>
-                  {{-- @endcan --}}
+                  @endcan
                 </div>
               </div>
             </div>

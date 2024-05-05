@@ -21,7 +21,7 @@ class Roles extends Model
     
     public function permissions()
     {
-        return $this->belongsToMany(Permissions::class, 'permission_role');
+        return $this->belongsToMany(Permissions::class, 'permission_role', 'roles_id', 'permissions_id');
     }
 
 }

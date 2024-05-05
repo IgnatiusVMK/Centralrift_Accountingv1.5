@@ -29,25 +29,27 @@
                   </div>
                   <form action="{{ url('users-roles-permissions/'.$user->id.'/create')}}" method="post">
                     @csrf
-
-                      <div class="mb-3">
-                        {{-- <label>User ID</label> --}}
+                
+                    <div class="mb-3">
                         <input type="hidden" name="user_id" class="form-control" value="{{ $user->id }}" readonly />
                         @error('user_id') <span class="text-danger">{{ $message}}</span> @enderror
-                      </div>
-
-                      @foreach ($roles as $role)
-                          <div class="form-check ps-4">
-                              <input type="checkbox" class="form-check-input" id="role_{{ $role->id }}" name="roles[]" value="{{ $role->role_id }}" @if ($user->roles->contains('role_id', $role->role_id)) checked @endif>
-                              <label class="form-check-label" for="role_{{ $role->id }}">{{ $role->Name }}</label>
-                          </div>
-                      @endforeach
-
-
-                    <div class="mb-3">
-                      <button type="submit"  class="btn btn-success text-center">Save</button>
                     </div>
-
+                
+                    @foreach ($roles as $role)
+                    <div class="form-check ps-4">
+                        <input type="checkbox" class="form-check-input" id="role_{{ $role->id }}" name="roles[]" value="{{ $user->id.'-'.$role->id }}" @if ($user->roles->contains('id', $role->id)) checked @endif>
+                        <label class="form-check-label" for="role_{{ $role->id }}">{{ $role->Name }}</label>
+                    </div>
+                    @endforeach
+                
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-success text-center">Save</button>
+                    </div>
+                  </form>
+                  <form action="{{ route('users-roles-permissions.delete', ['user' => $user->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete All Roles</button>
                   </form>
                 </div>
               </div>

@@ -13,7 +13,7 @@
                     @endif
                     <div class="card-header">
                       <h4 class="card-title">Users & Roles
-                      <a href="{{ url('users/create') }}" class="btn btn-primary float-end">+ New Role</a>
+                      <a href="{{-- {{ url('users/create') }} --}}" class="btn btn-primary float-end">+ New Role</a>
                       </h4>
                     </div>
                   

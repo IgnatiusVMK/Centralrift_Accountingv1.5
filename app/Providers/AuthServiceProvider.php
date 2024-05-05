@@ -134,7 +134,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         //SalesModel
-        Gate::define('access_sales', function ($user) {
+        Gate::define('access-sales', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_sales');
         }); 
         Gate::define('view-sales', function ($user) {

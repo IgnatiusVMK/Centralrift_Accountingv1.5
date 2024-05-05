@@ -71,11 +71,9 @@ Route::get('users/{id}/edit', [App\Http\Controllers\UsersController::class, 'edi
 Route::put('users/{id}/edit', [App\Http\Controllers\UsersController::class, 'update'])->middleware(['auth', 'verified'])->name('users.update');
 Route::get('users/{id}/delete', [App\Http\Controllers\UsersController::class, 'destroy'])->middleware(['auth', 'verified'])->name('users.delete');
 
-Route::get('users-roles-permissions/{id}/create', [App\Http\Controllers\UserRolePermissionsController::class,'index'])->middleware(['auth', 'verified'])->name('users-roles-permissions');
-Route::post('users-roles-permissions/{id}/create', [App\Http\Controllers\UserRolePermissionsController::class, 'store'])->middleware(['auth', 'verified'])->name('users-roles-permissions.store');
-/* Route::get('users/{id}/edit', [App\Http\Controllers\UserRolePermissionsController::class, 'edit'])->middleware(['auth', 'verified'])->name('users.edit');
-Route::put('users/{id}/edit', [App\Http\Controllers\UserRolePermissionsController::class, 'update'])->middleware(['auth', 'verified'])->name('users.update');
-Route::get('users/{id}/delete', [App\Http\Controllers\UserRolePermissionsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('users.delete'); */
+Route::get('users-roles-permissions/{user_id}/create', [App\Http\Controllers\UserRolePermissionsController::class,'index'])->middleware(['auth', 'verified'])->name('users-roles-permissions');
+Route::post('users-roles-permissions/{user_id}/create', [App\Http\Controllers\UserRolePermissionsController::class, 'store'])->middleware(['auth', 'verified'])->name('users-roles-permissions.store');
+Route::delete('users-roles-permissions/{user}/delete', [App\Http\Controllers\UserRolePermissionsController::class, 'deleteRoles'])->middleware(['auth', 'verified'])->name('users-roles-permissions.delete');
 
 Route::get('roles', [App\Http\Controllers\RolesController::class,'index'])->middleware(['auth', 'verified'])->name('roles');
 Route::get('roles/create', [App\Http\Controllers\RolesController::class, 'create'])->middleware(['auth', 'verified'])->name('roles.create');
@@ -84,7 +82,9 @@ Route::get('roles/{id}/edit', [App\Http\Controllers\RolesController::class, 'edi
 Route::put('roles/{id}/edit', [App\Http\Controllers\RolesController::class, 'update'])->middleware(['auth', 'verified'])->name('roles.update');
 Route::get('roles/{id}/delete', [App\Http\Controllers\RolesController::class, 'destroy'])->middleware(['auth', 'verified'])->name('roles.delete');
 
-Route::get('roles/{id}/permissions', [App\Http\Controllers\RoleUserController::class, 'index'])->middleware(['auth', 'verified'])->name('roles-permissions.edit');
+Route::get('roles/{roles_id}/permissions', [App\Http\Controllers\RoleUserController::class, 'index'])->middleware(['auth', 'verified'])->name('roles-permissions');
+Route::post('roles/{roles_id}/permissions', [App\Http\Controllers\RoleUserController::class, 'store'])->middleware(['auth', 'verified'])->name('roles-permissions.store');
+Route::delete('/roles/{role}/permissions', [App\Http\Controllers\RoleUserController::class, 'deletePermissions'])->middleware(['auth', 'verified'])->name('roles-permissions.delete');
 
 
 Route::get('permissions', [App\Http\Controllers\PermissionsController::class,'index'])->middleware(['auth', 'verified'])->name('permissions');
@@ -97,11 +97,9 @@ Route::get('permissions/{id}/delete', [App\Http\Controllers\PermissionsControlle
 Route::get('password-reset', [App\Http\Controllers\PasswordResetController::class,'index'])->middleware(['auth', 'verified'])->name('password-reset');
 Route::get('password-reset/create', [App\Http\Controllers\PasswordResetController::class, 'create'])->middleware(['auth', 'verified'])->name('password-reset.create');
 
-
 Route::get('departments', [App\Http\Controllers\DepartmentsController::class,'index'])->middleware(['auth', 'verified'])->name('departments');
 Route::get('departments/create', [App\Http\Controllers\DepartmentsController::class, 'create'])->middleware(['auth', 'verified'])->name('departments.create');
 Route::post('departments/create', [App\Http\Controllers\DepartmentsController::class, 'store'])->middleware(['auth', 'verified'])->name('departments.store');
-
 
 Route::get('customers', [App\Http\Controllers\CustomerController::class, 'index'])->middleware(['auth', 'verified'])->name('customers');
 Route::get('customers/create', [App\Http\Controllers\CustomerController::class, 'create'])->middleware(['auth', 'verified'])->name('customers.create');

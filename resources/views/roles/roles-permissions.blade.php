@@ -38,16 +38,20 @@
 
                       @foreach ($permissions as $permission)
                           <div class="form-check ps-4">
-                              <input type="checkbox" class="form-check-input" id="permission_{{ $permission->id }}" name="permissions[]" value="{{ $permission->permissions_id }}" @if ($role->permissions->contains('permissions_id', $permission->permissions_id)) checked @endif>
-                              <label class="form-check-label" for="permissions_{{ $permission->id }}">{{ $permission->Name }}</label>
+                              <input type="checkbox" class="form-check-input" id="permission_{{ $permission->id }}" name="permissions[]" value="{{ $permission->id }}" @if ($role->permissions->contains('id', $permission->id)) checked @endif>
+                              <label class="form-check-label" for="permission_{{ $permission->id }}">{{ $permission->Name }}</label>
                           </div>
                       @endforeach
-
 
                     <div class="mb-3">
                       <button type="submit"  class="btn btn-success text-center">Save</button>
                     </div>
 
+                  </form>
+                  <form action="{{ route('roles-permissions.delete', ['role' => $role->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete All Permissions</button>
                   </form>
                 </div>
               </div>
