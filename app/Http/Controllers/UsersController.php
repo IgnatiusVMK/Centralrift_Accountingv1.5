@@ -12,14 +12,15 @@ use Illuminate\Support\Facades\Hash;
 class UsersController extends Controller
 {
     public function index(){
-
-
+        
         $this->authorize('access-users');
 
         $users = User::with('departments')->get();
         return view('users.users', compact('users'));
     }
     public function create(){
+        $this->authorize('create-users');
+
         $departments = Departments::all();
         return view('user.create', compact('departments'));
     }
@@ -47,6 +48,9 @@ class UsersController extends Controller
         return redirect('users/create')->with('status','User Created');
     }
     public function edit(int $id){
+
+        $this->authorize('modify-users');
+
         $users = User::findOrFail($id);
         $departments = Departments::all();
         return view('users.edit', compact('users','departments'));
@@ -78,32 +82,32 @@ class UsersController extends Controller
 
         return redirect()->back()->with('status','User Updated');
     } */
-    public function update(Request $request, $id)
-    {
-    $request->validate([
-        'name' => 'required|max:255|string',    
-        'email' => 'required|max:255|string',
-        'role' => 'required|max:255|string',
-       /*  'password' => 'required|max:255|string', */
-        'is_active' => 'sometimes'
-    ]);
+    public function update(Request $request, $id){
 
-    $user = User::findOrFail($id);
+        $request->validate([
+            'name' => 'required|max:255|string',    
+            'email' => 'required|max:255|string',
+            'role' => 'required|max:255|string',
+            'is_active' => 'sometimes'
+        ]);
 
-    $user->update([
-        'name' => $request->name,
-        'email' => $request->email,
-        'role' => $request->role,
-        /* 'password' => Hash::make($request->password), */
-        'is_active' => $request->is_active == true ? 1 : 0,
-    ]);
+        $user = User::findOrFail($id);
 
-    // Sync the user's departments
-    $user->departments()->sync($request->input('departments'));
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'is_active' => $request->is_active == true ? 1 : 0,
+        ]);
 
-    return redirect()->back()->with('status', 'User Updated');
+        // Sync the user's departments
+        $user->departments()->sync($request->input('departments'));
+
+        return redirect()->back()->with('status', 'User Updated');
     }
     public function destroy(int $id){
+        $this->authorize('delete-users');
+
         $user = User::findOrFail($id);
         $user->departments()->detach();
         $user->delete();

@@ -22,6 +22,18 @@ class UsersPolicy
     {
         return $user->hasRole('Admin') || $user->hasPermission('view_users');
     }
+    public function create(User $user)
+    {
+        return $user->hasRole('Admin') || $user->hasPermission('create_users');
+    }
+    public function modify(User $user)
+    {
+        return $user->hasRole('Admin') || $user->hasPermission('modify_users');
+    }
+    public function delete(User $user)
+    {
+        return $user->hasRole('Admin') || $user->hasPermission('delete_users');
+    }
 
     // Define more authorization methods as needed
 }

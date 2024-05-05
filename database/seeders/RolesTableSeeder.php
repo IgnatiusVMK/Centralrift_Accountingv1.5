@@ -20,6 +20,11 @@ class RolesTableSeeder extends Seeder
                 'updated_at'=> now(),
             ],
             [
+                'Name'=> 'Executive',
+                'created_at'=> now(),
+                'updated_at'=> now(),
+            ],
+            [
                 'Name'=> 'Management',
                 'created_at'=> now(),
                 'updated_at'=> now(),

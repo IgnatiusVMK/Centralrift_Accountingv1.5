@@ -15,6 +15,18 @@ class SalesPolicy
     {
         return $user->hasRole('Admin') || $user->hasPermission('view_sales');
     }
+    public function create(User $user, Sales $sales)
+    {
+        return $user->hasRole('Admin') || $user->hasPermission('create_sales');
+    }
+    public function modify(User $user, Sales $sales)
+    {
+        return $user->hasRole('Admin') || $user->hasPermission('modify_sales');
+    }
+    public function delete(User $user, Sales $sales)
+    {
+        return $user->hasRole('Admin') || $user->hasPermission('delete_sales');
+    }
 
     // Define more authorization methods as needed
 }

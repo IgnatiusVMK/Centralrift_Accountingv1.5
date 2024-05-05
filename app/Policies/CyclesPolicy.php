@@ -21,10 +21,10 @@ class CyclesPolicy
     }
     public function create(User $user, Cycles $cycles)
     {
-        return $user->hasRole('Admin') || $user->hasPermission('create_cycles');
+        return $user->hasRole('Admin') ||  $user->hasPermission('create_cycles');
     }
     public function view(User $user, Cycles $cycles)
     {
-        return $user->hasRole('Admin') || $user->hasPermission('view_cycles');
+        return $user->hasRole('Admin') ||  $user->hasPermission('view_cycles');
     }
 }

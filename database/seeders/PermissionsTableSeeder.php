@@ -14,6 +14,8 @@ class PermissionsTableSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
+
+            //SuperAdmin Permissions for UserModel
             [
                 'Name'=> 'access_users',
             ],
@@ -30,6 +32,7 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'delete_users',
             ],
 
+            //Permissions for Cycles
             [
                 'Name'=> 'access_cycles',
             ],
@@ -40,19 +43,79 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'create_cycles',
             ],
 
+            //Permissions for Roles
             [
-                'Name'=> 'view_finance',
+                'Name'=> 'access_roles',
             ],
             [
-                'Name'=> 'create_finance',
+                'Name'=> 'view_roles',
             ],
             [
-                'Name'=> 'modify_finance',
+                'Name'=> 'create_roles',
+            ],
+            //Permissions for Permissions
+            [
+                'Name'=> 'access_permissions',
             ],
             [
-                'Name'=> 'delete_finance',
+                'Name'=> 'view_permissions',
+            ],
+            [
+                'Name'=> 'create_permissions',
             ],
 
+            //Permissions for Master-Operations
+            [
+                'Name'=> 'access_master',
+            ],
+            [
+                'Name'=> 'view_master',
+            ],
+            [
+                'Name'=> 'create_master',
+            ],
+            [
+                'Name'=> 'modify_master',
+            ],
+            [
+                'Name'=> 'delete_master',
+            ],
+
+            //Permissions for Monthly Expenses
+            [
+                'Name'=> 'access_financials',
+            ],
+            [
+                'Name'=> 'view_financials',
+            ],
+            [
+                'Name'=> 'create_financials',
+            ],
+            [
+                'Name'=> 'modify_financials',
+            ],
+            [
+                'Name'=> 'delete_financials',
+            ],
+
+            //Permissions for purchases
+            [
+                'Name'=> 'access_purchases',
+            ],
+            [
+                'Name'=> 'view_purchases',
+            ],
+            [
+                'Name'=> 'create_purchases',
+            ],
+            [
+                'Name'=> 'modify_purchases',
+            ],
+            [
+                'Name'=> 'delete_purchases',
+            ],
+
+            //Permissions for Sales
             [
                 'Name'=> 'access_sales',
             ],
@@ -69,32 +132,33 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'delete_sales',
             ],
 
+            //Permissions for Finances (Cashbook, P&L)
             [
-                'Name'=> 'view_operations',
+                'Name'=> 'access_finance',
             ],
             [
-                'Name'=> 'create_operations',
+                'Name'=> 'view_finance',
             ],
             [
-                'Name'=> 'modify_operations',
+                'Name'=> 'create_finance',
             ],
             [
-                'Name'=> 'delete_operations',
+                'Name'=> 'modify_finance',
             ],
-
+            [
+                'Name'=> 'delete_finance',
+            ],
+            
+            //Permissions for reports
+            [
+                'Name'=> 'access_reports',
+            ],
             [
                 'Name'=> 'view_reports',
             ],
             [
                 'Name'=> 'create_reports',
             ],
-            [
-                'Name'=> 'modify_reports',
-            ],
-            [
-                'Name'=> 'delete_reports',
-            ],
-            
             
         ];
 

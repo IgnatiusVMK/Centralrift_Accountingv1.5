@@ -39,7 +39,7 @@
                             Department
                           </th>
                           <th>
-                            Role
+                            Authentication
                           </th>
                           <th>
                             Date Added
@@ -47,9 +47,14 @@
                           <th>
                             Status
                           </th>
-                          @can('edit-users')
+                          @can('modify-users')
                           <th>
-                            Actions
+                            Update
+                          </th>
+                          @endcan
+                          @can('delete-users')
+                          <th>
+                            Delete
                           </th>
                           @endcan
                         </tr>
@@ -94,10 +99,14 @@
                             @endif
                           </td>
                           <td>
-                            @can('edit-users')
+                            @can('modify-users')
                               <a href="{{ url('users/'.$user->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
                             @endcan
-                            {{-- <a href="{{ url('users/'.$user->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a> --}}
+                          </td>
+                          <td>
+                            @can('delete-users')
+                              <a href="{{ url('users/'.$user->id.'/delete')}}" class="btn btn-danger">Destroy<i class="mdi mdi-shredder"></i></a>
+                            @endcan
                           </td>
                         </tr>
                         @endforeach

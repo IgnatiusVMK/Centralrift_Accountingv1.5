@@ -15,13 +15,94 @@ class RolesPermissionsTableSeeder extends Seeder
     //This Seeder attaches/assigns default permissions to the different roles 
     public function run(): void
     {
-
+        //Admin Permissions
         $adminRole = Roles::where('Name', 'Admin')->first();
 
-        $permissions = Permissions::all();
+        $adminpermissions = Permissions::all();
 
-        foreach ($permissions as $permission) {
-            $adminRole->permissions()->attach($permission);
+        foreach ($adminpermissions as $adminpermission) {
+            $adminRole->permissions()->attach($adminpermission);
+        }
+
+        //Executive Permissions
+        $executivePermissions = [
+            'access_users',
+            'view_users',
+            'create_users',
+            'access_cycles',
+            'view_cycles',
+            'create_cycles',
+            'access_master',
+            'view_master',
+            'create_master',
+            'modify_master',
+            'delete_master',
+            'access_financials',
+            'view_financials',
+            'create_financials',
+            'modify_financials',
+            'delete_financials',
+            'access_purchases',
+            'view_purchases',
+            'create_purchases',
+            'modify_purchases',
+            'delete_purchases',
+            'access_sales',
+            'view_sales',
+            'create_sales',
+            'modify_sales',
+            'delete_sales',
+            'access_finance',
+            'view_finance',
+            'create_finance',
+            'modify_finance',
+            'delete_finance',
+            'access_reports',
+            'view_reports',
+            'create_reports',
+        ];
+
+        $executiveRole = Roles::where('Name', 'Executive')->first();
+
+        foreach ($executivePermissions as $executivePermissionName) {
+            $execpermission = Permissions::where('Name', $executivePermissionName)->first();
+            if ($execpermission) {
+                $executiveRole->permissions()->attach($execpermission);
+            }
+        }
+
+        //Management Permissions
+        $managerPermissions = [
+            'access_cycles',
+            'view_cycles',
+            'create_cycles',
+            'access_master',
+            'view_master',
+            'create_master',
+            'access_financials',
+            'view_financials',
+            'create_financials',
+            'access_purchases',
+            'view_purchases',
+            'create_purchases',
+            'access_sales',
+            'view_sales',
+            'create_sales',
+            'access_finance',
+            'view_finance',
+            'create_finance',
+            'access_reports',
+            'view_reports',
+            'create_reports',
+        ];
+
+        $managerRole = Roles::where('Name', 'Management')->first();
+
+        foreach ($managerPermissions as $managerPermissionName) {
+            $mngpermission = Permissions::where('Name', $managerPermissionName)->first();
+            if ($mngpermission) {
+                $managerRole->permissions()->attach($mngpermission);
+            }
         }
 
     }

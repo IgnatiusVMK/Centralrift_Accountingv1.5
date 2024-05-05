@@ -19,15 +19,19 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{('/users')}}">Users</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{('/departments')}}">Departments</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{('/roles')}}">Roles</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{('/permissions')}}">Permissions</a></li>
+                @can('access-roles')
+                  <li class="nav-item"> <a class="nav-link" href="{{('/roles')}}">Roles</a></li>
+                @endcan
+                @can('access-permissions')
+                  <li class="nav-item"> <a class="nav-link" href="{{('/permissions')}}">Permissions</a></li>
+                @endcan
                 <li class="nav-item"> <a class="nav-link" href="{{-- {{('/password-reset')}} --}}">Password Reset</a></li>
               </ul>
             </div>
           </li>
           @endcan
           <!--Master-->
-          @can('view-master')
+          @can('access-master')
           <li class="nav-item nav-category">Master</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#master" aria-expanded="false" aria-controls="master">
@@ -64,7 +68,7 @@
           </li>
           @endcan
           <!--Finance-->
-          @can('view-finance')
+          @can('access-finance')
           <li class="nav-item nav-category">Expenses</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#finance" aria-expanded="false" aria-controls="finance">
@@ -102,7 +106,7 @@
             </div>
           </li>
           <!--Purchases-->
-          @can('view-purchases')
+          @can('access-purchases')
           <li class="nav-item nav-category">Purchase</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#purchases" aria-expanded="false" aria-controls="purchases">
@@ -121,7 +125,7 @@
           </li>
           @endcan
           <!--Sales-->
-          @can('view-sales')
+          @can('access-sales')
           <li class="nav-item nav-category">Sales</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#sales" aria-expanded="false" aria-controls="sales">
@@ -138,7 +142,7 @@
           </li>
           @endcan
           <!--Financial Statements-->
-          @can('view-financials')
+          @can('access-financials')
           <li class="nav-item nav-category">Financial Statements</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#financial-statements" aria-expanded="false" aria-controls="financial-statements">
@@ -155,7 +159,7 @@
           </li>
           @endcan
           <!--Reports-->
-          @can('view-reports')
+          @can('access-reports')
           <li class="nav-item nav-category">Generate Reports</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="reports">
