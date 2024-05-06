@@ -15,7 +15,7 @@ class CyclesController extends Controller
      */
     public function index()
     {
-        $cycles = Cycles::get();
+        $cycles = Cycles::where('Status', 'approved')->get();
         return view('cycles.cycles', [
             'cycles'=> $cycles,
         ]);
@@ -50,7 +50,8 @@ class CyclesController extends Controller
             'Client_Name' => 'required|max:255|string',
             'Cycle_Name' => 'required|max:255|string',
             'Cycle_Start' => 'required|date',
-            'Cycle_End' => 'required|date'
+            'Cycle_End' => 'required|date',
+            'maker_id' => 'required|max:255|integer',
             ]);
     
         Cycles::create([
@@ -61,6 +62,7 @@ class CyclesController extends Controller
             'Cycle_Name' => $request->Cycle_Name,
             'Cycle_Start' => $request->Cycle_Start,
             'Cycle_End' => $request->Cycle_End,
+            'maker_id' => $request->maker_id,
         ]);
 
         HarvestOrder::create([
@@ -70,6 +72,7 @@ class CyclesController extends Controller
             'planting_date' => $request->Cycle_Start,
             'harvest_date' => $request->Cycle_End,
             'product_name' => $request->Crop,
+            'maker_id' => $request->maker_id,
         ]);
     
         return redirect('new/cycle')->with('status','New Cycle Created');
@@ -106,31 +109,6 @@ class CyclesController extends Controller
     {
         //
     }
-
-/*     public function generateCycCode(Request $request)
-    {
-        $startDate = $request->input('Cycle_Start');
-        $endDate = $request->input('Cycle_End');
-    
-        $startMonth = strtoupper(date('M', strtotime($startDate))); // Capitalize and get the month abbreviation from the start date
-        $endMonth = strtoupper(date('M', strtotime($endDate))); // Capitalize and get the month abbreviation from the end date
-        $year = date('y', strtotime($startDate)); // Get the last two digits of the year from the start date
-    
-        // Construct the code with the fixed month range and year
-        $Cyclecode = "CYC-$startMonth-$endMonth-$year-";
-    
-
-        // Find the last serial number in the database and increment
-        $lastSerialNumber = Cycles::max('Cycle_Id');
-        $lastSerialNumber = intval(substr($lastSerialNumber, -3)); // Extract last 3 digits and convert to integer
-        $serialNumber = str_pad($lastSerialNumber + 1, 3, '0', STR_PAD_LEFT); // Increment and pad with zeros
-
-    
-        // Append the incremented serial number to the code
-        $Cyclecode .= $serialNumber;
-    
-        return $Cyclecode;
-    } */
 
     public function generateCycCode(Request $request)
     {

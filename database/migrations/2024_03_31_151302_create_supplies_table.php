@@ -19,6 +19,12 @@ return new class extends Migration
             $table->dateTime('Supply_Date');
             $table->integer('Quantity');
             $table->string('Cycle_Id');
+            $table->string('Status')->default('pending');
+            $table->unsignedBigInteger('checker_id')->nullable();
+            $table->unsignedBigInteger('maker_id')->nullable();
+
+            $table->foreign('checker_id')->references('id')->on('users');
+            $table->foreign('maker_id')->references('id')->on('users');
             
             $table->foreign('Product_Id')->references('Product_Id')->on('products');
             $table->foreign('Supplier_Id')->references('Supplier_Id')->on('suppliers');

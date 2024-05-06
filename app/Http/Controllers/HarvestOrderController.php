@@ -10,7 +10,7 @@ class HarvestOrderController extends Controller
 {
     public function index()
     {
-        $harvestOrders = Cycles::all();
+        $harvestOrders = Cycles::where('Status', 'approved')->all();
 
         return view('dashboard', compact('harvestOrders'));
     }

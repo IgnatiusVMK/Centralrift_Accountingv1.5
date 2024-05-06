@@ -12,15 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cycles', function (Blueprint $table) {
-            $table->string('Cycle_Id')->primary();
+            $table->id();
+            $table->string('Cycle_Id')->unique();
             $table->unsignedInteger('Block_Id');
             $table->string('Crop');
             $table->string('Client_Name');
             $table->string('Cycle_Name');
-            $table->dateTime('Cycle_Start');
-            $table->dateTime('Cycle_End');
+            $table->date('Cycle_Start');
+            $table->date('Cycle_End');
+            $table->string('Status')->default('pending');
+            $table->unsignedBigInteger('checker_id')->nullable();
+            $table->unsignedBigInteger('maker_id')->nullable();
             $table->timestamps();
 
+            $table->foreign('checker_id')->references('id')->on('users');
+            $table->foreign('maker_id')->references('id')->on('users');
             $table->foreign('Block_Id')->references('Block_Id')->on('blocks');
         });
     }

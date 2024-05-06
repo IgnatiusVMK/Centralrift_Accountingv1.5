@@ -17,10 +17,10 @@ class DashboardController extends Controller
 
      public function index()
     {
-        $countOrders =  HarvestOrder::count();
-        $countSales = Sales::count();
-        $harvestOrders = HarvestOrder::whereDate('harvest_date', '>', now())->get();
-        $completedHarvestOrders = HarvestOrder::whereDate('harvest_date', '<', now())->get();
+        $countOrders =  $this->getOrderCount();
+        $countSales = Sales::where('Status','approved')->count();
+        $harvestOrders = HarvestOrder::where('Status','approved')->whereDate('harvest_date', '>', now())->get();
+        $completedHarvestOrders = HarvestOrder::where('Status','approved')->whereDate('harvest_date', '<', now())->get();
 
         $accountController = new AccountController();
         $summary = $accountController->summary();
@@ -41,13 +41,14 @@ class DashboardController extends Controller
     }
 
     public function getOrderCount(){
-        $countOrders = HarvestOrder::count();
+        $countOrders = HarvestOrder::where('Status','approved')->count();
         return $countOrders;
     }
     public function listCyclesByProduct()
 {
     $cyclesByProduct = DB::table('harvest_orders')
         ->select('product_name', DB::raw('COUNT(DISTINCT cycle_id) as cycle_count'))
+        ->where('Status','approved')
         ->groupBy('product_name')
         ->orderByDesc('cycle_count')
         ->get();

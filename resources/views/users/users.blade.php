@@ -80,9 +80,11 @@
                                     , <!-- Add a comma if there are more departments -->
                                 @endif
                             @endforeach
-                        </td>
+                          </td>
                           <td>
-                            <a href="{{ url('users-roles-permissions/'.$user->id.'/create')}}"><i class="mdi mdi-border-color"></i>
+                            @can('modify-users')
+                              <a href="{{ url('users-roles-permissions/'.$user->id.'/create')}}"><i class="mdi mdi-border-color"></i>
+                            @endcan
                               {{$user->role}}
                             </a>
                           </td>
@@ -98,16 +100,16 @@
                               </button>
                             @endif
                           </td>
+                          @can('modify-users')
                           <td>
-                            @can('modify-users')
                               <a href="{{ url('users/'.$user->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
-                            @endcan
                           </td>
+                          @endcan
+                          @can('delete-users')
                           <td>
-                            @can('delete-users')
                               <a href="{{ url('users/'.$user->id.'/delete')}}" class="btn btn-danger">Destroy<i class="mdi mdi-shredder"></i></a>
-                            @endcan
                           </td>
+                          @endcan
                         </tr>
                         @endforeach
                       </tbody>

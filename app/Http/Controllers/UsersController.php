@@ -22,7 +22,7 @@ class UsersController extends Controller
         $this->authorize('create-users');
 
         $departments = Departments::all();
-        return view('user.create', compact('departments'));
+        return view('users.create', compact('departments'));
     }
     public function store(Request $request){
         $request->validate([

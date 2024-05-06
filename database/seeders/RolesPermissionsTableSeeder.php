@@ -29,6 +29,9 @@ class RolesPermissionsTableSeeder extends Seeder
             'access_users',
             'view_users',
             'create_users',
+            'access_approval',
+            'view_approval',
+            'create_approval',
             'access_cycles',
             'view_cycles',
             'create_cycles',
@@ -73,6 +76,9 @@ class RolesPermissionsTableSeeder extends Seeder
 
         //Management Permissions
         $managerPermissions = [
+            'access_maker',
+            'view_maker',
+            'create_maker',
             'access_cycles',
             'view_cycles',
             'create_cycles',

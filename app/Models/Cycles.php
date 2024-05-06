@@ -19,12 +19,17 @@ class Cycles extends Model
         'Cycle_Name',
         'Cycle_Start',
         'Cycle_End',
+        'checker_id',
+        'maker_id',
     ];
 
     public function block()
     {
         return $this->belongsTo(Blocks::class, 'Block_Id', 'Block_Id');
     }
-    
 
+    public function maker(){
+        return $this->belongsTo(User::class,'maker_id');
+    }
+    
 }

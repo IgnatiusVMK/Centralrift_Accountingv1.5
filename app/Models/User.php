@@ -24,7 +24,8 @@ class User extends Authenticatable
         'email',
         'is_active',
         'role',
-        'password'
+        'password',
+        
     ];
 
     /**
@@ -63,25 +64,21 @@ class User extends Authenticatable
     }
 
     public function hasRole($role)
-{
-    $hasRole = $this->roles()->where('Name', $role)->exists();
-/*     dd($role, $hasRole); // Check role name and whether the user has the role
- */    return $hasRole;
-}
-
-public function hasPermission($permission)
-{
-    foreach ($this->roles as $role) {
-        $hasPermission = $role->permissions->contains('Name', $permission);
-        /* dd($permission, $hasPermission);  */// Check permission name and whether the role has the permission
-        if ($hasPermission) {
-            return true;
-        }
+    {
+        $hasRole = $this->roles()->where('Name', $role)->exists();
+           return $hasRole;
     }
-    return false;
-}
 
-
-
+    public function hasPermission($permission)
+    {
+        foreach ($this->roles as $role) {
+            $hasPermission = $role->permissions->contains('Name', $permission);
+            /* dd($permission, $hasPermission);  */// Check permission name and whether the role has the permission
+            if ($hasPermission) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

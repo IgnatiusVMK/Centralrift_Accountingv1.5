@@ -64,6 +64,12 @@ Route::get('cycles/{Cycle_Id}/capital-expenses/create', [App\Http\Controllers\Ca
 Route::get('cycles/{Cycle_Id}/electricity/create', [App\Http\Controllers\ElectrictyController::class, 'create'])->middleware(['auth', 'verified'])->name('cycle.electricity.create');
 Route::get('cycles/{Cycle_Id}/sales/create', [App\Http\Controllers\SalesController::class, 'create'])->middleware(['auth', 'verified'])->name('cycle.sales.create');
 
+
+//Checker Validation Route
+Route::get('/checker', [App\Http\Controllers\CheckerController::class,'index'])->middleware(['auth', 'verified'])->name('checker.index');
+Route::get('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'viewDetails'])->middleware(['auth', 'verified'])->name('checker.details');
+Route::post('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'approveCycle'])->middleware(['auth', 'verified'])->name('checker.approve');
+
 Route::get('users', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('users');
 Route::get('users/create', [App\Http\Controllers\UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('users.create');
 Route::post('users/create', [App\Http\Controllers\UsersController::class, 'store'])->middleware(['auth', 'verified'])->name('users.store');

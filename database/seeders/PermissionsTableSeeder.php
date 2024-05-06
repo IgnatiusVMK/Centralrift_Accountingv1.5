@@ -32,6 +32,27 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'delete_users',
             ],
 
+            //Permissions for Approval
+            [
+                'Name'=> 'access_approval',
+            ],
+            [
+                'Name'=> 'view_approval',
+            ],
+            [
+                'Name'=> 'create_approval',
+            ],
+            //Permissions for Maker
+            [
+                'Name'=> 'access_maker',
+            ],
+            [
+                'Name'=> 'view_maker',
+            ],
+            [
+                'Name'=> 'create_maker',
+            ],
+
             //Permissions for Cycles
             [
                 'Name'=> 'access_cycles',

@@ -7,7 +7,9 @@ namespace App\Providers;
 use App\Models\Cycles;
 use App\Models\Sales;
 use App\Models\User;
+use App\Policies\CheckerPolicy;
 use App\Policies\CyclesPolicy;
+use App\Policies\MakerPolicy;
 use App\Policies\SalesPolicy;
 use App\Policies\UsersPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -24,6 +26,8 @@ class AuthServiceProvider extends ServiceProvider
         Sales::class => SalesPolicy::class,
         User::class => UsersPolicy::class,
         Cycles::class => CyclesPolicy::class,
+        User::class => CheckerPolicy::class,
+        User::class => MakerPolicy::class,
     ];
 
     /**
@@ -50,6 +54,27 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('delete_users');
         });
 
+        //Checker
+        Gate::define('access-approval', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('access_approval');
+        });
+        Gate::define('view-approval', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('view_approval');
+        });
+        Gate::define('create-approval', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('create_approval');
+        });
+        //Maker
+        Gate::define('access-maker', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('access_maker');
+        });
+        Gate::define('view-maker', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('view_maker');
+        });
+        Gate::define('create-maker', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('create_maker');
+        });
+        
         //CyclesModel
         Gate::define('access-cycles', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_cycles');

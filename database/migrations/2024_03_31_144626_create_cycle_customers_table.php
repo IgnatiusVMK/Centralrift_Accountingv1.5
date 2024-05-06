@@ -15,7 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('Cycle_Id');
             $table->unsignedBigInteger('Customer_Id');
+            $table->string('Status')->default('pending');
+            $table->unsignedBigInteger('checker_id')->nullable();
+            $table->unsignedBigInteger('maker_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('checker_id')->references('id')->on('users');
+            $table->foreign('maker_id')->references('id')->on('users');
 
             $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
             $table->foreign('Customer_Id')->references('Customer_Id')->on('customers');

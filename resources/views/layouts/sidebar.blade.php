@@ -48,6 +48,38 @@
             </div>
           </li>
           @endcan
+          <!--Checker-->
+          @can('access-approval')
+          <li class="nav-item nav-category">Checker Validation</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#checker" aria-expanded="false" aria-controls="checker">
+              <i class="menu-icon mdi {{-- mdi-folder-plus --}} mdi-playlist-plus"></i>
+              <span class="menu-title">Approvals</span>
+              <i class="menu-arrow"></i> 
+            </a>
+            <div class="collapse" id="checker">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{('/checker')}}">Awaiting Validation</a></li>
+              </ul>
+            </div>
+          </li>
+          @endcan
+          <!--Maker-->
+          @can('access-maker')
+          <li class="nav-item nav-category">Maker Requests</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#maker" aria-expanded="false" aria-controls="maker">
+              <i class="menu-icon mdi {{-- mdi-folder-remove --}} mdi-playlist-remove"></i>
+              <span class="menu-title">Requests</span>
+              <i class="menu-arrow"></i> 
+            </a>
+            <div class="collapse" id="maker">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{-- {{('/maker')}} --}}">Awaiting Approval</a></li>
+              </ul>
+            </div>
+          </li>
+          @endcan
           <!--Cycles-->
           @can('access-cycles')
           <li class="nav-item nav-category">Cycles</li>

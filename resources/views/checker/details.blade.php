@@ -1,16 +1,20 @@
 @extends('layouts.app')
 <style>
-  select {
-    width: auto;
-    padding: 8px;
-    font-size: 16px;
-    color: black;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-</style>
+    select {
+      width: auto;
+      padding: 8px;
+      font-size: 16px;
+      color: black;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+  }
+  </style>
 @section('content')
+@can('view-approval')
+{{-- @php
+dd($pendingCycles)    
+@endphp --}}
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
@@ -24,21 +28,26 @@
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
                   <h4 class="card-title">New Planting Cycle
-                    <a href="{{ url('cycles') }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
+                    <a href="{{ url('/checker') }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>
-                  <form action="{{ url('cycles/create')}}" method="post">
+                  <form action="{{url('checker/'.$pendingCycles->id.'/validate')}}" method="post">
                     @csrf
 
                     <div class="mb-3">
                       {{-- <label>Maker ID</label> --}}
-                      <input type="hidden" name="maker_id" class="form-control" value="{{Auth::user()->id}}" readonly/>
+                      <input type="hidden" name="maker_id" class="form-control" value="{{ $pendingCycles->maker_id}}" readonly/>
                       @error('maker_id') <span class="text-danger">{{ $message}}</span> @enderror
+                    </div>
+                    <div class="mb-3">
+                      {{-- <label>Checker ID</label> --}}
+                      <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                      @error('checker_id') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
                       <label>Block</label>
                         <select name="Block_Id" class="form-control">
-                          <option value="1" selected> -- SELECT BLOCK --</option>
+                          <option value="{{ $pendingCycles->Block_Id }}" selected> -- {{$pendingCycles->block->Block_Name}} --</option>
                           @foreach ($blocks as $block)
                               <option value="{{ $block->Block_Id}}">{{ $block->Block_Name }}</option>
                           @endforeach
@@ -48,7 +57,7 @@
                     <div class="mb-3">
                       <label>Crop</label>
                         <select name="Crop" class="form-control">
-                          <option value="" selected> -- SELECT CROP --</option>
+                          <option value="{{$pendingCycles->Crop}}" selected> -- {{$pendingCycles->Crop}} --</option>
                           @foreach ($crops as $crop)
                               <option value="{{ $crop->Product_Name}}">{{ $crop->Product_Name }}</option>
                           @endforeach
@@ -56,23 +65,31 @@
                       @error('Crop') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
+                      <label>Authorization</label>
+                        <select name="Status" class="form-control">
+                          <option value="approved" selected>Approve</option>
+                          <option value="declined">Decline</option>
+                        </select>
+                      @error('Crop') <span class="text-danger">{{ $message}}</span> @enderror
+                    </div>
+                    <div class="mb-3">
                       <label>Customer Name</label>
-                      <input type="text" name="Client_Name" class="form-control" value="{{ old ('Client_Name') }}" />
+                      <input type="text" name="Client_Name" class="form-control" value="{{ $pendingCycles->Client_Name }}" />
                       @error('Client_Name') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
                       <label>Cycle Name</label>
-                      <input type="text" name="Cycle_Name" class="form-control" value="{{ old ('Cycle_Name') }}" />
+                      <input type="text" name="Cycle_Name" class="form-control" value="{{ $pendingCycles->Cycle_Name}}" />
                       @error('Cycle_Name') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
                       <label>Cycle Start</label>
-                      <input type="date" name="Cycle_Start" class="form-control" value="{{ old ('Cycle_Start') }}" />
+                      <input type="date" name="Cycle_Start" class="form-control" value="{{ $pendingCycles->Cycle_Start }}" />
                       @error('Cycle_Start') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
                       <label>Cycle End</label>
-                      <input type="date" name="Cycle_End" class="form-control" value="{{ old ('Cycle_End') }}" />
+                      <input type="date" name="Cycle_End" class="form-control" value="{{ $pendingCycles->Cycle_End}}" />
                       @error('Cycle_End') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
@@ -92,4 +109,5 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
+@endcan
 @endsection

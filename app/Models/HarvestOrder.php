@@ -19,6 +19,8 @@ class HarvestOrder extends Model
         'order_date',
         'planting_date',
         'harvest_date',
+        'checker_id',
+        'maker_id',
     ];
 
     protected $dates = [
