@@ -67,7 +67,7 @@ Route::get('cycles/{Cycle_Id}/sales/create', [App\Http\Controllers\SalesControll
 
 //Checker Validation Route
 Route::get('/checker', [App\Http\Controllers\CheckerController::class,'index'])->middleware(['auth', 'verified'])->name('checker.index');
-Route::get('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'viewDetails'])->middleware(['auth', 'verified'])->name('checker.details');
+Route::get('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'viewCycleDetails'])->middleware(['auth', 'verified'])->name('checker.details');
 Route::post('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'approveCycle'])->middleware(['auth', 'verified'])->name('checker.approve');
 
 Route::get('users', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('users');
