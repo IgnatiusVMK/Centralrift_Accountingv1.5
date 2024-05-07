@@ -16,15 +16,15 @@ class CycleDetailsController extends Controller
     public function index(Request $request)
     {
 
-        $wages = Financial::where('type', 'expenditure')->simplePaginate(15);
-        $salaries = Financial::where('type', 'salary')->simplePaginate(15);
-        $advance = Financial::where('type', 'advance')->simplePaginate(15);
-        $transport = Financial::where('type', 'transport')->simplePaginate(15);
-        $electricity = Financial::where('type', 'electricity')->simplePaginate(15);
-        $maintenance = Financial::where('type', 'maintenance')->simplePaginate(15);
-        $cpexpenses = Financial::where('type', 'Capital Expenses')->simplePaginate(15);
-        $withdrawals = CapitalWithdrawal::simplePaginate(15);
-        $sales = Sales::simplePaginate(15);
+        $wages = Financial::where('type', 'expenditure')->where('Status', 'approved')->simplePaginate(15);
+        $salaries = Financial::where('type', 'salary')->where('Status', 'approved')->simplePaginate(15);
+        $advance = Financial::where('type', 'advance')->where('Status', 'approved')->simplePaginate(15);
+        $transport = Financial::where('type', 'transport')->where('Status', 'approved')->simplePaginate(15);
+        $electricity = Financial::where('type', 'electricity')->where('Status', 'approved')->simplePaginate(15);
+        $maintenance = Financial::where('type', 'maintenance')->where('Status', 'approved')->simplePaginate(15);
+        $cpexpenses = Financial::where('type', 'Capital Expenses')->where('Status', 'approved')->simplePaginate(15);
+        $withdrawals = CapitalWithdrawal::where('Status', 'approved')->simplePaginate(15);
+        $sales = Sales::where('Status', 'approved')->simplePaginate(15);
 
         $Cycle_Id = $request->route('Cycle_Id');
 

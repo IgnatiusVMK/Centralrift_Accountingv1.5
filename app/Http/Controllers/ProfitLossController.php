@@ -14,7 +14,7 @@ class ProfitLossController extends Controller
      */
     public function index()
     {
-        $cycles = Cycles::all();
+        $cycles = Cycles::where('Status', 'approved')->get();
 
         return view('finance.profit-loss', ['cycles' => $cycles]);
     }
@@ -28,8 +28,8 @@ class ProfitLossController extends Controller
 
         if ($cycles != null) {
         foreach ($cycleIds as $cycleId) {
-            $revenue = Account::where('Cycle_Id', $cycleId)->sum('Crd_Amnt');
-            $expenses = Account::where('Cycle_Id', $cycleId)->sum('Dbt_Amt');
+            $revenue = Account::where('Cycle_Id', $cycleId)->where('Status', 'approved')->sum('Crd_Amnt');
+            $expenses = Account::where('Cycle_Id', $cycleId)->where('Status', 'approved')->sum('Dbt_Amt');
             $profitOrLoss = $revenue - $expenses;
 
             $data[] = [
@@ -69,8 +69,8 @@ class ProfitLossController extends Controller
         $expenses = 0;
         $profitOrLoss = 0;
 
-        $revenue = Account::where('Cycle_Id', $cycleId)->sum('Crd_Amnt');
-        $expenses = Account::where('Cycle_Id', $cycleId)->sum('Dbt_Amt');
+        $revenue = Account::where('Cycle_Id', $cycleId)->where('Status', 'approved')->sum('Crd_Amnt');
+        $expenses = Account::where('Cycle_Id', $cycleId)->where('Status', 'approved')->sum('Dbt_Amt');
         $profitOrLoss = $revenue - $expenses;
 
         return response()->json([

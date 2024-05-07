@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Show the default form
-    document.getElementById("Expenditures").classList.add("show", "active");
-    document.getElementById("Expenditures-tab").classList.add("active");
+    document.getElementById("Cycles").classList.add("show", "active");
+    document.getElementById("Cycles-tab").classList.add("active");
 });
 
 function openForm(evt, formName) {

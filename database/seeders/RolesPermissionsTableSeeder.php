@@ -25,7 +25,7 @@ class RolesPermissionsTableSeeder extends Seeder
         }
 
         //Executive Permissions
-        $executivePermissions = [
+        /* $executivePermissions = [
             'access_users',
             'view_users',
             'create_users',
@@ -72,10 +72,10 @@ class RolesPermissionsTableSeeder extends Seeder
             if ($execpermission) {
                 $executiveRole->permissions()->attach($execpermission);
             }
-        }
+        } */
 
         //Management Permissions
-        $managerPermissions = [
+        /* $managerPermissions = [
             'access_maker',
             'view_maker',
             'create_maker',
@@ -110,6 +110,6 @@ class RolesPermissionsTableSeeder extends Seeder
                 $managerRole->permissions()->attach($mngpermission);
             }
         }
-
+ */
     }
 }

@@ -9,13 +9,14 @@ use Illuminate\Http\Request;
 class ExpendituresController extends Controller
 {
     public function index(){
-        $financials = Financial::where('type', 'expenditure')->simplePaginate(10);
+        $financials = Financial::where('type', 'expenditure')->where('Status', 'approved')->simplePaginate(10);
         return view('financials.expenditures.financials', compact('financials'))
         ->with('create', true);;
     }
     public function store(Request $request){
         
         $request->validate([
+            'maker_id' => 'required|max:255|integer',
             'Fin_Id_Id' => 'required|max:255|string',
             'Reason' => 'required|max:255|string',
             'Description' => 'required|max:255|string',
@@ -26,13 +27,15 @@ class ExpendituresController extends Controller
         $data = $request->all();
         $data['type'] = 'expenditure';
 
+        /* dd($data); */
+
         Financial::create($data);
 
-        $this->payOut($request->Amount, $request->Cycle_Id ,$request->Description);
+        $this->payOut($request->Amount, $request->Cycle_Id ,$request->Description, $request->maker_id);
 
         return redirect()->route('cycle.wages.create', ['Cycle_Id' => $request->Cycle_Id])->with('status', 'Record Created');
     }
-    public function payOut($amount, $Cycle, $Description)
+    public function payOut($amount, $Cycle, $Description, $maker_id)
     {
         $transactionId = $this->getNextTransactionId();
     
@@ -46,6 +49,7 @@ class ExpendituresController extends Controller
             'Description' => $Description,
             'Crd_Amnt' => 0,
             'Dbt_Amt' => $amount,
+            'maker_id' => $maker_id,
             'Bal' => $balance,
             'Crd_Dbt_Date' => now(),
             'Date_Created' => now(),

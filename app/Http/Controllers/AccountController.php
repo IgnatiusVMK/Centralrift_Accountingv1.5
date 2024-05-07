@@ -197,9 +197,9 @@ class AccountController extends Controller
 
  public function summary()
     {
-        $totalCredit = Account::sum('Crd_Amnt');
-        $totalDebit = Account::sum('Dbt_Amt');
-        $balance = Account::latest('id')->value('Bal');
+        $totalCredit = Account::where('Status','approved')->sum('Crd_Amnt');
+        $totalDebit = Account::where('Status','approved')->sum('Dbt_Amt');
+        $balance = Account::where('Status','approved')->latest('id')->value('Bal');
 
         return [
             'totalCredit' => $totalCredit,

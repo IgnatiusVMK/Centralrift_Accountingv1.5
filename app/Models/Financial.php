@@ -18,5 +18,11 @@ class Financial extends Model
         'Description',
         'Amount',
         'Cycle_Id',
+        'checker_id',
+        'maker_id',
     ];
+
+    /* public function maker(){
+        return $this->belongsTo(User::class,'maker_id');
+    } */
 }

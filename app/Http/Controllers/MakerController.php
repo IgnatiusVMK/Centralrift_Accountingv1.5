@@ -12,14 +12,13 @@ use App\Models\Product;
 use App\Models\Sales;
 use Illuminate\Http\Request;
 
-class CheckerController extends Controller
+
+class MakerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //
     public function index(Request $request)
     {
-        $this->authorize('access-approval');
+        $this->authorize('access-maker');
 
         $pendingCycles = Cycles::where('Status', 'pending')->get();
         $pendingCyclesCount = Cycles::where('Status', 'pending')->get()->count();
@@ -55,7 +54,7 @@ class CheckerController extends Controller
 
         
         //
-        return view('checker.index', [
+        return view('maker.index', [
             'pendingCycles'=>$pendingCycles,
             'pendingCyclesCount'=>$pendingCyclesCount,
             'wages'=> $wages,
@@ -83,108 +82,4 @@ class CheckerController extends Controller
             'Cycle_Id'=>$Cycle_Id,
         ]);
     }
-
-    public function viewCycleDetails(int $id)
-    {
-        $this->authorize('view-approval');
-
-        $pendingCycles= Cycles::findOrFail($id);
-
-        /* dd($pendingCycles); */
-        
-        $blocks  = Blocks::get();
-        $crops = Product::get();
-        return view('checker.details', [
-            'pendingCycles'=> $pendingCycles,
-            'blocks'=> $blocks,
-            'crops'=> $crops
-        ]);
-
-    }
-    public function approveCycle(Request $request,int $id)
-    {
-        $this->authorize('create-approval');
-
-        $request->validate([
-            'checker_id'=> 'required|max:255|integer',
-            'Status' => 'required|max:255|string',
-        ]);
-        Cycles::where('id', $id)->update([
-            'checker_id'=> $request->checker_id,
-            'Status'=> $request->Status,
-        ]);
-        HarvestOrder::where('id', $id)->update([
-            'checker_id'=> $request->checker_id,
-            'Status'=> $request->Status,
-        ]);
-
-        return redirect()->back()->with('Status','Cycle Approved');
-    }
-    public function approveFinancial(Request $request,int $id)
-    {
-        $this->authorize('create-approval');
-
-        $request->validate([
-            'checker_id'=> 'required|max:255|integer',
-            'Status' => 'required|max:255|string',
-        ]);
-        Financial::where('id', $id)->update([
-            'checker_id'=> $request->checker_id,
-            'Status'=> $request->Status,
-        ]);
-        Account::where('id', $id)->update([
-            'checker_id'=> $request->checker_id,
-            'Status'=> $request->Status,
-        ]);
-
-        return redirect()->back()->with('Status','Receipt Approved');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    /* public function show(string $id)
-    {
-        //
-    } */
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    /* public function edit(string $id)
-    {
-        //
-    } */
-
-    /**
-     * Update the specified resource in storage.
-     */
-    /* public function update(Request $request, string $id)
-    {
-        //
-    } */
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    /* public function destroy(string $id)
-    {
-        //
-    } */
 }

@@ -18,6 +18,8 @@ class Account extends Model
         'Bal',
         'Crd_Dbt_Date',
         'Date_Created',
+        'checker_id',
+        'maker_id',
     ];
 
     // Account.php

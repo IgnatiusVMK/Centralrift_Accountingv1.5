@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@can('view-approval')
+@can('view-maker')
   <div class="col-sm-12">
     <div class="home-tab">
       <div class="d-sm-flex align-items-center justify-content-between border-bottom">
@@ -793,7 +793,7 @@
                   </div>
                   <div class="card-title">
                     <h4 class="text-center">
-                      There are no new pending Approval.
+                      You have no Pending Requests.
                       <i class="mdi mdi-check-all"></i>
                     </h4>
                   </div>

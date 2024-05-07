@@ -22,7 +22,7 @@ class CashBookController extends Controller
     $totalDebit = Account::sum('Dbt_Amt');
     $balance = Account::orderBy('id', 'desc')->value('Bal');
 
-    $cashbook = Account::simplePaginate(15);
+    $cashbook = Account::where('Status', 'approved')->simplePaginate(15);
 
     return view('cashbook.cashbook', [
         'cashbook'=> $cashbook,

@@ -45,7 +45,7 @@
                       <tbody>
                         @foreach ($salaries as $sal )
                         <tr>
-                          <td>{{$sal->Financial_Id}}</td>
+                          <td>{{$sal->id}}</td>
                           <td>{{$sal->Fin_Id_Id}}</td>
                           <td>{{$sal->Reason}}</td>
                           <td>{{$sal->Description}}</td>

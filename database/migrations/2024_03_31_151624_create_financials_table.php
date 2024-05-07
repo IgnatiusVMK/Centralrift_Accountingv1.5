@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('financials', function (Blueprint $table) {
-            $table->id('Financial_Id');
+            $table->id();
             $table->string('Fin_Id_Id');
             $table->string('type');
             $table->string('Reason');
@@ -24,9 +24,6 @@ return new class extends Migration
             $table->unsignedBigInteger('checker_id')->nullable();
             $table->unsignedBigInteger('maker_id')->nullable();
             $table->timestamps();
-
-            $table->foreign('checker_id')->references('id')->on('users');
-            $table->foreign('maker_id')->references('id')->on('users');
         });
     }
 

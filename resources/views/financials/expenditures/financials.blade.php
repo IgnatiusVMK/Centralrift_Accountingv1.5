@@ -44,7 +44,7 @@
                       <tbody>
                         @foreach ($financials as $fin )
                         <tr>
-                          <td>{{$fin->Financial_Id}}</td>
+                          <td>{{$fin->id}}</td>
                           <td>{{$fin->Cycle_Id}}</td>
                           <td>{{$fin->Fin_Id_Id}}</td>
                           <td>{{$fin->Reason}}</td>

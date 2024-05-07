@@ -103,7 +103,7 @@
                           <tbody>
                             @foreach ($wages->where('Cycle_Id', $Cycle_Id) as $wage)
                             <tr>
-                              <td>{{$wage->Financial_Id}}</td>
+                              <td>{{$wage->id}}</td>
                               <td>{{$wage->Cycle_Id}}</td>
                               <td>{{$wage->Fin_Id_Id}}</td>
                               <td>{{$wage->Reason}}</td>
@@ -162,7 +162,7 @@
                         <tbody>
                           @foreach ($advance->where('Cycle_Id', $Cycle_Id) as $adv)
                           <tr>
-                            <td>{{$adv->Financial_Id}}</td>
+                            <td>{{$adv->id}}</td>
                             <td>{{$adv->Cycle_Id}}</td>
                             <td>{{$adv->Fin_Id_Id}}</td>
                             <td>{{$adv->Reason}}</td>
@@ -221,7 +221,7 @@
                         <tbody>
                           @foreach ($salaries->where('Cycle_Id', $Cycle_Id) as $sal)
                           <tr>
-                            <td>{{$sal->Financial_Id}}</td>
+                            <td>{{$sal->id}}</td>
                             <td>{{$sal->Cycle_Id}}</td>
                             <td>{{$sal->Fin_Id_Id}}</td>
                             <td>{{$sal->Reason}}</td>

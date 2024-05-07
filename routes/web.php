@@ -69,6 +69,11 @@ Route::get('cycles/{Cycle_Id}/sales/create', [App\Http\Controllers\SalesControll
 Route::get('/checker', [App\Http\Controllers\CheckerController::class,'index'])->middleware(['auth', 'verified'])->name('checker.index');
 Route::get('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'viewCycleDetails'])->middleware(['auth', 'verified'])->name('checker.details');
 Route::post('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'approveCycle'])->middleware(['auth', 'verified'])->name('checker.approve');
+Route::post('/checker/{Cycle_Id}/{Fin_Id_Id}/validate', [App\Http\Controllers\CheckerController::class,'approveFinancial'])->middleware(['auth', 'verified'])->name('checker.approve');
+
+//Maker
+Route::get('/maker', [App\Http\Controllers\MakerController::class,'index'])->middleware(['auth', 'verified'])->name('maker.index');
+
 
 Route::get('users', [App\Http\Controllers\UsersController::class,'index'])->middleware(['auth', 'verified'])->name('users');
 Route::get('users/create', [App\Http\Controllers\UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('users.create');
