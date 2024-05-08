@@ -47,13 +47,13 @@ class ElectrictyController extends Controller
 
         Financial::create($data);
 
-        $this->payOut($request->Amount, $request->Cycle_Id, $request->Reason.' '. $request->Description);
+        $this->payOut($request->Amount, $request->Cycle_Id, $request->Reason.' '. $request->Description, $request->maker_id);
 
         $Cycle_Id = $request->route('Cycle_Id');
         return redirect()->route('cycle.electricity.create', ['Cycle_Id' => $Cycle_Id])->with('status', 'Electricity Payment Created');
     }
 
-    public function payOut($amount, $Cycle, $Description)
+    public function payOut($amount, $Cycle, $Description, $maker_id)
     {
         $transactionId = $this->getNextTransactionId();
     
@@ -67,6 +67,7 @@ class ElectrictyController extends Controller
             'Description' => $Description,
             'Crd_Amnt' => 0,
             'Dbt_Amt' => $amount,
+            'maker_id' => $maker_id,
             'Bal' => $balance,
             'Crd_Dbt_Date' => now(),
             'Date_Created' => now(),

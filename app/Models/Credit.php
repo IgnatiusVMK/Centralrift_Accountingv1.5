@@ -15,7 +15,10 @@ class Credit extends Model
         'Credit_Id',
         'Source',
         'Description',
-        'Amount'
+        'Amount',
+        'Status',
+        'checker_id',
+        'maker_id'
     ];
     public function account()
     {

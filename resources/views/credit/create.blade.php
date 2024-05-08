@@ -21,6 +21,11 @@
                     @csrf
 
                     <div class="mb-3">
+                      {{-- <label>Maker ID</label> --}}
+                      <input type="hidden" name="maker_id" class="form-control" value="{{Auth::user()->id}}" readonly/>
+                      @error('maker_id') <span class="text-danger">{{ $message}}</span> @enderror
+                    </div>
+                    <div class="mb-3">
                       <label>Credit_Id</label>
                       <input type="text" name="Credit_Id" class="form-control" value="{{ $uniqueCode }}" readonly/>
                       @error('Credit_Id') <span class="text-danger">{{ $message}}</span> @enderror

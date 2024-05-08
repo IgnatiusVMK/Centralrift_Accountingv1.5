@@ -26,6 +26,12 @@
                   </div>
                   <form action="{{ url('financials/advance/create')}}" method="post">
                     @csrf
+
+                    <div class="mb-3">
+                      {{-- <label>Maker ID</label> --}}
+                      <input type="hidden" name="maker_id" class="form-control" value="{{Auth::user()->id}}" readonly/>
+                      @error('maker_id') <span class="text-danger">{{ $message}}</span> @enderror
+                    </div>
                       <div class="mb-3">
                         <label>Cycle</label>
                         <input type="hidden" name="Cycle_Id" class="form-control" value="{{ $Cycle_Id }}" readonly/>

@@ -20,6 +20,9 @@ class Sales extends Model
         'Total_Price',
         'Payment_Method',
         'Payment_Status',
+        'Status',
+        'checker_id',
+        'maker_id'
     ];
 
     public function products()

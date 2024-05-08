@@ -45,14 +45,14 @@ class CapitalWithdrawalController extends Controller
         
         CapitalWithdrawal::create($data);
 
-        $this->payOut($request->Amount, $request->Description);
+        $this->payOut($request->Amount, $request->Description, $request->maker_id);
 
         $Cycle_Id = $request->route('Cycle_Id');
         return redirect()->route('cycle.capital-withdrawal.create', ['Cycle_Id' => $Cycle_Id])->with('status', 'Withdrawal Recorded');
 
     }
 
-    public function payOut($amount, $Description)
+    public function payOut($amount, /* $Cycle,  */ $Description, $maker_id)
     {
         $transactionId = $this->getNextTransactionId();
     
@@ -66,6 +66,7 @@ class CapitalWithdrawalController extends Controller
             'Description' => $Description,
             'Crd_Amnt' => 0,
             'Dbt_Amt' => $amount,
+            'maker_id' => $maker_id,
             'Bal' => $balance,
             'Crd_Dbt_Date' => now(),
             'Date_Created' => now(),

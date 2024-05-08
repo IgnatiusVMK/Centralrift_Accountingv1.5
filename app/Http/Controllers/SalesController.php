@@ -62,7 +62,7 @@ class SalesController extends Controller
             'Payment_Status' => $request->Payment_Status,
         ]);
 
-        $this->payIn($request->Total_Price, $request->Cycle_Id, $request->Sales_Id);
+        $this->payIn($request->Total_Price, $request->Cycle_Id, $request->Sales_Id, $request->maker_id);
 
         // Update or create records in products_sales table
         /* foreach ($request->products'] as $product) {
@@ -82,7 +82,7 @@ class SalesController extends Controller
         return redirect()->route('cycle.sales.create', ['Cycle_Id' => $Cycle_Id])->with('status', 'Sale Recorded.');
     }
 
-    public function payIn($amount, $Cycle, $Description)
+    public function payIn($amount, $Cycle, $Description, $maker_id)
     {
         $transactionId = $this->getNextTransactionId();
     
@@ -96,6 +96,7 @@ class SalesController extends Controller
             'Description' => $Description,
             'Crd_Amnt' => $amount,
             'Dbt_Amt' => 0,
+            'maker_id' => $maker_id,
             'Bal' => $balance,
             'Crd_Dbt_Date' => now(),
             'Date_Created' => now(),

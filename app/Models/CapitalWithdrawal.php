@@ -14,7 +14,10 @@ class CapitalWithdrawal extends Model
     protected $fillable = [
         'Capt_Withdraw_Id',
         'Description',
-        'Amount'
+        'Amount',
+        'Status',
+        'checker_id',
+        'maker_id'
     ];
     public function account()
     {

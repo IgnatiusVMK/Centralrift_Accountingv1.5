@@ -19,6 +19,12 @@
                   </div>
                   <form action="{{ url('capital-withdrawal/'.$Cycle_Id.'/create')}}" method="POST">
                     @csrf
+
+                    <div class="mb-3">
+                      {{-- <label>Maker ID</label> --}}
+                      <input type="hidden" name="maker_id" class="form-control" value="{{Auth::user()->id}}" readonly/>
+                      @error('maker_id') <span class="text-danger">{{ $message}}</span> @enderror
+                    </div>
                     <div class="mb-3">
                       <input type="hidden" name="Cycle_Id" class="form-control" value="{{ $Cycle_Id }}" readonly/>
                     </div>

@@ -43,11 +43,11 @@ class MaintenanceController extends Controller
 
         Financial::create($data);
 
-        $this->payOut($request->Amount, $request->Cycle_Id ,$request->Description);
+        $this->payOut($request->Amount, $request->Cycle_Id ,$request->Description, $request->maker_id);
 
         return redirect()->route('cycle.maintenance.create', ['Cycle_Id' => $request->Cycle_Id])->with('status', 'Record Created');
     }
-    public function payOut($amount, $Cycle, $Description)
+    public function payOut($amount, $Cycle, $Description, $maker_id)
     {
         $transactionId = $this->getNextTransactionId();
     
@@ -61,6 +61,7 @@ class MaintenanceController extends Controller
             'Description' => $Description,
             'Crd_Amnt' => 0,
             'Dbt_Amt' => $amount,
+            'maker_id' => $maker_id,
             'Bal' => $balance,
             'Crd_Dbt_Date' => now(),
             'Date_Created' => now(),
