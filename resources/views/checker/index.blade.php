@@ -232,7 +232,7 @@
                                 <td>{{$wage->Description}}</td>
                                 <td>Ksh {{$wage->Amount}}</td>
                                 <td>
-                                  {{$wage->maker->name}}
+                                  {{$wage->maker?->name}}
                                 </td>
                                 <td>{{$wage->created_at}}</td>
                                 @can('create-approval')
