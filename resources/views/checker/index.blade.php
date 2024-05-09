@@ -293,19 +293,50 @@
                                 Amount
                               </th>
                               <th>
+                                Maker
+                              </th>
+                              @can('create-approval')
+                              <th>
+                                Edit
+                              </th>
+                              @endcan
+                              @can('create-approval')
+                              <th>
+                                Validate
+                              </th>
+                              @endcan
+                              <th>
                                 Payment Date
                               </th>
                             </tr>
                           </thead>
                           <tbody>
-                            @foreach ($advance->where('Cycle_Id', $Cycle_Id) as $adv)
+                            @foreach ($advance as $adv)
                             <tr>
-                              <td>{{$adv->Financial_Id}}</td>
+                              <td>{{$adv->id}}</td>
                               <td>{{$adv->Cycle_Id}}</td>
                               <td>{{$adv->Fin_Id_Id}}</td>
                               <td>{{$adv->Reason}}</td>
                               <td>{{$adv->Description}}</td>
                               <td>Ksh {{$adv->Amount}}</td>
+                              <td>
+                                {{$adv->maker?->name}}
+                              </td>
+                              @can('create-approval')
+                                <td>
+                                    <a href="{{ url('checker/'.$adv->id.'/validate')}}">Modify<i class="mdi mdi-border-color"></i></a>
+                                </td>
+                              @endcan
+                              @can('create-approval')
+                                <td>
+                                    <form action="{{ url('checker/'.$adv->id.'/'.$adv->Fin_Id_Id.'/validate')}}" method="POST">
+                                        @csrf
+                                          <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                                          <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
+                                        <button type="submit" class="btn btn-danger">Approve</button>
+                                      </form>
+                                </td>
+                              @endcan
                               <td>{{$adv->created_at}}</td>
                             </tr>
                             @endforeach
