@@ -28,7 +28,6 @@ class CustomersTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
-            // Add more customer entries as needed
         ];
 
         DB::table('customers')->insert($customers);

@@ -25,6 +25,7 @@ class CheckerController extends Controller
         $pendingCyclesCount = Cycles::where('Status', 'pending')->get()->count();
 
         $wages = Financial::where('type', 'expenditure')->where('Status', 'pending')->get();
+        // dd($wages->first()->maker);
 
         //
         

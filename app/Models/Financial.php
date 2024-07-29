@@ -22,7 +22,7 @@ class Financial extends Model
         'maker_id',
     ];
 
-    /* public function maker(){
+    public function maker(){
         return $this->belongsTo(User::class,'maker_id');
-    } */
+    }
 }

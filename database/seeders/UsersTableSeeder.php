@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Ignatius Victor',
                 'email' => 'ignatiusvmk@domain.org',
                 'is_active' => true,
-                'role' => 'IT Admin',
+                'role' => 'ICT Admin',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'remember_token' => Str::random(10),
