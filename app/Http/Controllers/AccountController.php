@@ -39,10 +39,10 @@ class AccountController extends Controller
             'Crd_Dbt_Date' => 'required|date',
             'Date_Created' => 'required|date',
         ]);
-    
+
         $data = $request->all();
-        $data['Description'] = $request->Fin_Id_Id; 
-    
+        $data['Description'] = $request->Fin_Id_Id;
+
 
         $account = Account::createWithTransactionId($data);
 
@@ -72,7 +72,7 @@ class AccountController extends Controller
 
     public static function getNextTransactionId()
     {
-        
+
         $lastAccount = Account::latest()->first();
 
         $lastTransactionId = $lastAccount ? $lastAccount->Transaction_Id : 0;
@@ -86,7 +86,7 @@ class AccountController extends Controller
     }
     public static function createWithTransactionId($data)
     {
-  
+
         $data['Transaction_Id'] = self::getNextTransactionId();
         $account = Account::create($data);
 
@@ -139,24 +139,24 @@ class AccountController extends Controller
     }
 
     public function payOut($amount, $Fin_Id_Id)
-{
-    // Calculate the balance
-    $lastAccount = Account::latest()->first();
-    $balance = $lastAccount ? $lastAccount->Bal : 0;
-    $balance -= $amount;
+    {
+        // Calculate the balance
+        $lastAccount = Account::latest()->first();
+        $balance = $lastAccount ? $lastAccount->Bal : 0;
+        $balance -= $amount;
 
-    // Create a new record in the accounts table
-    Account::create([
-        'Description' => $Fin_Id_Id,
-        'Crd_Amnt' => 0,
-        'Dbt_Amt' => $amount,
-        'Bal' => $balance,
-        'Crd_Dbt_Date' => now(),
-        'Date_Created' => now(),
-    ]);
-}
+        // Create a new record in the accounts table
+        Account::create([
+            'Description' => $Fin_Id_Id,
+            'Crd_Amnt' => 0,
+            'Dbt_Amt' => $amount,
+            'Bal' => $balance,
+            'Crd_Dbt_Date' => now(),
+            'Date_Created' => now(),
+        ]);
+    }
 
-/* public function payOut($amount, $Fin_Id_Id)
+    /* public function payOut($amount, $Fin_Id_Id)
 {
     // Calculate the balance
     $lastAccount = Account::latest()->first();
@@ -177,7 +177,7 @@ class AccountController extends Controller
  */
 
 
-/* public function summary()
+    /* public function summary()
 {
     $totalCredit = Account::sum('Crd_Amnt');
     $totalDebit = Account::sum('Dbt_Amt');
@@ -195,11 +195,11 @@ class AccountController extends Controller
  */
 
 
- public function summary()
+    public function summary()
     {
-        $totalCredit = Account::where('Status','approved')->sum('Crd_Amnt');
-        $totalDebit = Account::where('Status','approved')->sum('Dbt_Amt');
-        $balance = Account::where('Status','approved')->latest('id')->value('Bal');
+        $totalCredit = Account::where('Status', 'approved')->sum('Crd_Amnt');
+        $totalDebit = Account::where('Status', 'approved')->sum('Dbt_Amt');
+        $balance = Account::where('Status', 'approved')->latest('id')->value('Bal');
 
         return [
             'totalCredit' => $totalCredit,
@@ -207,6 +207,4 @@ class AccountController extends Controller
             'balance' => $balance
         ];
     }
-
-
 }
