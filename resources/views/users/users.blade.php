@@ -39,7 +39,8 @@
                             Department
                           </th>
                           <th>
-                            Authentication
+                            {{-- Authentication --}}
+                            User-Role
                           </th>
                           <th>
                             Date Added
@@ -74,18 +75,25 @@
                             <div>712345678</div>
                           </td>
                           <td>
+                            <div>
                             @foreach ($user->departments as $index => $dep)
-                                {{ $dep->department_name }}
+                                <b>{{ $dep->department_name }}</b>
                                 @if ($index < count($user->departments) - 1)
-                                    , <!-- Add a comma if there are more departments -->
+                                    <!-- Add a comma if there are more departments -->
                                 @endif
                             @endforeach
+                            </div>
+                            <br>
+                            <div><b>Auth: </b> {{$user->role }}</div>
                           </td>
                           <td>
                             @can('modify-users')
                               <a href="{{ url('users-roles-permissions/'.$user->id.'/create')}}"><i class="mdi mdi-border-color"></i>
                             @endcan
-                              {{$user->role}}
+                              @foreach ($user->roles as $index => $u_role)
+                                {{$u_role->Name}}
+                              @endforeach
+                              {{-- {{$user->roles}} --}}
                             </a>
                           </td>
                           <td>{{$user->created_at}}</td>

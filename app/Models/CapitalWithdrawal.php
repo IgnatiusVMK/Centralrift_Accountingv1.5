@@ -23,4 +23,7 @@ class CapitalWithdrawal extends Model
     {
         return $this->belongsTo(Account::class);
     }
+    public function maker(){
+        return $this->belongsTo(User::class,'maker_id');
+    }
 }

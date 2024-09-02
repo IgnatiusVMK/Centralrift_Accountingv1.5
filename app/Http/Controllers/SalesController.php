@@ -41,6 +41,7 @@ class SalesController extends Controller
 
     public function store(Request $request){
         $request->validate([
+            'maker_id' => 'required|max:255|integer',
             'Sales_Id' => 'required|max:255|string',
             'Customer_Id' => 'required|max:255|string',
             'Cycle_Id' => 'required|max:255|string',
@@ -52,6 +53,7 @@ class SalesController extends Controller
         ]);
 
         Sales::create([
+            'maker_id' => $request->maker_id,
             'Sales_Id' => $request->Sales_Id,
             'Customer_Id' => $request->Customer_Id,
             'Cycle_Id' => $request->Cycle_Id,

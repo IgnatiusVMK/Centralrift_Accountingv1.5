@@ -11,6 +11,8 @@ use App\Models\HarvestOrder;
 use App\Models\Product;
 use App\Models\Sales;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class CheckerController extends Controller
 {
@@ -102,7 +104,7 @@ class CheckerController extends Controller
         ]);
 
     }
-    public function approveCycle(Request $request,int $id)
+    public function approveCycle(Request $request, string $Cycle_Id)
     {
         $this->authorize('create-approval');
 
@@ -110,18 +112,18 @@ class CheckerController extends Controller
             'checker_id'=> 'required|max:255|integer',
             'Status' => 'required|max:255|string',
         ]);
-        Cycles::where('id', $id)->update([
+        Cycles::where('Cycle_Id', $Cycle_Id)->update([
             'checker_id'=> $request->checker_id,
             'Status'=> $request->Status,
         ]);
-        HarvestOrder::where('id', $id)->update([
+        HarvestOrder::where('Cycle_Id', $Cycle_Id)->update([
             'checker_id'=> $request->checker_id,
             'Status'=> $request->Status,
         ]);
 
         return redirect()->back()->with('Status','Cycle Approved');
     }
-    public function approveFinancial(Request $request,int $id)
+    public function approveFinancial(Request $request, string $Cycle_Id, string $Fin_Id_Id, int $id,)
     {
         $this->authorize('create-approval');
 
@@ -139,6 +141,52 @@ class CheckerController extends Controller
         ]);
 
         return redirect()->back()->with('Status','Receipt Approved');
+    }
+
+    public function approveSale(Request $request, string $Sales_Id, int $id, )
+    {
+
+        $this->authorize('create-approval');
+
+        $request->validate([
+            'checker_id'=> 'required|max:255|integer',
+            'Status' => 'required|max:255|string',
+        ]);
+        
+        $sale = Sales::where('id', $id)->update([
+            'checker_id'=> $request->checker_id,
+            'Status'=> $request->Status,
+        ]);
+
+        /* if (!$sale) {
+            return redirect()->back()->with('error', 'Sale not found.');
+        } */
+
+        Account::where('Description', $Sales_Id)->update([
+            'checker_id'=> $request->checker_id,
+            'Status'=> $request->Status,
+        ]);
+
+        return redirect()->back()->with('Status','Sale approved.');
+    }
+
+    public function approveCaptWithdrawal(Request $request, string $Capt_Withdraw_Id, int $id,){
+
+        $this->authorize('create-approval');
+
+        $request->validate([
+            'checker_id'=> 'required|max:255|integer',
+            'Status'=> 'required|max:255|string',        
+        ]);
+
+        CapitalWithdrawal::where('Capt_Withdraw_Id', $id)->update([
+            'checker_id'=> $request->checker_id,
+            'Status'=> $request->Status,
+        ]);
+        Account::where('Description', $Capt_Withdraw_Id)->update([
+            'checker_id'=> $request->checker_id,
+            'Status'=> $request->Status,
+        ]);
     }
 
     /**

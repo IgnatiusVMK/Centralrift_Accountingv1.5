@@ -306,9 +306,9 @@ $currentDate= new DateTime();
                                 <table class="table">
                                   <thead>
                                     <tr>
-                                      <th>Company Name</th>
-                                      <th>Product Name</th>
-                                      <th>Status</th>
+                                      <th>Company :</th>
+                                      <th>Product:</th>
+                                      <th>Status :</th>
                                     </tr>
                                   </thead>
                                   <tbody>

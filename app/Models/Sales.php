@@ -33,4 +33,8 @@ class Sales extends Model
     public function customer(){
         return $this->belongsTo(Customers::class, 'Customer_Id', 'Customer_Id');
     }
+
+    public function maker(){
+        return $this->belongsTo(User::class,'maker_id');
+    }
 }

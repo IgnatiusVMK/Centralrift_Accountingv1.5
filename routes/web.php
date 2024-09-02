@@ -64,9 +64,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     //Checker Validation Route
     Route::get('/checker', [App\Http\Controllers\CheckerController::class,'index'])->name('checker.index');
     Route::get('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'viewCycleDetails'])->name('checker.details');
-    Route::post('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'approveCycle'])->name('checker.approve');
-    Route::post('/checker/{Cycle_Id}/{Fin_Id_Id}/validate', [App\Http\Controllers\CheckerController::class,'approveFinancial'])->name('checker.approve');
-
+    Route::post('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'approveCycle'])->name('checker.approveCycles');
+    Route::post('/checker/{Sales_Id}/{id}/validate', [App\Http\Controllers\CheckerController::class, 'approveSale'])->name('checker.approveSales');
+    Route::post('/checker/{Cycle_Id}/{Fin_Id_Id}/{id}/validate', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveFinancials');
+    
     //Maker
     Route::get('/maker', [App\Http\Controllers\MakerController::class,'index'])->name('maker.index');
 

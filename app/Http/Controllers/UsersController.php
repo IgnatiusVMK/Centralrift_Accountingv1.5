@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departments;
+use App\Models\Roles;
 use App\Models\User;
 use App\Models\UsersDepartments;
 use Illuminate\Http\Request;
@@ -16,7 +17,11 @@ class UsersController extends Controller
         $this->authorize('access-users');
 
         $users = User::with('departments')->get();
-        return view('users.users', compact('users'));
+        $role = Roles::get();
+        return view('users.users', [
+            'users'=> $users,
+            'role'=> $role,
+        ]);
     }
     public function create(){
         $this->authorize('create-users');
