@@ -18,7 +18,8 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'System Administrator',
-                'email' => 'sysadmin@domain.org',
+                /* 'email' => 'sysadmin@domain.org', */
+                'email' => 'ivmkariuki@gmail.com',
                 'is_active' => true,
                 'role' => 'System Admin',
                 'email_verified_at' => now(),
@@ -29,7 +30,8 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'Ignatius Victor',
-                'email' => 'ignatiusvmk@domain.org',
+                /* 'email' => 'ignatiusvmk@domain.org', */
+                'email' => 'ivmkariuki@gmail.com',
                 'is_active' => true,
                 'role' => 'ICT Admin',
                 'email_verified_at' => now(),
@@ -40,7 +42,8 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'Michael Mwai',
-                'email' => 'mmwai@domain.org',
+                /* 'email' => 'mmwai@domain.org', */
+                'email' => 'ivmkariuki@gmail.com',
                 'is_active' => true,
                 'role' => 'user',
                 'email_verified_at' => now(),
@@ -51,7 +54,8 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'Lydiah Gichuki',
-                'email' => 'lgichuki@domain.org',
+                /* 'email' => 'lgichuki@domain.org', */
+                'email' => 'ivmkariuki@gmail.com',
                 'is_active' => true,
                 'role' => 'user',
                 'email_verified_at' => now(),
@@ -62,7 +66,8 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'Zackary Gichuki',
-                'email' => 'zgichuki@domain.org',
+                /* 'email' => 'zgichuki@domain.org', */
+                'email' => 'ivmkariuki@gmail.com',
                 'is_active' => true, //false
                 'role' => 'user',
                 'email_verified_at' => now(),

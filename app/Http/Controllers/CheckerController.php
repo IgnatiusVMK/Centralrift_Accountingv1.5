@@ -131,11 +131,11 @@ class CheckerController extends Controller
             'checker_id'=> 'required|max:255|integer',
             'Status' => 'required|max:255|string',
         ]);
-        Financial::where('id', $id)->update([
+        Financial::where('Fin_Id_Id', $Fin_Id_Id)->update([
             'checker_id'=> $request->checker_id,
             'Status'=> $request->Status,
         ]);
-        Account::where('id', $id)->update([
+        Account::where('Financial_Id', $Fin_Id_Id)->update([
             'checker_id'=> $request->checker_id,
             'Status'=> $request->Status,
         ]);
@@ -158,11 +158,11 @@ class CheckerController extends Controller
             'Status'=> $request->Status,
         ]);
 
-        /* if (!$sale) {
+        if (!$sale) {
             return redirect()->back()->with('error', 'Sale not found.');
-        } */
+        }
 
-        Account::where('Description', $Sales_Id)->update([
+        Account::where('Financial_Id', $Sales_Id)->update([
             'checker_id'=> $request->checker_id,
             'Status'=> $request->Status,
         ]);
@@ -170,7 +170,7 @@ class CheckerController extends Controller
         return redirect()->back()->with('Status','Sale approved.');
     }
 
-    public function approveCaptWithdrawal(Request $request, string $Capt_Withdraw_Id, int $id,){
+    public function approveCaptWithdrawal(Request $request, string $Capt_Withdraw_Id /* , int $id, */){
 
         $this->authorize('create-approval');
 
@@ -179,14 +179,16 @@ class CheckerController extends Controller
             'Status'=> 'required|max:255|string',        
         ]);
 
-        CapitalWithdrawal::where('Capt_Withdraw_Id', $id)->update([
+        CapitalWithdrawal::where('Capt_Withdraw_Id', $Capt_Withdraw_Id)->update([
             'checker_id'=> $request->checker_id,
             'Status'=> $request->Status,
         ]);
-        Account::where('Description', $Capt_Withdraw_Id)->update([
+        Account::where('Financial_Id', $Capt_Withdraw_Id)->update([
             'checker_id'=> $request->checker_id,
             'Status'=> $request->Status,
         ]);
+
+        return redirect()->back()->with('Status','Withdrawal approved.');
     }
 
     /**

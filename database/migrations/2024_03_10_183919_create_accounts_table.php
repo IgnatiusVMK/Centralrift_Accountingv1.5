@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('Transaction_Id');
             $table->string('Cycle_Id')->nullable();
+            $table->string('Financial_Id')->nullable();
             $table->string('Description');
             $table->integer('Crd_Amnt');
             $table->integer('Dbt_Amt');

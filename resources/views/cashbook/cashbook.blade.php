@@ -13,8 +13,18 @@
       <div>
         <div class="btn-wrapper">
           <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
-          <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
-          <a href="{{ ('/cashbook/export-pdf') }}" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
+          <a href="{{ ('/cashbook/export-pdf') }}" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
+          {{-- <a href="{{ ('/cashbook/send-email') }}" class="btn btn-primary text-white me-0"><i class="icon-download"></i>Mail --}}
+          <form action="{{url('cashbook/send-email')}}" method="post">
+              @csrf
+              {{-- Mail_to --}}
+                <input type="hidden" class="form-control" value="{{ Auth::user()->email}}" 
+                  id="mail_to" type="email" name="mail_to"
+                readonly/>
+                @error('mail_to')<small class="text-red-600 font-medium">{{$message}}</small>@enderror
+              <button type="submit" class="btn btn-primary text-white me-0">Email</button>
+          </form>
+          {{-- </a> --}}
         </div>
       </div>
     </div>

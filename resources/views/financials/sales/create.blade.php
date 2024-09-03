@@ -66,7 +66,7 @@
                           @error('Total_Price') <span class="text-danger">{{ $message}}</span> @enderror
                         </div>
                         <div class="mb-3">
-                          <label>Date</label>
+                          <label>Date (mm/dd/yyyy)</label>
                           <input type="date" name="Sale_Date" class="form-control" value="{{ old ('Sale_Date') }}" />
                           @error('Sale_Date') <span class="text-danger">{{ $message}}</span> @enderror
                         </div>

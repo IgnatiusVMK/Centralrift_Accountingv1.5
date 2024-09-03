@@ -1,11 +1,9 @@
 <?php
 
-use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CashBookController;
-use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProfitLossController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +66,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/checker/{Sales_Id}/{id}/validate', [App\Http\Controllers\CheckerController::class, 'approveSale'])->name('checker.approveSales');
     Route::post('/checker/{Cycle_Id}/{Fin_Id_Id}/{id}/validate', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveFinancials');
     
+/*     Route::get('/checker/withdrawals/{Capt_Withdraw_Id}/modify', [App\Http\Controllers\CheckerController::class,'viewWithdrawalDetails'])->name('checker.Withdrawal.details'); */
+    Route::post('/checker/withdrawals/{Capt_Withdraw_Id}/approve', [App\Http\Controllers\CheckerController::class,'approveCaptWithdrawal'])->name('checker.approveWithdrawal');
+
     //Maker
     Route::get('/maker', [App\Http\Controllers\MakerController::class,'index'])->name('maker.index');
 
@@ -172,12 +173,18 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('cashbook', [App\Http\Controllers\CashBookController::class,'index'])->name('cashbook');
 
-    Route::get('/generate-pdf', [PdfController::class, 'generatePdf']);
-
-    Route::get('/cashbook/export-pdf', [CashBookController::class, 'exportPdf']);
+    Route::get('cashbook/export-pdf', [CashBookController::class, 'exportPdf']);
+/*     Route::get('/cashbook/send-email', [CashBookController::class, 'exportMail']); */
+    Route::post('/cashbook/send-email', [App\Http\Controllers\CashBookController::class, 'sendAsMail']);
 
     Route::get('/profit-loss', [App\Http\Controllers\ProfitLossController::class, 'index'])->name('profit-loss');
     Route::get('/profit-loss/{Cycle_Id}', [App\Http\Controllers\ProfitLossController::class, 'show'])->name('profit-loss.show');
+
+
+    //Test Routes for Laravel Mail
+    Route::get('/welcome', [MailController::class, 'index']);
+
+    Route::post('send-mail', [MailController::class, 'sendMail']);
 
 });
 

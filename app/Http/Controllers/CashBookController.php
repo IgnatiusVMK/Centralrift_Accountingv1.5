@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendMail;
 use App\Models\Account;
 use App\Models\Financial;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class CashBookController extends Controller
@@ -17,7 +19,8 @@ class CashBookController extends Controller
      */
     public function index()
     {
-        // Calculate the summary
+
+    // Calculate the summary
     $totalCredit = Account::sum('Crd_Amnt');
     $totalDebit = Account::sum('Dbt_Amt');
     $balance = Account::orderBy('id', 'desc')->value('Bal');
@@ -54,14 +57,6 @@ class CashBookController extends Controller
 
         $data = compact('cashbook', 'totalCredit', 'totalDebit', 'balance');
     
-        // Pass data to the view
-        /* $data = [
-            'cashbook' => $cashbook,
-            'totalCredit' => $summary['totalCredit'],
-            'totalDebit' => $summary['totalDebit'],
-            'balance' => $summary['balance'],
-        ]; */
-    
         // Render the view to HTML
         $html = view('cashbook.pdf', $data)->render();
         $dompdf->loadHtml($html);
@@ -75,7 +70,30 @@ class CashBookController extends Controller
             ->header('Content-Length', strlen($dompdf->output()));
     }
 
-    
+    public function sendAsMail(Request $request)
+    {
+
+        $now = Carbon::now('Africa/Nairobi');
+        $currentTime = $now->format('Y-m-d h:i:s');
+
+        $request->validate([
+            'mail_to' => 'required',
+        ]);
+
+        $dispatchData = [
+            'mail_to' => $request->mail_to,
+            'subject' => "Monthly Cashbook Report",
+            'message' => "Your cashbook for this month has been exported today as at; " . $currentTime .", and has been attached below.",
+            'mailable' => "CashbookMail",
+            'user_name' => Auth::user()->name,
+        ];
+
+        dispatch(new SendMail($dispatchData));
+        /* SendMail::dispatch($dispatchData); */
+
+        toastr()->success('Mail sent successfully');
+        return redirect('/cashbook');
+    }
 
     public function create()
     {

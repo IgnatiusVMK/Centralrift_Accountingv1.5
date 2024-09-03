@@ -40,12 +40,12 @@ class ExpendituresController extends Controller
 
             Financial::create($data);
 
-            $this->payOut($request->Amount, $request->Cycle_Id, $request->Description, $request->maker_id);
+            $this->payOut($request->Amount, $request->Cycle_Id, $request->Description, $request->maker_id, $request->Fin_Id_Id);
         });
         
         return redirect()->route('cycle.wages.create', ['Cycle_Id' => $request->Cycle_Id])->with('status', 'Record Created');
     }
-    public function payOut($amount, $Cycle, $Description, $maker_id)
+    public function payOut($amount, $Cycle, $Description, $maker_id, $Fin_Id_Id)
     {
         $transactionId = $this->getNextTransactionId();
 
@@ -56,6 +56,7 @@ class ExpendituresController extends Controller
         Account::create([
             'Transaction_Id' => $transactionId,
             'Cycle_Id' => $Cycle,
+            'Financial_Id'=> $Fin_Id_Id,
             'Description' => $Description,
             'Crd_Amnt' => 0,
             'Dbt_Amt' => $amount,

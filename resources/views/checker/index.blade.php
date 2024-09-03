@@ -487,17 +487,17 @@
                             </td>
                             @can('create-approval')
                             <td>
-                                <a href="{{ url('checker/'.$withd->id.'/validate')}}">Modify<i class="mdi mdi-border-color"></i></a>
+                                <a href="{{ url('checker/withdrawals/'.$withd->Capt_Withdraw_Id.'/modify')}}">Modify<i class="mdi mdi-border-color"></i></a>
                             </td>
                             @endcan
                             @can('create-approval')
                             <td>
-                                <form action="{{ url('checker/'.$withd->Cycle_Id.'/validate')}}" method="POST">
+                                <form action="{{ url('checker/withdrawals/'.$withd->Capt_Withdraw_Id.'/approve')}}" method="POST">
                                     @csrf
                                       <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
                                       <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
                                     <button type="submit" class="btn btn-danger">Approve</button>
-                                  </form>
+                                </form>
                             </td>
                             @endcan
                             </tr>

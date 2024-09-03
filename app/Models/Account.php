@@ -12,6 +12,7 @@ class Account extends Model
     protected $fillable = [
         'Transaction_Id',
         'Cycle_Id',
+        'Financial_Id',
         'Description',
         'Crd_Amnt',
         'Dbt_Amt',
