@@ -1,7 +1,12 @@
 <?php
+
+use Carbon\Carbon;
 // Get current date and time
 $days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-$currentDate = new DateTime();
+
+$timezone = Carbon::now('Africa/Nairobi');
+$currentDate = new DateTime($timezone);
+
 $day = $days[$currentDate->format('w')];
 $date = $currentDate->format('d');
 $month = $currentDate->format('m');
@@ -69,7 +74,7 @@ $currentDateTime = $day . ', ' . $date . '/' . $month . '/' . $year . '<br>' . $
         }
 
         .text-xl {
-            font-size: 1.25rem; /* 20px */
+            font-size: 1.25rem;
         }
 
         .font-bold {

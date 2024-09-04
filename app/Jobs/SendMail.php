@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class SendMail implements ShouldQueue
 {
@@ -58,15 +59,8 @@ class SendMail implements ShouldQueue
     try {
         Mail::to($mailTo)->send($mailable);
     } catch (\Exception $e) {
-        \Log::error('Failed to send email: ' . $e->getMessage());
+        Log::error('Failed to send email: ' . $e->getMessage());
         throw $e; // Re-throw the exception to mark the job as failed
     }
-    
-
-
-        /* Mail::to($this->data['mail_to'])->send(new WelcomeMail([
-            'subject' => $this->data['subject'],
-            'message' => $this->data['message'],
-        ])); */
     }
 }
