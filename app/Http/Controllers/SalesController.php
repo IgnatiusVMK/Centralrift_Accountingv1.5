@@ -64,7 +64,7 @@ class SalesController extends Controller
             'Payment_Status' => $request->Payment_Status,
         ]);
 
-        $this->payIn($request->Total_Price, $request->Cycle_Id, $request->Customer_Id, $request->maker_id, $request->Sales_Id);
+        $this->payIn($request->Total_Price, $request->Cycle_Id, $request->Sales_Id, $request->maker_id, $request->Sales_Id);
 
         // Update or create records in products_sales table
         /* foreach ($request->products'] as $product) {

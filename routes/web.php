@@ -65,9 +65,16 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'approveCycle'])->name('checker.approveCycles');
     Route::post('/checker/{Sales_Id}/{id}/validate', [App\Http\Controllers\CheckerController::class, 'approveSale'])->name('checker.approveSales');
     Route::post('/checker/{Cycle_Id}/{Fin_Id_Id}/{id}/validate', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveFinancials');
-    
+    Route::post('/checker/salaries/{Cycle_Id}/{Fin_Id_Id}/{id}/approve', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveSalaries');
+    Route::post('/checker/advances/{Cycle_Id}/{Fin_Id_Id}/{id}/approve', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveAdvances');
+    Route::post('/checker/transport/{Cycle_Id}/{Fin_Id_Id}/{id}/approve', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveTransport');
+    Route::post('/checker/maintenance/{Cycle_Id}/{Fin_Id_Id}/{id}/approve', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveMaintenance');
+    Route::post('/checker/electricity/{Cycle_Id}/{Fin_Id_Id}/{id}/approve', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveElectricity');
+    Route::post('/checker/capital-expenses/{Cycle_Id}/{Fin_Id_Id}/{id}/approve', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveCapital-expenses');
+
 /*     Route::get('/checker/withdrawals/{Capt_Withdraw_Id}/modify', [App\Http\Controllers\CheckerController::class,'viewWithdrawalDetails'])->name('checker.Withdrawal.details'); */
     Route::post('/checker/withdrawals/{Capt_Withdraw_Id}/approve', [App\Http\Controllers\CheckerController::class,'approveCaptWithdrawal'])->name('checker.approveWithdrawal');
+    Route::post('/checker/credit/{Credit_Id}/approve', [App\Http\Controllers\CheckerController::class,'approveCredit'])->name('checker.approveCredit');
 
     //Maker
     Route::get('/maker', [App\Http\Controllers\MakerController::class,'index'])->name('maker.index');

@@ -30,10 +30,10 @@ class CyclesController extends Controller
         $this->authorize('create-cycles');
 
         $blocks  = Blocks::get();
-        $crops = Product::get();
+        $products = Product::get();
         return view('cycles.create', [
             'blocks'=> $blocks,
-            'crops'=> $crops
+            'products'=> $products
         ]);
     }
 
@@ -46,7 +46,7 @@ class CyclesController extends Controller
 
         $request->validate([
             'Block_Id' => 'required|max:255|integer',
-            'Crop' => 'required|max:255|string',
+            'Product' => 'required|max:255|string',
             'Client_Name' => 'required|max:255|string',
             'Cycle_Name' => 'required|max:255|string',
             'Cycle_Start' => 'required|date',
@@ -57,7 +57,7 @@ class CyclesController extends Controller
         Cycles::create([
             'Cycle_Id'=> $CycleCode,
             'Block_Id' => $request->Block_Id,
-            'Crop' => $request->Crop,
+            'Product' => $request->Product,
             'Client_Name' => $request->Client_Name,
             'Cycle_Name' => $request->Cycle_Name,
             'Cycle_Start' => $request->Cycle_Start,
@@ -71,7 +71,7 @@ class CyclesController extends Controller
             'order_date' => now(),
             'planting_date' => $request->Cycle_Start,
             'harvest_date' => $request->Cycle_End,
-            'product_name' => $request->Crop,
+            'product_name' => $request->Product,
             'maker_id' => $request->maker_id,
         ]);
     

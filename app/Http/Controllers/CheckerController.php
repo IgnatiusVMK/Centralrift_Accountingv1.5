@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\Blocks;
 use App\Models\CapitalWithdrawal;
+use App\Models\Credit;
 use App\Models\Cycles;
 use App\Models\Financial;
 use App\Models\HarvestOrder;
@@ -27,11 +28,9 @@ class CheckerController extends Controller
         $pendingCyclesCount = Cycles::where('Status', 'pending')->get()->count();
 
         $wages = Financial::where('type', 'expenditure')->where('Status', 'pending')->get();
-        // dd($wages->first()->maker);
 
-        //
-        
         $salaries = Financial::where('type', 'salary')->where('Status', 'pending')->get();
+        $credits = Credit::where('Status','pending')->get();
         $advance = Financial::where('type', 'advance')->where('Status', 'pending')->get();
         $transport = Financial::where('type', 'transport')->where('Status', 'pending')->get();
         $electricity = Financial::where('type', 'electricity')->where('Status', 'pending')->get();
@@ -42,6 +41,7 @@ class CheckerController extends Controller
         $withdrawals = CapitalWithdrawal::where('Status', 'pending')->get();
         $sales = Sales::where('Status', 'pending')->get();
 
+        $creditCount = Credit::where('Status', 'pending')->count();
         $wagesCount = Financial::where('type', 'expenditure')->where('Status', 'pending')->count();
         $salariesCount = Financial::where('type', 'salary')->where('Status', 'pending')->count();
         $advanceCount = Financial::where('type', 'advance')->where('Status', 'pending')->count();
@@ -60,6 +60,8 @@ class CheckerController extends Controller
         //
         return view('checker.index', [
             'pendingCycles'=>$pendingCycles,
+            'credits'=>$credits,
+            'creditCount'=>$creditCount,
             'pendingCyclesCount'=>$pendingCyclesCount,
             'wages'=> $wages,
             'salaries'=> $salaries,
@@ -189,6 +191,26 @@ class CheckerController extends Controller
         ]);
 
         return redirect()->back()->with('Status','Withdrawal approved.');
+    }
+
+    public function approveCredit(Request $request, string $Credit_Id ){
+        $this->authorize('create-approval');
+
+        $request->validate([
+            'checker_id'=> 'required|max:255|integer',
+            'Status'=> 'required|max:255|string',        
+        ]);
+
+        Credit::where('Credit_Id', $Credit_Id)->update([
+            'checker_id'=> $request->checker_id,
+            'Status'=> $request->Status,
+        ]);
+        Account::where('Financial_Id', $Credit_Id)->update([
+            'checker_id'=> $request->checker_id,
+            'Status'=> $request->Status,
+        ]);
+
+        return redirect()->back()->with('Status','Credit approved.');
     }
 
     /**

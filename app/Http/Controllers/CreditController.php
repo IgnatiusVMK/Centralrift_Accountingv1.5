@@ -13,7 +13,7 @@ class CreditController extends Controller
      */
     public function index()
     {
-        $credits = Credit::get();
+        $credits = Credit::where('Status', 'approved')->get();
         return view('credit.credit', compact('credits'));
     }
 
@@ -39,12 +39,12 @@ class CreditController extends Controller
         
         Credit::create($data);
 
-        $this->payIn($request->Amount, $request->Credit_Id);
+        $this->payIn($request->Amount, $request->Credit_Id, $request->Source.' - '.$request->Description);
 
         return redirect('credit/create')->with('status','Credit Recorded');
     }
 
-    public function payIn($amount, $Source)
+    public function payIn($amount, $Credit_Id, $Source)
     {
         $transactionId = $this->getNextTransactionId();
     
@@ -54,6 +54,7 @@ class CreditController extends Controller
     
         Account::create([
             'Transaction_Id' => $transactionId,
+            'Financial_Id' => $Credit_Id,
             'Description' => $Source,
             'Crd_Amnt' => $amount,
             'Dbt_Amt' => 0,

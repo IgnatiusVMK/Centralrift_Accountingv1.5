@@ -11,6 +11,11 @@
                   <a class="nav-link active ps-0" id="Cycles-tab" data-bs-toggle="tab" href="#Cycles" role="tab" aria-controls="Cycles" aria-selected="true" onclick="openForm(event, 'Cycles')">Cycles</a>
               </li>
               @endif
+              @if ($creditCount >= 1)
+              <li class="nav-item">
+                  <a class="nav-link active ps-0" id="Credits-tab" data-bs-toggle="tab" href="#Credits" role="tab" aria-controls="Credits" aria-selected="true" onclick="openForm(event, 'Credits')">Credits</a>
+              </li>
+              @endif
               @if ($wagesCount >= 1)
               <li class="nav-item">
                   <a class="nav-link" id="Expenditures-tab" data-bs-toggle="tab" href="#Expenditures" role="tab" aria-controls="Expenditures" aria-selected="false" onclick="openForm(event, 'Expenditures')">Wages</a>
@@ -78,7 +83,7 @@
     </div>
   </div>
   <div class="main-panel">
-    @if ($pendingCyclesCount >= 1 || $wagesCount >= 1 || $salariesCount >= 1 || $advanceCount >= 1 || $chemicalsCount >= 1 ||  $seedsCount >= 1 || $cpexpensesCount >= 1 || $maintenanceCount >= 1 || $salesCount || $withdrawalCount >= 1 || $electricityCount >= 1)
+    @if ($pendingCyclesCount >= 1 || $creditCount >=1 ||  $wagesCount >= 1 || $salariesCount >= 1 || $advanceCount >= 1 || $chemicalsCount >= 1 ||  $seedsCount >= 1 || $cpexpensesCount >= 1 || $maintenanceCount >= 1 || $salesCount || $withdrawalCount >= 1 || $electricityCount >= 1)
       <div class="content-wrapper">
         <div class="row">
           <div class="col-lg-12 grid-margin stretch-card">
@@ -112,7 +117,7 @@
                                   Block
                                 </th>
                                 <th>
-                                  Crop
+                                  Product
                                 </th>
                                 <th>
                                   Customer
@@ -141,7 +146,7 @@
                                   <td>{{$pending->Cycle_Id}}</td>
                                   <td>{{$pending->Cycle_Name}}</td>
                                   <td>{{$pending->block->Block_Name}}</td>
-                                  <td>{{$pending->Crop}}</td>
+                                  <td>{{$pending->Product}}</td>
                                   <td>{{$pending->Client_Name}}</td>
                                   <td>
                                       {{$pending->maker->name}}
@@ -155,6 +160,87 @@
                                   @can('create-approval')
                                   <td>
                                       <form action="{{ url('checker/'.$pending->Cycle_Id.'/validate')}}" method="POST">
+                                          @csrf
+                                            <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                                            <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
+                                          <button type="submit" class="btn btn-danger">Approve</button>
+                                        </form>
+                                  </td>
+                                  @endcan
+                              </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                  </div>
+                  @endif
+
+
+                  @if ($creditCount >= 1)
+                  <div class="tab-pane fade show active" id="Credits" role="tabpanel" aria-labelledby="Credits-tab">
+                    <!-- Credits form content here -->
+                      <div class="card-body">
+                        @if (session('status'))
+                          <div class="alert alert-danger text-center">{{session('status')}}</div>
+                        @endif
+                        <div class="card-header">
+                          <h4 class="card-title text-center">Credits
+                          </h4>
+                        </div>
+                        <div class="table-responsive">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>
+                                  Credit ID
+                                </th>
+                                <th>
+                                  Source
+                                </th>
+                                <th>
+                                  Description
+                                </th>
+                                <th>
+                                  Amount
+                                </th>
+                                <th>
+                                  Maker
+                                </th>
+                                @can('create-approval')
+                                <th>
+                                  Edit
+                                </th>
+                                @endcan
+                                <th>
+                                  Created On
+                                </th>
+                                @can('create-approval')
+                                <th>
+                                  Validate
+                                </th>
+                                @endcan
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach ($credits as $credit )
+                              <tr>
+                                  <td>{{$credit->Credit_Id}}</td>
+                                  <td>{{$credit->Source}}</td>
+                                  <td>{{$credit->Description}}</td>
+                                  <td>{{$credit->Amount}}</td>
+                                  <td>
+                                      {{$credit->maker->name}}
+                                  </td>
+                                  @can('create-approval')
+                                  <td>
+                                      <a href="{{-- {{ url('checker/credit'.$credit->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
+                                  </td>
+                                  @endcan
+                                  <td>{{$credit->created_at}}</td>
+                                  @can('create-approval')
+                                  <td>
+                                      <form action="{{ url('checker/credit/'.$credit->Credit_Id.'/approve')}}" method="POST">
                                           @csrf
                                             <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
                                             <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
@@ -281,9 +367,9 @@
                               <th>
                                 Cycle
                               </th>
-                              <th>
+                              {{-- <th>
                                 ID
-                              </th>
+                              </th> --}}
                               <th>
                                 Payee Name
                               </th>
@@ -296,6 +382,9 @@
                               <th>
                                 Maker
                               </th>
+                              <th>
+                                Payment Date
+                              </th>
                               @can('create-approval')
                               <th>
                                 Edit
@@ -306,9 +395,6 @@
                                 Validate
                               </th>
                               @endcan
-                              <th>
-                                Payment Date
-                              </th>
                             </tr>
                           </thead>
                           <tbody>
@@ -316,21 +402,23 @@
                             <tr>
                               <td>{{$adv->id}}</td>
                               <td>{{$adv->Cycle_Id}}</td>
-                              <td>{{$adv->Fin_Id_Id}}</td>
+                              {{-- <td>{{$adv->Fin_Id_Id}}</td> --}}
                               <td>{{$adv->Reason}}</td>
                               <td>{{$adv->Description}}</td>
                               <td>Ksh {{$adv->Amount}}</td>
+
+                              <td>{{$adv->created_at}}</td>
                               <td>
                                 {{$adv->maker?->name}}
                               </td>
                               @can('create-approval')
                                 <td>
-                                    <a href="{{ url('checker/'.$adv->id.'/validate')}}">Modify<i class="mdi mdi-border-color"></i></a>
+                                    <a href="{{-- {{ url('checker/advances/'.$adv->Cycle_Id.'/'.$adv->Fin_Id_Id.'/'.$adv->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
                                 </td>
                               @endcan
                               @can('create-approval')
                                 <td>
-                                    <form action="{{ url('checker/'.$adv->id.'/'.$adv->Fin_Id_Id.'/validate')}}" method="POST">
+                                    <form action="{{ url('checker/advances/'.$adv->Cycle_Id.'/'.$adv->Fin_Id_Id.'/'.$adv->id.'/approve')}}" method="POST">
                                         @csrf
                                           <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
                                           <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
@@ -338,7 +426,6 @@
                                       </form>
                                 </td>
                               @endcan
-                              <td>{{$adv->created_at}}</td>
                             </tr>
                             @endforeach
                           </tbody>
@@ -411,12 +498,12 @@
                               <td>{{$sal->created_at}}</td>
                                 @can('create-approval')
                                   <td>
-                                      <a href="{{ url('checker/'.$sal->id.'/validate')}}">Modify<i class="mdi mdi-border-color"></i></a>
+                                      <a href="{{-- {{ url('checker/salary/'.$sal->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
                                 @can('create-approval')
                                   <td>
-                                      <form action="{{ url('checker/'.$sal->id.'/'.$sal->Fin_Id_Id.'/validate')}}" method="POST">
+                                      <form action="{{ url('checker/salaries/'.$sal->Cycle_Id.'/'.$sal->Fin_Id_Id.'/'.$sal->id.'/approve')}}" method="POST">
                                           @csrf
                                             <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
                                             <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
@@ -543,8 +630,21 @@
                                 Amount
                               </th>
                               <th>
+                                Maker
+                              </th>
+                              <th>
                                 Date Created
                               </th>
+                              @can('create-approval')
+                              <th>
+                                Edit
+                              </th>
+                              @endcan
+                              @can('create-approval')
+                              <th>
+                                Validate
+                              </th>
+                              @endcan
                             </tr>
                           </thead>
                           <tbody>
@@ -555,7 +655,25 @@
                               <td>{{$elec->Reason}}</td>
                               <td>{{$elec->Description}}</td>
                               <td>Ksh {{$elec->Amount}}</td>
+                              <td>
+                                {{$elec->maker?->name}}
+                              </td>
                               <td>{{$elec->created_at}}</td>
+                              @can('create-approval')
+                                  <td>
+                                      <a href="{{-- {{ url('checker/electricity/'.$sal->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
+                                  </td>
+                                @endcan
+                                @can('create-approval')
+                                  <td>
+                                      <form action="{{ url('checker/electricity/'.$elec->Cycle_Id.'/'.$elec->Fin_Id_Id.'/'.$elec->id.'/approve')}}" method="POST">
+                                          @csrf
+                                            <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                                            <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
+                                          <button type="submit" class="btn btn-danger">Approve</button>
+                                        </form>
+                                  </td>
+                                @endcan
                             </tr>
                             @endforeach
                           </tbody>
@@ -590,9 +708,6 @@
                                 Cycle
                               </th>
                               <th>
-                                ID
-                              </th>
-                              <th>
                                 Reason
                               </th>
                               <th>
@@ -602,20 +717,50 @@
                                 Amount
                               </th>
                               <th>
+                                Maker
+                              </th>
+                              <th>
                                 Date Created
                               </th>
+                              @can('create-approval')
+                              <th>
+                                Edit
+                              </th>
+                              @endcan
+                              @can('create-approval')
+                              <th>
+                                Validate
+                              </th>
+                              @endcan
                             </tr>
                           </thead>
                           <tbody>
-                            @foreach ($maintenance->where('Cycle_Id', $Cycle_Id) as $maint)
+                            @foreach ($maintenance as $maint)
                             <tr>
-                              <td>{{$maint->Financial_Id}}</td>
+                              <td>{{-- {{$maint->id}} --}}</td>
                               <td>{{$maint->Cycle_Id}}</td>
-                              <td>{{$maint->Fin_Id_Id}}</td>
                               <td>{{$maint->Reason}}</td>
                               <td>{{$maint->Description}}</td>
                               <td>Ksh {{$maint->Amount}}</td>
+                              <td>
+                                {{$maint->maker?->name}}
+                              </td>
                               <td>{{$maint->created_at}}</td>
+                              @can('create-approval')
+                                  <td>
+                                    <a href="{{-- {{ url('checker/'.$maint->Sales_Id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
+                                  </td>
+                                @endcan
+                              @can('create-approval')
+                                  <td>
+                                      <form action="{{ url('checker/maintenance/'.$maint->Cycle_Id.'/'.$maint->Fin_Id_Id.'/'.$maint->id.'/approve')}}" method="POST">
+                                          @csrf
+                                            <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                                            <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
+                                          <button type="submit" class="btn btn-danger">Approve</button>
+                                        </form>
+                                  </td>
+                                @endcan
                             </tr>
                             @endforeach
                           </tbody>
@@ -643,13 +788,15 @@
                         <table class="table table-striped">
                           <thead>
                             <tr>
-                              <th>
+                              {{-- <th>
                                 Sn No.
-                              </th>
+                              </th> --}}
                               <th>
                                 Cycle
                               </th>
-                              <th>Sale</th>
+                              {{-- <th>
+                                Sale
+                              </th> --}}
                               <th>
                                 Customer
                               </th>
@@ -665,9 +812,9 @@
                               <th>
                                 Total Price
                               </th>
-                              <th>
+                              {{-- <th>
                                 Payment Type
-                              </th>
+                              </th> --}}
                               <th>
                                 Payment Status
                               </th>
@@ -686,9 +833,9 @@
                           <tbody>
                             @foreach ($sales as $sale)
                               <tr>
-                                <td>{{$sale->id}}</td>
+                                {{-- <td>{{$sale->id}}</td> --}}
                                 <td>{{$sale->Cycle_Id}}</td>
-                                <td>{{$sale->Sales_Id}}</td>
+                                {{-- <td>{{$sale->Sales_Id}}</td> --}}
                                 <td>{{$sale->customer->Customer_Fname}}</td>
                                 <td>{{$sale->Sale_Date}}</td>
                                 <td>
@@ -696,7 +843,7 @@
                                 </td>
                                 <td>{{$sale->Quantity}} Kg</td>
                                 <td>Ksh {{$sale->Total_Price}}</td>
-                                <td>{{$sale->Payment_Method}}</td>
+                                {{-- <td>{{$sale->Payment_Method}}</td> --}}
                                 <td class="@if($sale->Payment_Status == 'Un-paid') text-danger @elseif($sale->Payment_Status == 'Paid') text-success @else text-warning @endif">
                                   {{$sale->Payment_Status}}
                                 </td>
@@ -763,18 +910,43 @@
                               <th>
                                 Date Created
                               </th>
+                              @can('create-approval')
+                              <th>
+                                Edit
+                              </th>
+                              @endcan
+                              @can('create-approval')
+                              <th>
+                                Validate
+                              </th>
+                              @endcan
                             </tr>
                           </thead>
                           <tbody>
-                            @foreach ($transport->where('Cycle_Id', $Cycle_Id) as $tran)
+                            @foreach ($transport as $tran)
                             <tr>
-                              <td>{{$tran->Financial_Id}}</td>
+                              <td>{{$tran->id}}</td>
                               <td>{{$tran->Cycle_Id}}</td>
                               <td>{{$tran->Fin_Id_Id}}</td>
                               <td>{{$tran->Reason}}</td>
                               <td>{{$tran->Description}}</td>
                               <td>Ksh {{$tran->Amount}}</td>
                               <td>{{$tran->created_at}}</td>
+                              @can('create-approval')
+                                  <td>
+                                      <a href="{{-- {{ url('checker/transport/'.$tran->Cycle_Id.'/'.$tran->Fin_Id_Id.'/'.$tran->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
+                                  </td>
+                                @endcan
+                                @can('create-approval')
+                                  <td>
+                                      <form action="{{ url('checker/transport/'.$tran->Cycle_Id.'/'.$tran->Fin_Id_Id.'/'.$tran->id.'/approve')}}" method="POST">
+                                          @csrf
+                                            <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                                            <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
+                                          <button type="submit" class="btn btn-danger">Approve</button>
+                                        </form>
+                                  </td>
+                                @endcan
                             </tr>
                             @endforeach
                           </tbody>
@@ -816,9 +988,9 @@
                         <table class="table table-striped">
                           <thead>
                             <tr>
-                              <th>
+                              {{-- <th>
                                 Sn No.
-                              </th>
+                              </th> --}}
                               <th>
                                 Cycle
                               </th>
@@ -835,20 +1007,51 @@
                                 Amount
                               </th>
                               <th>
+                                Maker
+                              </th>
+                              <th>
                                 Date Created
                               </th>
+                              @can('create-approval')
+                              <th>
+                                Edit
+                              </th>
+                              @endcan
+                              @can('create-approval')
+                              <th>
+                                Validate
+                              </th>
+                              @endcan
                             </tr>
                           </thead>
                           <tbody>
-                            @foreach ($cpexpenses->where('Cycle_Id', $Cycle_Id) as $cpexpe)
+                            @foreach ($cpexpenses as $cpexpe)
                             <tr>
-                              <td>{{$cpexpe->Financial_Id}}</td>
+                              {{-- <td>{{$cpexpe->id}}</td> --}}
                               <td>{{$cpexpe->Cycle_Id}}</td>
                               <td>{{$cpexpe->Fin_Id_Id}}</td>
                               <td>{{$cpexpe->Reason}}</td>
                               <td>{{$cpexpe->Description}}</td>
                               <td>Ksh {{$cpexpe->Amount}}</td>
+                              <td>
+                                {{$cpexpe->maker?->name}}
+                              </td>
                               <td>{{$cpexpe->created_at}}</td>
+                              @can('create-approval')
+                                  <td>
+                                      <a href="{{-- {{ url('checker/capital-expenses/'.$tran->Cycle_Id.'/'.$tran->Fin_Id_Id.'/'.$tran->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
+                                  </td>
+                                @endcan
+                                @can('create-approval')
+                                  <td>
+                                      <form action="{{ url('checker/capital-expenses/'.$cpexpe->Cycle_Id.'/'.$cpexpe->Fin_Id_Id.'/'.$cpexpe->id.'/approve')}}" method="POST">
+                                          @csrf
+                                            <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                                            <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
+                                          <button type="submit" class="btn btn-danger">Approve</button>
+                                        </form>
+                                  </td>
+                                @endcan
                             </tr>
                             @endforeach
                           </tbody>
@@ -879,7 +1082,7 @@
                   </div>
                   <div class="card-title">
                     <h4 class="text-center">
-                      There are no new pending Approval.
+                      There are no new pending Requests.
                       <i class="mdi mdi-check-all"></i>
                     </h4>
                   </div>

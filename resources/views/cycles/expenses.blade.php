@@ -516,7 +516,7 @@
                         <tbody>
                           @foreach ($transport->where('Cycle_Id', $Cycle_Id) as $tran)
                           <tr>
-                            <td>{{$tran->Financial_Id}}</td>
+                            <td>{{$tran->id}}</td>
                             <td>{{$tran->Cycle_Id}}</td>
                             <td>{{$tran->Fin_Id_Id}}</td>
                             <td>{{$tran->Reason}}</td>

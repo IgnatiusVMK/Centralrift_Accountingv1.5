@@ -35,6 +35,7 @@ class ElectrictyController extends Controller
      */
     public function store(Request $request){
         $request->validate([
+            'Cycle_Id' => 'required|max:255|string',
             'Fin_Id_Id' => 'required|max:255|string',
             'Reason' => 'required|max:255|string',
             'Description' => 'required|max:255|string',
@@ -47,13 +48,13 @@ class ElectrictyController extends Controller
 
         Financial::create($data);
 
-        $this->payOut($request->Amount, $request->Cycle_Id, $request->Reason.' '. $request->Description, $request->maker_id);
+        $this->payOut($request->Amount, $request->Cycle_Id, $request->Fin_Id_Id, $request->type.'; '.$request->Reason.'-'.$request->Description, $request->maker_id);
 
         $Cycle_Id = $request->route('Cycle_Id');
         return redirect()->route('cycle.electricity.create', ['Cycle_Id' => $Cycle_Id])->with('status', 'Electricity Payment Created');
     }
 
-    public function payOut($amount, $Cycle, $Description, $maker_id)
+    public function payOut($amount, $Cycle, $Financial_Id, $Description, $maker_id)
     {
         $transactionId = $this->getNextTransactionId();
     
@@ -64,6 +65,7 @@ class ElectrictyController extends Controller
         Account::create([
             'Transaction_Id' => $transactionId,
             'Cycle_Id'=> $Cycle,
+            'Financial_Id'=> $Financial_Id,
             'Description' => $Description,
             'Crd_Amnt' => 0,
             'Dbt_Amt' => $amount,

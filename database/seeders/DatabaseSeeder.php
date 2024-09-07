@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             RolesPermissionsTableSeeder::class,
             RoleUserSeeder::class,
+            /* TestCycleSeeders::class, */
         ]);
     }
 }

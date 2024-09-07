@@ -263,7 +263,7 @@ $currentDateTime = $day . ', ' . $date . '/' . $month . '/' . $year . '<br>' . $
                                             <th>Description</th>
                                             <th>Credit Amount</th>
                                             <th>Debit Amount</th>
-                                            <th>Balance Estimate</th>
+                                            {{-- <th>Balance Estimate</th> --}}
                                             <th>Date</th>
                                         </tr>
                                     </thead>
@@ -276,7 +276,7 @@ $currentDateTime = $day . ', ' . $date . '/' . $month . '/' . $year . '<br>' . $
                                             <td>{{$cbk->Description}}</td>
                                             <td>Ksh {{$cbk->Crd_Amnt}}</td>
                                             <td>Ksh {{$cbk->Dbt_Amt}}</td>
-                                            <td>Ksh {{$cbk->Bal}}</td>
+                                            {{-- <td>Ksh {{$cbk->Bal}}</td> --}}
                                             <td>{{$cbk->created_at}}</td>
                                         </tr>
                                         @endforeach

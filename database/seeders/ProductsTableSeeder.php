@@ -111,6 +111,26 @@ class ProductsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
+            [
+                'Product_Id' => 11,
+                'Product_Name' => 'Eggs',
+                'Description' => 'Layers & Kienyeji',
+                'Price' => 500.00,
+                'Category_Id' => 3,
+                'Supplier_Id' => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 12,
+                'Product_Name' => 'White Meat',
+                'Description' => 'Poultry: Chicken',
+                'Price' => 500.00,
+                'Category_Id' => 3,
+                'Supplier_Id' => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
         ];
 
         DB::table('products')->insert($products);

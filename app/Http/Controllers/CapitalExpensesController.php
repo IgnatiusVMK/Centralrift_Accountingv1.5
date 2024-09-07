@@ -58,11 +58,11 @@ class CapitalExpensesController extends Controller
 
         Financial::create($data);
 
-        $this->payOut($request->Amount, $request->Cycle_Id ,$request->Description, $request->maker_id);
+        $this->payOut($request->Amount, $request->Cycle_Id, $request->Fin_Id_Id, $request->type.'; '.$request->Reason.'-'.$request->Description, $request->maker_id);
 
         return redirect()->route('cycle.capital-expenses.create', ['Cycle_Id' => $request->Cycle_Id])->with('status', 'Record Created');
     }
-    public function payOut($amount, $Cycle,  $Description, $maker_id)
+    public function payOut($amount, $Cycle, $Financial_Id, $Description, $maker_id)
     {
         $transactionId = $this->getNextTransactionId();
     
@@ -73,6 +73,7 @@ class CapitalExpensesController extends Controller
         Account::create([
             'Transaction_Id' => $transactionId,
             'Cycle_Id'=> $Cycle,
+            'Financial_Id'=> $Financial_Id,
             'Description' => $Description,
             'Crd_Amnt' => 0,
             'Dbt_Amt' => $amount,

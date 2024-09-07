@@ -13,7 +13,7 @@
                     @if (session('status'))
                       <div class="alert alert-success">{{session('status')}}</div>
                     @endif
-                  <h4 class="card-title">Record New Expenditure
+                  <h4 class="card-title">Record New Expense
                     <a href="{{ url('cycles/'.$Cycle_Id ) }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i></a>
                   </h4>
                   </div>

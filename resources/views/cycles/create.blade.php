@@ -38,7 +38,7 @@
                     <div class="mb-3">
                       <label>Block</label>
                         <select name="Block_Id" class="form-control">
-                          <option value="1" selected> -- SELECT BLOCK --</option>
+                          <option value="11" selected> -- SELECT BLOCK --</option>
                           @foreach ($blocks as $block)
                               <option value="{{ $block->Block_Id}}">{{ $block->Block_Name }}</option>
                           @endforeach
@@ -46,14 +46,14 @@
                       @error('Block_Id') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
-                      <label>Crop</label>
-                        <select name="Crop" class="form-control">
-                          <option value="" selected> -- SELECT CROP --</option>
-                          @foreach ($crops as $crop)
-                              <option value="{{ $crop->Product_Name}}">{{ $crop->Product_Name }}</option>
+                      <label>Product</label>
+                        <select name="Product" class="form-control">
+                          <option value="" selected> -- SELECT PRODUCT --</option>
+                          @foreach ($products as $product)
+                              <option value="{{ $product->Product_Name}}">{{ $product->Product_Name }}</option>
                           @endforeach
                         </select>
-                      @error('Crop') <span class="text-danger">{{ $message}}</span> @enderror
+                      @error('Product') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
                       <label>Customer Name</label>

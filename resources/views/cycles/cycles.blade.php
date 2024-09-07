@@ -21,20 +21,17 @@
                     <table class="table table-striped">
                       <thead>
                         <tr>
-                          {{-- <th>
-                            SN No.
-                          </th> --}}
                           <th>
                             Cycle ID
-                          </th>
-                          <th>
-                            Customer
                           </th>
                           <th>
                             Cycle Name
                           </th>
                           <th>
-                            Crop
+                            Customer
+                          </th>
+                          <th>
+                            Product
                           </th>
                           <th>
                             Block
@@ -55,16 +52,20 @@
                       <tbody>
                         @foreach ($cycles as $cyc)
                         <tr>
-                           <td>
+                          <td>
+                            {{$cyc->Cycle_Id}}
+                           </td>
+                          <td>
                             @can('view-cycles')
                               <a href="{{ url('cycles/'.$cyc->Cycle_Id)}}" class="">
                                 <i class="mdi mdi-border-color"></i> 
                             @endcan
-                            {{$cyc->Cycle_Id}}</a>
+                            {{$cyc->Cycle_Name}}</a>
+                          </td>
+                           <td>
+                            {{$cyc->Client_Name}}
                            </td>
-                          <td>{{$cyc->Client_Name}}</td>
-                          <td>{{$cyc->Cycle_Name}}</td>
-                          <td>{{$cyc->Crop}}</td>
+                          <td>{{$cyc->Product}}</td>
                           <td>{{$cyc->block->Block_Name}}</td>
                           <td>
                             <div>{{$cyc->Cycle_Start}}</div>
@@ -74,7 +75,7 @@
                           </td>
                           <td>
                             @can('view-cycles')
-                              <a href="{{ url('cycles/'.$cyc->Cycle_Id)}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i>Update</a>
+                              <a href="{{-- {{ url('cycles/'.$cyc->Cycle_Id)}} --}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i>Update</a>
                             @endcan
                           </td>
                         </tr>
