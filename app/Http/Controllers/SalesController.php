@@ -6,6 +6,9 @@ use App\Models\Account;
 use App\Models\Customers;
 use App\Models\ProductsSales;
 use App\Models\Sales;
+use Carbon\Carbon;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -104,6 +107,34 @@ class SalesController extends Controller
             'Crd_Dbt_Date' => now(),
             'Date_Created' => now(),
         ]);
+    }
+
+    public function generateInvoice(Request $request, string $Sales_Id){
+  
+          $sales = Sales::where('Sales_Id', $Sales_Id)->get();
+      
+          $dompdf = new Dompdf();
+          $options = new Options();
+          $options->set('isHtml5ParserEnabled', true);
+          $dompdf->setOptions($options);
+      
+          $now = Carbon::now('Africa/Nairobi');
+          $Sales_Id = $request->route('Sales_Id');
+          $pdfName = 'Inv-' . /* $now->format('Y-m-d-H:i:s') */ $Sales_Id . '.pdf';
+  
+          $data = compact('sales'/* , 'totalCredit', 'totalDebit', 'balance' */);
+      
+          // Render the view to HTML
+          $html = view('financials.sales.invoice', $data)->render();
+          $dompdf->loadHtml($html);
+          $dompdf->setPaper('A4', 'portrait');
+          $dompdf->render();
+      
+          // Return the PDF as a download
+          return response($dompdf->output())
+              ->header('Content-Type', 'application/pdf')
+              ->header('Content-Disposition', 'attachment; filename="' . $pdfName . '"')
+              ->header('Content-Length', strlen($dompdf->output()));
     }
 
     public function getNextTransactionId()

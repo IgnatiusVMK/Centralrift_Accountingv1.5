@@ -4,6 +4,8 @@ use App\Http\Controllers\CashBookController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\SalesController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -177,11 +179,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('sales', [App\Http\Controllers\SalesController::class,'index'])->middleware(['auth', 'verified', /* 'can:view-sales' */])->name('sales');
     Route::post('sales/{Cycle_Id}/create', [App\Http\Controllers\SalesController::class, 'store'])->name('sales.store');
+    Route::get('/sales/{Sales_Id}/generate-invoice', [SalesController::class, 'generateInvoice'])->name('sales.generateInvoice');
 
     Route::get('cashbook', [App\Http\Controllers\CashBookController::class,'index'])->name('cashbook');
 
     Route::get('cashbook/export-pdf', [CashBookController::class, 'exportPdf']);
-/*     Route::get('/cashbook/send-email', [CashBookController::class, 'exportMail']); */
     Route::post('/cashbook/send-email', [App\Http\Controllers\CashBookController::class, 'sendAsMail']);
 
     Route::get('/profit-loss', [App\Http\Controllers\ProfitLossController::class, 'index'])->name('profit-loss');
@@ -189,9 +191,28 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 
     //Test Routes for Laravel Mail
-    Route::get('/welcome', [MailController::class, 'index']);
+    /* Route::get('/welcome', [MailController::class, 'index']); */
 
     Route::post('send-mail', [MailController::class, 'sendMail']);
+
+    //Route to view blade view of the email templates
+    Route::get('/view-mail', function () {
+        $mailData = [
+            'message' => 'Mail from ItSolutionStuff.com',
+            'user_name' => Auth::user()->name,
+        ];
+        
+        return view('emails.cashbook-mail', ['mailData' => $mailData]);
+    });
+    // Route to view/modify blade template of sales invoice
+    Route::get('/view-invoice', function () {
+        /* $mailData = [
+            'mailData' => 'Mail from ItSolutionStuff.com',
+            'message' => 'Test Message body',
+        ]; */
+        
+        return view('financials.sales.invoice', /* ['mailData' => $mailData] */);
+    }); 
 
 });
 

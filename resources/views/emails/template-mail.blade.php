@@ -117,15 +117,13 @@
 <body>
     <div class="container">
         <div class="header">
-            {{-- <img src="{{ url('/images/marley.png') }}" alt="Company Logo"> --}}
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/marley.png'))) }}" alt="Company Logo">
-
+            <img src="{{ asset('/images/marley.png') }}" alt="Company Logo">
             <h6>Centralrift Fresh Produce Kenya LTD</h6>
         </div>
 
         <h2>Monthly Cashbook Report</h2>
 
-        <p>Dear, {{ $mailData['user_name'] }}</p>
+        <p>Dear, {{-- {{ Auth::user()->name }} --}}</p>
 
         <div class="content">
             <p>{{ $mailData['message'] }}</p>
@@ -164,3 +162,41 @@
 </body>
 
 </html>
+
+{{-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashBook Email Reports</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        p {
+            margin: 0 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Centralrift Fresh Produce Kenya LTD</h2>
+    <hr>
+    <p>Dear, {{ isset(Auth::user()->name) ? Auth::user()->name : 'Sir/Madam' }}</p><br>
+    
+    <p>{{ $mailData['message'] }}</p>
+
+    <p>Regards,</p><br>
+    <p>IT Support,</p>
+    <p>Centralrift FreshPKL.</p>
+
+    <footer>
+        Contact us at: support@centralrift-fpkl.com
+    </footer>
+</body>
+
+</html>
+ --}}

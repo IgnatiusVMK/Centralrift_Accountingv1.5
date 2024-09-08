@@ -17,43 +17,45 @@ class SendMail implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $dispatchData;
+    public $name;
+    public $email;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($dispatchData)
+    public function __construct($dispatchData, $user)
     {
         $this->dispatchData = $dispatchData;
+        $this->name = $user->name;
+        $this->email = $user->email;
     }
-
     /**
      * Execute the job.
      */
     public function handle(): void
-    {
+{
+    $mailableClass = $this->dispatchData['mailable'];
+    $mailTo = $this->dispatchData['mail_to'];
+    
+    switch ($mailableClass) {
+        case 'WelcomeMail':
+            $mailable = new WelcomeMail([
+                'subject' => $this->dispatchData['subject'],
+                'message' => $this->dispatchData['message'],
+                'user_name' => $this->dispatchData['user_name'],
+            ]);
+            break;
 
-        $mailableClass = $this->dispatchData['mailable'];
-        $mailTo = $this->dispatchData['mail_to'];
-        
-        switch ($mailableClass) {
-            case 'WelcomeMail':
-                $mailable = new WelcomeMail([
-                    'subject' => $this->dispatchData['subject'],
-                    'message' => $this->dispatchData['message'],
-                    'user_name' => $this->dispatchData['user_name'],
-                ]);
-                break;
-        
-            case 'CashbookMail':
-                $mailable = new CashbookMail([
-                    'subject' => $this->dispatchData['subject'],
-                    'message' => $this->dispatchData['message'],
-                    'user_name' => $this->dispatchData['user_name'],
-                ]);
-                break;
-        
-            default:
-                throw new \Exception("Mailable class not found: {$mailableClass}");
+        case 'CashbookMail':
+            $mailable = new CashbookMail([
+                'subject' => $this->dispatchData['subject'],
+                'message' => $this->dispatchData['message'],
+                'user_name' => $this->name, // Pass the name directly
+            ]);
+            break;
+
+        default:
+            throw new \Exception("Mailable class not found: {$mailableClass}");
     }
 
     try {
@@ -62,5 +64,6 @@ class SendMail implements ShouldQueue
         Log::error('Failed to send email: ' . $e->getMessage());
         throw $e; // Re-throw the exception to mark the job as failed
     }
-    }
+}
+
 }

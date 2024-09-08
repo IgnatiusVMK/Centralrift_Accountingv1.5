@@ -73,6 +73,7 @@ class CashBookController extends Controller
     public function sendAsMail(Request $request)
     {
 
+        $user = Auth::user();
         $now = Carbon::now('Africa/Nairobi');
         $currentTime = $now->format('Y-m-d h:i:s');
 
@@ -88,8 +89,7 @@ class CashBookController extends Controller
             'user_name' => Auth::user()->name,
         ];
 
-        dispatch(new SendMail($dispatchData));
-        /* SendMail::dispatch($dispatchData); */
+        dispatch(new SendMail($dispatchData, $user));
 
         toastr()->success('Mail sent successfully');
         return redirect('/cashbook');
