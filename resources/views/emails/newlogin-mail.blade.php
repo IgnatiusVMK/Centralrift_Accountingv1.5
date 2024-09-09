@@ -117,11 +117,11 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/marley.png'))) }}" alt="Centralrift">
+            <img src="{{ asset('/images/marley.png') }}" alt="Company Logo">
             <h6>Centralrift Fresh Produce Kenya LTD</h6>
         </div>
 
-        <h2>Monthly Cashbook Report</h2>
+        <h2>Login Notification</h2>
 
         <p>Dear, {{ $mailData['user_name'] }}</p>
 

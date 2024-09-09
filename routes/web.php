@@ -206,12 +206,23 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
     // Route to view/modify blade template of sales invoice
     Route::get('/view-invoice', function () {
-        /* $mailData = [
+        $sales = [
+            'No_of_Boxes'=> '25',
+            'packaging_option' => '3Kg',
+            'Description' => 'Extra Fine French Beans',
+            'Net_Weight'=> '158',
+            'Total_Price' => '17580',
             'mailData' => 'Mail from ItSolutionStuff.com',
             'message' => 'Test Message body',
-        ]; */
+        ];
+        $invoiceDetails = [
+            'Lpo_No' => 'NRB4575KE',
+            'Sale_Date' => '2024/09/10',
+        ];
+
         
-        return view('financials.sales.invoice', /* ['mailData' => $mailData] */);
+        
+        return view('financials.sales.invoice-template', ['sales' => $sales, 'invoiceDetails' => $invoiceDetails]);
     }); 
 
 });

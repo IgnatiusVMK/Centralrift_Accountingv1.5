@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\CashbookMail;
+use App\Mail\LoginNotificationMail;
 use App\Mail\WelcomeMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -38,6 +39,14 @@ class SendMail implements ShouldQueue
     $mailTo = $this->dispatchData['mail_to'];
     
     switch ($mailableClass) {
+        case 'LoginNotificationMail':
+            $mailable = new LoginNotificationMail([
+                'subject' => $this->dispatchData['subject'],
+                'message' => $this->dispatchData['message'],
+                'user_name' => $this->name,
+            ]);
+            break;
+
         case 'WelcomeMail':
             $mailable = new WelcomeMail([
                 'subject' => $this->dispatchData['subject'],

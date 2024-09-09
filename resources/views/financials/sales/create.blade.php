@@ -75,7 +75,7 @@
                             <label for="option1" class="form-check-label">3Kg (30gms x 100)</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" id="option2" name="packaging_option" value="1kg" class="form-check-input" />
+                            <input type="radio" id="option2" name="packaging_option" value="1Kg" class="form-check-input" />
                             <label for="option2" class="form-check-label">1Kg (100gms x 10)</label>
                         </div>
                         @error('packaging_option') <span class="text-danger">{{ $message }}</span> @enderror
