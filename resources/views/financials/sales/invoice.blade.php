@@ -3,199 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+    <title>Commercial Invoice</title>
     <style>
+        @page {
+            margin: 15px;
+            font-size: 10px;
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+            padding: 15px;
+            background-color: rgb(255, 255, 255);
         }
         .invoice-container {
-            width: 100%;
-            margin: 10px auto;
-            background-color: white;
+            border: 1px solid black;
             padding: 10px;
-            border-radius: 4px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            width: auto;
+            height: auto;
         }
-        .header {
+        .header-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header-logo {
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+        .header-logo img {
+            max-height: 60px;
+            vertical-align: middle;
+        }
+        .header-text {
+            flex: 1;
+            text-align: left;
+            color: #297233;
+        }
+        .invoice-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-right: 5px;
+            text-align: right;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            text-align: right;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
+        }
+        .declaration, .notes {
+            margin-top: 20px;
+        }
+        .signatures {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        .header img {
-            width: 150px;
-            margin-right: 5px; 
-            padding-right: 5px;
-            border-right: 2px solid #ddd;
-        }
-
-        .header h6 {
-            font-size: 18px;
-            margin: 0;
-            padding-left: 5px; 
-            white-space: nowrap;
-        }
-        .header .unpaid {
-            color: white;
-            background-color: red;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-        .invoice-details {
             margin-top: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ddd;
         }
-        .invoice-details h2 {
-            margin: 0;
+        .signature-item {
+            flex: 1;
+            text-align: center;
         }
-        .details {
-            margin-top: 10px;
+        .signature-line {
+            display: inline-block;
+            width: 80%;
+            border-bottom: 1px solid black;
+            margin-top: 5px;
         }
-        .details table {
+        .bank-details-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            margin-top: 20px;
+            width: 100%; /* Ensure it takes full width */
+        }
+        .bank-details {
+            width: 400px;
+            border: 1px solid black;
+            padding: 10px;
+            font-size: 0.9em;
+        }
+        .bank-details p {
+            margin: 0 0 5px 0;
+        }
+        .bank-details table {
             width: 100%;
-            margin-top: 20px;
-        }
-        .details th, .details td {
-            text-align: left;
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-        }
-        .details th {
-            background-color: #f9f9f9;
-        }
-        .totals {
-            margin-top: 20px;
-        }
-        .totals table {
-            width: 100%;
-        }
-        .totals th, .totals td {
-            padding: 8px;
-        }
-        .totals .sub-total, .totals .vat, .totals .total {
-            text-align: right;
-        }
-        .transactions {
-            margin-top: 20px;
-        }
-        .transactions table {
-            width: 100%;
-            margin-top: 10px;
             border-collapse: collapse;
         }
-        .transactions th, .transactions td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+        .bank-details td {
+            padding: 2px 4px;
+            border: 1px solid #ddd;
+        }
+        .bank-details td:first-child {
+            font-weight: bold;
+            width: 40%;
         }
     </style>
 </head>
 <body>
-
-<div class="invoice-container">
-    <!-- Header Section -->
-    <div class="header">
+    <div class="invoice-container">
+        <div class="header-container">
+            <div class="header-logo">
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/marley.png'))) }}" alt="Centralrift">
+            </div>
+            <div class="header-text">
+                <h4>CENTRALRIFT FRESH PRODUCE KENYA LTD</h4>
+                <p>P.O. Box 67891, 00200</p>
+                <p>Nairobi, Kenya.</p>
+                <p>Tel: +254 712 345678</p>
+            </div>
+        </div>
+        <div style="text-align: center; text-decoration: underline;">
+            <h3>COMMERCIAL INVOICE</h3>
+        </div>        
         <div>
-            {{-- <img src="{{ url('/images/marley.png') }}" alt="Company Logo"> --}}
-            <h6>Centralrift Fresh Produce Kenya LTD</h6>
+            <p><strong>Consignee:</strong></p>
+            <p>[CONSIGNEE DETAILS]</p>
         </div>
-        <div class="unpaid">UNPAID</div>
-    </div>
-
-    <!-- Invoice Details -->
-    <div class="invoice-details">
-        <h2>Invoice # {{-- {{}} --}}</h2>
-        <p>Invoice Date: {{-- {{}} --}}</p>
-        <p>Due Date: {{-- {{}} --}}</p>
-
-        <div class="to">
-            <strong>Invoiced To:</strong>
-            <p>
-                {{-- {{}} --}}<br>
-                {{-- {{}} --}}<br>
-                {{-- 67891-00200<br> --}}
-                Nairobi, Kenya
-            </p>
+        
+        <div class="invoice-details">
+            <div>
+                <p><b>CUSTOMER INVOICE NO:</b> INV-09-09-2024</p>
+                <p><b>LPO NUMBER:</b> {{ $invoiceDetails->Lpo_No }}</p>
+                <p><b>DELIVERY DATE: </b>{{ $invoiceDetails->Sale_Date }} </p>
+                <p>MAWB: [NUMBER]</p>
+                <p>Flight No.: [NUMBER]</p>
+                <p>EURO 1: [NUMBER]</p>
+                <p>Agent: [NAME]</p>
+            </div>
         </div>
-    </div>
-
-    <!-- Item Details -->
-    <div class="details">
-        <table>
+        
+        <table style="text-align: right">
             <thead>
                 <tr>
-                    <th>Description</th>
-                    <th>Total</th>
+                    <th>Ref</th>
+                    <th>No.of cartons</th>
+                    <th>Packaging</th>
+                    <th>Description of Goods</th>
+                    <th>Net Weight (kgs)</th>
+                    {{-- <th>Gross Weight (kgs)</th> --}}
+                    <th>Unit Price Euros</th>
+                    <th>Total price Euros CIF</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>{{-- TrueHost Silver SSD Hosting - vimak-infotech-labs.co.ke (03/09/2024 - 02/09/2025) --}}</td>
-                    <td>Ksh {{-- {{}} --}}</td>
+                    @foreach($sales as $sale)
+                    <td style="text-align: right;">1</td>
+                    <td style="text-align: right;">{{ $sale->No_of_boxes }}</td>
+                    <td style="text-align: right;">
+                        @if($sale->packaging_option == '3Kg')
+                            30gms * 100
+                        @elseif($sale->packaging_option == '1Kg')
+                            100gms * 10
+                        @else
+                            {{ $sale->packaging_option }}
+                        @endif
+                    </td>                                      
+                    <td style="text-align: right;">{{ $sale->Description }}</td>
+                    <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
+                    {{-- <td>1575.00</td> --}}
+                    <td style="text-align: right;">22.00</td>
+                    <td style="text-align: right;">{{ $sale->Total_Price }}</td>
                 </tr>
                 <tr>
-                    <td>{{-- {{}} --}}</td>
-                    <td>{{-- {{}} --}}</td>
+                    <td colspan="4">Total</td>
+                    <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
+                    <td></td>
+                    {{-- <td>1,575.00</td> --}}
+                    <td style="text-align: right;">{{ $sale->Total_Price }}</td>
                 </tr>
-               {{--  <tr>
-                    <td>AutoPay Discount</td>
-                    <td>-Ksh 175.00</td>
-                </tr> --}}
+                @endforeach
             </tbody>
         </table>
+        
+        <div class="declaration">
+            <p>The exporter of the product covered by this document declares that, except where otherwise clearly indicated, these products are of Kenyan preferential origin according to the rules of origin of the European Community</p>
+        </div>
+        
+        <div class="signatures" style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; width: 100%; box-sizing: border-box;">
+            <div class="signature-item" style="flex: 1; padding: 0 10px; text-align: left;">
+                <p style="margin: 0;">Place & Date:</p>
+                <p style="margin: 0;">Nairobi/Kenya</p>
+            </div>
+            <div class="signature-item" style="flex: 1; padding: 0 10px; text-align: center;">
+                <p style="margin: 0;">Signature & Name:</p><br>
+                <span style="display: inline-block; width: 30%; border-bottom: 1px solid black; margin-top: 5px;"></span>
+            </div>
+            <div class="signature-item" style="flex: 1; padding: 0 10px; text-align: right;">
+                <p style="margin: 0;">Company Stamp:</p><br>
+                <span style="display: inline-block; width: 30%; border-bottom: 1px solid black; margin-top: 5px;"></span>
+            </div>
+        </div>
+        <div class="notes">
+            <p>Please note that any claims should be made within 48 hours of receiving the produce.</p>
+            <p>Any claims raised after 48 hours will not be honoured</p>
+        </div>
     </div>
 
-    <!-- Totals -->
-    <div class="totals">
-        <table>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td class="sub-total">Sub Total:</td>
-                    <td>Ksh {{--  --}}</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="vat">16.00% Kenyan VAT:</td>
-                    <td>Ksh {{--  --}}</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="total">Total:</td>
-                    <td><strong>Ksh {{--  --}}</strong></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="bank-details-container" style="text-align: center; margin-top: 20px;">
+        <div class="bank-details" style="display: inline-block; text-align: left; width: 400px; border: 1px solid black; padding: 10px; font-size: 0.9em;">
+            <p><b>PIN NO: [NUMBER]</b></p>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Name</td><td style="padding: 2px 4px; border: 1px solid #ddd;">Centralrift Fresh Produce Kenya</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[BANK NAME]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Currency</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CURRENCY]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[NUMBER]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[BRANCH NAME]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CODE]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CODE]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Swift Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CODE]</td></tr>
+            </table>
+        </div>
     </div>
-
-    <!-- Transactions -->
-    <div class="transactions">
-        <h3>Transactions</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Transaction Date</th>
-                    <th>Gateway</th>
-                    <th>Transaction ID</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="4">No Related Transactions Found</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Balance: Ksh {{--  --}}</p>
-    </div>
-    @php
-        $dateTimeZone = new DateTimeZone('Africa/Nairobi');
-    @endphp
-    <p>PDF Generated on {{ now($dateTimeZone)->format('jS M, Y | h:i A T') }}</p>
-</div>
-
 </body>
 </html>

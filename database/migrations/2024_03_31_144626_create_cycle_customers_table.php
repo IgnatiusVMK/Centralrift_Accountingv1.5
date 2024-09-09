@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreign('maker_id')->references('id')->on('users');
 
             $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
-            $table->foreign('Customer_Id')->references('Customer_Id')->on('customers');
+            $table->foreign('Customer_Id')->references('id')->on('customers');
         });
     }
 

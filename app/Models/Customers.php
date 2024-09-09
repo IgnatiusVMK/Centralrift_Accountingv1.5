@@ -11,19 +11,22 @@ class Customers extends Model
 
     protected $table = 'customers';
 
-    protected $primaryKey = 'Customer_Id';
-
     protected $fillable = [
-        'Customer_Fname',
-        'Customer_Lname',
-        'Email',
-        'Contact',
-        'Address'/* ,
-        'is_active' */
+        'Customer_Name',
+        'Cust_Account_No',
+        'Address',
+        // Add other fields if necessary, like 'is_active'
     ];
 
+    // Define the relationship with the Sales model
     public function sales()
     {
-        return $this->hasMany(Sales::class, 'Customer_Id', 'Customer_Id');
+        return $this->hasMany(Sales::class, 'customer_id', 'id');
+    }
+
+    // Define the relationship with the SalesPerson model
+    public function salespersons()
+    {
+        return $this->belongsToMany(SalesPerson::class, 'customer_salesperson', 'customer_id', 'sales_person_id');
     }
 }

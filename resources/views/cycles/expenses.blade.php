@@ -435,10 +435,13 @@
                               Customer
                             </th>
                             <th>
+                              LPO NUmber
+                            </th>
+                            <th>
                               Sales Date
                             </th>
                             <th>
-                              Quantity
+                              Net Weight
                             </th>
                             <th>
                               Total Price
@@ -459,9 +462,12 @@
                           <tr>
                             <td>{{$sale->id}}</td>
                             <td>{{$sale->Cycle_Id}}</td>
-                            <td>{{$sale->customer->Customer_Fname}}</td>
+                            <td>{{$sale->customer->Customer_Name}}</td>
+                            <td>
+                              {{$sale->Lpo_No}}
+                            </td>
                             <td>{{$sale->Sale_Date}}</td>
-                            <td>{{$sale->Quantity}} Kg</td>
+                            <td>{{$sale->Net_Weight}} Kg</td>
                             <td>Ksh {{$sale->Total_Price}}</td>
                             {{-- <td>{{$sale->Payment_Method}}</td> --}}
                             <td class="@if($sale->Payment_Status == 'Un-paid') text-danger @elseif($sale->Payment_Status == 'Paid') text-success @else text-warning @endif">

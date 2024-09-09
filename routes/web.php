@@ -122,10 +122,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('customers/create', [App\Http\Controllers\CustomerController::class, 'create'])->name('customers.create');
     Route::post('customers/create', [App\Http\Controllers\CustomerController::class, 'store'])->name('customers.store');
     Route::get('customers/{id}/edit', [App\Http\Controllers\CustomerController::class, 'edit'])->name('customers.edit');
-    Route::put('customers/{id}/edit', [App\Http\Controllers\CustomerController::class, 'update'])->name('customers.update');
-    Route::get('customers/{id}/delete', [App\Http\Controllers\CustomerController::class, 'destroy'])->name('customers.destroy');
+    Route::put('customers/update/{id}', [App\Http\Controllers\CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('customers/{id}/delete', [App\Http\Controllers\CustomerController::class, 'destroy'])->name('customers.destroy');
 
-    Route::get('customers/{Customer_Fname}', [App\Http\Controllers\CustomerSalesController::class, 'index'])->name('customer.sales');
+    Route::get('customers/{id}', [App\Http\Controllers\CustomerSalesController::class, 'index'])->name('customers.showSales');
 
 
     Route::get('suppliers', [App\Http\Controllers\SupplierController::class,'index'])->name('suppliers');

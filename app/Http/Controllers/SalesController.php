@@ -42,50 +42,49 @@ class SalesController extends Controller
         ]);
     }
 
-    public function store(Request $request){
-        $request->validate([
-            'maker_id' => 'required|max:255|integer',
-            'Sales_Id' => 'required|max:255|string',
-            'Customer_Id' => 'required|max:255|string',
-            'Cycle_Id' => 'required|max:255|string',
-            'Sale_Date' => 'required|date',
-            'Quantity' => 'required|integer|max:1000000',
-            'Total_Price' => 'required|integer|max:1000000',
-            /* 'Payment_Method' => 'required|max:255|string', */
-            'Payment_Status' => 'required|max:255|string',
-        ]);
+    public function store(Request $request)
+{
+    // Validate the request data
+    $request->validate([
+        'maker_id' => 'required|integer|exists:users,id',
+        'Sales_Id' => 'required|string|max:255|unique:sales,Sales_Id',
+        'Customer_Id' => 'required|integer|exists:customers,id',
+        'Cycle_Id' => 'required|string|max:255',
+        'Lpo_No' => 'required|string|max:255',
+        'Sale_Date' => 'required|date',
+        'Net_Weight' => 'required|numeric|min:0',
+        'Total_Price' => 'required|numeric|min:0',
+        'Payment_Status' => 'required|string|max:255',
+        'packaging_option' => 'required|string|max:255',
+        'Description' => 'nullable|string',
+        'No_of_boxes' => 'nullable|numeric|min:0',
+    ]);
 
-        Sales::create([
-            'maker_id' => $request->maker_id,
-            'Sales_Id' => $request->Sales_Id,
-            'Customer_Id' => $request->Customer_Id,
-            'Cycle_Id' => $request->Cycle_Id,
-            'Sale_Date' => $request->Sale_Date,
-            'Quantity' => $request->Quantity,
-            'Total_Price' => $request->Total_Price,
-            /* 'Payment_Method' => $request->Payment_Method, */
-            'Payment_Status' => $request->Payment_Status,
-        ]);
+    // Create the Sales record
+    $sale = Sales::create([
+        'maker_id' => $request->maker_id,
+        'Sales_Id' => $request->Sales_Id,
+        'Customer_Id' => $request->Customer_Id,
+        'Cycle_Id' => $request->Cycle_Id,
+        'Lpo_No' => $request->Lpo_No,
+        'Sale_Date' => $request->Sale_Date,
+        'Net_Weight' => $request->Net_Weight,
+        'Total_Price' => $request->Total_Price,
+        'Payment_Status' => $request->Payment_Status,
+        'packaging_option' => $request->packaging_option,
+        'Description' => $request->Description,
+        'No_of_boxes' => $request->No_of_boxes,
+    ]);
 
-        $this->payIn($request->Total_Price, $request->Cycle_Id, $request->Sales_Id, $request->maker_id, $request->Sales_Id);
+    // Call your payIn method (if needed)
+    $this->payIn($request->Total_Price, $request->Cycle_Id, $request->Sales_Id, $request->maker_id, $request->Sales_Id);
 
-        // Update or create records in products_sales table
-        /* foreach ($request->products'] as $product) {
-            ProductsSales::updateOrCreate(
-                [
-                    'Product_Id' => $product['Product_Id'],
-                    'Sales_Id' => $sale->Sales_Id,
-                ],
-                [
-                    'Quantity' => $product['Quantity'],
-                    'Unit_Price' => $product['Unit_Price'],
-                ]
-            );
-        } */
+    // Redirect to the sales creation page with a success message
+    return redirect()->route('cycle.sales.create', ['Cycle_Id' => $request->Cycle_Id])->with('success', 'Sale Recorded.');
+}
 
-        $Cycle_Id = $request->route('Cycle_Id');
-        return redirect()->route('cycle.sales.create', ['Cycle_Id' => $Cycle_Id])->with('status', 'Sale Recorded.');
-    }
+
+
 
     public function payIn($amount, $Cycle, $Description, $maker_id, $Fin_Id_Id)
     {
@@ -109,33 +108,46 @@ class SalesController extends Controller
         ]);
     }
 
-    public function generateInvoice(Request $request, string $Sales_Id){
-  
-          $sales = Sales::where('Sales_Id', $Sales_Id)->get();
-      
-          $dompdf = new Dompdf();
-          $options = new Options();
-          $options->set('isHtml5ParserEnabled', true);
-          $dompdf->setOptions($options);
-      
-          $now = Carbon::now('Africa/Nairobi');
-          $Sales_Id = $request->route('Sales_Id');
-          $pdfName = 'Inv-' . /* $now->format('Y-m-d-H:i:s') */ $Sales_Id . '.pdf';
-  
-          $data = compact('sales'/* , 'totalCredit', 'totalDebit', 'balance' */);
-      
-          // Render the view to HTML
-          $html = view('financials.sales.invoice', $data)->render();
-          $dompdf->loadHtml($html);
-          $dompdf->setPaper('A4', 'portrait');
-          $dompdf->render();
-      
-          // Return the PDF as a download
-          return response($dompdf->output())
-              ->header('Content-Type', 'application/pdf')
-              ->header('Content-Disposition', 'attachment; filename="' . $pdfName . '"')
-              ->header('Content-Length', strlen($dompdf->output()));
-    }
+    public function generateInvoice(Request $request, string $Sales_Id)
+{
+    // Retrieve all sales records for the given Sales_Id
+    $sales = Sales::where('Sales_Id', $Sales_Id)->get();
+
+    $invoiceDetails = Sales::where('Sales_Id', $Sales_Id)->first();
+
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+    $options->set('isPhpEnabled', true);
+    $options->set('defaultFont', 'Arial');
+    $options->set('isFontSubsettingEnabled', true);
+    $options->set('isRemoteEnabled', true); // To load remote resources like images
+
+    $dompdf = new Dompdf($options);
+
+    $now = Carbon::now('Africa/Nairobi');
+    $pdfName = 'Inv-' . $Sales_Id . '.pdf';
+
+    // Pass the sales collection to the view
+    $data = compact('sales', 'invoiceDetails');
+
+    // Render the view to HTML
+    $html = view('financials.sales.invoice', $data)->render();
+    $dompdf->loadHtml($html);
+
+    // Set paper size and margins using the correct method
+    $dompdf->setPaper('A4', 'portrait');
+
+    // If you need custom margins, use the following to set margins (not set_option):
+    $dompdf->set_option('isRemoteEnabled', true); // Make sure remote content (like images) is allowed
+    $dompdf->render();
+
+    // Return the PDF as a download
+    return response($dompdf->output())
+        ->header('Content-Type', 'application/pdf')
+        ->header('Content-Disposition', 'attachment; filename="' . $pdfName . '"')
+        ->header('Content-Length', strlen($dompdf->output()));
+}
+
 
     public function getNextTransactionId()
     {

@@ -41,9 +41,25 @@
             </a>
             <div class="collapse" id="master">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{('/customers')}}">Customers</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{('/suppliers')}}">Suppliers</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{('/credit')}}">Credit</a></li>
+              </ul>
+            </div>
+          </li>
+          @endcan
+          <!--Customers-->
+          @can('access-customers')
+          <li class="nav-item nav-category">Customers</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#customers" aria-expanded="false" aria-controls="customers">
+              <i class="menu-icon mdi mdi-briefcase-account"></i>
+              <span class="menu-title">Customers</span>
+              <i class="menu-arrow"></i> 
+            </a>
+            <div class="collapse" id="customers">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{('/customers')}}">Customers</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{-- {{('/suppliers')}} --}}">Sales Person</a></li>
               </ul>
             </div>
           </li>
@@ -161,14 +177,14 @@
           <li class="nav-item nav-category">Sales</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#sales" aria-expanded="false" aria-controls="sales">
-              <i class="menu-icon mdi mdi-square-inc-cash"></i>
+              <i class="menu-icon mdi mdi-store"></i>
               <span class="menu-title">Sales</span>
               <i class="menu-arrow"></i> 
             </a>
             <div class="collapse" id="sales">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/sales')}}">Sales</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Sales Invoice</a></li>
+                {{-- <li class="nav-item"> <a class="nav-link" href="#">Sales Invoice</a></li> --}}
               </ul>
             </div>
           </li>
@@ -213,7 +229,7 @@
           <li class="nav-item nav-category">PROFILE</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon mdi mdi-account-settings"></i>
+              <i class="menu-icon mdi mdi-account-network-outline"></i>
               <span class="menu-title">User Pages</span>
               <i class="menu-arrow"></i>
             </a>

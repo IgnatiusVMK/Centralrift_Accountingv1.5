@@ -12,18 +12,29 @@ class CustomerSalesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request){
-        $customers = Customers::get();
-        $customercontacts = CustomerContacts::get();
 
-        $Customer_Fname = $request->route('Customer_Fname');
+    public function index(Request $request, $Customer_Id)
+    {
+        // Fetch all customers with their salespersons
+        $customers = Customers::with('salespersons')->get();
 
+        // Get the Customer_Id from the request
+        $Customer_Id = $request->route('id');
+        $Sales_Id = $request->route('Sales_Id');
+
+        // Fetch the customer name based on the Customer_Id
+        $Customer_Name = Customers::where('id', $Customer_Id)->value('Customer_Name');
+
+        
+
+
+        // Return the view with the data
         return view('customers.customer-sales', [
-            'Customer_Fname' => $Customer_Fname,
-            'customers'=> $customers,
-            'customercontacts'=> $customercontacts,
+            'Customer_Name' => $Customer_Name,
+            'customers' => $customers,
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

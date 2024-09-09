@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    /* public function up(): void
     {
         Schema::create('customer_contacts', function (Blueprint $table) {
             $table->id();
@@ -20,13 +20,13 @@ return new class extends Migration
             $table->string('Address', 255);
             $table->timestamps();
         });
-    }
+    } */
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    /* public function down(): void
     {
         Schema::dropIfExists('customer_contacts');
-    }
+    } */
 };

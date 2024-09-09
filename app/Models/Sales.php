@@ -12,17 +12,18 @@ class Sales extends Model
     protected $table = 'sales';
 
     protected $fillable = [
+        'maker_id',
         'Sales_Id',
         'Customer_Id',
         'Cycle_Id',
+        'Lpo_No',
         'Sale_Date',
-        'Quantity',
+        'Net_Weight',
         'Total_Price',
-        'Payment_Method',
         'Payment_Status',
-        'Status',
-        'checker_id',
-        'maker_id'
+        'packaging_option',
+        'Description',
+        'No_of_boxes',
     ];
 
     public function products()
@@ -31,7 +32,7 @@ class Sales extends Model
     }
 
     public function customer(){
-        return $this->belongsTo(Customers::class, 'Customer_Id', 'Customer_Id');
+        return $this->belongsTo(Customers::class, 'Customer_Id', 'id');
     }
 
     public function maker(){

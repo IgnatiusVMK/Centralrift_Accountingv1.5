@@ -124,6 +124,23 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('delete_master');
         });
 
+        //Customers
+        Gate::define('access-customers', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('access_customers');
+        });
+        Gate::define('view-customers', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('view_customers');
+        });
+        Gate::define('create-customers', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('create_customers');
+        });
+        Gate::define('modify-customers', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('modify_customers');
+        });
+        Gate::define('delete-customers', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('delete_customers');
+        });
+
         //ExpensesModel
         Gate::define('access-financials', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_financials');

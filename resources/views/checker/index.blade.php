@@ -801,6 +801,9 @@
                                 Customer
                               </th>
                               <th>
+                                LPO Number
+                              </th>
+                              <th>
                                 Sales Date
                               </th>
                               <th>
@@ -833,23 +836,21 @@
                           <tbody>
                             @foreach ($sales as $sale)
                               <tr>
-                                {{-- <td>{{$sale->id}}</td> --}}
                                 <td>{{$sale->Cycle_Id}}</td>
-                                {{-- <td>{{$sale->Sales_Id}}</td> --}}
-                                <td>{{$sale->customer->Customer_Fname}}</td>
+                                <td>{{$sale->customer->Customer_Name}}</td>
+                                <td>{{$sale->Lpo_No}}</td>
                                 <td>{{$sale->Sale_Date}}</td>
                                 <td>
                                   {{$sale->maker?->name}}
                                 </td>
                                 <td>{{$sale->Quantity}} Kg</td>
                                 <td>Ksh {{$sale->Total_Price}}</td>
-                                {{-- <td>{{$sale->Payment_Method}}</td> --}}
                                 <td class="@if($sale->Payment_Status == 'Un-paid') text-danger @elseif($sale->Payment_Status == 'Paid') text-success @else text-warning @endif">
                                   {{$sale->Payment_Status}}
                                 </td>
                                 @can('create-approval')
                                   <td>
-                                    <a href="{{-- {{ url('checker/'.$sale->Sales_Id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
+                                    <a href="">Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
                                 @can('create-approval')
@@ -858,12 +859,12 @@
                                       @csrf
                                       <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
                                       <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
-                                      <button type="submit" class="btn btn-success" {{-- onclick="return confirm('Are you sure you want to approve this sale?');" --}}>Approve Sale</button>
+                                      <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to approve this sale?');">Approve Sale</button>
                                   </form>                                  
                                   </td>
                                 @endcan
                               </tr>
-                            @endforeach
+                            @endforeach{{-- {{ url('checker/'.$sale->Sales_Id.'/validate')}} --}}
                           </tbody>
                         </table>
                           {{-- <div class="pagination-container float-end">

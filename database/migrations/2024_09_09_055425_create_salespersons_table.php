@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->id();
-            $table->string('Customer_Name', 255);
-            $table->integer('Cust_Account_No');
-            $table->string('Address', 255);
+        Schema::create('salespersons', function (Blueprint $table) {
+            $table->id(); // unique identifier for each salesperson
+            $table->string('first_name', 255);
+            $table->string('last_name', 255);
+            $table->string('email', 255)->unique();
+            $table->string('phone', 255)->nullable();
             $table->timestamps();
-            
         });
+        
     }
 
     /**
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('salespersons');
     }
 };

@@ -101,6 +101,22 @@ class PermissionsTableSeeder extends Seeder
             [
                 'Name'=> 'delete_master',
             ],
+            //Permissions for Customers
+            [
+                'Name'=> 'access_customers',
+            ],
+            [
+                'Name'=> 'view_customers',
+            ],
+            [
+                'Name'=> 'create_customers',
+            ],
+            [
+                'Name'=> 'modify_customers',
+            ],
+            [
+                'Name'=> 'delete_customers',
+            ],
 
             //Permissions for Monthly Expenses
             [

@@ -41,7 +41,7 @@ class CreditController extends Controller
 
         $this->payIn($request->Amount, $request->Credit_Id, $request->Source.' - '.$request->Description);
 
-        return redirect('credit/create')->with('status','Credit Recorded');
+        return redirect('credit/create')->with('success','Credit Recorded');
     }
 
     public function payIn($amount, $Credit_Id, $Source)

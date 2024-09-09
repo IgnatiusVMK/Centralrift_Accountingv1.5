@@ -26,25 +26,25 @@
                             Sales ID
                           </th>
                           <th>
-                            Cycle
+                            LPO Number:
                           </th>
                           <th>
                             Customer
                           </th>
                           <th>
-                            Sales Date
+                            Details
                           </th>
                           <th>
-                            Quantity
+                            Net Weight
                           </th>
                           <th>
                             Total Price
                           </th>
-                          {{-- <th>
-                            Payment Type
-                          </th> --}}
                           <th>
                             Payment Status
+                          </th>
+                          <th>
+                            Delivery Date
                           </th>
                           <th>
                               Generate Invoice
@@ -55,16 +55,23 @@
                         @foreach ($sales as $sale)
                         <tr>
                           <td>{{$sale->id}}</td>
-                          <td>{{$sale->Sales_Id}}</td>
-                          <td>{{$sale->Cycle_Id}}</td>
-                          <td>{{$sale->customer->Customer_Fname}}</td>
-                          <td>{{$sale->Sale_Date}}</td>
-                          <td>{{$sale->Quantity}} Kg</td>
+                          <td>
+                            <b>Cycle:</b> {{$sale->Cycle_Id}} <br><br>
+                            {{$sale->Sales_Id}}
+                          </td>
+                          <td>
+                            {{$sale->Lpo_No}}
+                          </td>
+                          <td>{{$sale->customer->Customer_Name}}</td>
+                          <td>{{$sale->Description}}</td>
+                          
+                          <td>{{$sale->Net_Weight}} Kg</td>
                           <td>Ksh {{$sale->Total_Price}}</td>
                           {{-- <td>{{$sale->Payment_Method}}</td> --}}
                           <td class="@if($sale->Payment_Status == 'Un-paid') text-danger @elseif($sale->Payment_Status == 'Paid') text-success @else text-warning @endif">
                             {{$sale->Payment_Status}}
                           </td>
+                          <td>{{$sale->Sale_Date}}</td>
                           <td>
                             <a href="{{ ('/sales'.'/'.$sale->Sales_Id.'/generate-invoice') }}" {{-- class="btn btn-otline-dark" --}}>
                               <button type="submit" class="btn btn-primary text-white me-0">
