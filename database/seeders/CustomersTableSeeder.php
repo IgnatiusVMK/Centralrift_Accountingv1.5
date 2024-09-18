@@ -15,16 +15,18 @@ class CustomersTableSeeder extends Seeder
     {
         $customers = [
             [
-                'Customer_Id' => 1,
-                'Customer_Fname' => 'Keitt Fresh',
-                'Customer_Lname' => 'Limited',
+                'id' => 1,
+                'Customer_Name' => 'Spisa Herbs LTD',
+                'Cust_Account_No' => 5845225,
+                'Address' => 'Airport RD',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'Customer_Id' => 2,
-                'Customer_Fname' => 'Romwa',
-                'Customer_Lname' => 'Ltd',
+                'id' => 2,
+                'Customer_Name' => 'Keitt Fresh LTD',
+                'Cust_Account_No' => 4785265,
+                'Address' => 'Mombasa Road',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

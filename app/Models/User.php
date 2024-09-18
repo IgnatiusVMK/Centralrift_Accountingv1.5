@@ -57,6 +57,14 @@ class User extends Authenticatable
         return $this->belongsToMany(Roles::class, 'role_user', 'user_id', 'role_id');
     }
 
+
+    // Check if the user is an admin
+    public function isAdmin()
+    {
+        // Check if the user has the admin role (role_id = 1)
+        return $this->roles->contains('id', 1);
+    }
+
     public function permissions()
     {
         return $this->hasManyThrough(Permissions::class, Roles::class);

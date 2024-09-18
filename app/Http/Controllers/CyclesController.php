@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blocks;
+use App\Models\Customers;
 use App\Models\Cycles;
 use App\Models\HarvestOrder;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CyclesController extends Controller
 {
@@ -26,37 +28,54 @@ class CyclesController extends Controller
      */
     public function create()
     {
-
         $this->authorize('create-cycles');
 
-        $blocks  = Blocks::get();
+        $blocks = Blocks::get();
         $products = Product::get();
+        $customers = Customers::all()/* ->map(function($customer) {
+            return [
+                'id' => $customer->id,
+                'name' => $customer->Customer_Name
+            ];
+        }) */;
+
         return view('cycles.create', [
-            'blocks'=> $blocks,
-            'products'=> $products
+            'blocks' => $blocks,
+            'products' => $products,
+            'customers' => $customers
         ]);
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+
+        $this->authorize('create-cycles');
+
         $CycleCode = $this->generateCycCode($request);
 
-        $request->validate([
+        $validatedData = $request->validate([
             'Block_Id' => 'required|max:255|integer',
             'Product' => 'required|max:255|string',
-            'Client_Name' => 'required|max:255|string',
+            /* 'Client_Name' => 'max:255|string', */
             'Cycle_Name' => 'required|max:255|string',
             'Cycle_Start' => 'required|date',
             'Cycle_End' => 'required|date',
             'maker_id' => 'required|max:255|integer',
-            ]);
-    
-        Cycles::create([
+        ]);
+
+        // Get the selected product based on the product_id
+        $product = Product::where('Product_Name', $validatedData['Product'])->first();
+
+        // Retrieve the Category_Id from the selected product
+        $categoryId = $product->Category_Id;
+            
+        /* dd($categoryId); */
+        $cycles = Cycles::create([
             'Cycle_Id'=> $CycleCode,
             'Block_Id' => $request->Block_Id,
+            'Category_Id' => $categoryId,
             'Product' => $request->Product,
             'Client_Name' => $request->Client_Name,
             'Cycle_Name' => $request->Cycle_Name,
@@ -74,8 +93,10 @@ class CyclesController extends Controller
             'product_name' => $request->Product,
             'maker_id' => $request->maker_id,
         ]);
+
+        Log::info($cycles);
     
-        return redirect('new/cycle')->with('status','New Cycle Created');
+        return redirect('new/cycle')->with('success','Cycle Created');
     }
 
     /**

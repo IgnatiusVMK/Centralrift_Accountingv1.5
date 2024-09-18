@@ -123,7 +123,7 @@ class CheckerController extends Controller
             'Status'=> $request->Status,
         ]);
 
-        return redirect()->back()->with('Status','Cycle Approved');
+        return redirect()->back()->with('success','Cycle Entry Approved');
     }
     public function approveFinancial(Request $request, string $Cycle_Id, string $Fin_Id_Id, int $id,)
     {
@@ -142,7 +142,7 @@ class CheckerController extends Controller
             'Status'=> $request->Status,
         ]);
 
-        return redirect()->back()->with('Status','Receipt Approved');
+        return redirect()->back()->with('success','Finanacial Entry Approved');
     }
 
     public function approveSale(Request $request, string $Sales_Id, int $id, )
@@ -169,7 +169,7 @@ class CheckerController extends Controller
             'Status'=> $request->Status,
         ]);
 
-        return redirect()->back()->with('Status','Sale approved.');
+        return redirect()->back()->with('success','Sale Entry approved.');
     }
 
     public function approveCaptWithdrawal(Request $request, string $Capt_Withdraw_Id /* , int $id, */){
@@ -190,7 +190,7 @@ class CheckerController extends Controller
             'Status'=> $request->Status,
         ]);
 
-        return redirect()->back()->with('Status','Withdrawal approved.');
+        return redirect()->back()->with('success','Withdrawal Entry approved.');
     }
 
     public function approveCredit(Request $request, string $Credit_Id ){
@@ -210,7 +210,7 @@ class CheckerController extends Controller
             'Status'=> $request->Status,
         ]);
 
-        return redirect()->back()->with('Status','Credit approved.');
+        return redirect()->back()->with('success','Credit Entry approved.');
     }
 
     /**

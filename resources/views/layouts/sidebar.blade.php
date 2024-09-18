@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
+
+
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
@@ -245,6 +248,26 @@
               </ul>
             </div>
           </li>
+          <!-- Maintenance-->
+          @can('access-maintenance')
+          <li class="nav-item nav-category">System Maintenance</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#maintenance" aria-expanded="false" aria-controls="maintenance">
+              <i class="menu-icon mdi mdi-cog-sync-outline"></i>
+              <span class="menu-title">Maintenance</span>
+              <i class="menu-arrow"></i>
+            </a>
+            @can('create-maintenance')
+            <div class="collapse" id="maintenance">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/system-maintenance">Maintenance Mode</a></li>
+              </ul>
+            </div>
+            @endcan
+          </li>
+          @endcan
+
+          <!--Contact Support-->
           <li class="nav-item nav-category">Contact Support</li>
           <li class="nav-item">
             <a class="nav-link" href="#">

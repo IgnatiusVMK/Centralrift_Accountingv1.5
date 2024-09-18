@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Customers;
+use App\Models\Cycles;
 use App\Models\ProductsSales;
 use App\Models\Sales;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SalesController extends Controller
 {
@@ -33,10 +35,12 @@ class SalesController extends Controller
     public function create(Request $request){
 
         $Cycle_Id = $request->route('Cycle_Id');
+        $cycle = Cycles::where('Cycle_Id', $Cycle_Id)->first();
         $Customers = Customers::get();
         $SaleuniqueCode = $this->generateUniqueCode('Sales');
         return view('financials.sales.create', [
             'Cycle_Id' => $Cycle_Id,
+            'cycle' => $cycle,
             'Customers' => $Customers,
             'SaleuniqueCode' => $SaleuniqueCode,
         ]);
@@ -44,36 +48,58 @@ class SalesController extends Controller
 
     public function store(Request $request)
 {
+
     // Validate the request data
     $request->validate([
         'maker_id' => 'required|integer|exists:users,id',
+        'Cycle_Id' => 'required|string|max:255',
         'Sales_Id' => 'required|string|max:255|unique:sales,Sales_Id',
         'Customer_Id' => 'required|integer|exists:customers,id',
-        'Cycle_Id' => 'required|string|max:255',
+        'Cust_Account_No' => 'required|numeric|min:256',
         'Lpo_No' => 'required|string|max:255',
-        'Sale_Date' => 'required|date',
-        'Net_Weight' => 'required|numeric|min:0',
-        'Total_Price' => 'required|numeric|min:0',
-        'Payment_Status' => 'required|string|max:255',
+        'Description' => 'required|string',
         'packaging_option' => 'required|string|max:255',
-        'Description' => 'nullable|string',
-        'No_of_boxes' => 'nullable|numeric|min:0',
+        'Quantity' => 'required|numeric|min:0',
+        'Unit_Price' => 'required|numeric|min:0',
+        'Total_Price' => 'required|numeric|min:0',
+        'Sale_Date' => 'required|date',
+        'Payment_Status' => 'required|string|max:255',
+        /* 'Net_Weight' => 'required_if:product_type,Herbs|numeric|min:0', */
     ]);
 
+    /* Log::info('Sale data:', [
+        'maker_id' => $request->maker_id,
+        'Cycle_Id' => $request->Cycle_Id,
+        'Sales_Id' => $request->Sales_Id,
+        'Customer_Id' => $request->Customer_Id,
+        'Cust_Account_No'=> $request->Cust_Account_No,
+        'Lpo_No' => $request->Lpo_No,
+        'Description' => $request->Description,
+        'packaging_option' => $request->packaging_option,
+        'Quantity' => $request->Quantity,
+        'Unit_Price' => $request->Unit_Price,
+        'Total_Price' => $request->Total_Price,
+        'Payment_Status' => $request->Payment_Status,
+        'Sale_Date' => $request->Sale_Date,
+        'Net_Weight' => $request->Net_Weight,
+    ]); */
+
     // Create the Sales record
-    $sale = Sales::create([
+    Sales::create([
         'maker_id' => $request->maker_id,
         'Sales_Id' => $request->Sales_Id,
         'Customer_Id' => $request->Customer_Id,
+        'Cust_Account_No' => $request->Cust_Account_No,
         'Cycle_Id' => $request->Cycle_Id,
         'Lpo_No' => $request->Lpo_No,
         'Sale_Date' => $request->Sale_Date,
         'Net_Weight' => $request->Net_Weight,
+        'Unit_Price' => $request->Unit_Price,
         'Total_Price' => $request->Total_Price,
         'Payment_Status' => $request->Payment_Status,
         'packaging_option' => $request->packaging_option,
         'Description' => $request->Description,
-        'No_of_boxes' => $request->No_of_boxes,
+        'Quantity' => $request->Quantity,
     ]);
 
     // Call your payIn method (if needed)

@@ -220,5 +220,16 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('create_reports');
         });
         
+        //System Maintenance
+        Gate::define('access-maintenance', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('access_maintenance');
+        });
+        Gate::define('view-maintenance', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('view_maintenance');
+        });
+        Gate::define('create-maintenance', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('create_maintenance');
+        });
+        
     }
 }

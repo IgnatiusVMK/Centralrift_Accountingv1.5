@@ -13,17 +13,19 @@ class Sales extends Model
 
     protected $fillable = [
         'maker_id',
-        'Sales_Id',
+        'Cycle_Id',  
+        'Sales_Id', 
         'Customer_Id',
-        'Cycle_Id',
+        'Cust_Account_No',
         'Lpo_No',
-        'Sale_Date',
-        'Net_Weight',
-        'Total_Price',
-        'Payment_Status',
+        'Description', 
         'packaging_option',
-        'Description',
-        'No_of_boxes',
+        'Quantity',
+        'Unit_Price', 
+        'Total_Price',
+        'Payment_Status', 
+        'Sale_Date', 
+        'Net_Weight', 
     ];
 
     public function products()

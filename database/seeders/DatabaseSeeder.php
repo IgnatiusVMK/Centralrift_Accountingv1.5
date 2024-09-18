@@ -22,8 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             BlocksTableSeeder::class,
             CategoriesTableSeeder::class,
-            /* CustomersTableSeeder::class,
-            CustomerContactsTableSeeder::class, */
+            CustomersTableSeeder::class,
+            SalesPersonTableSeeder::class,
+            Customer_SalesPersonTableSeeder::class,
             DepartmentsTableSeeder::class,
             SuppliersTableSeeder::class,
             SupplierContactsTableSeeder::class,

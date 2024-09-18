@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('Cycle_Id')->unique();
             $table->unsignedInteger('Block_Id');
+            $table->unsignedInteger('Category_Id');
             $table->string('Product');
-            $table->string('Client_Name');
+            $table->string('Client_Name')->nullable();
             $table->string('Cycle_Name');
             $table->date('Cycle_Start');
             $table->date('Cycle_End');

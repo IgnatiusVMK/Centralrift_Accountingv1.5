@@ -14,18 +14,20 @@ return new class extends Migration
         if (!Schema::hasTable('sales')) {
             Schema::create('sales', function (Blueprint $table) {
                 $table->id();
+                $table->string('Cycle_Id');
                 $table->string('Sales_Id')->unique();
                 $table->unsignedBigInteger('Customer_Id');
-                $table->string('Cycle_Id');
-                $table->string('Lpo_No');
+                $table->bigInteger('Cust_Account_No');
+                $table->string('Lpo_No')->nullable();
                 $table->date('Sale_Date');
-                $table->integer('Net_Weight');
+                $table->integer('Net_Weight')->nullable();
+                $table->decimal('Unit_Price', 10, 2);
                 $table->decimal('Total_Price', 10, 2);
                 /* $table->string('Payment_Method')->nullable(); */
                 $table->string('Payment_Status');
                 $table->string('packaging_option');
                 $table->string('Description')->nullable();
-                $table->decimal('No_of_boxes', 10, 2)->nullable();
+                $table->decimal('Quantity', 10, 2)->nullable();/* No_of_boxes */
                 $table->string('Status')->default('pending');
                 $table->unsignedBigInteger('checker_id')->nullable();
                 $table->unsignedBigInteger('maker_id')->nullable();
