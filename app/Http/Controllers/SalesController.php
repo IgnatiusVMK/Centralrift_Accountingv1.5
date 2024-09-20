@@ -56,7 +56,7 @@ class SalesController extends Controller
         'Sales_Id' => 'required|string|max:255|unique:sales,Sales_Id',
         'Customer_Id' => 'required|integer|exists:customers,id',
         'Cust_Account_No' => 'required|numeric|min:256',
-        'Lpo_No' => 'required|string|max:255',
+        /* 'Lpo_No' => 'required|string|max:255', */
         'Description' => 'required|string',
         'packaging_option' => 'required|string|max:255',
         'Quantity' => 'required|numeric|min:0',
@@ -135,44 +135,44 @@ class SalesController extends Controller
     }
 
     public function generateInvoice(Request $request, string $Sales_Id)
-{
-    // Retrieve all sales records for the given Sales_Id
-    $sales = Sales::where('Sales_Id', $Sales_Id)->get();
+    {
+        // Retrieve all sales records for the given Sales_Id
+        $sales = Sales::where('Sales_Id', $Sales_Id)->get();
 
-    $invoiceDetails = Sales::where('Sales_Id', $Sales_Id)->first();
+        $invoiceDetails = Sales::where('Sales_Id', $Sales_Id)->first();
 
-    $options = new Options();
-    $options->set('isHtml5ParserEnabled', true);
-    $options->set('isPhpEnabled', true);
-    $options->set('defaultFont', 'Arial');
-    $options->set('isFontSubsettingEnabled', true);
-    $options->set('isRemoteEnabled', true); // To load remote resources like images
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
+        $options->set('defaultFont', 'Arial');
+        $options->set('isFontSubsettingEnabled', true);
+        $options->set('isRemoteEnabled', true); // To load remote resources like images
 
-    $dompdf = new Dompdf($options);
+        $dompdf = new Dompdf($options);
 
-    $now = Carbon::now('Africa/Nairobi');
-    $pdfName = 'Inv-' . $Sales_Id . '.pdf';
+        $now = Carbon::now('Africa/Nairobi');
+        $pdfName = 'Inv-' . $Sales_Id . '.pdf';
 
-    // Pass the sales collection to the view
-    $data = compact('sales', 'invoiceDetails');
+        // Pass the sales collection to the view
+        $data = compact('sales', 'invoiceDetails');
 
-    // Render the view to HTML
-    $html = view('financials.sales.invoice', $data)->render();
-    $dompdf->loadHtml($html);
+        // Render the view to HTML
+        $html = view('financials.sales.invoice', $data)->render();
+        $dompdf->loadHtml($html);
 
-    // Set paper size and margins using the correct method
-    $dompdf->setPaper('A4', 'portrait');
+        // Set paper size and margins using the correct method
+        $dompdf->setPaper('A4', 'portrait');
 
-    // If you need custom margins, use the following to set margins (not set_option):
-    $dompdf->set_option('isRemoteEnabled', true); // Make sure remote content (like images) is allowed
-    $dompdf->render();
+        // If you need custom margins, use the following to set margins (not set_option):
+        $dompdf->set_option('isRemoteEnabled', true); // Make sure remote content (like images) is allowed
+        $dompdf->render();
 
-    // Return the PDF as a download
-    return response($dompdf->output())
-        ->header('Content-Type', 'application/pdf')
-        ->header('Content-Disposition', 'attachment; filename="' . $pdfName . '"')
-        ->header('Content-Length', strlen($dompdf->output()));
-}
+        // Return the PDF as a download
+        return response($dompdf->output())
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="' . $pdfName . '"')
+            ->header('Content-Length', strlen($dompdf->output()));
+    }
 
 
     public function getNextTransactionId()

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CashBookController;
+use App\Http\Controllers\CustomerSalesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
@@ -129,6 +130,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::delete('customers/{id}/delete', [App\Http\Controllers\CustomerController::class, 'destroy'])->name('customers.destroy');
 
         Route::get('customers/{id}', [App\Http\Controllers\CustomerSalesController::class, 'index'])->name('customers.showSales');
+        Route::post('customer/{id}/generate-groupedinvoice', [CustomerSalesController::class, 'generateGroupedInvoice'])->name('customer.generateGroupedInvoice');
 
 
         Route::get('suppliers', [App\Http\Controllers\SupplierController::class,'index'])->name('suppliers');
@@ -183,6 +185,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('sales', [App\Http\Controllers\SalesController::class,'index'])->middleware(['auth', 'verified', /* 'can:view-sales' */])->name('sales');
         Route::post('sales/{Cycle_Id}/create', [App\Http\Controllers\SalesController::class, 'store'])->name('sales.store');
         Route::get('/sales/{Sales_Id}/generate-invoice', [SalesController::class, 'generateInvoice'])->name('sales.generateInvoice');
+    
 
         Route::get('cashbook', [App\Http\Controllers\CashBookController::class,'index'])->name('cashbook');
 

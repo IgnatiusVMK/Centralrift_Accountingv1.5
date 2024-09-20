@@ -1,7 +1,29 @@
 @extends('layouts.app')
-
+@php
+  $cust_id = $customers_details->id;
+  $customer = $customers->where('Customer_Name', $Customer_Name);
+@endphp
 @section('content')
-@include('layouts.export')
+<div class="col-sm-12">
+  <div class="home-tab">
+    <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+        </li>
+      </ul>
+      <div>
+        <div class="btn-wrapper">
+          <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
+          {{-- <a href="{{ url('customer/'.$cust_id.'/generate-groupedinvoice') }}" class="btn btn-success"><i class="icon-printer"></i>Generate Invoice</a> --}}
+          <a href="#" class="btn btn-success" data-toggle="modal" data-target="#dateModal">
+            <i class="icon-printer"></i> Invoice Cluster
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="main-panel">
   <div class="content-wrapper">
     <div class="card">
@@ -63,7 +85,46 @@
         </div>
     </div>
   </div>
+
+  <div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="dateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dateModalLabel">Enter Date</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="invoiceForm" action="{{ url('customer/'.$cust_id.'/generate-groupedinvoice') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="invoiceDate">Date</label>
+                        <input type="date" class="form-control" id="invoiceDate" name="Sale_Date" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submitInvoice">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- content-wrapper ends -->
 </div>
 <!-- main-panel ends -->
+
+<!-- Include Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Include jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.getElementById('submitInvoice').addEventListener('click', function() {
+      document.getElementById('invoiceForm').submit();
+  });
+</script>
 @endsection

@@ -132,72 +132,71 @@
                 <p><b>CUSTOMER INVOICE NO:</b>{{$invoiceDetails->Sales_Id}}</p>
                 <p><b>LPO NUMBER:</b> {{-- {{ $invoiceDetails->Lpo_No }} --}}</p>
                 <p><b>DELIVERY DATE: </b>{{ $invoiceDetails->Sale_Date }} </p>
-                {{-- <p>MAWB: [NUMBER]</p>
-                <p>Flight No.: [NUMBER]</p>
-                <p>EURO 1: [NUMBER]</p>
-                <p>Agent: [NAME]</p> --}}
             </div>
         </div>
         
         <table style="text-align: right">
             <thead>
-                @foreach($sales as $sale)
                 <tr>
                     <th>Ref</th>
-                    @if ($sale->packaging_option === '30 * 1 Tray')
-                        <th>Quantity</th>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
-                        <th>No.of cartons</th>
+                    @if ($sales->isNotEmpty())
+                        @if ($sales->first()->packaging_option === '30 * 1 Tray')
+                            <th>Quantity</th>
+                        @elseif ($sales->first()->packaging_option === '1Kg (100gms x 10)' || $sales->first()->packaging_option === '3Kg (30gms x 100)')
+                            <th>No. of Cartons</th>
+                        @endif
+                        <th>Packaging</th>
+                        <th>Description of Goods</th>
+                        @if ($sales->first()->packaging_option === '30 * 1 Tray')
+                            <th>Net Tray(s)</th>
+                        @elseif ($sales->first()->packaging_option === '1Kg (100gms x 10)' || $sales->first()->packaging_option === '3Kg (30gms x 100)')
+                            <th>Net Weight (kgs)</th>
+                        @endif
+                        <th>Unit Price</th>
+                        <th>Total Price</th>
                     @endif
-                    <th>Packaging</th>
-                    <th>Description of Goods</th>
-                    @if ($sale->packaging_option === '30 * 1 Tray')
-                        <th>Net Tray(s)</th>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
-                        <th>Net Weight (kgs)</th>
-                    @endif
-                    <th>Unit Price</th>
-                    <th>Total price</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    {{-- @foreach($sales as $sale) --}}
-                    <td style="text-align: right;">1</td>
-                    <td style="text-align: right;">{{-- {{ $sale->Quantity }} --}}</td>
-                    <td style="text-align: right;">
-                        @if($sale->packaging_option == '3Kg (30gms x 100)')
-                            {{-- 30gms * 100 --}}
-                        @elseif($sale->packaging_option == '1Kg (100gms x 10)')
-                            {{-- 100gms * 10 --}}
-                        @elseif ($sale->packaging_option === '30 * 1 Tray')
-                            {{-- Tray(s) --}}
-                        @else
-                            {{-- {{ $sale->packaging_option }} --}}
-                        @endif
-                    </td>                                      
-                    <td style="text-align: right;">{{ $sale->Description }}</td>
-                    @if ($sale->packaging_option === '30 * 1 Tray')
-                        <td style="text-align: right;">{{ $sale->Quantity }} Trays</td>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
-                        <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
-                    @endif
-                    <td style="text-align: right;">{{ $sale->Unit_Price }}</td>
-                    <td style="text-align: right;">Ksh {{ $sale->Total_Price }}</td>
-                </tr>
-                <tr>
-                    <td colspan="4">Total</td>
-                    @if ($sale->packaging_option === '30 * 1 Tray')
-                        <td style="text-align: right;">{{ $sale->Quantity }} Trays</td>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
-                        <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
-                    @endif
-                    <td></td>
-                    <td style="text-align: right;">Ksh {{ $sale->Total_Price }}</td>
-                </tr>
+                @php
+                    $totalPrice = 0; // Initialize total price variable
+                @endphp
+                @foreach($sales as $sale)
+                    <tr>
+                        <td style="text-align: right;">{{ $loop->iteration }}</td>
+                        <td style="text-align: right;">
+                            @if ($sale->packaging_option === '30 * 1 Tray')
+                                {{ $sale->Quantity }}
+                            @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
+                                {{-- Calculate and display the number of cartons here if applicable --}}
+                            @endif
+                        </td>
+                        <td style="text-align: right;">{{ $sale->packaging_option }}</td>
+                        <td style="text-align: right;">{{ $sale->Description }}</td>
+                        <td style="text-align: right;">
+                            @if ($sale->packaging_option === '30 * 1 Tray')
+                                {{ $sale->Quantity }} Trays
+                            @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
+                                {{ $sale->Net_Weight }} Kg
+                            @endif
+                        </td>
+                        <td style="text-align: right;">{{ $sale->Unit_Price }}</td>
+                        <td style="text-align: right;">Ksh {{ $sale->Total_Price }}</td>
+                        @php
+                            $totalPrice += $sale->Total_Price; // Accumulate total price
+                        @endphp
+                    </tr>
                 @endforeach
+                <tr>
+                    <td colspan="5" style="text-align: left;"><b>Total</b></td>
+                    <td style="text-align: right;"></td>
+                    <td style="text-align: right;">Ksh {{ $totalPrice }}</td>
+                </tr>
             </tbody>
         </table>
+        
+        
+        
         
         <div class="declaration">
             <p>The exporter of the product covered by this document declares that, except where otherwise clearly indicated, these products are of Kenyan preferential origin according to the rules of origin of the European Community</p>
