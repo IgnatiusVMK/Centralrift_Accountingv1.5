@@ -129,7 +129,7 @@
         
         <div class="invoice-details">
             <div>
-                <p><b>CUSTOMER INVOICE NO:</b>{{$invoiceDetails->Sales_Id}}</p>
+                <p><b>CUSTOMER INVOICE NO:</b>{{$invoiceDetails->id}}</p>
                 <p><b>LPO NUMBER:</b> {{-- {{ $invoiceDetails->Lpo_No }} --}}</p>
                 <p><b>DELIVERY DATE: </b>{{ $invoiceDetails->Sale_Date }} </p>
                 {{-- <p>MAWB: [NUMBER]</p>
@@ -183,7 +183,7 @@
                         <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
                     @endif
                     <td style="text-align: right;">{{ $sale->Unit_Price }}</td>
-                    <td style="text-align: right;">Ksh {{ $sale->Total_Price }}</td>
+                    <td style="text-align: right;">Ksh {{ number_format($sale->Total_Price, 0, '.', ',') }}</td>
                 </tr>
                 <tr>
                     <td colspan="4">Total</td>
@@ -193,7 +193,7 @@
                         <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
                     @endif
                     <td></td>
-                    <td style="text-align: right;">Ksh {{ $sale->Total_Price }}</td>
+                    <td style="text-align: right;">Ksh {{ number_format($sale->Total_Price, 0, '.', ',') }}</td>
                 </tr>
                 @endforeach
             </tbody>

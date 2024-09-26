@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\HarvestOrder;
 use App\Models\Sales;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,6 +23,25 @@ class DashboardController extends Controller
         $harvestOrders = HarvestOrder::where('Status','approved')->whereDate('harvest_date', '>', now())->get();
         $completedHarvestOrders = HarvestOrder::where('Status','approved')->whereDate('harvest_date', '<', now())->get();
 
+        // $currentMonth = Carbon::now()->month;
+        // $currentYear = Carbon::now()->year;
+
+        // $dailyData = Account::selectRaw('DATE(Date_Created) as date, SUM(Crd_Amnt) as totalAccCredit, SUM(Dbt_Amt) as totalAccDebit')
+        // ->whereMonth('Date_Created', $currentMonth)  // Filter by current month
+        // ->whereYear('Date_Created', $currentYear)    // Filter by current year
+        // ->groupBy('date')
+        // ->orderBy('date')
+        // ->get();
+        $dailyData = Account::selectRaw('DATE(Date_Created) as date, SUM(Crd_Amnt) as totalAccCredit, SUM(Dbt_Amt) as totalAccDebit')
+        ->groupBy('date')
+        ->orderBy('date')
+        ->get();
+
+        // Prepare arrays for the chart
+        $dates = $dailyData->pluck('date');
+        $totalAccCredit = $dailyData->pluck('totalAccCredit');
+        $totalAccDebit = $dailyData->pluck('totalAccDebit');
+
         $accountController = new AccountController();
         $summary = $accountController->summary();
 
@@ -37,6 +57,9 @@ class DashboardController extends Controller
             'totalCredit' => $summary['totalCredit'],
             'totalDebit' => $summary['totalDebit'],
             'balance' => $summary['balance'],
+            'totalAccCredit' => $totalAccCredit,
+            'totalAccDebit' => $totalAccDebit,
+            'dates' => $dates,
         ]);
     }
 

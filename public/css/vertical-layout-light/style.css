@@ -9589,7 +9589,7 @@ progress {
   }
   .col-sm-8 {
     flex: 0 0 auto;
-    width: 66.66667%;
+    /* width: 66.66667%;  */ /*Removed this. Reason; affects account-summary graph*/
   }
   .col-sm-9 {
     flex: 0 0 auto;
@@ -16389,6 +16389,17 @@ fieldset:disabled .swal2-modal .swal2-buttonswrapper .swal2-styled,
   background-color: #1F3BB3 !important;
 }
 
+.bg-account-summary {
+  background-color: #b4b4b4 !important;
+}
+
+#account-summary {
+    width: auto;
+    height: auto;
+    /* min-width : 450px; */
+    margin: 0 auto; 
+}
+
 .bg-secondary {
   background-color: #F1F1F1 !important;
 }
@@ -20271,7 +20282,7 @@ code {
 }
 
 .home-tab .chartjs-wrapper {
-  height: 150px !important;
+  height: auto;
 }
 
 .home-tab .status-summary-ight-white {
@@ -20280,6 +20291,17 @@ code {
 
 .home-tab .status-summary-chart-wrapper {
   height: 90px;
+}
+.home-tab.account-summary-ight-white {
+  color: rgba(240, 240, 240, 0.6);
+}
+/* .home-tab */
+.account-summary-chart-wrapper {
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  height: auto;
+  min-height: 250px; 
 }
 
 .home-tab .circle-progress-width {
@@ -22264,7 +22286,7 @@ code {
 }
 
 .card.table-darkBGImg {
-  background: #1E283D url("../../images/dashboard/darkBG.png") repeat-y right top;
+  /* background: #1E283D url("") repeat-y right top; ../../images/dashboard/darkBG.png */
 }
 
 .card.tale-bg {

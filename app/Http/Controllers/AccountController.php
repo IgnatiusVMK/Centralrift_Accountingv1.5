@@ -199,7 +199,7 @@ class AccountController extends Controller
     {
         $totalCredit = Account::where('Status', 'approved')->sum('Crd_Amnt');
         $totalDebit = Account::where('Status', 'approved')->sum('Dbt_Amt');
-        $balance = Account::where('Status', 'approved')->latest('id')->value('Bal');
+        $balance = $totalCredit - $totalDebit;
 
         return [
             'totalCredit' => $totalCredit,

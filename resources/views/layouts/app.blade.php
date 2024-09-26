@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="{{asset('vendors/css/vendor.bundle.base.css')}}">
         <!-- endinject -->
         <!-- Plugin css for this page -->
-        <link rel="stylesheet" href="{{asset('vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
+        {{-- <link rel="stylesheet" href="{{asset('vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}"> --}}
         <link rel="stylesheet" href="{{asset('js/select.dataTables.min.css')}}">
         <!-- End plugin css for this page -->
         <!-- inject:css -->
@@ -55,7 +55,7 @@
     </div>
 
 
-    <script src="{{ asset('js/app.js') }}"></script> <!-- Include jQuery -->
+    {{-- <script src="{{ asset('js/app.js') }}"></script> <!-- Include jQuery --> --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
 
     <!-- plugins:js -->
@@ -76,8 +76,8 @@
   <script src="{{asset('js/todolist.js') }}"></script>
   <!-- endinject -->
 
-  <!-- Custom js for this page-->
-  <script src="{{asset('js/dashboard.js') }}"></script>
+  <!-- Custom js for dashboard page-->
+  <script src="{{asset('js/dashboard.js') }}"></script> 
   <script src="{{ asset('js/Chart.roundedBarCharts.js') }}"></script>
   <!-- End custom js for this page-->
 </body>

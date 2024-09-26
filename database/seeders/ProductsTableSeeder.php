@@ -14,8 +14,8 @@ class ProductsTableSeeder extends Seeder
             [
                 'Product_Id' => 1,
                 'Product_Name' => 'F/Beans',
-                'Description' => 'French Beans',
-                'Price' => 00.00,
+                'Description' => 'Fine Beans',
+                'Price' => 80.00,
                 'Category_Id' => 2,
                 'Supplier_Id' => 2,
                 'created_at' => now(),
@@ -65,7 +65,7 @@ class ProductsTableSeeder extends Seeder
                 'Product_Id' => 6,
                 'Product_Name' => 'Basil',
                 'Description' => 'Aroma Type',
-                'Price' => 00.00,
+                'Price' => 300.00,
                 'Category_Id' => 1,
                 'Supplier_Id' => 2,
                 'created_at' => now(),
@@ -75,7 +75,7 @@ class ProductsTableSeeder extends Seeder
                 'Product_Id' => 7,
                 'Product_Name' => 'Tarragon',
                 'Description' => 'Bushy Aromatic Herb',
-                'Price' => 00.00,
+                'Price' => 380.00,
                 'Category_Id' => 1,
                 'Supplier_Id' => 2,
                 'created_at' => now(),
@@ -85,7 +85,7 @@ class ProductsTableSeeder extends Seeder
                 'Product_Id' => 8,
                 'Product_Name' => 'Oregano',
                 'Description' => 'Oregano',
-                'Price' => 00.00,
+                'Price' => 320.00,
                 'Category_Id' => 1,
                 'Supplier_Id' => 2,
                 'created_at' => now(),
@@ -93,6 +93,16 @@ class ProductsTableSeeder extends Seeder
             ],
             [
                 'Product_Id' => 9,
+                'Product_Name' => 'Marjoram',
+                'Description' => 'Marjoram',
+                'Price' => 350.00,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 10,
                 'Product_Name' => 'Lovage',
                 'Description' => 'Lovage',
                 'Price' => 00.00,
@@ -102,17 +112,17 @@ class ProductsTableSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'Product_Id' => 10,
+                'Product_Id' => 11,
                 'Product_Name' => 'Thyme',
                 'Description' => 'Thyme',
-                'Price' => 00.00,
+                'Price' => 300.00,
                 'Category_Id' => 1,
                 'Supplier_Id' => 2,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'Product_Id' => 11,
+                'Product_Id' => 12,
                 'Product_Name' => 'Eggs',
                 'Description' => 'Layers & Kienyeji',
                 'Price' => 500.00,
@@ -122,7 +132,7 @@ class ProductsTableSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'Product_Id' => 12,
+                'Product_Id' => 13,
                 'Product_Name' => 'White Meat',
                 'Description' => 'Poultry: Chicken',
                 'Price' => 500.00,

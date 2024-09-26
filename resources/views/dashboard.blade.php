@@ -94,23 +94,19 @@ $currentDate= new DateTime();
                       <div class="col-lg-4 d-flex flex-column">
                         <div class="row flex-grow">
                           <div class="col-md-6 col-lg-12 grid-margin stretch-card">
-                            <div class="card bg-primary card-rounded">
-                              <div class="card-body pb-0">
-                                <h4 class="card-title card-title-dash text-white mb-4">Sales Summary</h4>
-                                <div class="row">
-                                  <div class="col-sm-4">
-                                    <p class="status-summary-ight-white mb-1">Closed Sales</p>
-                                    <h2 class="text-info">(int)</h2>
-                                  </div>
-                                  <div class="col-sm-8">
-                                    <div class="status-summary-chart-wrapper pb-4">
-                                      <canvas id="status-summary"></canvas>
+                            <div class="card card-rounded">
+                                <div class="card-body pb-0">
+                                    <h4 class="card-title card-title-dash text-black mb-4">Account Balance Summary</h4>
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="account-summary-chart-wrapper pb-4" style="position: relative;">
+                                                <canvas id="account-summary"></canvas>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
-                              </div>
                             </div>
-                          </div>
+                        </div>                        
                           <div class="col-md-6 col-lg-12 grid-margin stretch-card">
                             <div class="card card-rounded">
                               <div class="card-body">
@@ -557,5 +553,132 @@ $currentDate= new DateTime();
                     }
                 });
             </script>
-                
+            <script>
+              window.labels = {!! json_encode($dates->map(function($date) {
+                  return (new DateTime($date))->format('M-d'); // Convert string to DateTime
+              })) !!}; // Keep as Collection
+              window.totalAccCredit = {!! json_encode($totalAccCredit) !!};
+              window.totalAccDebit = {!! json_encode($totalAccDebit) !!};
+          </script>
+          
+          <script>
+            $(document).ready(function() {
+                if ($("#account-summary").length) {
+                    var statusSummaryChartCanvas = document.getElementById("account-summary").getContext('2d');
+            
+                    // Create gradient for Credit Amount
+                    var creditGradient = statusSummaryChartCanvas.createLinearGradient(0, 0, 0, 400);
+                    creditGradient.addColorStop(0, 'rgba(76, 175, 80, 0.3)');  // Starting shade (semi-transparent)
+                    creditGradient.addColorStop(1, 'rgba(76, 175, 80, 0.01)'); // Fading to transparent
+            
+                    // Create gradient for Debit Amount
+                    var debitGradient = statusSummaryChartCanvas.createLinearGradient(0, 0, 0, 400);
+                    debitGradient.addColorStop(0, 'rgba(244, 67, 54, 0.4)');   // Starting shade (semi-transparent)
+                    debitGradient.addColorStop(1, 'rgba(244, 67, 54, 0.02)'); // Fading to transparent
+            
+                    var statusData = {
+                        labels: window.labels,  // Use the global variable for labels
+                        datasets: [
+                            {
+                                label: 'Credit Amount',
+                                data: window.totalAccCredit,  // Use the global variable here
+                                backgroundColor: creditGradient,  // Use gradient for fill
+                                borderColor: '#4CAF50',
+                                borderWidth: 1.5,
+                                fill: true,  // Enable fill for the fading effect
+                                pointRadius: 4,
+                                pointHoverRadius: 6,
+                            },
+                            {
+                                label: 'Debit Amount',
+                                data: window.totalAccDebit,  // Use the global variable here
+                                backgroundColor: debitGradient,  // Use gradient for fill
+                                borderColor: '#F44336',
+                                borderWidth: 1.5,
+                                fill: true,  // Enable fill for the fading effect
+                                pointRadius: 4,
+                                pointHoverRadius: 6,
+                            }
+                        ]
+                    };
+            
+                    var statusSummaryChart = new Chart(statusSummaryChartCanvas, {
+                        type: 'line',
+                        data: statusData,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Date',
+                                        color: '#333',
+                                        font: {
+                                            size: 14,
+                                            weight: 'bold'
+                                        }
+                                    },
+                                    grid: {
+                                        display: false,  // No vertical grid lines
+                                    },
+                                    ticks: {
+                                        color: '#333',
+                                        font: {
+                                            size: 12,
+                                        },
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Amount',
+                                        color: '#333',
+                                        font: {
+                                            size: 14,
+                                            weight: 'bold'
+                                        }
+                                    },
+                                    grid: {
+                                        display: true,
+                                        drawBorder: false,
+                                        color: "#F0F0F0", // Light grid color for y-axis
+                                        zeroLineColor: '#F0F0F0',
+                                    },
+                                    ticks: {
+                                        color: '#333',
+                                        font: {
+                                            size: 12
+                                        },
+                                        beginAtZero: true,
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    labels: {
+                                        color: '#333',
+                                        font: {
+                                            size: 14,
+                                            weight: 'bold'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+            </script>
+            
+        
+        
+         
+            <script>
+              console.log("Total Account Credit: ", totalAccCredit);
+              console.log("Total Account Debit: ", totalAccDebit);
+            </script>
+                          
 @endsection

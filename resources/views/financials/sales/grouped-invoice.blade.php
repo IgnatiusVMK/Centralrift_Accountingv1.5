@@ -129,7 +129,7 @@
         
         <div class="invoice-details">
             <div>
-                <p><b>CUSTOMER INVOICE NO:</b>{{$invoiceDetails->Sales_Id}}</p>
+                <p><b>CUSTOMER INVOICE NO:</b>{{$invoiceDetails->id}}</p>
                 <p><b>LPO NUMBER:</b> {{-- {{ $invoiceDetails->Lpo_No }} --}}</p>
                 <p><b>DELIVERY DATE: </b>{{ $invoiceDetails->Sale_Date }} </p>
             </div>
@@ -176,12 +176,12 @@
                         <td style="text-align: right;">
                             @if ($sale->packaging_option === '30 * 1 Tray')
                                 {{ $sale->Quantity }} Trays
-                            @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
+                            @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === 'Crates')
                                 {{ $sale->Net_Weight }} Kg
                             @endif
                         </td>
                         <td style="text-align: right;">{{ $sale->Unit_Price }}</td>
-                        <td style="text-align: right;">Ksh {{ $sale->Total_Price }}</td>
+                        <td style="text-align: right;">Ksh {{ number_format($sale->Total_Price, 0, '.', ',') }}</td>
                         @php
                             $totalPrice += $sale->Total_Price; // Accumulate total price
                         @endphp
@@ -190,7 +190,7 @@
                 <tr>
                     <td colspan="5" style="text-align: left;"><b>Total</b></td>
                     <td style="text-align: right;"></td>
-                    <td style="text-align: right;">Ksh {{ $totalPrice }}</td>
+                    <td style="text-align: right;">Ksh {{ number_format($totalPrice, 0, '.', ',') }}</td>
                 </tr>
             </tbody>
         </table>
