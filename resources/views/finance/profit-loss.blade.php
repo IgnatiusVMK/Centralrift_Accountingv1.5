@@ -38,25 +38,6 @@
             </tbody>
         </table>
     </div>
-
-    {{-- <form action="{{ route('profit-loss.compare') }}" method="POST">
-        @csrf
-        <label for="cycle1">Cycle 1:</label>
-        <select name="cycle1" id="cycle1">
-            @foreach($cycles as $cycle)
-                <option value="{{ $cycle->Cycle_Id }}">{{ $cycle->Cycle_Name }}</option>
-            @endforeach
-        </select>
-        
-        <label for="cycle2">Cycle 2:</label>
-        <select name="cycle2" id="cycle2">
-            @foreach($cycles as $cycle)
-                <option value="{{ $cycle->Cycle_Id }}">{{ $cycle->Cycle_Name }}</option>
-            @endforeach
-        </select>
-        
-        <button type="submit">Compare</button>
-    </form> --}}
     
 
     <div style="width: 400px; height: 400px;">

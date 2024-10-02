@@ -68,14 +68,21 @@ Stock quantities are tracked for the overall farm without cycle-specific informa
 ##### Table Design:
 ```php
 Schema::create('stocks', function (Blueprint $table) {
-    $table->id();
-    $table->string('item_name');
-    $table->integer('total_quantity'); // Total purchased quantity
-    $table->integer('remaining_quantity'); // Remaining quantity
-    $table->decimal('unit_cost', 10, 2); // Cost per unit
-    $table->decimal('total_cost', 10, 2); // Total purchase cost
-    $table->timestamps(); // Created_at, Updated_at
-});
+            $table->id();
+            $table->string('Stock_Name');
+            $table->integer('Total_Quantity');
+            $table->integer('Remaining_Quantity');
+            $table->decimal('Unit_Cost', 10, 2);
+            $table->decimal('Total_Cost', 10, 2);
+            $table->string('Status')->default('pending');
+            $table->unsignedBigInteger('checker_id')->nullable();
+            $table->unsignedBigInteger('maker_id')->nullable();
+            $table->timestamps(); // Created_at, Updated_at
+
+            $table->foreign('id')->references('Stock_Id')->on('purchases');
+            $table->foreign('checker_id')->references('id')->on('users');
+            $table->foreign('maker_id')->references('id')->on('users');
+        });
 ```
 
 ### 2. Cycle Allocation Table
@@ -84,28 +91,48 @@ Schema::create('stocks', function (Blueprint $table) {
 ##### Table Design:
 ```php
 Schema::create('cycle_allocations', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('cycle_id')->constrained(); // Link to a cycle (foreign key)
-    $table->foreignId('stock_id')->constrained(); // Link to the stock pool (foreign key)
-    $table->integer('allocated_quantity'); // Quantity allocated to the cycle
-    $table->date('allocation_date'); // Date of allocation
-    $table->integer('remaining_quantity')->default(0); // Remaining quantity in this allocation (if partially used)
-    $table->timestamps();
-});
+            $table->id();
+            $table->integer('Cycle_Id');
+            $table->foreignId('stock_id');
+            $table->integer('allocated_quantity');
+            $table->date('allocation_date');
+            $table->integer('remaining_quantity')->default(0); // Remaining quantity in this allocation (if partially used)
+            $table->string('Status')->default('pending');
+            $table->unsignedBigInteger('checker_id')->nullable();
+            $table->unsignedBigInteger('maker_id')->nullable();
+            $table->timestamps();
+
+            $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
+            $table->foreign('stock_id')->references('id')->on('stocks');
+            $table->foreign('checker_id')->references('id')->on('users');
+            $table->foreign('maker_id')->references('id')->on('users');
+        });
 ```
 
-### 3. Cycle Table (If not already present)
+### 3. Cycles Table (If not already present)
 * This is the table representing different cycles of crops/herbs. If you already have this, no need to create a new one. However, if not, this is what the table structure would look like:
 
 ##### Table Design:
 ```php
 Schema::create('cycles', function (Blueprint $table) {
-    $table->id();
-    $table->string('cycle_name'); // Name of the cycle (e.g., "Tomato Planting Cycle")
-    $table->date('start_date'); // Start date of the cycle
-    $table->date('end_date')->nullable(); // End date (nullable if ongoing)
-    $table->timestamps();
-});
+            $table->id();
+            $table->string('Cycle_Id')->unique();
+            $table->unsignedInteger('Block_Id');
+            $table->unsignedInteger('Category_Id');
+            $table->string('Product');
+            $table->string('Client_Name')->nullable();
+            $table->string('Cycle_Name');
+            $table->date('Cycle_Start');
+            $table->date('Cycle_End');
+            $table->string('Status')->default('pending');
+            $table->unsignedBigInteger('checker_id')->nullable();
+            $table->unsignedBigInteger('maker_id')->nullable();
+            $table->timestamps();
+
+            $table->foreign('checker_id')->references('id')->on('users');
+            $table->foreign('maker_id')->references('id')->on('users');
+            $table->foreign('Block_Id')->references('Block_Id')->on('blocks');
+        });
 ```
 ### 4. Stock Usage Table (Depletion of Stock)
 * This table will track when stock is actually used during a cycle. It will link back to the cycle and allocation tables to keep track of how much stock has been used from the allocation.
@@ -113,27 +140,46 @@ Schema::create('cycles', function (Blueprint $table) {
 ##### Table Design:
 ```php
 Schema::create('stock_usages', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('cycle_id')->constrained(); // Link to the cycle (foreign key)
-    $table->foreignId('allocation_id')->constrained('cycle_allocations'); // Link to cycle allocation (foreign key)
-    $table->integer('quantity_used'); // Quantity used from this allocation
-    $table->date('usage_date'); // Date when the stock was used
-    $table->timestamps();
-});
+            $table->id();
+            $table->string('Cycle_Id');
+            $table->unsignedBigInteger('Allocation_Id');
+            $table->integer('quantity_used'); // Quantity used from this allocation
+            $table->date('usage_date'); // Date when the stock was used
+            $table->string('Status')->default('pending');
+            $table->unsignedBigInteger('checker_id')->nullable();
+            $table->unsignedBigInteger('maker_id')->nullable();
+            $table->timestamps();
+
+            $table->index('Cycle_Id');
+
+            $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
+            $table->foreign('Allocation_Id')->references('id')->on('cycle_allocations');
+            $table->foreign('checker_id')->references('id')->on('users');
+            $table->foreign('maker_id')->references('id')->on('users');
+        });
 ```
-### 5. Purchase Table (Optional - If you want to track individual stock purchases separately)
+### 5. Purchase Table (To track individual stock purchases separately)
 * This table would keep track of each individual stock purchase, which can be useful for auditing and historical records. If this is not required, you can merge this functionality with the stock table.
 
 Table Design:
 ```php
 Schema::create('purchases', function (Blueprint $table) {
-    $table->id();
-    $table->string('item_name');
-    $table->integer('quantity'); // Quantity of the purchased item
-    $table->decimal('unit_cost', 10, 2); // Cost per unit
-    $table->decimal('total_cost', 10, 2); // Total cost of purchase
-    $table->timestamps();
-});
+            $table->id('Purchase_Id');
+            $table->id('Stock_Id');
+            $table->unsignedBigInteger('Supplier_Id');
+            $table->string('Quantity');
+            $table->decimal('Unit_Cost');
+            $table->decimal('Total_Cost');
+            $table->string('Status')->default('pending');
+            $table->unsignedBigInteger('checker_id')->nullable();
+            $table->unsignedBigInteger('maker_id')->nullable();
+            $table->timestamps();
+
+            $table->foreign('checker_id')->references('id')->on('users');
+            $table->foreign('maker_id')->references('id')->on('users');
+            $table->foreign('Supplier_Id')->references('Supplier_Id')->on('suppliers');
+            $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles');
+        });
 ```
 ### 6. Reports (Not a Table, but Query-Based)
 * The final report views for "Overall Stock Pool" and "Cycle-Specific Stock Allocation" can be generated using Laravel queries, rather than requiring new tables.

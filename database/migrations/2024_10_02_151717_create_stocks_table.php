@@ -11,25 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchases', function (Blueprint $table) {
+        Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('Item_Name');
-            $table->unsignedBigInteger('Supplier_Id');
-            $table->integer('Category_Id');
-            $table->string('Quantity');
-            $table->decimal('Unit_Cost', 10, 2);
-            $table->decimal('Total_Cost', 10, 2);
-            $table->date('Purchase_Date');
+            $table->string('Stock_Name');
+            $table->integer('Total_Quantity');
+            $table->integer('Remaining_Quantity');
             $table->string('Status')->default('pending');
             $table->unsignedBigInteger('checker_id')->nullable();
             $table->unsignedBigInteger('maker_id')->nullable();
-            $table->timestamps();
+            $table->timestamps(); // Created_at, Updated_at
 
-            // $table->index(columns: 'Stock_Id');
-            
+            $table->foreign('id')->references('id')->on('purchases')->onDelete('cascade');
             $table->foreign('checker_id')->references('id')->on('users');
             $table->foreign('maker_id')->references('id')->on('users');
-            $table->foreign('Supplier_Id')->references('Supplier_Id')->on('suppliers');
         });
     }
 
@@ -38,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchases');
+        Schema::dropIfExists('stocks');
     }
 };

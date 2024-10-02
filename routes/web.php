@@ -182,9 +182,16 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('products-categories/create', [App\Http\Controllers\CategoryController::class, 'create'])->name('products-categories.create');
         Route::post('products-categories/create', [App\Http\Controllers\CategoryController::class, 'store'])->name('products-categories.store');
 
-        Route::get('sales', [App\Http\Controllers\SalesController::class,'index'])->middleware(['auth', 'verified', /* 'can:view-sales' */])->name('sales');
+        Route::get('sales', [App\Http\Controllers\SalesController::class,'index'])->name('sales');
         Route::post('sales/{Cycle_Id}/create', [App\Http\Controllers\SalesController::class, 'store'])->name('sales.store');
         Route::get('/sales/{Sales_Id}/generate-invoice', [SalesController::class, 'generateInvoice'])->name('sales.generateInvoice');
+
+        Route::get('purchases/view', [App\Http\Controllers\PurchaseController::class,'index'])->name('purchase');
+        Route::get('purchase/create', [App\Http\Controllers\PurchaseController::class,'create'])->name('purchase.create');
+        Route::post('purchase/create', [App\Http\Controllers\PurchaseController::class, 'store'])->name('purchase.store');
+
+        Route::get('stock-inventory', [App\Http\Controllers\StocksController::class,'index'])->name('stock');
+
     
 
         Route::get('cashbook', [App\Http\Controllers\CashBookController::class,'index'])->name('cashbook');

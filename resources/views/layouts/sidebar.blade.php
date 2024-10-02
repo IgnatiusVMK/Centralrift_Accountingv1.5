@@ -156,6 +156,23 @@
               </ul>
             </div>
           </li>
+          <!--Sales-->
+          @can('access-sales')
+          <li class="nav-item nav-category">Sales</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#sales" aria-expanded="false" aria-controls="sales">
+              <i class="menu-icon mdi mdi-wallet-plus "></i>
+              <span class="menu-title">Sales</span>
+              <i class="menu-arrow"></i> 
+            </a>
+            <div class="collapse" id="sales">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/sales')}}">Sales</a></li>
+                {{-- <li class="nav-item"> <a class="nav-link" href="#">Sales Invoice</a></li> --}}
+              </ul>
+            </div>
+          </li>
+          @endcan
           <!--Purchases-->
           @can('access-purchases')
           <li class="nav-item nav-category">Purchase</li>
@@ -169,25 +186,23 @@
               <ul class="nav flex-column sub-menu">
                 {{-- <li class="nav-item"> <a class="nav-link" href="#">Purchase Orders</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">Purchase Invoice</a></li> --}}
-                <li class="nav-item"> <a class="nav-link" href="#">Chemicals</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Seeds</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{'/purchases/view'}}">Purchase</a></li>
               </ul>
             </div>
           </li>
           @endcan
-          <!--Sales-->
-          @can('access-sales')
-          <li class="nav-item nav-category">Sales</li>
+          <!--Stock-->
+          @can('access-stock')
+          <li class="nav-item nav-category">StockS & Inventory</li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#sales" aria-expanded="false" aria-controls="sales">
-              <i class="menu-icon mdi mdi-store"></i>
-              <span class="menu-title">Sales</span>
+            <a class="nav-link" data-bs-toggle="collapse" href="#stock" aria-expanded="false" aria-controls="stock">
+              <i class="menu-icon mdi mdi-store-plus"></i>
+              <span class="menu-title">Stock</span>
               <i class="menu-arrow"></i> 
             </a>
-            <div class="collapse" id="sales">
+            <div class="collapse" id="stock">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ ('/sales')}}">Sales</a></li>
-                {{-- <li class="nav-item"> <a class="nav-link" href="#">Sales Invoice</a></li> --}}
+                <li class="nav-item"> <a class="nav-link" href="{{ ('/stock-inventory')}}">Stock</a></li>
               </ul>
             </div>
           </li>

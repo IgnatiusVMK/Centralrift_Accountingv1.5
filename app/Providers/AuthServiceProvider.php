@@ -191,6 +191,23 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('delete-sales', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('delete_sales');
         });
+        
+        //StockModel
+        Gate::define('access-stock', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('access_stock');
+        }); 
+        Gate::define('view-stock', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('view_stock');
+        });
+        Gate::define('create-stock', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('create_stock');
+        });
+        Gate::define('modify-stock', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('modify_stock');
+        });
+        Gate::define('delete-stock', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('delete_stock');
+        });
 
         //FinanceModel (Cashbook, P&L)
         Gate::define('access-finance', function ($user) {
