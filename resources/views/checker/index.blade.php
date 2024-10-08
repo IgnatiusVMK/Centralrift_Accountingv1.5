@@ -61,6 +61,21 @@
                 <a class="nav-link" id="Sales-tab" data-bs-toggle="tab" href="#Sales" role="tab" aria-selected="false" onclick="openForm(event, 'Sales')">Sales</a>
               </li>
               @endif
+              @if ($purchaseCount >= 1)
+              <li class="nav-item">
+                <a class="nav-link" id="Purchases-tab" data-bs-toggle="tab" href="#Purchases" role="tab" aria-selected="false" onclick="openForm(event, 'Purchases')">Purchases</a>
+              </li>
+              @endif
+              @if ($stocksCount >= 1)
+              <li class="nav-item">
+                <a class="nav-link" id="Stocks-tab" data-bs-toggle="tab" href="#Stocks" role="tab" aria-selected="false" onclick="openForm(event, 'Stocks')">Stocks</a>
+              </li>
+              @endif
+              @if ($cycAllocateCount >= 1)
+              <li class="nav-item">
+                <a class="nav-link" id="cycAllocate-tab" data-bs-toggle="tab" href="#cycAllocate" role="tab" aria-selected="false" onclick="openForm(event, 'cycAllocate')">Cycle Allocations</a>
+              </li>
+              @endif
               @if ($withdrawalCount >= 1)
               <li class="nav-item">
                 <a class="nav-link" id="CapitalWithdrawals-tab" data-bs-toggle="tab" href="#CapitalWithdrawals" role="tab" aria-selected="false" onclick="openForm(event, 'CapitalWithdrawals')">Capital Withdrawal</a>
@@ -83,7 +98,7 @@
     </div>
   </div>
   <div class="main-panel">
-    @if ($pendingCyclesCount >= 1 || $creditCount >=1 ||  $wagesCount >= 1 || $salariesCount >= 1 || $advanceCount >= 1 || $chemicalsCount >= 1 ||  $seedsCount >= 1 || $cpexpensesCount >= 1 || $maintenanceCount >= 1 || $salesCount || $withdrawalCount >= 1 || $electricityCount >= 1)
+    @if ($pendingCyclesCount >= 1 || $creditCount >=1 ||  $wagesCount >= 1 || $salariesCount >= 1 || $advanceCount >= 1 || $chemicalsCount >= 1 ||  $seedsCount >= 1 || $cpexpensesCount >= 1 || $maintenanceCount >= 1 || $salesCount >=1 || $purchaseCount >=1 || $stocksCount >= 1 || $cycAllocateCount >= 1 || $withdrawalCount >= 1 || $electricityCount >= 1)
       <div class="content-wrapper">
         <div class="row">
           <div class="col-lg-12 grid-margin stretch-card">
@@ -874,6 +889,272 @@
                     </div>
                   </div>
                   @endif
+
+                  @if ($purchaseCount >= 1)
+                  <div class="tab-pane fade" id="Purchases" role="tabpanel" aria-labelledby="Purchases-tab">
+                    <!-- Purchases form content here -->
+                    <div class="card-body">
+                      @if (session('status'))
+                        <div class="alert alert-danger text-center">{{session('status')}}</div>
+                      @endif
+                      <div class="card-header">
+                        <h4 class="card-title text-center">Purchases
+                        </h4>
+                      </div>
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>
+                                Sn No.
+                              </th>
+                              <th>
+                                Item Name
+                              </th>
+                              <th>
+                                Supplier
+                              </th>
+                              <th>
+                                Quantity
+                              </th>
+                              <th>
+                                Unit Cost
+                              </th>
+                              <th>
+                                Total Cost
+                              </th>
+                              <th>
+                                Maker
+                              </th>
+                              @can('create-approval')
+                              <th>
+                                Edit
+                              </th>
+                              @endcan
+                              @can('create-approval')
+                              <th>
+                                Validate
+                              </th>
+                              @endcan
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($purchases as $purchase)
+                              <tr>
+                                <td>{{$purchase->id}}</td>
+                                <td>{{$purchase->Item_Name}}</td>
+                                <td>{{$purchase->supplier->Supplier_Name}}</td>
+                                @if ($purchase->Category_Id == 1)
+                                  <td>{{$purchase->Quantity}} Ltrs.</td>
+                                @elseif ($purchase->Category_Id == 2)
+                                  <td>{{$purchase->Quantity}} gms/Kgs</td>
+                                @elseif ($purchase->Category_Id == 3)
+                                  <td>{{$purchase->Quantity}} Boxes/Kgs</td>
+                                @endif
+                                <td>Ksh {{$purchase->Unit_Cost}}</td>
+                                <td>Ksh {{$purchase->Total_Cost}}</td>
+                                <td>{{$purchase->maker->name}}</td>
+                                @can('create-approval')
+                                  <td>
+                                    <a href={{-- "" --}}>Modify<i class="mdi mdi-border-color"></i></a>
+                                  </td>
+                                @endcan
+                                @can('create-approval')
+                                  <td>
+                                    <form action="{{ url('checker/purchases/'.$purchase->id.'/'.$purchase->Purchase_Id.'/approve') }}" method="POST">
+                                      {{-- {{ url('checker/'.$sale->Sales_Id.'/'.$sale->id.'/validate') }} --}}
+                                      {{-- /checker/purchases/{Purchase_Id}/validate --}}
+                                      @csrf
+
+                                      <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                                      <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
+                                      <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to approve this Purchase?');">Approve Purchase</button>
+                                  </form>                                  
+                                  </td>
+                                @endcan
+                              </tr>
+                            @endforeach{{-- {{ url('checker/'.$purchase->Sales_Id.'/validate')}} --}}
+                          </tbody>
+                        </table>
+                          {{-- <div class="pagination-container float-end">
+                             {{ $purchases->links() }}
+                          </div> --}}
+                      </div> 
+                    </div>
+                  </div>
+                  @endif
+                      
+                  @if ($stocksCount >= 1)
+                  <div class="tab-pane fade" id="Stocks" role="tabpanel" aria-labelledby="Stocks-tab">
+                    <!-- Stocks form content here -->
+                    <div class="card-body">
+                      @if (session('status'))
+                        <div class="alert alert-danger text-center">{{session('status')}}</div>
+                      @endif
+                      <div class="card-header">
+                        <h4 class="card-title text-center">Stocks
+                        </h4>
+                      </div>
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>
+                                Sn No.
+                              </th>
+                              <th>
+                                Inventory Name
+                              </th>
+                              <th>
+                                Quantity
+                              </th>
+                              <th>
+                                Quantity in Stock
+                              </th>
+                              <th>
+                                Maker
+                              </th>
+                              @can('create-approval')
+                              <th>
+                                Edit
+                              </th>
+                              @endcan
+                              @can('create-approval')
+                              <th>
+                                Validate
+                              </th>
+                              @endcan
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($stocks as $stock)
+                              <tr>
+                                <td>{{$stock->id}}</td>
+                                <td>{{$stock->Stock_Name}}</td>
+                                @if ($stock->purchase->Category_Id == 1)
+                                  <td style="font-size: 18px">{{$stock->Total_Quantity}} (Ltrs.)</td>
+                                @elseif ($stock->purchase->Category_Id == 2)
+                                  <td style="font-size: 18px">{{$stock->Total_Quantity}} (gms/Kgs)</td>
+                                @elseif ($stock->purchase->Category_Id == 3)
+                                  <td style="font-size: 18px">{{$stock->Total_Quantity}} (Boxes/Kgs)</td>
+                                @endif
+                                @if ($stock->purchase->Category_Id == 1)
+                                  <td style="font-size: 18px">{{$stock->Remaining_Quantity}} (Ltrs.)</td>
+                                @elseif ($stock->purchase->Category_Id == 2)
+                                  <td style="font-size: 18px">{{$stock->Remaining_Quantity}} (gms/Kgs)</td>
+                                @elseif ($stock->purchase->Category_Id == 3)
+                                  <td style="font-size: 18px">{{$stock->Remaining_Quantity}} (Boxes/Kgs)</td>
+                                @endif
+                                <td>{{$stock->maker->name}}</td>
+                                @can('create-approval')
+                                  <td>
+                                    <a href={{-- "" --}}>Modify<i class="mdi mdi-border-color"></i></a>
+                                  </td>
+                                @endcan
+                                @can('create-approval')
+                                  <td>
+                                    <form action="{{ url('/checker/stock/'.$stock->id.'/approve') }}" method="POST">
+                                      {{-- {{ url('checker/'.$sale->Sales_Id.'/'.$sale->id.'/validate') }} --}}
+                                      {{-- /checker/purchases/{Purchase_Id}/validate --}}
+                                      @csrf
+
+                                      <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                                      <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
+                                      <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to approve this Stock Record?');">Approve Stock Record</button>
+                                  </form>                                  
+                                  </td>
+                                @endcan
+                              </tr>
+                            @endforeach{{-- {{ url('checker/'.$stock->Sales_Id.'/validate')}} --}}
+                          </tbody>
+                        </table>
+                          {{-- <div class="pagination-container float-end">
+                             {{ $stocks->links() }}
+                          </div> --}}
+                      </div> 
+                    </div>
+                  </div>
+                  @endif
+
+                  @if ($cycAllocateCount >= 1)
+                  <div class="tab-pane fade" id="cycAllocate" role="tabpanel" aria-labelledby="cycAllocate-tab">
+                    <!-- cycAllocate form content here -->
+                    <div class="card-body">
+                      @if (session('status'))
+                        <div class="alert alert-danger text-center">{{session('status')}}</div>
+                      @endif
+                      <div class="card-header">
+                        <h4 class="card-title text-center">Cycles Inventory Allocations
+                        </h4>
+                      </div>
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>
+                                Sn No.
+                              </th>
+                              <th>
+                                Inventory Name
+                              </th>
+                              <th>
+                                Allocated Quantity
+                              </th>
+                              <th>
+                                Maker
+                              </th>
+                              @can('create-approval')
+                              <th>
+                                Edit
+                              </th>
+                              @endcan
+                              @can('create-approval')
+                              <th>
+                                Validate
+                              </th>
+                              @endcan
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($cycAllocates as $cycAllocate)
+                              <tr>
+                                <td style="font-size: 18px">{{$cycAllocate->id}}</td>
+                                <td style="font-size: 18px">{{$cycAllocate->cyc_alloc->Cycle_Name}}</td>
+                                @if ($cycAllocate->category ==1)
+                                  <td style="font-size: 18px">{{$cycAllocate->allocated_quantity}} (Ltrs.)</td>
+                                @elseif ($cycAllocate->category ==2)
+                                  <td style="font-size: 18px">{{$cycAllocate->allocated_quantity}} (gms/Kgs)</td>
+                                @elseif ($cycAllocate->category ==3)
+                                  <td style="font-size: 18px">{{$cycAllocate->allocated_quantity}} (Boxes/Kgs)</td>
+                                @endif
+                                <td style="font-size: 18px">{{$cycAllocate->maker->name}}</td>
+                                @can('create-approval')
+                                  <td>
+                                    <a href={{-- "" --}}>Modify<i class="mdi mdi-border-color"></i></a>
+                                  </td>
+                                @endcan
+                                @can('create-approval')
+                                  <td>
+                                    <form action="{{ url('/checker/cycle-allocations/'.$cycAllocate->id.'/approve') }}" method="POST">
+                                      @csrf
+
+                                      <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                                      <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
+                                      <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to approve this Allocation?');">Approve Allocation</button>
+                                  </form>                                  
+                                  </td>
+                                @endcan
+                              </tr>
+                            @endforeach{{-- {{ url('checker/'.$cycAllocate->Sales_Id.'/validate')}} --}}
+                          </tbody>
+                        </table>
+                          {{-- <div class="pagination-container float-end">
+                             {{ $cycAllocates->links() }}
+                          </div> --}}
+                      </div> 
+                    </div>
+                  </div>
+                  @endif
                       
                   @if ($transportCount >= 1)
                   <div class="tab-pane fade" id="Transport" role="tabpanel" aria-labelledby="Transport-tab">
@@ -1076,23 +1357,21 @@
     @else
     <div class="content-wrapper">
       <div class="row">
-          <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                  <div>
-                      <a href="{{ url('/dashboard') }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i> Close</a>
-                  </div>
-                  <div class="card-title">
-                    <h4 class="text-center">
-                      There are no new pending Requests.
-                      <i class="mdi mdi-check-all"></i>
-                    </h4>
-                  </div>
-              </div>
+        <div class="col-lg-12 grid-margin stretch-card">
+          <div class="card">
+            <div>
+              <a href="{{ url('/dashboard') }}" class="btn btn-danger float-end"><i class="mdi mdi-close"></i> Close</a>
+            </div>
+            <div class="card-title">
+              <h4 class="text-center">
+                There are no new pending Requests.
+                <i class="mdi mdi-check-all"></i>
+              </h4>
+            </div>
           </div>
+        </div>
       </div>
-  </div>
-  
+    </div>
     @endif
-
 @endcan
 @endsection

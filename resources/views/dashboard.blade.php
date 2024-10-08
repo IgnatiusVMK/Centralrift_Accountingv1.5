@@ -297,7 +297,7 @@ $currentDate= new DateTime();
                         <div class="row flex-grow">
                           <div class="col-md-6 col-lg-6 grid-margin stretch-card">
                             <div class="card card-rounded">
-                              <div class="card-body card-rounded">
+                              <div class="card-body card-rounded table-responsive">
                                 <h4 class="card-title card-title-dash">Recent Harvests</h4>
                                 <table class="table">
                                   <thead>

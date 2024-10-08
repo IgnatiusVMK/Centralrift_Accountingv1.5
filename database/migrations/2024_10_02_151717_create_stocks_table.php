@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->string('Purchase_Id');
             $table->string('Stock_Name');
-            $table->integer('Total_Quantity');
-            $table->integer('Remaining_Quantity');
+            $table->decimal('Total_Quantity', 10, 2);
+            $table->decimal('Remaining_Quantity', 10, 2);
             $table->string('Status')->default('pending');
             $table->unsignedBigInteger('checker_id')->nullable();
             $table->unsignedBigInteger('maker_id')->nullable();
             $table->timestamps(); // Created_at, Updated_at
 
-            $table->foreign('id')->references('id')->on('purchases')->onDelete('cascade');
+            $table->foreign('Purchase_Id')->references('Purchase_Id')->on('purchases')->onDelete('cascade');
             $table->foreign('checker_id')->references('id')->on('users');
             $table->foreign('maker_id')->references('id')->on('users');
         });

@@ -7,6 +7,8 @@ use App\Models\Financial;
 use App\Models\Sales;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\DB;
+use App\Models\CycleAllocations;
 
 class CycleDetailsController extends Controller
 {
@@ -15,6 +17,8 @@ class CycleDetailsController extends Controller
      */
     public function index(Request $request)
     {
+
+        $Cycle_Id = $request->route('Cycle_Id');
 
         $wages = Financial::where('type', 'expenditure')->where('Status', 'approved')->simplePaginate(15);
         $salaries = Financial::where('type', 'salary')->where('Status', 'approved')->simplePaginate(15);
@@ -25,9 +29,33 @@ class CycleDetailsController extends Controller
         $cpexpenses = Financial::where('type', 'Capital Expenses')->where('Status', 'approved')->simplePaginate(15);
         $withdrawals = CapitalWithdrawal::where('Status', 'approved')->simplePaginate(15);
         $sales = Sales::where('Status', 'approved')->simplePaginate(15);
+        // $stocks = DB::table('cycle_allocations')
+        //         ->where('Cycle_Id', $Cycle_Id)
+        //         ->where('Status', 'approved')
+        //         // ->select('Stock_Name', 'Total_Quantity', 'Remaining_Quantity')
+        //         ->get();
 
-        $Cycle_Id = $request->route('Cycle_Id');
+        $stocks = CycleAllocations::with('stock') // Eager load the stock relationship
+        ->where('Cycle_Id', $Cycle_Id)
+        ->where('Status', 'approved')
+        ->get();
 
+        $inventoryCount = CycleAllocations::with('stock') // Eager load the stock relationship
+        ->where('Cycle_Id', $Cycle_Id)
+        ->where('Status', 'approved')
+        ->count();
+
+        // Prepare data for Chart.js
+        // $stockNames = $stocks->pluck('Stock_Name')->toArray(); // Array of stock names
+        $inventoryNames = $stocks->pluck('stock.Stock_Name')->toArray();
+        $allocatedQuantities = $stocks->pluck('allocated_quantity')->toArray(); // Total quantities
+        $remainingQuantities = $stocks->pluck('remaining_quantity')->toArray(); // Remaining quantities
+
+        $usedQuantities = array_map(function($allocated, $remaining) {
+            return $allocated - $remaining;
+        }, $allocatedQuantities, $remainingQuantities);
+
+        // dd($inventoryNames, $allocatedQuantities, $remainingQuantities);
         $expuniqueCode = $this->generateUniqueCode('wages');
         $advuniqueCode = $this->generateUniqueCode('advance');
         $saluniqueCode = $this->generateUniqueCode('salary');
@@ -57,6 +85,11 @@ class CycleDetailsController extends Controller
             'maintuniqueCode' => $maintuniqueCode,
             'cpexpeuniqueCode' => $cpexpeuniqueCode,
             'saleuniqueCode' => $saleuniqueCode,
+            'inventoryNames' => $inventoryNames,
+            'allocatedQuantities' => $allocatedQuantities,
+            'remainingQuantities' => $remainingQuantities,
+            'usedQuantities' => $usedQuantities,
+            'inventoryCount' => $inventoryCount
         ]);
     }
 

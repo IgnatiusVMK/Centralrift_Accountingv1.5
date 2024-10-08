@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('Cycle_Id');
             $table->unsignedBigInteger('stock_id');
-            $table->integer('allocated_quantity');
+            $table->decimal('allocated_quantity', 10, 2);
             $table->date('allocation_date');
-            $table->integer('remaining_quantity')->default(0); // Remaining quantity in this allocation (if partially used)
+            $table->decimal('remaining_quantity', 10, 2)->default(0); // Remaining quantity in this allocation (if partially used)
             $table->string('Status')->default('pending');
             $table->unsignedBigInteger('checker_id')->nullable();
             $table->unsignedBigInteger('maker_id')->nullable();

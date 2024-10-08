@@ -34,6 +34,10 @@ class UserDepartmentSeeder extends Seeder
                 'user_id' => 5,
                 'department_Id' => 6,
             ],
+            [
+                'user_id' => 6,
+                'department_Id' => 5,
+            ],
         ]);
     }
 }

@@ -82,6 +82,9 @@
                 @can('create-cycles')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('cycle.create') }}">New Cycles</a></li>
                 @endcan    
+                @can('create-cycles')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('cycle.allocate') }}">Allocate Inventory</a></li>
+                @endcan    
               </ul>
             </div>
           </li>

@@ -11,6 +11,7 @@ class Stocks extends Model
 
     protected $table = 'stocks';
     protected $fillable = [
+        'Purchase_Id',
         'Stock_Name',
         'Total_Quantity',
         'Remaining_Quantity',
@@ -22,6 +23,9 @@ class Stocks extends Model
 
     public function purchase()
     {
-        return $this->belongsTo(Purchase::class, 'id', 'id');
+        return $this->belongsTo(Purchase::class, 'Purchase_Id', 'Purchase_Id');
+    }
+    public function maker(){
+        return $this->belongsTo(User::class,'maker_id');
     }
 }

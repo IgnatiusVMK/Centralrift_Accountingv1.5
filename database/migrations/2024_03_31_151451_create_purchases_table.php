@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rules\Unique;
 
 return new class extends Migration
 {
@@ -13,10 +14,11 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
+            $table->string('Purchase_Id')->unique();
             $table->string('Item_Name');
             $table->unsignedBigInteger('Supplier_Id');
             $table->integer('Category_Id');
-            $table->string('Quantity');
+            $table->decimal('Quantity',10, 2);
             $table->decimal('Unit_Cost', 10, 2);
             $table->decimal('Total_Cost', 10, 2);
             $table->date('Purchase_Date');

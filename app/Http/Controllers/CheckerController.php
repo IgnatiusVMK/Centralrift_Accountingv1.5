@@ -6,11 +6,14 @@ use App\Models\Account;
 use App\Models\Blocks;
 use App\Models\CapitalWithdrawal;
 use App\Models\Credit;
+use App\Models\CycleAllocations;
 use App\Models\Cycles;
 use App\Models\Financial;
 use App\Models\HarvestOrder;
 use App\Models\Product;
+use App\Models\Purchase;
 use App\Models\Sales;
+use App\Models\Stocks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -40,6 +43,10 @@ class CheckerController extends Controller
         $seeds = Financial::where('type', 'seeds')->where('Status', 'pending')->get();
         $withdrawals = CapitalWithdrawal::where('Status', 'pending')->get();
         $sales = Sales::where('Status', 'pending')->get();
+        $purchases = Purchase::where('Status', 'pending')->get();
+        $stocks = Stocks::with('purchase')->where('Status', 'pending')->get();
+        $cycAllocates = CycleAllocations::where('Status', 'pending')->get();
+        // Stocks::with('purchase')->where('Status', 'approved')->get();
 
         $creditCount = Credit::where('Status', 'pending')->count();
         $wagesCount = Financial::where('type', 'expenditure')->where('Status', 'pending')->count();
@@ -53,6 +60,9 @@ class CheckerController extends Controller
         $cpexpensesCount = Financial::where('type', 'Capital Expenses')->where('Status', 'pending')->count();
         $withdrawalCount = CapitalWithdrawal::where('Status', 'pending')->count();
         $salesCount = Sales::where('Status', 'pending')->count();
+        $purchaseCount = Purchase::where('Status', 'pending')->count();
+        $stocksCount = Stocks::where('Status', 'pending')->count();
+        $cycAllocateCount = CycleAllocations::where('Status', 'pending')->count();
 
         $Cycle_Id = $request->route('Cycle_Id');
 
@@ -76,6 +86,9 @@ class CheckerController extends Controller
             'seedsCount'=> $seedsCount,
             'maintenance'=> $maintenance,
             'sales'=> $sales,
+            'purchases'=> $purchases,
+            'stocks'=> $stocks,
+            'cycAllocates'=> $cycAllocates,
             'wagesCount'=> $wagesCount,
             'salariesCount'=> $salariesCount,
             'advanceCount'=> $advanceCount,
@@ -85,6 +98,9 @@ class CheckerController extends Controller
             'cpexpensesCount'=> $cpexpensesCount,
             'maintenanceCount'=> $maintenanceCount,
             'salesCount'=> $salesCount,
+            'purchaseCount'=>$purchaseCount,
+            'stocksCount'=>$stocksCount,
+            'cycAllocateCount'=>$cycAllocateCount,
             'Cycle_Id'=>$Cycle_Id,
         ]);
     }
@@ -211,6 +227,56 @@ class CheckerController extends Controller
         ]);
 
         return redirect()->back()->with('success','Credit Entry approved.');
+    }
+    public function approvePurchases(Request $request, int $id, string $Purchase_Id ){
+        $this->authorize('create-approval');
+
+        $request->validate([
+            'checker_id'=> 'required|max:255|integer',
+            'Status'=> 'required|max:255|string',        
+        ]);
+
+        Purchase::where('id', $id)->update([
+            'checker_id'=> $request->checker_id,
+            'Status'=> $request->Status,
+        ]);
+
+        Account::where('Financial_Id', $Purchase_Id)->update([
+            'checker_id'=> $request->checker_id,
+            'Status'=> $request->Status,
+        ]);
+
+        return redirect()->back()->with('success','Purchase approved.');
+    }
+    public function approveNewStock(Request $request, int $id ){
+        $this->authorize('create-approval');
+
+        $request->validate([
+            'checker_id'=> 'required|max:255|integer',
+            'Status'=> 'required|max:255|string',        
+        ]);
+
+        Stocks::where('id', $id)->update([
+            'checker_id'=> $request->checker_id,
+            'Status'=> $request->Status,
+        ]);
+
+        return redirect()->back()->with('success','New Inventory approved.');
+    }
+    public function approveCycAllocation(Request $request, int $id ){
+        $this->authorize('create-approval');
+
+        $request->validate([
+            'checker_id'=> 'required|max:255|integer',
+            'Status'=> 'required|max:255|string',        
+        ]);
+
+        CycleAllocations::where('id', $id)->update([
+            'checker_id'=> $request->checker_id,
+            'Status'=> $request->Status,
+        ]);
+
+        return redirect()->back()->with('success','Allocation approved.');
     }
 
     /**

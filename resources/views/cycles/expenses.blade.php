@@ -40,6 +40,9 @@
                 <a class="nav-link" id="Electricity-tab" data-bs-toggle="tab" href="#Electricity" role="tab" aria-selected="false" onclick="openForm(event, 'Electricity')">Electricity</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" id="Inventory-tab" data-bs-toggle="tab" href="#Inventory" role="tab" aria-selected="false" onclick="openForm(event, 'Inventory')">Inventory</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link border-0" id="Others-tab" data-bs-toggle="tab" href="#Others" role="tab" aria-selected="false" onclick="openForm(event, 'Others')">Others</a>
             </li>
         </ul>
@@ -622,11 +625,81 @@
                   </div>
                 </div>
 
+                <div class="tab-pane fade" id="Inventory" role="tabpanel" aria-labelledby="Inventory-tab">
+                  <div class="card-body">
+                    <div class="card-header">
+                      <h4 class="card-title text-center">Allocated Inventory
+                      </h4>
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <div class="float-lg-center;" style="width: 1000px;">
+                          @if ($inventoryCount > 0)
+                            <h2>Inventory Levels: Total, Allocated, and Remaining</h2>
+                              <canvas id="allocstockChart" width="400" height="200"></canvas>
+                            </div>
+                          @else
+                            <div {{-- class="card-title" --}}>
+                              <h4 class="text-center" style="padding: auto"><br>
+                                No Inventory has been allocated to this cycle.
+                                <i class="mdi mdi-check-all"></i>
+                              </h4>
+                            </div>
+                          @endif
+                          {{-- @else
+                          <div class="card-title" style="text-align: center;">
+                            <h4 style="margin: 0;">
+                              No Inventory has been allocated to this cycle.
+                              <i class="mdi mdi-check-all"></i>
+                            </h4>
+                          </div>                          
+                          @endif --}}
+                        {{-- <thead>
+                          <tr>
+                            <th>
+                              Sn No.
+                            </th>
+                            <th>
+                              Cycle
+                            </th>
+                            <th>
+                              Payment ID
+                            </th>
+                            <th>
+                              Reason
+                            </th>
+                            <th>
+                              Description
+                            </th>
+                            <th>
+                              Amount
+                            </th>
+                            <th>
+                              Date Created
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($cpexpenses->where('Cycle_Id', $Cycle_Id) as $cpexpe)
+                          <tr>
+                            <td>{{$cpexpe->Financial_Id}}</td>
+                            <td>{{$cpexpe->Cycle_Id}}</td>
+                            <td>{{$cpexpe->Fin_Id_Id}}</td>
+                            <td>{{$cpexpe->Reason}}</td>
+                            <td>{{$cpexpe->Description}}</td>
+                            <td>Ksh {{$cpexpe->Amount}}</td>
+                            <td>{{$cpexpe->created_at}}</td>
+                          </tr>
+                          @endforeach
+                        </tbody> --}}
+                      </table>
+                    </div> 
+                  </div>
+                </div>
                 <div class="tab-pane fade" id="Others" role="tabpanel" aria-labelledby="Others-tab">
                     <!-- Others form content here -->
                     <p>Others</p>
                 </div>
-
               </div>
             </div>
         </div>
@@ -636,4 +709,77 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('allocstockChart').getContext('2d');
+
+    var stockData = {
+        labels:  @json($inventoryNames),
+        datasets: [
+            {
+                label: 'Allocated Inventory',
+                backgroundColor: 'rgba(34,139,34,0.5)'/*  */,
+                data:  @json($allocatedQuantities),// Dynamic total quantities
+            },
+            {
+                label: 'Used Inventory',
+                backgroundColor: 'rgba(255,165,0,0.5)',
+                data: @json($usedQuantities), // Dynamic allocated quantities
+            },
+            {
+                label: 'Remaining Inventory',
+                backgroundColor: 'rgba(255,0,0,0.6)',
+                data: @json($remainingQuantities), // Dynamic remaining quantities
+            }
+        ]
+    };
+
+    var allocstockChart = new Chart(ctx, {
+    type: 'bar',
+    data: stockData,
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Quantity',
+                    font: {
+                        size: 18 
+                    }
+                },
+                ticks: {
+                    font: {
+                        size: 14
+                    }
+                }
+            },
+            x: {
+                ticks: {
+                    font: {
+                        size: 14 // Font size for X-axis labels (stock names)
+                    }
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
+            },
+            title: {
+                display: true,
+                text: 'Inventory Levels Overview',
+                font: {
+                    size: 20
+                }
+            }
+        }
+    }
+});
+</script>
 @endsection

@@ -46,6 +46,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             ->name('cycles');
         Route::get('new/cycle', [App\Http\Controllers\CyclesController::class,'create'])
             ->name('cycle.create');
+        Route::get('inventory/allocate-cycle', [App\Http\Controllers\CycleAllocationsController::class,'index'])
+            ->name('cycle.allocate');
         Route::post('cycles/create', [App\Http\Controllers\CyclesController::class,'store'])
             ->name('cycles.store');
         Route::get('cycles/{Cycle_Id}', [App\Http\Controllers\CycleDetailsController::class,'index'])
@@ -81,7 +83,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         /* Route::get('/checker/withdrawals/{Capt_Withdraw_Id}/modify', [App\Http\Controllers\CheckerController::class,'viewWithdrawalDetails'])->name('checker.Withdrawal.details'); */
         Route::post('/checker/withdrawals/{Capt_Withdraw_Id}/approve', [App\Http\Controllers\CheckerController::class,'approveCaptWithdrawal'])->name('checker.approveWithdrawal');
         Route::post('/checker/credit/{Credit_Id}/approve', [App\Http\Controllers\CheckerController::class,'approveCredit'])->name('checker.approveCredit');
-
+        Route::post('/checker/stock/{id}/approve', [App\Http\Controllers\CheckerController::class,'approveNewStock'])->name('checker.approveNewStock');
+        Route::post('/checker/purchases/{id}/{Purchase_Id}/approve', [App\Http\Controllers\CheckerController::class,'approvePurchases'])->name('checker.approvePurchases');
+        Route::post('/checker/cycle-allocations/{id}/approve', [App\Http\Controllers\CheckerController::class,'approveCycAllocation'])->name('checker.approveCycAllocation');
         //Maker
         Route::get('/maker', [App\Http\Controllers\MakerController::class,'index'])->name('maker.index');
 
@@ -191,6 +195,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('purchase/create', [App\Http\Controllers\PurchaseController::class, 'store'])->name('purchase.store');
 
         Route::get('stock-inventory', [App\Http\Controllers\StocksController::class,'index'])->name('stock');
+        Route::post('allocate/{stock_id}/{Cycle_Id}', [App\Http\Controllers\CycleAllocationsController::class,'store'])->name('stock.allocate');
+        // {{-- {{ url('allocate/'.$stock->id.'/'.$cycles->Cycle_Id) }} --}}
 
     
 

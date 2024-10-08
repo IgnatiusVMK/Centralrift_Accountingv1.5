@@ -38,6 +38,12 @@ class RoleUserSeeder extends Seeder
                 "role_id" => 3,
                 "created_at"=>now(),
                 "updated_at"=> now(),
+            ],
+            [
+                "user_id" => 6,
+                "role_id" => 1,
+                "created_at"=>now(),
+                "updated_at"=> now(),
             ]
         ];
 

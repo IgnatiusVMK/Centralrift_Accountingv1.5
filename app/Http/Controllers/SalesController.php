@@ -23,7 +23,7 @@ class SalesController extends Controller
 
         $this->authorize('view-sales');
 
-        $sales = Sales::orderBy("Sale_Date","desc")->paginate(15);
+        $sales = Sales::where('Status', 'approved')->orderBy("Sale_Date","desc")->paginate(15);
         return view('financials.sales.sales', [
             'sales' => $sales,
         ]);
@@ -103,14 +103,11 @@ class SalesController extends Controller
     ]);
 
     // Call your payIn method (if needed)
-    $this->payIn($request->Total_Price, $request->Cycle_Id, $request->Sales_Id, $request->maker_id, $request->Sales_Id);
+    $this->payIn($request->Total_Price, $request->Cycle_Id, $request->Description.'-Sales-'.$request->Net_Weight, $request->maker_id, $request->Sales_Id);
 
     // Redirect to the sales creation page with a success message
     return redirect()->route('cycle.sales.create', ['Cycle_Id' => $request->Cycle_Id])->with('success', 'Sale Recorded.');
 }
-
-
-
 
     public function payIn($amount, $Cycle, $Description, $maker_id, $Fin_Id_Id)
     {

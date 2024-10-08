@@ -14,10 +14,11 @@ class StocksController extends Controller
     public function index()
     {
         $stocks = DB::table('stocks')
+                ->where('Status', 'approved')
                 ->select('Stock_Name', 'Total_Quantity', 'Remaining_Quantity')
                 ->get();
 
-        $stock_act_vals = Stocks::with('purchase')->get();
+        $stock_act_vals = Stocks::with('purchase')->where('Status', 'approved')->get();
         // Prepare data for Chart.js
         $stockNames = $stocks->pluck('Stock_Name')->toArray(); // Array of stock names
         $totalQuantities = $stocks->pluck('Total_Quantity')->toArray(); // Total quantities
