@@ -87,7 +87,7 @@ class CustomerSalesController extends Controller
         $dompdf = new Dompdf($options);
 
         $now = Carbon::now('Africa/Nairobi');
-        $pdfName = 'Inv-' . $invoiceName .'-'. $now ->format('Y-m-d-H-i-s') . '.pdf';
+        $pdfName = 'Inv-' . $invoiceName .'-'. $Sale_Date . '.pdf';
 
         // Pass the sales collection to the view
         $data = compact('sales', 'invoiceDetails');

@@ -146,14 +146,14 @@
                     <th>Ref</th>
                     @if ($sale->packaging_option === '30 * 1 Tray')
                         <th>Quantity</th>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
+                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === 'Crates')
                         <th>No.of cartons</th>
                     @endif
                     <th>Packaging</th>
                     <th>Description of Goods</th>
                     @if ($sale->packaging_option === '30 * 1 Tray')
                         <th>Net Tray(s)</th>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
+                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === 'Crates')
                         <th>Net Weight (kgs)</th>
                     @endif
                     <th>Unit Price</th>
@@ -179,7 +179,7 @@
                     <td style="text-align: right;">{{ $sale->Description }}</td>
                     @if ($sale->packaging_option === '30 * 1 Tray')
                         <td style="text-align: right;">{{ $sale->Quantity }} Trays</td>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
+                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === 'Crates')
                         <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
                     @endif
                     <td style="text-align: right;">{{ $sale->Unit_Price }}</td>
@@ -189,7 +189,7 @@
                     <td colspan="4">Total</td>
                     @if ($sale->packaging_option === '30 * 1 Tray')
                         <td style="text-align: right;">{{ $sale->Quantity }} Trays</td>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
+                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === 'Crates')
                         <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
                     @endif
                     <td></td>

@@ -138,6 +138,8 @@ class SalesController extends Controller
 
         $invoiceDetails = Sales::where('Sales_Id', $Sales_Id)->first();
 
+        $sale_date = Sales::where('Sales_Id', $Sales_Id)->first();
+
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isPhpEnabled', true);
@@ -147,8 +149,8 @@ class SalesController extends Controller
 
         $dompdf = new Dompdf($options);
 
-        $now = Carbon::now('Africa/Nairobi');
-        $pdfName = 'Inv-' . $Sales_Id . '.pdf';
+        // $now = Carbon::now('Africa/Nairobi');
+        $pdfName = 'Inv-' . $sale_date->Sale_Date . '.pdf';
 
         // Pass the sales collection to the view
         $data = compact('sales', 'invoiceDetails');
