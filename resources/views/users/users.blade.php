@@ -26,9 +26,9 @@
                           <th>
                             User ID
                           </th>
-                          <th>
+                          {{-- <th>
                             User
-                          </th>
+                          </th> --}}
                           <th>
                             Name
                           </th>
@@ -66,9 +66,9 @@
                         
                         <tr>
                           <td>{{$user->id}}</td>
-                          <td class="py-1">
+                          {{-- <td class="py-1">
                             <img src="{{ asset('/images/marley.png')}}" alt="image"/>
-                          </td>
+                          </td> --}}
                           <td>{{$user->name}}</td>
                           <td>
                             <div>{{$user->email}}</div><br>

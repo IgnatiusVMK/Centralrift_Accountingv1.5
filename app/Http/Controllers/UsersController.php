@@ -36,7 +36,8 @@ class UsersController extends Controller
             'department_id' => 'required|exists:departments,id',
             'role' => 'required|max:255|string',
             'password' => 'required|max:255|string',
-            'is_active' => 'sometimes'
+            'is_active' => 'sometimes',
+            'otp_enabled' => 'sometimes'
         ]);
 
         $users = User::create([
@@ -45,6 +46,7 @@ class UsersController extends Controller
             'role' => $request->role,
             'password' => Hash::make($request->password),
             'is_active' => $request->is_active == true ? 1:0,
+            'otp_enabled' => $request->otp_enabled == true ?1:0,
         ]);
 
         // Attach the user to the department
@@ -93,7 +95,8 @@ class UsersController extends Controller
             'name' => 'required|max:255|string',    
             'email' => 'required|max:255|string',
             'role' => 'required|max:255|string',
-            'is_active' => 'sometimes'
+            'is_active' => 'sometimes',
+            'otp_enabled' => 'sometimes'
         ]);
 
         $user = User::findOrFail($id);
@@ -103,12 +106,13 @@ class UsersController extends Controller
             'email' => $request->email,
             'role' => $request->role,
             'is_active' => $request->is_active == true ? 1 : 0,
+            'otp_enabled' => $request->otp_enabled == true ? 1 : 0,
         ]);
 
         // Sync the user's departments
         $user->departments()->sync($request->input('departments'));
 
-        return redirect()->back()->with('status', 'User Updated');
+        return redirect()->back()->with('success', 'User Updated');
     }
     public function destroy(int $id){
         $this->authorize('delete-users');

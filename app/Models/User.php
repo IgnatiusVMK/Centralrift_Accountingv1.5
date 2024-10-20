@@ -25,6 +25,7 @@ class User extends Authenticatable
         'is_active',
         'role',
         'password',
+        'otp_enabled',
         
     ];
 

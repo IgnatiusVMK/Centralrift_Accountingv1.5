@@ -30,39 +30,49 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        // Check if OTP is already verified
-        if (session()->has('otp_verified') && session('otp_verified') === true) {
-            // If OTP is already verified, redirect to the dashboard
-            return redirect()->route('dashboard');
-        }
-
-        //Generate OTP 
-        $otp = rand(100000, 999999); //Generates 6-digit OTP
-
-        // Save OTP in Session
-        session(['otp'=> $otp]);
-
-        //Log OTP for offline testing purposes
-        Log::info('Generated OTP for user '. Auth::user()->email.' : ' .$otp);
-
         $user = Auth::user();
-        $mail_to = Auth::user()->email;
+        // Check if OTP is enabled for this user
+        if ($user->otp_enabled) {
 
-        // Prepare OTP for dispatch
-        $dispatchData = [
-            'mail_to' => $mail_to,
-            'subject' => 'OTP Login Request',
-            'message' => 'You recently attempted to log in to your account. Please use the one-time password (OTP) below to complete your login:',
-            'otp' => $otp,
-            'mailable' => 'LoginOtpMail',
-            'user_name' => Auth::user()->name,
-        ];
+            // Check if OTP is already verified
+            if (session()->has('otp_verified') && session('otp_verified') === true) {
+                // If OTP is already verified, redirect to the dashboard
+                return redirect()->route('dashboard');
+            }
 
-        // Dispatch the Otp for Login Authetication
-        dispatch(new SendMail($dispatchData, $user));
+            //Generate OTP 
+            $otp = rand(100000, 999999); //Generates 6-digit OTP
 
-        //Redirect user to OTP Verification Page.
-        return redirect ()->route('otp-authform')->with('success','A One TIme Password has been sent to your mail.');
+            // Save OTP in Session
+            session(['otp'=> $otp]);
+
+            //Log OTP for offline testing purposes
+            Log::info('Generated OTP for user '. Auth::user()->email.' : ' .$otp);
+
+            $user = Auth::user();
+            $mail_to = Auth::user()->email;
+
+            // Prepare OTP for dispatch
+            $dispatchData = [
+                'mail_to' => $mail_to,
+                'subject' => 'OTP Login Request',
+                'message' => 'You recently attempted to log in to your account. Please use the one-time password (OTP) below to complete your login:',
+                'otp' => $otp,
+                'mailable' => 'LoginOtpMail',
+                'user_name' => Auth::user()->name,
+            ];
+
+            // Dispatch the Otp for Login Authetication
+            dispatch(new SendMail($dispatchData, $user));
+
+            //Redirect user to OTP Verification Page.
+            return redirect ()->route('otp-authform')->with('success','A One TIme Password has been sent to your mail.');
+        }
+        
+        // If OTP is disabled, log the user in directly
+        $request->session()->regenerate();
+        return redirect()->intended(RouteServiceProvider::HOME);
+
     }
 
     /**

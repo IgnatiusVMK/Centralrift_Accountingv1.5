@@ -69,6 +69,11 @@
                       @error('is_active') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
+                      <label>OTP Enabled</label>
+                      <input type="checkbox" name="otp_enabled" {{ $users->otp_enabled  == true ? 'checked': '' }} />
+                      @error('otp_enabled') <span class="text-danger">{{ $message}}</span> @enderror
+                    </div>
+                    <div class="mb-3">
                       <button type="submit"  class="btn btn-success text-center">Save</button>
                     </div>
 
