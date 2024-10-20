@@ -27,6 +27,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'otp_enabled' => false,
             ],
             [
                 'name' => 'Ignatius Victor',
@@ -39,6 +40,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'otp_enabled' => true,
             ],
             [
                 'name' => 'Michael Mwai',
@@ -51,6 +53,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'otp_enabled' => true,
             ],
             [
                 'name' => 'Lydiah Gichuki',
@@ -63,6 +66,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'otp_enabled' => true,
             ],
             [
                 'name' => 'Zackary Gichuki',
@@ -75,6 +79,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'otp_enabled' => true,
             ],
             [
                 'name' => 'Dennis Kainga',
@@ -86,6 +91,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'otp_enabled' => true,
             ],
         ]);
     }
