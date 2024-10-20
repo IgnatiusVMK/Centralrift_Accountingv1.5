@@ -10,6 +10,8 @@ use App\Http\Controllers\ScheduleMaintenanceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+use App\Http\Controllers\OtpVerificationController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,7 +27,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['auth', 'verified']], function () {
+Route::get('otp-verify', [OtpVerificationController::class, 'index'])->name('otp-authform');
+
+Route::post('otp-verify', [OtpVerificationController::class, 'verify'])->name('otp.verification');
+
+Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function () {
     
         // Routes that require authentication and verified email
 

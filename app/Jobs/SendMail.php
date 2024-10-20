@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Mail\CashbookMail;
 use App\Mail\LoginNotificationMail;
+use App\Mail\LoginOtpMail;
 use App\Mail\WelcomeMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,10 +40,20 @@ class SendMail implements ShouldQueue
     $mailTo = $this->dispatchData['mail_to'];
     
     switch ($mailableClass) {
+        case 'LoginOtpMail':
+            $mailable = new LoginOtpMail([
+                'subject' => $this->dispatchData['subject'],
+                'message' => $this->dispatchData['message'],
+                'otp' => $this->dispatchData['otp'],
+                'user_name' => $this->name,
+            ]);
+            break;
+
         case 'LoginNotificationMail':
             $mailable = new LoginNotificationMail([
                 'subject' => $this->dispatchData['subject'],
                 'message' => $this->dispatchData['message'],
+                'login_time' => $this->dispatchData['login_time'],
                 'user_name' => $this->name,
             ]);
             break;

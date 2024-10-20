@@ -121,33 +121,28 @@
             <h6>Centralrift Fresh Produce Kenya LTD</h6>
         </div>
 
-        <h2>Login Notification</h2>
+        <h2>OTP Request</h2>
 
         <p>Dear, {{ $mailData['user_name'] }}</p>
 
         <div class="content">
             <p>{{ $mailData['message'] }}</p>
 
-            <table class="info-table">
-                {{-- <tr>
-                    <td>IP Address:</td>
-                    <td>{{ request()->ip() }}</td>
-                </tr> --}}
+            <table class="info-table" style="width: 100%; text-align: center;">
                 <tr>
-                    <td>Location:</td>
-                    <td>Nairobi, Nairobi County KE</td>
+                    <td style="padding: 20px; font-size: 32px; font-weight: bold; text-align: center; color: #333; background-color: #e8f5e9; border: 2px solid #c8e6c9; border-radius: 10px;">
+                        {{ $mailData['otp'] }}
+                    </td>
                 </tr>
                 <tr>
-                    <td>Date | Time:</td>
-                    <td>{{ $mailData['login_time'] }} EAT</td>
+                    <td style="padding-top: 10px; font-size: 14px; color: #555;">
+                        Date | Time: {{ now()->format('jS M, Y | h:i A T') }}
+                    </td>
                 </tr>
-            </table>
+            </table>            
         </div>
 
-        <p style="font-size: 16px">If you don’t recognize this login, we recommend you take the following steps:</p>
-        <p style="font-size: 14px"><b>1. Change your password. </b> Choose a strong password you haven’t used before. </p>
-            
-        <p>Immediately contact <a href="mailto:support@centralrift-fpkl.com">support@centralrift-fpkl.com</a>.</p>
+        <p>If you did not authorise this activity, change your password immediately and contact <a href="mailto:support@centralrift-fpkl.com">support@centralrift-fpkl.com</a>.</p>
 
         <div class="footer">
             <p>Why this email? We are committed to preserving your security and updating you on account activity.</p>
