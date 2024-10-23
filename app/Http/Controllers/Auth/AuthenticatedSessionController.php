@@ -71,6 +71,23 @@ class AuthenticatedSessionController extends Controller
         
         // If OTP is disabled, log the user in directly
         $request->session()->regenerate();
+
+        $user = Auth::user();
+            $mail_to = Auth::user()->email;
+            $now = Carbon::now('Africa/Nairobi');
+            $currentTime = $now->format('Y-m-d h:i:s');
+
+            $dispatchData = [
+                'mail_to' => $mail_to,
+                'subject' => 'New Login Notification',
+                'message' => 'We noticed a new login to your account. Here are the details:',
+                'login_time' => $currentTime,
+                'mailable' => 'LoginNotificationMail',
+                'user_name' => Auth::user()->name,
+            ];
+
+            // Dispatch the job
+        dispatch(new SendMail($dispatchData, $user));
         return redirect()->intended(RouteServiceProvider::HOME);
 
     }

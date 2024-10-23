@@ -1,11 +1,11 @@
 #
 # OTP Authentication and Verification
 
-* Modify existing authentication process with Laravel Breeze to include OTP verification before a user is fully logged in, and to log the OTP locally.
+> Modify existing authentication process with Laravel Breeze to include OTP verification before a user is fully logged in, and to log the OTP locally.
 
 ### Step 1: Modify Laravel Breeze Authentication Flow.
 
-* Laravel Breeze handles the authentication automatically after the credentials are validated, adjust it so that users are not automatically logged in after entering their email and password. Instead, they will be redirected to the OTP verification step.
+> Laravel Breeze handles the authentication automatically after the credentials are validated, adjust it so that users are not automatically logged in after entering their email and password. Instead, they will be redirected to the OTP verification step.
 
 #### 1. Override the default login behavior.
 
@@ -142,7 +142,7 @@ class OtpController extends Controller
 
 ### Step 3: Handling Offline Mode (Log OTP Locally)
 
-* If you are testing your app without an internet connection and want to save the OTP to logs instead of sending it via email:
+> If you are testing your app without an internet connection and want to save the OTP to logs instead of sending it via email:
 
 #### 1. Log the OTP: You can use Laravel's Log::info() to store the OTP in your local log files.
 
@@ -178,8 +178,8 @@ Log::info('OTP for ' . $request->email . ': ' . $otp);
 ```php
 php artisan make:middleware EnsureOtpIsVerified
 ```
-***Update Middleware Logic:*** In the generated middleware located in app/Http/Middleware/
-EnsureOtpIsVerified.php, modify the handle method to check if the user has verified the OTP.
+> ***Update Middleware Logic:*** In the generated middleware located in ```app/Http/Middleware/
+EnsureOtpIsVerified.php```, modify the handle method to check if the user has verified the OTP.
 
 * Example middleware:
 
@@ -201,7 +201,7 @@ public function handle($request, Closure $next)
 
 * This middleware checks if a session variable otp_verified is set. If not, it redirects the user to the OTP form.
 
-***Register the Middleware:*** In app/Http/Kernel.php, register your middleware in the web middleware group or create a new middleware group for OTP verification.
+***Register the Middleware:*** In ```app/Http/Kernel.php```, register your middleware in the web middleware group or create a new middleware group for OTP verification.
 
 * Example:
 
@@ -251,7 +251,7 @@ public function verify(Request $request)
 
 #
 # Disabling OTP for SuperUsers/Administrators and selected Users
-* You can add a flag to the users’ table to allow specific users to bypass OTP verification.
+> You can add a flag to the users’ table to allow specific users to bypass OTP verification.
 
 ### a) Add otp_enabled Column to Users Table
 * Create a migration to add a boolean otp_enabled field to the users table:
@@ -365,5 +365,5 @@ class VerifyOtp
 
 * If the user requires OTP verification (i.e., if ```otp_enabled``` is 1 or not set), it will check the session for the otp_verified flag.
 
-### Conclusion:
+> ### Conclusion:
 * Disable OTP for Certain Users: You can add a flag (otp_enabled) in the database to allow specific users to skip OTP verification.
