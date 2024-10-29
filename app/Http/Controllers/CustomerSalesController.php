@@ -90,7 +90,7 @@ class CustomerSalesController extends Controller
         $pdfName = 'Inv-' . $invoiceName .'-'. $Sale_Date . '.pdf';
 
         // Pass the sales collection to the view
-        $data = compact('sales', 'invoiceDetails');
+        $data = compact('sales', 'invoiceDetails', 'CustomerInvoiceDetails');
 
         // Render the view to HTML
         $html = view('financials.sales.grouped-invoice', $data)->render();

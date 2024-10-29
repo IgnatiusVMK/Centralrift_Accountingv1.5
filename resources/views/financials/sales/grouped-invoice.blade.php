@@ -124,7 +124,7 @@
         </div>        
         <div>
             <p><strong>Consignee:</strong></p>
-            <p>Spica {{-- [CONSIGNEE DETAILS] --}}</p>
+            <p>{{$CustomerInvoiceDetails->Customer_Name}}</p>
         </div>
         
         <div class="invoice-details">
