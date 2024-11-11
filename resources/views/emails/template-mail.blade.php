@@ -144,7 +144,7 @@
             </table>
         </div>
 
-        <p>If you did not authorise this activity, change your password immediately and contact <a href="mailto:support@centralrift-fpkl.com">support@centralrift-fpkl.com</a>.</p>
+        <p>If you did not authorise this activity, change your password immediately and contact <a href="mailto:itsupport@centralriftfpkl.com">itsupport@centralriftfpkl.com</a>.</p>
 
         <div class="footer">
             <p>Why this email? We are committed to preserving your security and updating you on account activity.</p>
@@ -156,7 +156,7 @@
             </div>
 
             <p>Centralrift Fresh Produce Kenya LTD <br> Nairobi, Kenya</p>
-            <p>Contact us at: <a href="mailto:support@centralrift-fpkl.com">support@centralrift-fpkl.com</a></p>
+            <p>Contact us at: <a href="mailto:itsupport@centralriftfpkl.com">itsupport@centralriftfpkl.com</a></p>
         </div>
     </div>
 </body>
@@ -194,7 +194,7 @@
     <p>Centralrift FreshPKL.</p>
 
     <footer>
-        Contact us at: support@centralrift-fpkl.com
+        Contact us at: itsupport@centralriftfpkl.com
     </footer>
 </body>
 
