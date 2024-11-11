@@ -87,9 +87,6 @@
                         @endforeach
                       </tbody>
                     </table>
-                      <div class="pagination-container float-end">
-                         {{ $sales->links() }}
-                      </div>
                   </div>
                   @endcan
                 </div>

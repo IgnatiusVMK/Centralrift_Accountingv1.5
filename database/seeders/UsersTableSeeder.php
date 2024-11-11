@@ -18,12 +18,11 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'System Administrator',
-                /* 'email' => 'sysadmin@domain.org', */
-                'email' => 'vmwaikariuki@outlook.com',
+                'email' => 'sys-administrator@centralriftfpkl.com',
                 'is_active' => true,
                 'role' => 'System Admin',
                 'email_verified_at' => now(),
-                'password' => Hash::make('sysadmin@domain.org'),
+                'password' => Hash::make('sysadmin@centralriftfpkl.com'),
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -31,12 +30,11 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'Ignatius Victor',
-                /* 'email' => 'ignatiusvmk@domain.org', */
-                'email' => 'ignatiusvmk@gmail.com',
+                'email' => 'ignatiusvmk@centralriftfpkl.com',
                 'is_active' => true,
                 'role' => 'ICT Admin',
                 'email_verified_at' => now(),
-                'password' => Hash::make('ignatiusvmk@domain.org'),
+                'password' => Hash::make('ignatiusvmk@centralriftfpkl.com'),
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -44,12 +42,11 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'Michael Mwai',
-                /* 'email' => 'mmwai@domain.org', */
-                'email' => 'ivmkariuki@gmail.com',
+                'email' => 'mmwai@centralriftfpkl.com',
                 'is_active' => true,
                 'role' => 'Manager',
                 'email_verified_at' => now(),
-                'password' => Hash::make('mmwai@domain.org'),
+                'password' => Hash::make('mmwai@centralriftfpkl.com'),
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -57,12 +54,11 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'Lydiah Gichuki',
-                /* 'email' => 'lgichuki@domain.org', */
-                'email' => 'acadwrittyvmk8@gmail.com',
+                'email' => 'lgichuki@centralriftfpkl.com',
                 'is_active' => true,
                 'role' => 'Manager',
                 'email_verified_at' => now(),
-                'password' => Hash::make('lgichuki@domain.org'),
+                'password' => Hash::make('lgichuki@centralriftfpkl.com'),
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -70,24 +66,11 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'Zackary Gichuki',
-                /* 'email' => 'zgichuki@domain.org', */
-                'email' => 'marleyignacio8@gmail.com',
+                'email' => 'zgichuki@centralriftfpkl.com',
                 'is_active' => true, //false
                 'role' => 'user',
                 'email_verified_at' => now(),
-                'password' => Hash::make('zgichuki@domain.org'),
-                'remember_token' => Str::random(10),
-                'created_at' => now(),
-                'updated_at' => now(),
-                'otp_enabled' => true,
-            ],
-            [
-                'name' => 'Dennis Kainga',
-                'email' => 'denniskainga@gmail.com',
-                'is_active' => true, //false
-                'role' => 'ICT Admin',
-                'email_verified_at' => now(),
-                'password' => Hash::make('denniskainga@gmail.com'),
+                'password' => Hash::make('zgichuki@centralriftfpkl.com'),
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),

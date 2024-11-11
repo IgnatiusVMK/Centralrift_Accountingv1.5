@@ -23,7 +23,7 @@ class SalesController extends Controller
 
         $this->authorize('view-sales');
 
-        $sales = Sales::where('Status', 'approved')->orderBy("Sale_Date","desc")->paginate(15);
+        $sales = Sales::where('Status', 'approved')->orderBy("Sale_Date","desc")->get();
         return view('financials.sales.sales', [
             'sales' => $sales,
         ]);
