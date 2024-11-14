@@ -101,6 +101,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'Name'=> 'delete_master',
             ],
+            
             // Permissions for Customers
             [
                 'Name'=> 'access_customers',
@@ -212,7 +213,7 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'Name'=> 'create_reports',
-            ].
+            ],
 
             //Permissions for System Maintenance
             [
