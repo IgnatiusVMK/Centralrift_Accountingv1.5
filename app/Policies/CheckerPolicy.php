@@ -16,14 +16,14 @@ class CheckerPolicy
 
     public function access(User $user)
     {
-        return $user->hasRole('Admin') || $user->hasPermission('access_approval');
+        return $user->hasRole('Admin') || $user->hasPermission('access_checker');
     }
     public function create(User $user)
     {
-        return $user->hasRole('Admin') ||  $user->hasPermission('create_approval');
+        return $user->hasRole('Admin') ||  $user->hasPermission('create_checker');
     }
     public function view(User $user)
     {
-        return $user->hasRole('Admin') ||  $user->hasPermission('view_approval');
+        return $user->hasRole('Admin') ||  $user->hasPermission('view_checker');
     }
 }
