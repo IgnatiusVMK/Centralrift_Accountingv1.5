@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@can('view-approval')
+@can('view-checker')
   <div class="col-sm-12">
     <div class="home-tab">
       <div class="d-sm-flex align-items-center justify-content-between border-bottom">
@@ -98,7 +98,7 @@
     </div>
   </div>
   <div class="main-panel">
-    @if ($pendingCyclesCount >= 1 || $creditCount >=1 ||  $wagesCount >= 1 || $salariesCount >= 1 || $advanceCount >= 1 || $chemicalsCount >= 1 ||  $seedsCount >= 1 || $cpexpensesCount >= 1 || $maintenanceCount >= 1 || $salesCount >=1 || $purchaseCount >=1 || $stocksCount >= 1 || $cycAllocateCount >= 1 || $withdrawalCount >= 1 || $electricityCount >= 1)
+    @if ($pendingCyclesCount >= 1 || $creditCount >=1 ||  $wagesCount >= 1 || $salariesCount >= 1 || $advanceCount >= 1  || $transportCount >= 1 || $chemicalsCount >= 1 ||  $seedsCount >= 1 || $cpexpensesCount >= 1 || $maintenanceCount >= 1 || $salesCount >=1 || $purchaseCount >=1 || $stocksCount >= 1 || $cycAllocateCount >= 1 || $withdrawalCount >= 1 || $electricityCount >= 1)
       <div class="content-wrapper">
         <div class="row">
           <div class="col-lg-12 grid-margin stretch-card">
@@ -140,7 +140,7 @@
                                 <th>
                                   Maker
                                 </th>
-                                @can('create-approval')
+                                @can('create-checker')
                                 <th>
                                   Edit
                                 </th>
@@ -148,7 +148,7 @@
                                 <th>
                                   Created On
                                 </th>
-                                @can('create-approval')
+                                @can('create-checker')
                                 <th>
                                   Validate
                                 </th>
@@ -166,13 +166,13 @@
                                   <td>
                                       {{$pending->maker->name}}
                                   </td>
-                                  @can('create-approval')
+                                  @can('create-checker')
                                   <td>
                                       <a href="{{ url('checker/'.$pending->id.'/validate')}}">Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                   @endcan
                                   <td>{{$pending->created_at}}</td>
-                                  @can('create-approval')
+                                  @can('create-checker')
                                   <td>
                                       <form action="{{ url('checker/'.$pending->Cycle_Id.'/validate')}}" method="POST">
                                           @csrf
@@ -222,7 +222,7 @@
                                 <th>
                                   Maker
                                 </th>
-                                @can('create-approval')
+                                @can('create-checker')
                                 <th>
                                   Edit
                                 </th>
@@ -230,7 +230,7 @@
                                 <th>
                                   Created On
                                 </th>
-                                @can('create-approval')
+                                @can('create-checker')
                                 <th>
                                   Validate
                                 </th>
@@ -247,13 +247,13 @@
                                   <td>
                                       {{$credit->maker->name}}
                                   </td>
-                                  @can('create-approval')
+                                  @can('create-checker')
                                   <td>
                                       <a href="{{-- {{ url('checker/credit'.$credit->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                   @endcan
                                   <td>{{$credit->created_at}}</td>
-                                  @can('create-approval')
+                                  @can('create-checker')
                                   <td>
                                       <form action="{{ url('checker/credit/'.$credit->Credit_Id.'/approve')}}" method="POST">
                                           @csrf
@@ -308,7 +308,7 @@
                                 <th>
                                   Maker
                                 </th>
-                                @can('create-approval')
+                                @can('create-checker')
                                 <th>
                                   Date Created
                                 </th>
@@ -316,7 +316,7 @@
                                   Edit
                                 </th>
                                 @endcan
-                                @can('create-approval')
+                                @can('create-checker')
                                 <th>
                                   Validate
                                 </th>
@@ -337,12 +337,12 @@
                                   {{$wage->maker?->name}}
                                 </td>
                                 <td>{{$wage->created_at}}</td>
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                       <a href="{{ url('checker/'.$wage->id.'/validate')}}">Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                       <form action="{{ url('checker/'.$wage->Cycle_Id.'/'.$wage->Fin_Id_Id.'/'.$wage->id.'/validate')}}" method="POST">
                                           @csrf
@@ -400,12 +400,12 @@
                               <th>
                                 Payment Date
                               </th>
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Edit
                               </th>
                               @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Validate
                               </th>
@@ -426,12 +426,12 @@
                               <td>
                                 {{$adv->maker?->name}}
                               </td>
-                              @can('create-approval')
+                              @can('create-checker')
                                 <td>
                                     <a href="{{-- {{ url('checker/advances/'.$adv->Cycle_Id.'/'.$adv->Fin_Id_Id.'/'.$adv->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
                                 </td>
                               @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                                 <td>
                                     <form action="{{ url('checker/advances/'.$adv->Cycle_Id.'/'.$adv->Fin_Id_Id.'/'.$adv->id.'/approve')}}" method="POST">
                                         @csrf
@@ -489,12 +489,12 @@
                               <th>
                                 Payment Date
                               </th>
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Edit
                               </th>
                               @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Validate
                               </th>
@@ -511,12 +511,12 @@
                               <td>{{$sal->Description}}</td>
                               <td>Ksh {{$sal->Amount}}</td>
                               <td>{{$sal->created_at}}</td>
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                       <a href="{{-- {{ url('checker/salary/'.$sal->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                       <form action="{{ url('checker/salaries/'.$sal->Cycle_Id.'/'.$sal->Fin_Id_Id.'/'.$sal->id.'/approve')}}" method="POST">
                                           @csrf
@@ -587,12 +587,12 @@
                               <td>
                                 {{$withd->maker->name}}
                             </td>
-                            @can('create-approval')
+                            @can('create-checker')
                             <td>
                                 <a href="{{ url('checker/withdrawals/'.$withd->Capt_Withdraw_Id.'/modify')}}">Modify<i class="mdi mdi-border-color"></i></a>
                             </td>
                             @endcan
-                            @can('create-approval')
+                            @can('create-checker')
                             <td>
                                 <form action="{{ url('checker/withdrawals/'.$withd->Capt_Withdraw_Id.'/approve')}}" method="POST">
                                     @csrf
@@ -650,12 +650,12 @@
                               <th>
                                 Date Created
                               </th>
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Edit
                               </th>
                               @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Validate
                               </th>
@@ -674,12 +674,12 @@
                                 {{$elec->maker?->name}}
                               </td>
                               <td>{{$elec->created_at}}</td>
-                              @can('create-approval')
+                              @can('create-checker')
                                   <td>
                                       <a href="{{-- {{ url('checker/electricity/'.$sal->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                       <form action="{{ url('checker/electricity/'.$elec->Cycle_Id.'/'.$elec->Fin_Id_Id.'/'.$elec->id.'/approve')}}" method="POST">
                                           @csrf
@@ -737,12 +737,12 @@
                               <th>
                                 Date Created
                               </th>
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Edit
                               </th>
                               @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Validate
                               </th>
@@ -761,12 +761,12 @@
                                 {{$maint->maker?->name}}
                               </td>
                               <td>{{$maint->created_at}}</td>
-                              @can('create-approval')
+                              @can('create-checker')
                                   <td>
                                     <a href="{{-- {{ url('checker/'.$maint->Sales_Id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                                   <td>
                                       <form action="{{ url('checker/maintenance/'.$maint->Cycle_Id.'/'.$maint->Fin_Id_Id.'/'.$maint->id.'/approve')}}" method="POST">
                                           @csrf
@@ -836,12 +836,12 @@
                               <th>
                                 Payment Status
                               </th>
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Edit
                               </th>
                               @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Validate
                               </th>
@@ -863,12 +863,12 @@
                                 <td class="@if($sale->Payment_Status == 'Un-paid') text-danger @elseif($sale->Payment_Status == 'Paid') text-success @else text-warning @endif">
                                   {{$sale->Payment_Status}}
                                 </td>
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                     <a href="">Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                     <form action="{{ url('checker/'.$sale->Sales_Id.'/'.$sale->id.'/validate') }}" method="POST">
                                       @csrf
@@ -926,12 +926,12 @@
                               <th>
                                 Maker
                               </th>
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Edit
                               </th>
                               @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Validate
                               </th>
@@ -954,12 +954,12 @@
                                 <td>Ksh {{$purchase->Unit_Cost}}</td>
                                 <td>Ksh {{$purchase->Total_Cost}}</td>
                                 <td>{{$purchase->maker->name}}</td>
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                     <a href={{-- "" --}}>Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                     <form action="{{ url('checker/purchases/'.$purchase->id.'/'.$purchase->Purchase_Id.'/approve') }}" method="POST">
                                       {{-- {{ url('checker/'.$sale->Sales_Id.'/'.$sale->id.'/validate') }} --}}
@@ -1014,12 +1014,12 @@
                               <th>
                                 Maker
                               </th>
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Edit
                               </th>
                               @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Validate
                               </th>
@@ -1046,12 +1046,12 @@
                                   <td style="font-size: 18px">{{$stock->Remaining_Quantity}} (Boxes/Kgs)</td>
                                 @endif
                                 <td>{{$stock->maker->name}}</td>
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                     <a href={{-- "" --}}>Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                     <form action="{{ url('/checker/stock/'.$stock->id.'/approve') }}" method="POST">
                                       {{-- {{ url('checker/'.$sale->Sales_Id.'/'.$sale->id.'/validate') }} --}}
@@ -1103,12 +1103,12 @@
                               <th>
                                 Maker
                               </th>
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Edit
                               </th>
                               @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Validate
                               </th>
@@ -1128,12 +1128,12 @@
                                   <td style="font-size: 18px">{{$cycAllocate->allocated_quantity}} (Boxes/Kgs)</td>
                                 @endif
                                 <td style="font-size: 18px">{{$cycAllocate->maker->name}}</td>
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                     <a href={{-- "" --}}>Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                     <form action="{{ url('/checker/cycle-allocations/'.$cycAllocate->id.'/approve') }}" method="POST">
                                       @csrf
@@ -1192,12 +1192,12 @@
                               <th>
                                 Date Created
                               </th>
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Edit
                               </th>
                               @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Validate
                               </th>
@@ -1214,12 +1214,12 @@
                               <td>{{$tran->Description}}</td>
                               <td>Ksh {{$tran->Amount}}</td>
                               <td>{{$tran->created_at}}</td>
-                              @can('create-approval')
+                              @can('create-checker')
                                   <td>
                                       <a href="{{-- {{ url('checker/transport/'.$tran->Cycle_Id.'/'.$tran->Fin_Id_Id.'/'.$tran->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                       <form action="{{ url('checker/transport/'.$tran->Cycle_Id.'/'.$tran->Fin_Id_Id.'/'.$tran->id.'/approve')}}" method="POST">
                                           @csrf
@@ -1294,12 +1294,12 @@
                               <th>
                                 Date Created
                               </th>
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Edit
                               </th>
                               @endcan
-                              @can('create-approval')
+                              @can('create-checker')
                               <th>
                                 Validate
                               </th>
@@ -1319,12 +1319,12 @@
                                 {{$cpexpe->maker?->name}}
                               </td>
                               <td>{{$cpexpe->created_at}}</td>
-                              @can('create-approval')
+                              @can('create-checker')
                                   <td>
                                       <a href="{{-- {{ url('checker/capital-expenses/'.$tran->Cycle_Id.'/'.$tran->Fin_Id_Id.'/'.$tran->id.'/validate')}} --}}">Modify<i class="mdi mdi-border-color"></i></a>
                                   </td>
                                 @endcan
-                                @can('create-approval')
+                                @can('create-checker')
                                   <td>
                                       <form action="{{ url('checker/capital-expenses/'.$cpexpe->Cycle_Id.'/'.$cpexpe->Fin_Id_Id.'/'.$cpexpe->id.'/approve')}}" method="POST">
                                           @csrf

@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
                 'otp_enabled' => false,
             ],
             [
-                'name' => 'Ignatius Victor',
+                'name' => 'Ignatius Kariuki',
                 'email' => 'ignatiusvmk@centralriftfpkl.com',
                 'is_active' => true,
                 'role' => 'ICT Admin',
@@ -38,11 +38,11 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
-                'otp_enabled' => true,
+                'otp_enabled' => false,
             ],
             [
                 'name' => 'Michael Mwai',
-                'email' => 'mmwai@centralriftfpkl.com',
+                'email' => 'mkmwai2002@gmail.com',
                 'is_active' => true,
                 'role' => 'Manager',
                 'email_verified_at' => now(),
@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'Lydiah Gichuki',
-                'email' => 'lgichuki@centralriftfpkl.com',
+                'email' => 'itsupport@centralriftfpkl.com',
                 'is_active' => true,
                 'role' => 'Manager',
                 'email_verified_at' => now(),
@@ -62,11 +62,11 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
-                'otp_enabled' => true,
+                'otp_enabled' => false,
             ],
             [
                 'name' => 'Zackary Gichuki',
-                'email' => 'zgichuki@centralriftfpkl.com',
+                'email' => 'itsupport@centralriftfpkl.com',
                 'is_active' => true, //false
                 'role' => 'user',
                 'email_verified_at' => now(),

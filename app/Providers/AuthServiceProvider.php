@@ -37,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //UserModel
+        // UserModel
         Gate::define('access-users', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_users');
         });
@@ -54,17 +54,17 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('delete_users');
         });
 
-        //Checker
-        Gate::define('access-approval', function ($user) {
-            return $user->hasRole('Admin') || $user->hasPermission('access_approval');
+        // Checker
+        Gate::define('access-checker', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('access_checker');
         });
-        Gate::define('view-approval', function ($user) {
-            return $user->hasRole('Admin') || $user->hasPermission('view_approval');
+        Gate::define('view-checker', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('view_checker');
         });
-        Gate::define('create-approval', function ($user) {
-            return $user->hasRole('Admin') || $user->hasPermission('create_approval');
+        Gate::define('create-checker', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('create_checker');
         });
-        //Maker
+        // Maker
         Gate::define('access-maker', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_maker');
         });
@@ -75,7 +75,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('create_maker');
         });
         
-        //CyclesModel
+        // Cycles Model
         Gate::define('access-cycles', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_cycles');
         });
@@ -86,7 +86,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('create_cycles');
         });
 
-        //RolesModel
+        // Roles Model
         Gate::define('access-roles', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_roles');
         });
@@ -96,7 +96,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('create-roles', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('create_roles');
         });
-        //PermissionsModel
+        // Permissions Model
         Gate::define('access-permissions', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_permissions');
         });
@@ -107,7 +107,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('create_permissions');
         });
 
-        //Master Operation
+        // Master Operation
         Gate::define('access-master', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_master');
         });
@@ -124,7 +124,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('delete_master');
         });
 
-        //Customers
+        // Customers
         Gate::define('access-customers', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_customers');
         });
@@ -141,7 +141,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('delete_customers');
         });
 
-        //ExpensesModel
+        // Expenses Model
         Gate::define('access-financials', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_financials');
         });  
@@ -158,7 +158,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('delete_financials');
         });  
 
-        //PurchaseModel
+        // Purchase Model
         Gate::define('access-purchases', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_purchases');
         }); 
@@ -175,7 +175,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('delete_purchases');
         });
 
-        //SalesModel
+        // Sales Model
         Gate::define('access-sales', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_sales');
         }); 
@@ -192,7 +192,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('delete_sales');
         });
         
-        //StockModel
+        // Inventory Model
         Gate::define('access-stock', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_stock');
         }); 
@@ -209,7 +209,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('delete_stock');
         });
 
-        //FinanceModel (Cashbook, P&L)
+        // FinanceModel (Cashbook, P&L)
         Gate::define('access-finance', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_finance');
         });

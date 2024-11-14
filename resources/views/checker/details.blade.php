@@ -11,7 +11,7 @@
   }
   </style>
 @section('content')
-@can('view-approval')
+@can('view-checker')
 {{-- @php
 dd($pendingCycles)    
 @endphp --}}

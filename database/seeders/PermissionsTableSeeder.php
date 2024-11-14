@@ -15,7 +15,7 @@ class PermissionsTableSeeder extends Seeder
     {
         $permissions = [
 
-            //SuperAdmin Permissions for UserModel
+            // SuperAdmin Permissions for UserModel
             [
                 'Name'=> 'access_users',
             ],
@@ -32,17 +32,17 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'delete_users',
             ],
 
-            //Permissions for Approval
+            //Permissions for checker
             [
-                'Name'=> 'access_approval',
+                'Name'=> 'access_checker',
             ],
             [
-                'Name'=> 'view_approval',
+                'Name'=> 'view_checker',
             ],
             [
-                'Name'=> 'create_approval',
+                'Name'=> 'create_checker',
             ],
-            //Permissions for Maker
+            // Permissions for Maker
             [
                 'Name'=> 'access_maker',
             ],
@@ -53,7 +53,7 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'create_maker',
             ],
 
-            //Permissions for Cycles
+            // Permissions for Cycles
             [
                 'Name'=> 'access_cycles',
             ],
@@ -64,7 +64,7 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'create_cycles',
             ],
 
-            //Permissions for Roles
+            // Permissions for Roles-Model
             [
                 'Name'=> 'access_roles',
             ],
@@ -74,7 +74,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'Name'=> 'create_roles',
             ],
-            //Permissions for Permissions
+            // Permissions for Permissions-Model
             [
                 'Name'=> 'access_permissions',
             ],
@@ -85,7 +85,7 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'create_permissions',
             ],
 
-            //Permissions for Master-Operations
+            // Permissions for Master-Operations
             [
                 'Name'=> 'access_master',
             ],
@@ -101,7 +101,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'Name'=> 'delete_master',
             ],
-            //Permissions for Customers
+            // Permissions for Customers
             [
                 'Name'=> 'access_customers',
             ],
@@ -118,7 +118,7 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'delete_customers',
             ],
 
-            //Permissions for Monthly Expenses
+            // Permissions for Monthly Expenses
             [
                 'Name'=> 'access_financials',
             ],
@@ -135,7 +135,7 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'delete_financials',
             ],
 
-            //Permissions for purchases
+            // Permissions for purchases
             [
                 'Name'=> 'access_purchases',
             ],
@@ -152,7 +152,7 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'delete_purchases',
             ],
 
-            //Permissions for Sales
+            // Permissions for Sales Model
             [
                 'Name'=> 'access_sales',
             ],
@@ -169,7 +169,7 @@ class PermissionsTableSeeder extends Seeder
                 'Name'=> 'delete_sales',
             ],
 
-            //Permissions for Finances (Cashbook, P&L)
+            // Permissions for Finance Model (Cashbook, P&L)
             [
                 'Name'=> 'access_finance',
             ],
@@ -185,6 +185,23 @@ class PermissionsTableSeeder extends Seeder
             [
                 'Name'=> 'delete_finance',
             ],
+
+            //  InventoryModel
+            [
+                'Name'=> 'access_stock',
+            ],
+            [
+                'Name'=> 'view_stock',
+            ],
+            [
+                'Name'=> 'create_stock',
+            ],
+            [
+                'Name'=> 'modify_stock',
+            ],
+            [
+                'Name'=> 'delete_stock',
+            ],
             
             //Permissions for reports
             [
@@ -195,7 +212,19 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'Name'=> 'create_reports',
+            ].
+
+            //Permissions for System Maintenance
+            [
+                'Name'=> 'access_maintenance',
             ],
+            [
+                'Name'=> 'view_maintenance',
+            ],
+            [
+                'Name'=> 'create_maintenance',
+            ],
+
             
         ];
 
