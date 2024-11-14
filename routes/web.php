@@ -227,7 +227,8 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
                 'user_name' => Auth::user()->name,
             ];
             
-            return view('emails.cashbook-mail', ['mailData' => $mailData]);
+            /* return view('emails.cashbook-mail', ['mailData' => $mailData]); */
+            return view('emails.template-mail', ['mailData' => $mailData]);
         });
         // Route to view/modify blade template of sales invoice
         Route::get('/view-invoice', function () {

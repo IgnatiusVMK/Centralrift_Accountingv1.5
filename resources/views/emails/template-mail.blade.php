@@ -146,17 +146,26 @@
 
         <p>If you did not authorise this activity, change your password immediately and contact <a href="mailto:itsupport@centralriftfpkl.com">itsupport@centralriftfpkl.com</a>.</p>
 
-        <div class="footer">
-            <p>Why this email? We are committed to preserving your security and updating you on account activity.</p>
-
-            <div class="social-icons">
-                <img src="https://image.shutterstock.com/image-vector/facebook-icon-260nw-1243472888.jpg" alt="Facebook">
-                <img src="https://image.shutterstock.com/image-vector/twitter-icon-260nw-1243472890.jpg" alt="Twitter">
-                <img src="https://image.shutterstock.com/image-vector/instagram-icon-260nw-1243472891.jpg" alt="Instagram">
+        <div class="social-icons text-center">
+            <div style="text-align: center;">
+                <img src="{{ asset('/images/world-wide-web_1927746.png') }}" alt="Centralriftfpkl">
+                <span style="margin-left: 5px;">www.centralriftfpkl.com</span><br><br>
             </div>
-
-            <p>Centralrift Fresh Produce Kenya LTD <br> Nairobi, Kenya</p>
-            <p>Contact us at: <a href="mailto:itsupport@centralriftfpkl.com">itsupport@centralriftfpkl.com</a></p>
+                
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <div style="margin-right: 20px; display: flex; align-items: center;">
+                    <img src="{{ asset('/images/facebook_5968764.png') }}" alt="Facebook" style="margin-right: 5px;">  
+                    <span>@Centralrift FPKL</span>
+                </div>
+                <div style="margin-right: 20px; display: flex; align-items: center;">
+                    <img src="{{ asset('/images/twitter_5969020.png') }}" alt="Twitter" style="margin-right: 5px;">
+                    <span>@CentralriftFPKL</span>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <img src="{{ asset('/images/instagram_2111463.png') }}" alt="Instagram" style="margin-right: 5px;">
+                    <span>@centralrift.fpkl</span>
+                </div>
+            </div>
         </div>
     </div>
 </body>
