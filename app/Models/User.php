@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -66,9 +67,14 @@ class User extends Authenticatable
         return $this->roles->contains('id', 1);
     }
 
+    // public function permissions()
+    // {
+    //     return $this->hasManyThrough(Permissions::class, Roles::class);
+    // }
+
     public function permissions()
     {
-        return $this->hasManyThrough(Permissions::class, Roles::class);
+        return $this->belongsToMany(Permissions::class, 'role_user', 'user_id', 'permission_id');
     }
 
     public function hasRole($role)
@@ -87,6 +93,16 @@ class User extends Authenticatable
             }
         }
         return false;
+    }
+
+    // public function hasPermission($permission)
+    // {
+    //     return $this->permissions->contains('Name', $permission);
+    // }
+
+    public function notifications()
+    {
+        return $this->morphMany(\Illuminate\Notifications\DatabaseNotification::class, 'notifiable');
     }
 
 }

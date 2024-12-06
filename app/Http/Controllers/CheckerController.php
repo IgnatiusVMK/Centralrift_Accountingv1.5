@@ -25,7 +25,7 @@ class CheckerController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('access-approval');
+        $this->authorize('access-checker');
 
         $pendingCycles = Cycles::where('Status', 'pending')->get();
         $pendingCyclesCount = Cycles::where('Status', 'pending')->get()->count();
@@ -107,7 +107,7 @@ class CheckerController extends Controller
 
     public function viewCycleDetails(int $id)
     {
-        $this->authorize('view-approval');
+        $this->authorize('view-checker');
 
         $pendingCycles= Cycles::findOrFail($id);
 
@@ -124,7 +124,7 @@ class CheckerController extends Controller
     }
     public function approveCycle(Request $request, string $Cycle_Id)
     {
-        $this->authorize('create-approval');
+        $this->authorize('create-checker');
 
         $request->validate([
             'checker_id'=> 'required|max:255|integer',
@@ -143,7 +143,7 @@ class CheckerController extends Controller
     }
     public function approveFinancial(Request $request, string $Cycle_Id, string $Fin_Id_Id, int $id,)
     {
-        $this->authorize('create-approval');
+        $this->authorize('create-checker');
 
         $request->validate([
             'checker_id'=> 'required|max:255|integer',
@@ -164,7 +164,7 @@ class CheckerController extends Controller
     public function approveSale(Request $request, string $Sales_Id, int $id, )
     {
 
-        $this->authorize('create-approval');
+        $this->authorize('create-checker');
 
         $request->validate([
             'checker_id'=> 'required|max:255|integer',
@@ -190,7 +190,7 @@ class CheckerController extends Controller
 
     public function approveCaptWithdrawal(Request $request, string $Capt_Withdraw_Id /* , int $id, */){
 
-        $this->authorize('create-approval');
+        $this->authorize('create-checker');
 
         $request->validate([
             'checker_id'=> 'required|max:255|integer',
@@ -210,7 +210,7 @@ class CheckerController extends Controller
     }
 
     public function approveCredit(Request $request, string $Credit_Id ){
-        $this->authorize('create-approval');
+        $this->authorize('create-checker');
 
         $request->validate([
             'checker_id'=> 'required|max:255|integer',
@@ -229,7 +229,7 @@ class CheckerController extends Controller
         return redirect()->back()->with('success','Credit Entry approved.');
     }
     public function approvePurchases(Request $request, int $id, string $Purchase_Id ){
-        $this->authorize('create-approval');
+        $this->authorize('create-checker');
 
         $request->validate([
             'checker_id'=> 'required|max:255|integer',
@@ -249,7 +249,7 @@ class CheckerController extends Controller
         return redirect()->back()->with('success','Purchase approved.');
     }
     public function approveNewStock(Request $request, int $id ){
-        $this->authorize('create-approval');
+        $this->authorize('create-checker');
 
         $request->validate([
             'checker_id'=> 'required|max:255|integer',
@@ -264,7 +264,7 @@ class CheckerController extends Controller
         return redirect()->back()->with('success','New Inventory approved.');
     }
     public function approveCycAllocation(Request $request, int $id ){
-        $this->authorize('create-approval');
+        $this->authorize('create-checker');
 
         $request->validate([
             'checker_id'=> 'required|max:255|integer',

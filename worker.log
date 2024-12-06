@@ -1,1 +1,29 @@
 nohup: ignoring input
+  2024-12-02 14:55:06 App\Jobs\SendMail .............................. RUNNING
+  2024-12-02 14:55:06 App\Jobs\SendMail ......................... 28.98ms DONE
+  2024-12-02 14:55:06 App\Mail\LoginNotificationMail ................. RUNNING
+  2024-12-02 14:55:10 App\Mail\LoginNotificationMail ................. 3s DONE
+  2024-12-02 14:55:31 App\Jobs\SendMail .............................. RUNNING
+  2024-12-02 14:55:31 App\Jobs\SendMail .......................... 9.84ms DONE
+  2024-12-02 14:55:31 App\Mail\LoginNotificationMail ................. RUNNING
+  2024-12-02 14:55:32 App\Mail\LoginNotificationMail ........... 851.26ms DONE
+  2024-12-02 15:03:45 App\Jobs\SendMail .............................. RUNNING
+  2024-12-02 15:03:45 App\Jobs\SendMail ......................... 29.92ms DONE
+  2024-12-02 15:03:45 App\Mail\LoginNotificationMail ................. RUNNING
+  2024-12-02 15:03:48 App\Mail\LoginNotificationMail ................. 2s DONE
+  2024-12-02 15:44:03 App\Jobs\SendMail .............................. RUNNING
+  2024-12-02 15:44:03 App\Jobs\SendMail ......................... 24.58ms DONE
+  2024-12-02 15:44:03 App\Mail\LoginNotificationMail ................. RUNNING
+  2024-12-02 15:44:05 App\Mail\LoginNotificationMail ................. 2s DONE
+  2024-12-02 15:01:05 App\Jobs\SendMail .............................. RUNNING
+  2024-12-02 15:01:05 App\Jobs\SendMail ......................... 10.40ms DONE
+  2024-12-02 15:01:05 App\Mail\LoginNotificationMail ................. RUNNING
+  2024-12-02 15:01:08 App\Mail\LoginNotificationMail ................. 2s DONE
+  2024-12-02 15:02:41 App\Jobs\SendMail .............................. RUNNING
+  2024-12-02 15:02:41 App\Jobs\SendMail ......................... 14.19ms DONE
+  2024-12-02 15:02:41 App\Mail\LoginNotificationMail ................. RUNNING
+  2024-12-02 15:02:48 App\Mail\LoginNotificationMail ................. 7s DONE
+  2024-12-02 15:38:51 App\Jobs\SendMail .............................. RUNNING
+  2024-12-02 15:38:51 App\Jobs\SendMail ......................... 18.76ms DONE
+  2024-12-02 15:38:51 App\Mail\LoginNotificationMail ................. RUNNING
+  2024-12-02 15:38:54 App\Mail\LoginNotificationMail ................. 2s DONE

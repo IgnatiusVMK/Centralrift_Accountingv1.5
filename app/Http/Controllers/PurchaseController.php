@@ -6,6 +6,9 @@ use App\Models\Account;
 use App\Models\Purchase;
 use App\Models\Stocks;
 use App\Models\Supplier;
+use App\Models\User;
+use App\Notifications\ApprovalsNotification;
+use App\Notifications\NewPurchaseNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,33 +53,55 @@ class PurchaseController extends Controller
             'Purchase_Date' => 'required|date',
         ]);
 
-        DB::transaction(function() use ($request) {
-            // Create a purchase entry
+        
+        
 
-            $PurchaseuniqueCode = $this->generateUniqueCode('Purchase');
+        try {
+            DB::transaction(function() use ($request) {
+                // Create a purchase entry
 
-            $purchase = Purchase::create([
-                'Purchase_Id' => $PurchaseuniqueCode,
-                'maker_id' => $request->maker_id,
-                'Item_Name' => $request->Item_Name,
-                'Supplier_Id' => $request->Supplier_Id,
-                'Category_Id' => $request->Category_Id,
-                'Quantity' => $request->Quantity,
-                'Unit_Cost' => $request->Unit_Cost,
-                'Total_Cost' => $request->Total_Cost,
-                'Purchase_Date' => $request->Purchase_Date,
-            ]);
-            // dd($PurchaseuniqueCode);
+                $PurchaseuniqueCode = $this->generateUniqueCode('Purchase');
 
-            // Ensure the purchase was created before inserting into stocks
-            if ($purchase) {
-                // Create a new stock entry (ensure foreign key is correctly linked)
-                $this->newStock($PurchaseuniqueCode, $request->Item_Name, $request->Quantity, $request->maker_id);
-            
-                // Register a payout for the purchase
-                $this->payOut($request->Total_Cost, 'Purchase-' . $request->Item_Name . '-' . $request->Quantity, $request->maker_id, $PurchaseuniqueCode);
-            }
-        });
+                $purchase = Purchase::create([
+                    'Purchase_Id' => $PurchaseuniqueCode,
+                    'maker_id' => $request->maker_id,
+                    'Item_Name' => $request->Item_Name,
+                    'Supplier_Id' => $request->Supplier_Id,
+                    'Category_Id' => $request->Category_Id,
+                    'Quantity' => $request->Quantity,
+                    'Unit_Cost' => $request->Unit_Cost,
+                    'Total_Cost' => $request->Total_Cost,
+                    'Purchase_Date' => $request->Purchase_Date,
+                ]);
+
+                // Ensure the purchase was created before inserting into stocks
+                if ($purchase) {
+                    // Create a new stock entry (ensure foreign key is correctly linked)
+                    $this->newStock($PurchaseuniqueCode, $request->Item_Name, $request->Quantity, $request->maker_id);
+                
+                    // Register a payout for the purchase
+                    $this->payOut($request->Total_Cost, 'Purchase-' . $request->Item_Name . '-' . $request->Quantity, $request->maker_id, $PurchaseuniqueCode);
+                }
+
+                /// Notify all users with the 'access_checker' permission
+                $checkers = User::with('roles.permissions')
+                        ->whereHas('roles.permissions', function ($query) {
+                            $query->where('name', 'access_checker');
+                        })
+                        ->get();
+
+                foreach ($checkers as $checker) {
+                    // Queue the notification for each checker user
+                    $checker->notify(new NewPurchaseNotification($purchase));
+                }
+
+
+                
+            });
+        } catch (\Exception $e) {
+            // Handles general exceptions
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
 
         return redirect()->back()->with('success','New Inventory Created');
     }

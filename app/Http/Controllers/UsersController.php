@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\UsersDepartments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -40,18 +40,25 @@ class UsersController extends Controller
             'otp_enabled' => 'sometimes'
         ]);
 
-        $users = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => $request->role,
-            'password' => Hash::make($request->password),
-            'is_active' => $request->is_active == true ? 1:0,
-            'otp_enabled' => $request->otp_enabled == true ?1:0,
-        ]);
+        try{
+            DB::transaction(function() use($request) {
+                $users = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'role' => $request->role,
+                    'password' => Hash::make($request->password),
+                    'is_active' => $request->is_active == true ? 1:0,
+                    'otp_enabled' => $request->otp_enabled == true ?1:0,
+                ]);
 
-        // Attach the user to the department
-        $users->departments()->attach($request->input('department_id'));
+                // Attach the user to the department
+                $users->departments()->attach($request->input('department_id'));
+            });
 
+        }catch(\Exception $e){
+            // Handles general exceptions
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
         return redirect('users/create')->with('status','User Created');
     }
     public function edit(int $id){
@@ -98,19 +105,26 @@ class UsersController extends Controller
             'is_active' => 'sometimes',
             'otp_enabled' => 'sometimes'
         ]);
+        try{
+            DB::transaction(function() use ($request, $id){
+                $user = User::findOrFail($id);
 
-        $user = User::findOrFail($id);
+                $user->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'role' => $request->role,
+                    'is_active' => $request->is_active == true ? 1 : 0,
+                    'otp_enabled' => $request->otp_enabled == true ? 1 : 0,
+                ]);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => $request->role,
-            'is_active' => $request->is_active == true ? 1 : 0,
-            'otp_enabled' => $request->otp_enabled == true ? 1 : 0,
-        ]);
+                // Sync the user's departments
+                $user->departments()->sync($request->input('departments'));
+            });
 
-        // Sync the user's departments
-        $user->departments()->sync($request->input('departments'));
+        }catch(\Exception $e) {
+            // Handles general exceptions
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
 
         return redirect()->back()->with('success', 'User Updated');
     }

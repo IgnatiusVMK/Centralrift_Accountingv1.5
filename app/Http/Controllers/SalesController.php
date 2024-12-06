@@ -12,6 +12,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class SalesController extends Controller
 {
@@ -67,43 +68,33 @@ class SalesController extends Controller
         /* 'Net_Weight' => 'required_if:product_type,Herbs|numeric|min:0', */
     ]);
 
-    /* Log::info('Sale data:', [
-        'maker_id' => $request->maker_id,
-        'Cycle_Id' => $request->Cycle_Id,
-        'Sales_Id' => $request->Sales_Id,
-        'Customer_Id' => $request->Customer_Id,
-        'Cust_Account_No'=> $request->Cust_Account_No,
-        'Lpo_No' => $request->Lpo_No,
-        'Description' => $request->Description,
-        'packaging_option' => $request->packaging_option,
-        'Quantity' => $request->Quantity,
-        'Unit_Price' => $request->Unit_Price,
-        'Total_Price' => $request->Total_Price,
-        'Payment_Status' => $request->Payment_Status,
-        'Sale_Date' => $request->Sale_Date,
-        'Net_Weight' => $request->Net_Weight,
-    ]); */
+    // Begin transaction: Sales record
+    try{
+        DB::transaction(function() use ($request) {
+            Sales::create([
+                'maker_id' => $request->maker_id,
+                'Sales_Id' => $request->Sales_Id,
+                'Customer_Id' => $request->Customer_Id,
+                'Cust_Account_No' => $request->Cust_Account_No,
+                'Cycle_Id' => $request->Cycle_Id,
+                'Lpo_No' => $request->Lpo_No,
+                'Sale_Date' => $request->Sale_Date,
+                'Net_Weight' => $request->Net_Weight,
+                'Unit_Price' => $request->Unit_Price,
+                'Total_Price' => $request->Total_Price,
+                'Payment_Status' => $request->Payment_Status,
+                'packaging_option' => $request->packaging_option,
+                'Description' => $request->Description,
+                'Quantity' => $request->Quantity,
+            ]);
 
-    // Create the Sales record
-    Sales::create([
-        'maker_id' => $request->maker_id,
-        'Sales_Id' => $request->Sales_Id,
-        'Customer_Id' => $request->Customer_Id,
-        'Cust_Account_No' => $request->Cust_Account_No,
-        'Cycle_Id' => $request->Cycle_Id,
-        'Lpo_No' => $request->Lpo_No,
-        'Sale_Date' => $request->Sale_Date,
-        'Net_Weight' => $request->Net_Weight,
-        'Unit_Price' => $request->Unit_Price,
-        'Total_Price' => $request->Total_Price,
-        'Payment_Status' => $request->Payment_Status,
-        'packaging_option' => $request->packaging_option,
-        'Description' => $request->Description,
-        'Quantity' => $request->Quantity,
-    ]);
-
-    // Call your payIn method (if needed)
-    $this->payIn($request->Total_Price, $request->Cycle_Id, $request->Description.'-Sales-'.$request->Net_Weight, $request->maker_id, $request->Sales_Id);
+            // Call payIn method
+            $this->payIn($request->Total_Price, $request->Cycle_Id, $request->Description.'-Sales-'.$request->Net_Weight, $request->maker_id, $request->Sales_Id);
+        });
+    } catch (\Exception $e) {
+        // Handles general exceptions
+        return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+    }
 
     // Redirect to the sales creation page with a success message
     return redirect()->route('cycle.sales.create', ['Cycle_Id' => $request->Cycle_Id])->with('success', 'Sale Recorded.');

@@ -90,7 +90,7 @@
           </li>
           @endcan
           <!--Checker-->
-          @can('access-approval')
+          @can('access-checker')
           <li class="nav-item nav-category">Checker Validation</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#checker" aria-expanded="false" aria-controls="checker">

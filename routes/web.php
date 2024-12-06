@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerSalesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\ScheduleMaintenanceController;
 use Illuminate\Support\Facades\Auth;
@@ -213,6 +214,17 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
 
         Route::get('/profit-loss', [App\Http\Controllers\ProfitLossController::class, 'index'])->name('profit-loss');
         Route::get('/profit-loss/{Cycle_Id}', [App\Http\Controllers\ProfitLossController::class, 'show'])->name('profit-loss.show');
+
+        // Route to show notification details
+        Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
+        Route::get('/notification/{notification}', [NotificationsController::class, 'show'])->name('notification.show');
+        Route::get('/notification/{notificationId}', [NotificationsController::class, 'getNotification']);
+        Route::post('/notifications/{notification}/mark-as-read', [NotificationsController::class, 'markAsRead'])->name('notifications.markAsRead');
+
+
+
+
+
 
 
         //Test Routes for Laravel Mail

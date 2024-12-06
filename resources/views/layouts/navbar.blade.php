@@ -88,42 +88,34 @@
           </li>
           <li class="nav-item dropdown"> 
             <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="icon-bell"></i>
-              <span class="count"></span>
+                <i class="icon-bell"></i>
+                <span class="count">{{ auth()->user()->unreadNotifications->count() }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="countDropdown">
               <a class="dropdown-item py-3">
-                <p class="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
-                <span class="badge badge-pill badge-primary float-right">View all</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="" alt="image" class="img-sm profile-pic">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="mb-0 font-weight-medium"><b>You have {{ auth()->user()->unreadNotifications->count() }} unread notifications</b></p>
+            
+                    @if(auth()->user()->unreadNotifications->count() > 0)
+                        <a href="{{ route('notifications.index') }}" class="badge badge-pill badge-primary">View all</a>
+                    @endif
                 </div>
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
-                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="" alt="image" class="img-sm profile-pic">
-                </div>
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
-                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="" alt="image" class="img-sm profile-pic">
-                </div>
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
-                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
-                </div>
-              </a>
+              </a>            
+                <div class="dropdown-divider"></div>
+            
+                @foreach(auth()->user()->unreadNotifications as $notification)
+                  <a class="dropdown-item preview-item" href="javascript:void(0);" onclick="showNotificationPopup({{ $notification->id }})">
+                      <div class="preview-item-content flex-grow py-2">
+                          <p class="preview-subject ellipsis font-weight-medium text-dark">{{ $notification->data['item_name'] }}</p>
+                          <p class="fw-light small-text mb-0">{{ $notification->data['message'] }}</p>
+                      </div>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                @endforeach
+            
+                @if(auth()->user()->unreadNotifications->count() === 0)
+                    <p class="text-center">No new notifications</p>
+                @endif
             </div>
           </li>
           <li class="nav-item dropdown d-none d-lg-block user-dropdown">
@@ -174,3 +166,48 @@
     // Display the greeting
     document.getElementById("greeting").textContent = greeting + "," /* {{ Auth::user()->name }}" */;
   </script>
+  <script>
+    function showNotificationPopup(notificationId) {
+        // Perform an AJAX request to fetch notification data by ID
+        fetch(`/notifications/${notificationId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Create the modal HTML structure dynamically using the fetched data
+                let modalHtml = `
+                    <div class="modal" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="notificationModalLabel">${data.item_name}</h5>
+                                    <button> type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ${data.message}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Append modal to body
+                document.body.insertAdjacentHTML('beforeend', modalHtml);
+                
+                // Show the modal using Bootstrap's modal method
+                var myModal = new bootstrap.Modal(document.getElementById('notificationModal'));
+                myModal.show();
+
+                // Optionally, mark the notification as read here (you can send an AJAX request to mark it as read)
+
+                // After closing, remove modal from DOM
+                document.getElementById('notificationModal').addEventListener('hidden.bs.modal', function () {
+                    document.getElementById('notificationModal').remove();
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching notification:', error);
+            });
+    }
+</script>
