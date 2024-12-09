@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
 <div class="container">
     <div class="float-lg-right;" style="width: 1000px;">
@@ -6,38 +7,52 @@
         <canvas id="stockChart" width="400" height="200"></canvas>
     </div><br>
     <div id="stockandInventory">
-        <div>
-            <h3>Stock and Inventory Statement</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th style="font-size: 22px">Description</th>
-                        <th style="font-size: 22px">Quantity</th>
-                        <th style="font-size: 22px">Remaining Quantity</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($stock_act_vals as $stock)
-                        <tr>
-                          <td style="font-size: 18px">{{$stock->Stock_Name}}</td>
-                          @if ($stock->purchase->Category_Id == 1)
-                            <td style="font-size: 18px">{{$stock->Total_Quantity}} (Ltrs.)</td>
-                          @elseif ($stock->purchase->Category_Id == 2)
-                            <td style="font-size: 18px">{{$stock->Total_Quantity}} (gms/Kgs)</td>
-                          @elseif ($stock->purchase->Category_Id == 3)
-                            <td style="font-size: 18px">{{$stock->Total_Quantity}} (Boxes/Kgs)</td>
-                          @endif
-                          @if ($stock->purchase->Category_Id == 1)
-                            <td style="font-size: 18px">{{$stock->Remaining_Quantity}} (Ltrs.)</td>
-                          @elseif ($stock->purchase->Category_Id == 2)
-                            <td style="font-size: 18px">{{$stock->Remaining_Quantity}} (gms/Kgs)</td>
-                          @elseif ($stock->purchase->Category_Id == 3)
-                            <td style="font-size: 18px">{{$stock->Remaining_Quantity}} (Boxes/Kgs)</td>
-                          @endif
-                        </tr>
-                        @endforeach
-                </tbody>
-            </table>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>
+                            Stock and Inventory Statement
+                        </h3>
+                    </div>
+                
+                    <div class="card-body">
+                        <!-- Add a responsive wrapper around the table -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 22px">Description</th>
+                                        <th style="font-size: 22px">Quantity</th>
+                                        <th style="font-size: 22px">Remaining Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($stock_act_vals as $stock)
+                                        <tr>
+                                        <td style="font-size: 18px"><b>{{$stock->Stock_Name}}</b></td>
+                                        @if ($stock->purchase->Category_Id == 1)
+                                            <td style="font-size: 18px">{{$stock->Total_Quantity}} (Ltrs.)</td>
+                                        @elseif ($stock->purchase->Category_Id == 2)
+                                            <td style="font-size: 18px">{{$stock->Total_Quantity}} (gms/Kgs)</td>
+                                        @elseif ($stock->purchase->Category_Id == 3)
+                                            <td style="font-size: 18px">{{$stock->Total_Quantity}} (Boxes/Kgs)</td>
+                                        @endif
+                                        @if ($stock->purchase->Category_Id == 1)
+                                            <td style="font-size: 18px">{{$stock->Remaining_Quantity}} (Ltrs.)</td>
+                                        @elseif ($stock->purchase->Category_Id == 2)
+                                            <td style="font-size: 18px">{{$stock->Remaining_Quantity}} (gms/Kgs)</td>
+                                        @elseif ($stock->purchase->Category_Id == 3)
+                                            <td style="font-size: 18px">{{$stock->Remaining_Quantity}} (Boxes/Kgs)</td>
+                                        @endif
+                                        </tr>
+                                        @endforeach
+                                </tbody>
+                            </table>
+                        </div> <!-- End of table-responsive -->
+                    </div>
+                </div>
+            </div>
         </div>
 </div>
 
