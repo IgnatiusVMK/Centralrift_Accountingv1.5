@@ -48,7 +48,7 @@ class CapitalWithdrawalController extends Controller
         $this->payOut($request->Amount, $request->Description, $request->maker_id, $request->Capt_Withdraw_Id);
 
         $Cycle_Id = $request->route('Cycle_Id');
-        return redirect()->route('cycle.capital-withdrawal.create', ['Cycle_Id' => $Cycle_Id])->with('status', 'Withdrawal Recorded');
+        return redirect()->route('cycle.capital-withdrawal.create', ['Cycle_Id' => $Cycle_Id])->with('success', 'Withdrawal Recorded');
 
     }
 

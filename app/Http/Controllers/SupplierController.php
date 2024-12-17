@@ -53,7 +53,7 @@ class SupplierController extends Controller
                 'Created_Date' => $request->Created_Date,
             ]);
     
-            return redirect('suppliers/create')->with('status','New Supplier Registered');
+            return redirect('suppliers/create')->with('success','New Supplier Registered');
     }
 
     /**

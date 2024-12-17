@@ -97,9 +97,9 @@
                         @endforeach
                       </tbody>
                     </table>
-                    <div class="pagination-container float-end">
+                    {{-- <div class="pagination-container float-end">
                       {{ $cashbook->links() }}
-                    </div>
+                    </div> --}}
                   </div>
                 </div>
               </div>

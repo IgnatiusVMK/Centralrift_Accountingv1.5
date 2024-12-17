@@ -72,7 +72,15 @@ class RoleUserController extends Controller
             }
         }
 
-        return redirect()->route('roles-permissions', ['roles_id' => $roles_id])->with('status', 'Permissions Assigned/Deassigned');
+        return redirect()->route('roles-permissions', ['roles_id' => $roles_id])->with('warning', 'Permissions Assigned/Deassigned');
+    }
+
+    public function assignPermissions(Request $request, Roles $role)
+    {
+        $newPermissions = $request->input('new_permissions', []);
+        $role->permissions()->attach($newPermissions);
+
+        return redirect()->back()->with('success', 'Permissions assigned successfully.');
     }
 
     public function deletePermissions(Roles $role)
@@ -80,7 +88,7 @@ class RoleUserController extends Controller
         // Delete all permissions associated with the role
         PermissionRole::where('roles_id', $role->id)->delete();
 
-        return redirect()->back()->with('status', 'All permissions for this role have been deleted.');
+        return redirect()->back()->with('danger', 'All permissions for this role have been deleted.');
     }
 
 }

@@ -29,7 +29,7 @@ class RolesController extends Controller
         // Attach the user to the department
         /* $users->departments()->attach($request->input('department_id')); */
 
-        return redirect('roles/create')->with('status','Role Created');
+        return redirect('roles/create')->with('success','Role Created');
     }
 
     /**

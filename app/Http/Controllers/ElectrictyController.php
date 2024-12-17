@@ -51,7 +51,7 @@ class ElectrictyController extends Controller
         $this->payOut($request->Amount, $request->Cycle_Id, $request->Fin_Id_Id, $request->type.'; '.$request->Reason.'-'.$request->Description, $request->maker_id);
 
         $Cycle_Id = $request->route('Cycle_Id');
-        return redirect()->route('cycle.electricity.create', ['Cycle_Id' => $Cycle_Id])->with('status', 'Electricity Payment Created');
+        return redirect()->route('cycle.electricity.create', ['Cycle_Id' => $Cycle_Id])->with('status', 'Electricity Payment Recorded');
     }
 
     public function payOut($amount, $Cycle, $Financial_Id, $Description, $maker_id)

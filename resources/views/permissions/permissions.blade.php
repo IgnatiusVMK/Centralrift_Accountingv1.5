@@ -27,29 +27,29 @@
                           <th>
                             Permission
                           </th>
-                          {{-- <th>
-                            Date Added
-                          </th> --}}
-                          {{-- <th>
-                            Actions
-                          </th> --}}
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($permissions as $permission)
-                        
-                        
-                        <tr>
-                          <td>{{$permission->id}}</td>
-                          <td>{{$permission->Name}}</td>
-                          {{-- <td>{{$permission->created_at}}</td> --}}
-                          <td>
-                            {{-- <a href="{{ url('permissions/'.$permission->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a> --}}
-                            {{-- <a href="{{ url('permissions/'.$role->id.'/delete')}}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a> --}}
-                          </td>
-                        </tr>
+                        @foreach ($permissions->chunk(3) as $chunk)
+                            <tr>
+                                @foreach ($chunk as $permission)
+                                    <td>
+                                            <p><strong>ID:</strong> {{ $permission->id }}</p>
+                                            <p><strong>Name:</strong> {{ $permission->Name }}</p>
+                                            <p>
+                                                {{-- Optional action buttons --}}
+                                                {{-- <a href="{{ url('permissions/'.$permission->id.'/edit') }}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a> --}}
+                                                {{-- <a href="{{ url('permissions/'.$permission->id.'/delete') }}" class="btn btn-danger">Delete <i class="mdi mdi-shredder"></i></a> --}}
+                                            </p>
+                                    </td>
+                                @endforeach
+                                @for ($i = $chunk->count(); $i < 3; $i++)
+                                    <td></td> <!-- Empty cells to fill out the row if fewer than 3 items -->
+                                @endfor
+                            </tr>
                         @endforeach
-                      </tbody>
+                    </tbody>
+                    
                     </table>
                   </div>
                 </div>

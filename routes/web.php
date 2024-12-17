@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 use App\Http\Controllers\OtpVerificationController;
+use App\Http\Controllers\RoleUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,6 +118,8 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
         Route::get('roles/{roles_id}/permissions', [App\Http\Controllers\RoleUserController::class, 'index'])->name('roles-permissions');
         Route::post('roles/{roles_id}/permissions', [App\Http\Controllers\RoleUserController::class, 'store'])->name('roles-permissions.store');
         Route::delete('/roles/{role}/permissions', [App\Http\Controllers\RoleUserController::class, 'deletePermissions'])->name('roles-permissions.delete');
+        Route::post('/roles/{role}/permissions/assign', [RoleUserController::class, 'assignPermissions'])->name('permissions.assign');
+
 
 
         Route::get('permissions', [App\Http\Controllers\PermissionsController::class,'index'])->name('permissions');

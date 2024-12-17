@@ -51,7 +51,7 @@
                       @error('department_name') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
-                      <label>Role</label>
+                      <label>User Role</label>
                       <input type="text" name="role" class="form-control" value="{{ old ('role') }}" />
                       @error('role') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
@@ -61,7 +61,7 @@
                       @error('password') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
-                      <label>Is Active</label>
+                      <label>Activate Account</label>
                       <input type="checkbox" name="is_active" {{ old ('is_active') == true ? 'checked': '' }} />
                       @error('is_active') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>

@@ -29,7 +29,7 @@ class PermissionsController extends Controller
         // Attach the user to the department
         /* $users->departments()->attach($request->input('department_id')); */
 
-        return redirect('permissions/create')->with('status','Role Created');
+        return redirect('permissions/create')->with('success','Role Created');
     }
 
     /**

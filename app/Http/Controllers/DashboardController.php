@@ -107,7 +107,7 @@ class DashboardController extends Controller
             'product_name' => $request->product_name,
         ]);
 
-        return redirect('add-order')->with('status','Order Created');
+        return redirect('add-order')->with('success','Order Created');
     }
 
     /**

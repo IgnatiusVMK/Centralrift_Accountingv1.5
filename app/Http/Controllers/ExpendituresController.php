@@ -43,7 +43,7 @@ class ExpendituresController extends Controller
             $this->payOut($request->Amount, $request->Cycle_Id, $request->Reason.' - '.$request->Description, $request->maker_id, $request->Fin_Id_Id);
         });
         
-        return redirect()->route('cycle.wages.create', ['Cycle_Id' => $request->Cycle_Id])->with('status', 'Record Created');
+        return redirect()->route('cycle.wages.create', ['Cycle_Id' => $request->Cycle_Id])->with('success', 'Record Created');
     }
     public function payOut($amount, $Cycle, $Description, $maker_id, $Fin_Id_Id)
     {

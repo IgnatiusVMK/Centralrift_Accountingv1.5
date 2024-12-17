@@ -45,7 +45,7 @@ class Transportcontroller extends Controller
 
         $this->payOut($request->Amount, $request->Cycle_Id, $request->Fin_Id_Id, $request->type.'; '.$request->Reason.'- '.$request->Description, $request->maker_id);
 
-        return redirect()->route('cycle.transport.create', ['Cycle_Id' => $request->Cycle_Id])->with('status', 'Transport-Record Created');
+        return redirect()->route('cycle.transport.create', ['Cycle_Id' => $request->Cycle_Id])->with('success', 'Transport-Record Created');
     }
 
     public function payOut($amount, $Cycle, $Financial_Id, $Description, $maker_id)

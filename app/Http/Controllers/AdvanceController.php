@@ -35,7 +35,7 @@ class AdvanceController extends Controller
 
         $this->payOut($request->Amount, $request->Cycle_Id , $request->Fin_Id_Id, $request->type.' for, '.$request->Reason.', '.$request->Description, $request->maker_id);
 
-        return redirect()->route('cycle.advance.create', ['Cycle_Id' => $request->Cycle_Id])->with('status', 'Record Created');
+        return redirect()->route('cycle.advance.create', ['Cycle_Id' => $request->Cycle_Id])->with('success', 'Record Created');
     }
     public function payOut($amount, $Cycle, $Financial_Id, $Description , $maker_id)
     {

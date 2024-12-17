@@ -195,7 +195,7 @@ public function update(Request $request, int $id)
     $customer->salespersons()->sync($salespersonIds);
 
     // Redirect with success message
-    return redirect()->back()->with('status', 'Customer and Salesperson details updated successfully!');
+    return redirect()->back()->with('success', 'Customer and Salesperson details updated successfully!');
 }
 
     public function destroy(int $id){

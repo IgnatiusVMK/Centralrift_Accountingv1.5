@@ -44,7 +44,7 @@ class CategoryController extends Controller
             'Created_Date' => $request->Created_Date,
         ]);
 
-        return redirect('/products-categories/create')->with('status','Category Created');
+        return redirect('/products-categories/create')->with('success','Category Created');
     }
 
     /**

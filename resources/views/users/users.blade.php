@@ -40,7 +40,7 @@
                           </th>
                           <th>
                             {{-- Authentication --}}
-                            User-Role
+                            System-User Role
                           </th>
                           <th>
                             Date Added
@@ -115,7 +115,7 @@
                           @endcan
                           @can('delete-users')
                           <td>
-                              <a href="{{ url('users/'.$user->id.'/delete')}}" class="btn btn-danger">Destroy<i class="mdi mdi-shredder"></i></a>
+                              <a href="{{ url('users/'.$user->id.'/delete')}}" class="btn btn-danger">Delete<i class="mdi mdi-shredder"></i></a>
                           </td>
                           @endcan
                         </tr>

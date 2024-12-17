@@ -59,7 +59,7 @@ class UsersController extends Controller
             // Handles general exceptions
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
-        return redirect('users/create')->with('status','User Created');
+        return redirect('users/create')->with('success','User Created');
     }
     public function edit(int $id){
 
@@ -135,6 +135,6 @@ class UsersController extends Controller
         $user->departments()->detach();
         $user->delete();
 
-        return redirect()->back()->with('status','User Deleted');
+        return redirect()->back()->with('warning','User Deleted');
     }
 }

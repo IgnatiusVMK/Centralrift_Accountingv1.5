@@ -54,7 +54,7 @@ class ProductController extends Controller
             'Created_Date' => $request->Created_Date,
         ]);
     
-        return redirect('products/create')->with('status','New Product Created');
+        return redirect('products/create')->with('success','New Product Created');
 
     }
 

@@ -23,6 +23,6 @@ class DepartmentsController extends Controller
             'department_name' => $request->department_name,
         ]);
 
-        return redirect('departments/create')->with('status','Department Created');
+        return redirect('departments/create')->with('success','Department Created');
     }
 }

@@ -63,14 +63,9 @@ class User extends Authenticatable
     // Check if the user is an admin
     public function isAdmin()
     {
-        // Check if the user has the admin role (role_id = 1)
+        // Check if the user has the Admin role (role_id = 1)
         return $this->roles->contains('id', 1);
     }
-
-    // public function permissions()
-    // {
-    //     return $this->hasManyThrough(Permissions::class, Roles::class);
-    // }
 
     public function permissions()
     {
@@ -87,18 +82,13 @@ class User extends Authenticatable
     {
         foreach ($this->roles as $role) {
             $hasPermission = $role->permissions->contains('Name', $permission);
-            /* dd($permission, $hasPermission);  */// Check permission name and whether the role has the permission
+            /* dd($permission, $hasPermission);  */ // Check permission name and whether the role has the permission
             if ($hasPermission) {
                 return true;
             }
         }
         return false;
     }
-
-    // public function hasPermission($permission)
-    // {
-    //     return $this->permissions->contains('Name', $permission);
-    // }
 
     public function notifications()
     {
