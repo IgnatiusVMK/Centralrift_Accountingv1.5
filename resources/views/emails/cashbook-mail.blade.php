@@ -5,175 +5,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CashBook Email Reports</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 30px auto;
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .header img {
-            width: 150px;
-            margin-right: 5px; /* Further reduced margin */
-            padding-right: 5px; /* Reduced padding for smaller gap */
-            border-right: 2px solid #ddd; /* Horizontal line between logo and text */
-        }
-
-        .header h6 {
-            font-size: 18px;
-            /* color: #4caf50; */ /* Green theme color */
-            margin: 0;
-            padding-left: 5px; /* Further reduced padding to bring it closer to the line */
-            white-space: nowrap;
-        }
-
-        .content {
-            padding: 20px;
-            background-color: #e6f4e7;
-            border: 1px solid #000000;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            color: #4caf50; /* Green theme color */
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 16px;
-            margin: 10px 0;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 14px;
-            color: #777;
-        }
-
-        .footer a {
-            color: #4caf50; /* Green theme color */
-            text-decoration: none;
-        }
-
-        .footer .social-icons {
-            margin-top: 10px;
-        }
-
-        .social-icons img {
-            width: 25px;
-            margin-right: 10px;
-        }
-
-        .info-table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-
-        .info-table td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            font-size: 14px;
-        }
-
-        .info-table td:first-child {
-            font-weight: bold;
-        }
-
-        .button {
-            background-color: #4caf50; /* Green theme color */
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            display: inline-block;
-            margin: 20px 0;
-        }
-    </style>
 </head>
 
-<body>
-    <div class="container">
-        <div class="header">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/marley.png'))) }}" alt="Centralrift">
-            <h6>Centralrift Fresh Produce Kenya LTD</h6>
-        </div>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f5f5f5; margin: 0; padding: 0;">
+    <div style="max-width: 600px; margin: 30px auto; background-color: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+        
+        <!-- Header Section -->
+        <table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">
+            <tr>
+                <td style="width: 60px; padding-right: 10px; border-right: 2px solid #ddd; text-align: center;">
+                    <img src="{{ asset('https://www.centralriftfpkl.com/images/www-icon.png') }}" alt="Company Logo" style="width: 50px;">
+                </td>
+                <td style="padding-left: 10px; vertical-align: middle;">
+                    <h6 style="font-size: 18px; margin: 0;">Centralrift Fresh Produce Kenya LTD</h6>
+                </td>
+            </tr>
+        </table>
 
-        <h2>Monthly Cashbook Report</h2>
+         <!-- Title -->
+         <h2 style="color: #4caf50; font-size: 22px; margin-bottom: 20px;">Monthly Cashbook Report</h2>
 
-        <p>Dear, {{ $mailData['user_name'] }}</p>
+         <!-- Greeting -->
+         <p style="font-size: 16px;">Dear {{ $mailData['user_name'] }}</p>
 
-        <div class="content">
-            <p>{{ $mailData['message'] }}</p>
-
-            <table class="info-table">
+        <!-- Content Section -->
+        <div style="padding: 20px; background-color: #e6f4e7; border: 1px solid #000000; border-radius: 8px; margin-bottom: 20px;">
+            <p style="font-size: 16px;">{{ $mailData['message'] }}</p>
+            <table style="width: 100%; margin-top: 20px; border-collapse: collapse; text-align: left;">
                 <tr>
-                    <td>IP Address:</td>
-                    <td>{{ request()->ip() }}</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd; font-size: 14px; font-weight: bold;">IP Address:</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd; font-size: 14px;">{{ request()->ip() }}</td>
                 </tr>
                 <tr>
-                    <td>Location:</td>
-                    <td>Nairobi, Nairobi County KE</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd; font-size: 14px; font-weight: bold;">Location:</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd; font-size: 14px;">Nairobi, Nairobi County KE</td>
                 </tr>
                 <tr>
-                    <td>Date | Time:</td>
-                    <td>{{ now()->format('jS M, Y | h:i A T') }}</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd; font-size: 14px; font-weight: bold;">Date | Time:</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd; font-size: 14px;">{{ now()->format('jS M, Y | h:i A T') }} EAT</td>
                 </tr>
             </table>
         </div>
 
-        <p>If you did not authorise this activity, change your password immediately and contact <a href="mailto:itsupport@centralriftfpkl.com">itsupport@centralriftfpkl.com</a>.</p>
+        <!-- Instructions -->
+        <p style="font-size: 16px;">If you don’t recognize this login, we recommend you take the following steps:</p>
+        <p style="font-size: 14px;"><b>1. Change your password:</b> Choose a strong password you haven’t used before.</p>
+        <p style="font-size: 14px;">Immediately contact <a href="mailto:itsupport@centralriftfpkl.com" style="color: #4caf50; text-decoration: none;">itsupport@centralriftfpkl.com</a>.</p>
+        
+        <!-- Footer Section -->
+        <div style="text-align: center; margin-top: 30px; font-size: 14px; color: #777;">
+            <p style="font-size: 14px;">Why this email? We are committed to preserving your security and updating you on account activity.</p>
 
-        <div class="footer">
-            <p>Why this email? We are committed to preserving your security and updating you on account activity.</p>
-
-            <div class="social-icons text-center">
-                <div style="text-align: center;">
-                    <img src="{{ asset('/images/world-wide-web_1927746.png') }}" alt="Centralriftfpkl">
-                    <span style="margin-left: 5px;">www.centralriftfpkl.com</span><br><br>
-                </div>
-                    
-                <div style="display: flex; justify-content: center; align-items: center;">
-                    <div style="margin-right: 20px; display: flex; align-items: center;">
-                        <img src="{{ asset('/images/facebook_5968764.png') }}" alt="Facebook" style="margin-right: 5px;">  
-                        <span>@Centralrift FPKL</span>
-                    </div>
-                    <div style="margin-right: 20px; display: flex; align-items: center;">
-                        <img src="{{ asset('/images/twitter_5969020.png') }}" alt="Twitter" style="margin-right: 5px;">
-                        <span>@CentralriftFPKL</span>
-                    </div>
-                    <div style="display: flex; align-items: center;">
-                        <img src="{{ asset('/images/instagram_2111463.png') }}" alt="Instagram" style="margin-right: 5px;">
-                        <span>@centralrift.fpkl</span>
-                    </div>
-                </div>
+            <!-- Single Centered Icon -->
+            <div style="margin-bottom: 20px;">
+                <img src="{{ asset('https://www.centralriftfpkl.com/images/www-icon.png') }}" alt="Website" style="width: 30px;">
+                <p style="font-size: 12px; margin-top: 5px;">www.centralriftfpkl.com</p>
             </div>
 
-            <p>Centralrift Fresh Produce Kenya LTD <br> Nairobi, Kenya</p>
-            <p>Contact us at: <a href="mailto:itsupport@centralriftfpkl.com">itsupport@centralriftfpkl.com</a></p>
+            <!-- Social Icons -->
+            <table style="width: 100%; margin-top: 10px; text-align: center; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 5px;">
+                        <img src="{{ asset('https://www.centralriftfpkl.com/images/fb-icon.png') }}" alt="Facebook" style="width: 25px;">
+                        <div style="font-size: 12px; margin-top: 5px;">@Centralrift FPKL</div>
+                    </td>
+                    <td style="padding: 5px;">
+                        <img src="{{ asset('https://www.centralriftfpkl.com/images/twitter-icon.png') }}" alt="Twitter" style="width: 25px;">
+                        <div style="font-size: 12px; margin-top: 5px;">@CentralriftFPKL</div>
+                    </td>
+                    <td style="padding: 5px;">
+                        <img src="{{ asset('https://www.centralriftfpkl.com/images/insta-icon.png') }}" alt="Instagram" style="width: 25px;">
+                        <div style="font-size: 12px; margin-top: 5px;">@centralrift.fpkl</div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Contact Info -->
+            <p style="margin-top: 10px;">Centralrift Fresh Produce Kenya LTD<br>Nairobi, Kenya</p>
+            <p>Contact us at: <a href="mailto:itsupport@centralriftfpkl.com" style="color: #4caf50; text-decoration: none;">itsupport@centralriftfpkl.com</a></p>
         </div>
+
     </div>
 </body>
 

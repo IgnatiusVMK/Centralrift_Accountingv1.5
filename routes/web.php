@@ -121,7 +121,6 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
         Route::post('/roles/{role}/permissions/assign', [RoleUserController::class, 'assignPermissions'])->name('permissions.assign');
 
 
-
         Route::get('permissions', [App\Http\Controllers\PermissionsController::class,'index'])->name('permissions');
         Route::get('permissions/create', [App\Http\Controllers\PermissionsController::class, 'create'])->name('permissions.create');
         Route::post('permissions/create', [App\Http\Controllers\PermissionsController::class, 'store'])->name('permissions.store');
