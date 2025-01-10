@@ -154,6 +154,9 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
         Route::get('credit/create', [App\Http\Controllers\CreditController::class, 'create'])->name('credit.create');
         Route::post('credit/create', [App\Http\Controllers\CreditController::class, 'store'])->name('credit.store');
 
+        Route::get('credit/{Credit_Id}/generate-credit-note', [App\Http\Controllers\CreditController::class, 'generateCreditNote'])->name('gen.credit.note');
+        Route::get('credit-note', [App\Http\Controllers\CreditController::class, 'creditNote'])->name('credit.note');
+
 
         Route::get('finances', [App\Http\Controllers\FinanceController::class,'index'])->name('finances');
 

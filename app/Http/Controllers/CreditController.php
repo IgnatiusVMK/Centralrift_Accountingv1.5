@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\Credit;
 use Illuminate\Http\Request;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class CreditController extends Controller
 {
@@ -76,6 +78,57 @@ class CreditController extends Controller
     
         return $newTransactionId;
     }
+
+    public function creditNote()
+    {
+        return view('credit.credit-note');
+    }
+
+    public function generateCreditNote(Request $request, string $Credit_Id)
+    {
+        // Retrieve all sales records for the given Credit_Id
+        $credits = Credit::where('Credit_Id', $Credit_Id)->get();
+
+        $creditDetails = Credit::where('Credit_Id', $Credit_Id)->first();
+
+        $credit_note = Credit::where('Credit_Id', $Credit_Id)->first();
+
+
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
+        $options->set('defaultFont', 'Arial');
+        $options->set('isFontSubsettingEnabled', true);
+        $options->set('isRemoteEnabled', true); // To load remote resources like images
+
+        $dompdf = new Dompdf($options);
+
+        //dd($credits);
+
+        // $now = Carbon::now('Africa/Nairobi');
+        $pdfName = 'Credit-Note-' . $credit_note->Description . '-' . $credit_note->id .'.pdf';
+
+        // Pass the credit collection to the view
+        $data = compact('credits', 'creditDetails');
+
+        // Render the view to HTML
+        $html = view('credit.credit-note', $data)->render();
+        $dompdf->loadHtml($html);
+
+        // Set paper size and margins using the correct method
+        $dompdf->setPaper('A4', 'portrait');
+
+        // If you need custom margins, use the following to set margins (not set_option):
+        $dompdf->set_option('isRemoteEnabled', true); // Make sure remote content (like images) is allowed
+        $dompdf->render();
+
+        // Return the PDF as a download
+        return response($dompdf->output())
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="' . $pdfName . '"')
+            ->header('Content-Length', strlen($dompdf->output()));
+    }
+
 
     /**
      * Display the specified resource.

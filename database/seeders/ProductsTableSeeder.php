@@ -123,6 +123,16 @@ class ProductsTableSeeder extends Seeder
             ],
             [
                 'Product_Id' => 12,
+                'Product_Name' => 'Rosemary',
+                'Description' => 'Rosemary',
+                'Price' => 300.00,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 13,
                 'Product_Name' => 'Eggs',
                 'Description' => 'Layers & Kienyeji',
                 'Price' => 500.00,
@@ -132,7 +142,7 @@ class ProductsTableSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'Product_Id' => 13,
+                'Product_Id' => 14,
                 'Product_Name' => 'White Meat',
                 'Description' => 'Poultry: Chicken',
                 'Price' => 500.00,

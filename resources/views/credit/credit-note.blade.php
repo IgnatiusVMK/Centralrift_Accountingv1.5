@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{$CustomerInvoiceDetails->Customer_Name}}</title>
+    <title>Credit Note</title>
     <style>
         @page {
             margin: 15px;
@@ -113,25 +113,23 @@
                 {{-- <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/marley.png'))) }}" alt="Centralrift"> --}}
             </div>
             <div class="header-text">
-                <h4>CENTRALRIFT FRESH PRODUCE (K) LIMITED</h4>
+                <h4>CENTRALRIFT FRESH PRODUCE KENYA LTD</h4>
                 <p>P.O. Box 67891, 00200</p>
                 <p>Nairobi, Kenya.</p>
-                <p>Tel: +254 733 506881</p>
+                <p>Tel: +254 722 491 615</p>
             </div>
         </div>
         <div style="text-align: center; text-decoration: underline;">
-            <h3>CUSTOMER INVOICE</h3>
+            <h3>CREDIT NOTE</h3>
         </div>        
         <div>
-            <p><strong>Consignee:</strong></p>
-            <p>{{$CustomerInvoiceDetails->Customer_Name}}</p>
+            <p><strong>COMPANY NAME:</strong></p>
+            <p>SPICA</p>
         </div>
         
         <div class="invoice-details">
             <div>
-                <p><b>CUSTOMER INVOICE NO:</b>{{$invoiceDetails->id}}</p>
-                <p><b>LPO NUMBER:</b> {{-- {{ $invoiceDetails->Lpo_No }} --}}</p>
-                <p><b>DELIVERY DATE: </b>{{ $invoiceDetails->Sale_Date }} </p>
+                <p><b>CREDIT DATE:</b> 20/11/2024</p>
             </div>
         </div>
         
@@ -139,68 +137,26 @@
             <thead>
                 <tr>
                     <th>Ref</th>
-                    @if ($sales->isNotEmpty())
-                        @if ($sales->first()->packaging_option === '30 * 1 Tray')
-                            <th>Quantity</th>
-                        @elseif ($sales->first()->packaging_option === '1Kg (100gms x 10)' || $sales->first()->packaging_option === '3Kg (30gms x 100)')
-                            <th>No. of Cartons</th>
-                        @endif
-                        <th>Packaging</th>
-                        <th>Description of Goods</th>
-                        @if ($sales->first()->packaging_option === '30 * 1 Tray')
-                            <th>Net Tray(s)</th>
-                        @elseif ($sales->first()->packaging_option === '1Kg (100gms x 10)' || $sales->first()->packaging_option === '3Kg (30gms x 100)')
-                            <th>Net Weight (kgs)</th>
-                        @endif
-                        <th>Unit Price</th>
-                        <th>Total Price</th>
-                    @endif
+                    <th>Company/Customer</th>
+                    <th>Credit</th>
                 </tr>
             </thead>
             <tbody>
-                @php
-                    $totalPrice = 0; // Initialize total price variable
-                @endphp
-                @foreach($sales as $sale)
-                    <tr>
-                        <td style="text-align: right;">{{ $loop->iteration }}</td>
-                        <td style="text-align: right;">
-                            @if ($sale->packaging_option === '30 * 1 Tray')
-                                {{ $sale->Quantity }}
-                            @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
-                                {{-- Calculate and display the number of cartons here if applicable --}}
-                            @endif
-                        </td>
-                        <td style="text-align: right;">{{-- {{ $sale->packaging_option }} --}}</td>
-                        <td style="text-align: right;">{{ $sale->Description }}</td>
-                        <td style="text-align: right;">
-                            @if ($sale->packaging_option === '30 * 1 Tray')
-                                {{ $sale->Quantity }} Trays
-                            @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === 'Crates')
-                                {{ $sale->Net_Weight }} Kg
-                            @endif
-                        </td>
-                        <td style="text-align: right;">{{ $sale->Unit_Price }}</td>
-                        <td style="text-align: right;">Ksh {{ number_format($sale->Total_Price, 0, '.', ',') }}</td>
-                        @php
-                            $totalPrice += $sale->Total_Price; // Accumulate total price
-                        @endphp
-                    </tr>
-                @endforeach
                 <tr>
-                    <td colspan="5" style="text-align: left;"><b>Total</b></td>
-                    <td style="text-align: right;"></td>
-                    <td style="text-align: right;">Ksh {{ number_format($totalPrice, 0, '.', ',') }}</td>
+                    <td style="text-align: right;">{{$creditDetails->id}}</td>
+                    <td style="text-align: right;">{{$creditDetails->Description}}</td>
+                    <td style="text-align: right;">Ksh {{ number_format($creditDetails->Amount, 0, '.', ',') }}</td> 
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Total Credit</b></td>
+                    <td style="text-align: right;">Ksh {{ number_format($creditDetails->Amount, 0, '.', ',') }}</td>
                 </tr>
             </tbody>
         </table>
         
-        
-        
-        
-        <div class="declaration">
+        {{-- <div class="declaration">
             <p>The exporter of the product covered by this document declares that, except where otherwise clearly indicated, these products are of Kenyan preferential origin according to the rules of origin of the European Community</p>
-        </div>
+        </div> --}}
         
         <div class="signatures" style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; width: 100%; box-sizing: border-box;">
             <div class="signature-item" style="flex: 1; padding: 0 10px; text-align: left;">
@@ -222,20 +178,20 @@
         </div>
     </div>
 
-    <div class="bank-details-container" style="text-align: center; margin-top: 20px;">
+    {{-- <div class="bank-details-container" style="text-align: center; margin-top: 20px;">
         <div class="bank-details" style="display: inline-block; text-align: left; width: 400px; border: 1px solid black; padding: 10px; font-size: 0.9em;">
-            <p><b>{{-- PIN NO: [NUMBER] --}}</b></p>
+            <p><b>PIN NO: [NUMBER]</b></p>
             <table style="width: 100%; border-collapse: collapse;">
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Name</td><td style="padding: 2px 4px; border: 1px solid #ddd;">Centralrift Fresh Produce (K) Limited</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank</td><td style="padding: 2px 4px; border: 1px solid #ddd;">Diamond Trust Bank</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Currency</td><td style="padding: 2px 4px; border: 1px solid #ddd;">KES</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">0264200001</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch</td><td style="padding: 2px 4px; border: 1px solid #ddd;">DTB Centre</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">{{-- [CODE] --}}</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">{{-- [CODE] --}}</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Swift Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">{{-- [CODE] --}}</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Name</td><td style="padding: 2px 4px; border: 1px solid #ddd;">Centralrift Fresh Produce Kenya</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[BANK NAME]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Currency</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CURRENCY]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[NUMBER]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[BRANCH NAME]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CODE]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CODE]</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Swift Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CODE]</td></tr>
             </table>
         </div>
-    </div>
+    </div> --}}
 </body>
 </html>
