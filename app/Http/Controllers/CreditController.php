@@ -7,6 +7,7 @@ use App\Models\Credit;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Carbon\Carbon;
 
 class CreditController extends Controller
 {
@@ -33,7 +34,8 @@ class CreditController extends Controller
             'Credit_Id' => 'required|max:255|string',
             'Source' => 'required|max:255|string',
             'Description' => 'required|max:255|string',
-            'Amount' => 'required|integer|max:1000000'
+            'Amount' => 'required|integer|max:1000000',
+            'Credit_Date' => 'required|date',
         ]);
 
 
@@ -113,6 +115,57 @@ class CreditController extends Controller
 
         // Render the view to HTML
         $html = view('credit.credit-note', $data)->render();
+        $dompdf->loadHtml($html);
+
+        // Set paper size and margins using the correct method
+        $dompdf->setPaper('A4', 'portrait');
+
+        // If you need custom margins, use the following to set margins (not set_option):
+        $dompdf->set_option('isRemoteEnabled', true); // Make sure remote content (like images) is allowed
+        $dompdf->render();
+
+        // Return the PDF as a download
+        return response($dompdf->output())
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="' . $pdfName . '"')
+            ->header('Content-Length', strlen($dompdf->output()));
+    }
+
+    public function generateGroupedCreditNote(Request $request )
+    {
+
+        $request->validate([
+            'Credit_Date' => 'required|date',
+        ]);
+
+        $Credit_Date = $request->Credit_Date;
+
+        // Retrieve all credit records for the given Credit_Date
+        $credits = Credit::where('Credit_Date', $Credit_Date)
+                        ->get();
+
+        $creditDetails = Credit::where('Credit_Date', $Credit_Date)->first();
+        
+        $CompanyCreditNoteDetails = Credit::where('Credit_Date', $Credit_Date)->first();
+        $creditNoteName = $CompanyCreditNoteDetails->Source;
+
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
+        $options->set('defaultFont', 'Arial');
+        $options->set('isFontSubsettingEnabled', true);
+        $options->set('isRemoteEnabled', true); // To load remote resources like images
+
+        $dompdf = new Dompdf($options);
+
+        $now = Carbon::now('Africa/Nairobi');
+        $pdfName = 'CreditNote-' . $creditNoteName .'-'. $Credit_Date . '.pdf';
+
+        // Pass the sales collection to the view
+        $data = compact('credits', 'creditDetails', 'CompanyCreditNoteDetails');
+
+        // Render the view to HTML
+        $html = view('credit.grouped-credit-note', $data)->render();
         $dompdf->loadHtml($html);
 
         // Set paper size and margins using the correct method

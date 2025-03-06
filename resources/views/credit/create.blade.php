@@ -45,6 +45,17 @@
                       <input type="number" name="Amount" class="form-control" value="{{ old ('Amount') }}" />
                       @error('Amount') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
+                    <div class="mb-3">
+                      <label>Remarks</label>
+                      <input type="text" name="Remarks" class="form-control" value="{{ old ('Remarks') }}" />
+                      @error('Remarks') <span class="text-danger">{{ $message}}</span> @enderror
+                    </div>
+
+                    <div class="mb-3">
+                      <label>Credit Date (mm/dd/yyyy)</label>
+                      <input type="date" name="Credit_Date" class="form-control" value="{{ old('Credit_Date') }}" />
+                      @error('Credit_Date') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
                     
                     <div class="mb-3">
                       <button type="submit"  class="btn btn-success text-center">Save</button>

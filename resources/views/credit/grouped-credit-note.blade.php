@@ -13,7 +13,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 15px;
-            background-color: rgb(255, 214, 238);
+            background-color: rgb(255, 231, 245);
         }
         .invoice-container {
             border: 1px solid black;
@@ -113,10 +113,10 @@
                 {{-- <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/marley.png'))) }}" alt="Centralrift"> --}}
             </div>
             <div class="header-text">
-                <h4>CENTRALRIFT FRESH PRODUCE KENYA LTD</h4>
+                <h4>CENTRALRIFT FRESH PRODUCE (K) LIMITED</h4>
                 <p>P.O. Box 67891, 00200</p>
                 <p>Nairobi, Kenya.</p>
-                <p>Tel: +254 722 491 615</p>
+                <p>Tel: +254 733 506881</p>
             </div>
         </div>
         <div style="text-align: center; text-decoration: underline;">
@@ -142,19 +142,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td style="text-align: right;">{{$creditDetails->id}}</td>
-                    <td style="text-align: right;">{{$creditDetails->Description}}</td>
-                    <td style="text-align: right;">Ksh {{ number_format($creditDetails->Amount, 0, '.', ',') }}</td> 
-                </tr>
+                @php
+                    $totalCredit = 0; // Initialize total price variable
+                @endphp
+                @foreach($credits as $credit)
+                    <tr>
+                        <td style="text-align: right;">{{ $loop->iteration }}</td>
+                        <td style="text-align: right;">{{ $credit->Description }}</td>
+                        <td style="text-align: right;">Ksh {{ number_format($credit->Amount, 0, '.', ',') }}</td>
+                        @php
+                            $totalCredit += $credit->Amount; // Accumulate total Credit
+                        @endphp
+                    </tr>
+                @endforeach
                 <tr>
                     <td colspan="2"><b>Total Credit</b></td>
-                    <td style="text-align: right;">Ksh {{ number_format($creditDetails->Amount, 0, '.', ',') }}</td>
+                    <td style="text-align: right;">Ksh {{ number_format($totalCredit, 0, '.', ',') }}</td>
                 </tr>
             </tbody>
         </table>
-    
-
+        
+        
         <div class="remarks-container" style="margin-top: 20px; border: 1px solid black; padding: 10px;">
             <h4 style="margin: 0; text-decoration: underline;">Remarks</h4>
             <p>{{$creditDetails->Remarks}}</p>
@@ -179,5 +187,7 @@
             <p>Any claims raised after 48 hours will not be honoured</p>
         </div>
     </div>
+
+    
 </body>
 </html>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CashBookController;
+use App\Http\Controllers\CreditController;
 use App\Http\Controllers\CustomerSalesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -156,6 +157,8 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
 
         Route::get('credit/{Credit_Id}/generate-credit-note', [App\Http\Controllers\CreditController::class, 'generateCreditNote'])->name('gen.credit.note');
         Route::get('credit-note', [App\Http\Controllers\CreditController::class, 'creditNote'])->name('credit.note');
+        Route::post('credit/generate-grouped-CreditNote', [CreditController::class, 'generateGroupedCreditNote'])->name('credit.generateGroupedCreditNote');
+
 
 
         Route::get('finances', [App\Http\Controllers\FinanceController::class,'index'])->name('finances');

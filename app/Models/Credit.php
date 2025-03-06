@@ -16,6 +16,8 @@ class Credit extends Model
         'Source',
         'Description',
         'Amount',
+        'Remarks',
+        'Credit_Date',
         'Status',
         'checker_id',
         'maker_id'

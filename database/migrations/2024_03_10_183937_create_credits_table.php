@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('Source');
             $table->string('Description');
             $table->integer('Amount');
+            $table->string('Remarks');
+            $table->date('Credit_Date');
             $table->string('Status')->default('pending');
             $table->unsignedBigInteger('checker_id')->nullable();
             $table->unsignedBigInteger('maker_id')->nullable();
