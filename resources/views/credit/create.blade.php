@@ -42,7 +42,7 @@
                     </div>
                     <div class="mb-3">
                       <label>Amount</label>
-                      <input type="number" name="Amount" class="form-control" value="{{ old ('Amount') }}" />
+                      <input type="number" name="Amount" step="0.01" class="form-control" value="{{ old ('Amount') }}" />
                       @error('Amount') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">

@@ -35,7 +35,7 @@ class CreditController extends Controller
             'Source' => 'required|max:255|string',
             'Currency'=> 'required|max:255|string',
             'Description' => 'required|max:255|string',
-            'Amount' => 'required|integer|max:1000000',
+            'Amount' => 'required|decimal:2|min:0|max:1000000',
             'Credit_Date' => 'required|date',
         ]);
 
