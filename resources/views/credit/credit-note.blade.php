@@ -145,11 +145,11 @@
                 <tr>
                     <td style="text-align: right;">{{$creditDetails->id}}</td>
                     <td style="text-align: right;">{{$creditDetails->Description}}</td>
-                    <td style="text-align: right;">Ksh {{ number_format($creditDetails->Amount, 0, '.', ',') }}</td> 
+                    <td style="text-align: right;">{{$creditDetails->Currency}} {{ number_format($creditDetails->Amount, 2, '.', ',') }}</td> 
                 </tr>
                 <tr>
                     <td colspan="2"><b>Total Credit</b></td>
-                    <td style="text-align: right;">Ksh {{ number_format($creditDetails->Amount, 0, '.', ',') }}</td>
+                    <td style="text-align: right;">{{$creditDetails->Currency}} {{ number_format($creditDetails->Amount, 2, '.', ',') }}</td>
                 </tr>
             </tbody>
         </table>

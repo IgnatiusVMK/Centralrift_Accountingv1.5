@@ -149,7 +149,7 @@
                     <tr>
                         <td style="text-align: right;">{{ $loop->iteration }}</td>
                         <td style="text-align: right;">{{ $credit->Description }}</td>
-                        <td style="text-align: right;">Ksh {{ number_format($credit->Amount, 0, '.', ',') }}</td>
+                        <td style="text-align: right;">{{$creditDetails->Currency}} {{ number_format($credit->Amount, 0, '.', ',') }}</td>
                         @php
                             $totalCredit += $credit->Amount; // Accumulate total Credit
                         @endphp
@@ -157,7 +157,7 @@
                 @endforeach
                 <tr>
                     <td colspan="2"><b>Total Credit</b></td>
-                    <td style="text-align: right;">Ksh {{ number_format($totalCredit, 0, '.', ',') }}</td>
+                    <td style="text-align: right;">{{$creditDetails->Currency}} {{ number_format($totalCredit, 0, '.', ',') }}</td>
                 </tr>
             </tbody>
         </table>

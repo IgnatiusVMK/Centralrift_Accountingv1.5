@@ -70,6 +70,7 @@
                           <td>{{$cred->id}}</td>
                           <td>{{$cred->Credit_Id}}</td>
                           <td>{{$cred->Source}}</td>
+                          <td>{{$cred->Currency}}</td>
                           <td>{{$cred->Description}}</td>
                           <td>Ksh {{$cred->Amount}}</td>
                           <td>{{$cred->Remarks}}</td>

@@ -20,7 +20,8 @@ class Credit extends Model
         'Credit_Date',
         'Status',
         'checker_id',
-        'maker_id'
+        'maker_id',
+        'Currency'
     ];
     public function account()
     {

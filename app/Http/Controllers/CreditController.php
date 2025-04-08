@@ -33,6 +33,7 @@ class CreditController extends Controller
         $request->validate([
             'Credit_Id' => 'required|max:255|string',
             'Source' => 'required|max:255|string',
+            'Currency'=> 'required|max:255|string',
             'Description' => 'required|max:255|string',
             'Amount' => 'required|integer|max:1000000',
             'Credit_Date' => 'required|date',
@@ -108,7 +109,7 @@ class CreditController extends Controller
         //dd($credits);
 
         // $now = Carbon::now('Africa/Nairobi');
-        $pdfName = 'Credit-Note-' . $credit_note->Description . '-' . $credit_note->id .'.pdf';
+        $pdfName = 'Credit-Note-' . $credit_note->Source . '-' . $credit_note->Credit_Date .'.pdf';
 
         // Pass the credit collection to the view
         $data = compact('credits', 'creditDetails');

@@ -7,10 +7,10 @@
         </div>
         <div>
           <a class="navbar-brand brand-logo" href="{{ route('dashboard')}}">
-            <img src="{{ asset('images/marley.png') }}" alt="logo" />
+            <img src="{{ asset('images/ivmk_logo-nonbg.png') }}" alt="logo" />
           </a>
           <a class="navbar-brand brand-logo-mini" href="{{ route('dashboard')}}">
-            <img src="{{ asset('images/marley.png') }}" alt="logo" />
+            <img src="{{ asset('images/ivmk_logo-nonbg.png') }}" alt="logo" />
           </a>
         </div>
       </div>
@@ -120,10 +120,10 @@
           </li>
           <li class="nav-item dropdown d-none d-lg-block user-dropdown">
             <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="{{ asset('images/marley.png')}}" alt="Profile image"> </a>
+              <img class="img-xs rounded-circle" src="{{ asset('images/ivmk_logo-nonbg.png')}}" alt="Profile image"> </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
-                <img class="img-md rounded-circle" src="{{ asset('images/marley.png')}}" alt="Profile image">
+                <img class="img-md rounded-circle" src="{{ asset('images/ivmk_logo-nonbg.png')}}" alt="Profile image">
                 <p class="mb-1 mt-3 font-weight-semibold">{{ Auth::user()->name }}</p>
                 <p class="fw-light text-muted mb-0">{{ Auth::user()->email }}</p>
               </div>

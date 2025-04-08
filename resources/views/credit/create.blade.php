@@ -46,6 +46,11 @@
                       @error('Amount') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
+                      <label>Cuurency</label>
+                      <input type="text" name="Currency" class="form-control" value="{{ old ('Currency') }}" />
+                      @error('Currency') <span class="text-danger">{{ $message}}</span> @enderror
+                    </div>
+                    <div class="mb-3">
                       <label>Remarks</label>
                       <input type="text" name="Remarks" class="form-control" value="{{ old ('Remarks') }}" />
                       @error('Remarks') <span class="text-danger">{{ $message}}</span> @enderror

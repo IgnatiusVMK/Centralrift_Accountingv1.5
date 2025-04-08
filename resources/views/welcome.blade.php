@@ -51,7 +51,7 @@
                     <!--Welcome Logo-->
                     <div class="max-w-7xl mx-auto p-6 lg:p-8">
                         <div class="flex items-center"> 
-                            <img src="{{ asset('images/marley.png') }}" alt="HOM\_Logo"> 
+                            <img src="{{ asset('images/ivmk_logo-nonbg.png') }}" alt="HOM\_Logo"> 
                             <div class="border-l-2 h-12 border-gray-400"></div> 
                             <div class="text-xl font-bold text-gray-800">Centralrift Kenya LTD.</div> 
                         </div>
