@@ -31,7 +31,7 @@
                       @error('Credit_Id') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>
                     <div class="mb-3">
-                      <label>Source</label>
+                      <label>Creditor</label>
                       <input type="text" name="Source" class="form-control" value="{{ old ('Source') }}" />
                       @error('Source') <span class="text-danger">{{ $message}}</span> @enderror
                     </div>

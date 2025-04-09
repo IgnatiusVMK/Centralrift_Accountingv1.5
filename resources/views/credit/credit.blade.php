@@ -45,7 +45,10 @@
                             Credit ID
                           </th>
                           <th>
-                            Source
+                            Creditor
+                          </th>
+                          <th>
+                            Currency
                           </th>
                           <th>
                             Description
