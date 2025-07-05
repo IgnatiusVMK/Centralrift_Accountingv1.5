@@ -2,7 +2,7 @@
 
 @section('content')
 @include('layouts.export')
-<div class="main-panel">
+<div {{-- class="main-panel" --}}>
   <div class="content-wrapper">
     <div class="card">
         <div class="card-header">
@@ -13,14 +13,14 @@
         <div class="card-body">
             <!-- Add a responsive wrapper around the table -->
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>Sn No.</th>
                             <th>Customer</th>
                             <th>Sales Person</th>
                             <th>Salesperson Contacts</th>
-                            <th>Customer Address</th>
+                            <th>Address Line1</th>
                             <th>Update</th>
                             <th>Delete</th>
                         </tr>
@@ -49,7 +49,29 @@
                                         {{ $salesperson->phone }}<br><br>
                                     @endforeach
                                 </td>
-                                <td>{{ $customer->Address }}</td>
+                               <td>
+                                    @if($customer->AttentionTo)
+                                        {{ $customer->AttentionTo }}<br><br>
+                                    @endif
+
+                                    {{ $customer->AddressLine1 }}<br>
+
+                                    @if($customer->AddressLine2)
+                                        {{ $customer->AddressLine2 }}<br>
+                                    @endif
+
+                                    {{ $customer->City }}<br>
+
+                                    @if($customer->Region_State)
+                                        {{ $customer->Region_State }}<br>
+                                    @endif
+
+                                    @if($customer->PostalCode)
+                                        {{ $customer->PostalCode }}<br>
+                                    @endif
+
+                                    {{ $customer->Country }}<br>
+                                </td>
                                 <td>
                                     <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-warning">Edit</a>
                                 </td>

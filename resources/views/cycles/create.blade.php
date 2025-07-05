@@ -40,7 +40,7 @@
                                     </select>
                                     @error('Product') <span class="text-danger">{{ $message}}</span> @enderror
                                 </div>
-                                <div class="mb-3">
+                                {{-- <div class="mb-3">
                                     <label>Customer Name</label>
                                     <select name="Client_Name" class="form-control">
                                         <option value="" selected> -- CUSTOMER --</option>
@@ -48,10 +48,8 @@
                                             <option value="{{ $customer->Customer_Name}}">{{ $customer->Customer_Name}}</option>
                                         @endforeach
                                     </select>
-                                    {{-- <input type="text" id="client-name" name="Client_Name" class="form-control" value="{{ old('Client_Name') }}" />
-                                    <input type="hidden" id="selected-customer-id" name="Customer_Id" value="{{ old('Customer_Id') }}"> --}}
                                     @error('Client_Name') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
+                                </div> --}}
                                 <div class="mb-3">
                                     <label>Cycle Name</label>
                                     <input type="text" name="Cycle_Name" class="form-control" value="{{ old ('Cycle_Name') }}" />

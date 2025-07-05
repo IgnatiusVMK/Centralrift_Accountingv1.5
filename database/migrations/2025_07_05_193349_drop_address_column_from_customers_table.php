@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('credits', function (Blueprint $table) {
-            $table->string('Remarks');
+        // This migration drops the old 'Address' column
+        Schema::table('customers', function (Blueprint $table) {
+            $table->dropColumn('Address');
         });
     }
 
@@ -21,8 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('credits', function (Blueprint $table) {
-            //
+        // This is crucial for rollback functionality.
+        Schema::table('customers', function (Blueprint $table) {
+            $table->string('Address', 255)->nullable(false);
         });
     }
 };

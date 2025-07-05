@@ -45,4 +45,9 @@ public function credit()
     return $this->hasOne(Credit::class, 'Transaction_Id', 'Credit_Id');
 }
 
+public function cycle()
+{
+    return $this->belongsTo(Cycles::class, 'Cycle_Id', 'Cycle_Id');
+}
+
 }

@@ -13,6 +13,7 @@ class Sales extends Model
 
     protected $fillable = [
         'maker_id',
+        'Harvest_Id',
         'Cycle_Id',  
         'Sales_Id', 
         'Customer_Id',
@@ -20,7 +21,8 @@ class Sales extends Model
         'Lpo_No',
         'Description', 
         'packaging_option',
-        'Quantity',
+        'Quantity_of_packages',
+        'Currency',
         'Unit_Price', 
         'Total_Price',
         'Payment_Status', 
@@ -39,5 +41,8 @@ class Sales extends Model
 
     public function maker(){
         return $this->belongsTo(User::class,'maker_id');
+    }
+    public function harvest(){
+        return $this->belongsTo(Harvests::class);
     }
 }

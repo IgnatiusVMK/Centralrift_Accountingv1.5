@@ -10,6 +10,7 @@ use App\Models\CycleAllocations;
 use App\Models\Cycles;
 use App\Models\Financial;
 use App\Models\HarvestOrder;
+use App\Models\Harvests;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Sales;
@@ -29,6 +30,9 @@ class CheckerController extends Controller
 
         $pendingCycles = Cycles::where('Status', 'pending')->get();
         $pendingCyclesCount = Cycles::where('Status', 'pending')->get()->count();
+
+        $harvest = Harvests::where('Status', 'pending')->get();
+        $harvestCount = Harvests::where('Status', 'pending')->get()->count();
 
         $wages = Financial::where('type', 'expenditure')->where('Status', 'pending')->get();
 
@@ -70,6 +74,7 @@ class CheckerController extends Controller
         //
         return view('checker.index', [
             'pendingCycles'=>$pendingCycles,
+            'harvests' => $harvest,
             'credits'=>$credits,
             'creditCount'=>$creditCount,
             'pendingCyclesCount'=>$pendingCyclesCount,
@@ -89,6 +94,7 @@ class CheckerController extends Controller
             'purchases'=> $purchases,
             'stocks'=> $stocks,
             'cycAllocates'=> $cycAllocates,
+            'harvestCount' => $harvestCount,
             'wagesCount'=> $wagesCount,
             'salariesCount'=> $salariesCount,
             'advanceCount'=> $advanceCount,
@@ -140,6 +146,23 @@ class CheckerController extends Controller
         ]);
 
         return redirect()->back()->with('success','Cycle Entry Approved');
+    }
+
+    public function approveNewHarvest(Request $request, int $Harvest_Id) 
+    {
+        $this->authorize('create-checker');
+
+        $request->validate( [
+            'checker_id'=> 'required|max:255|integer',
+            'Status' => 'required|max:255|string',
+        ]);
+        Harvests::where('id', $Harvest_Id)->update([
+            
+            'checker_id'=> $request->checker_id,
+            'Status'=> $request->Status,
+        ]);
+
+        return redirect()->back()->with('success', 'Harvest Entry approved.');
     }
     public function approveFinancial(Request $request, string $Cycle_Id, string $Fin_Id_Id, int $id,)
     {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\Customers;
 use App\Models\Cycles;
+use App\Models\Harvests;
 use App\Models\ProductsSales;
 use App\Models\Sales;
 use Carbon\Carbon;
@@ -38,10 +39,12 @@ class SalesController extends Controller
         $Cycle_Id = $request->route('Cycle_Id');
         $cycle = Cycles::where('Cycle_Id', $Cycle_Id)->first();
         $Customers = Customers::get();
+        $harvests = Harvests::with('customer')->get();
         $SaleuniqueCode = $this->generateUniqueCode('Sales');
         return view('financials.sales.create', [
             'Cycle_Id' => $Cycle_Id,
             'cycle' => $cycle,
+            'harvests' => $harvests,
             'Customers' => $Customers,
             'SaleuniqueCode' => $SaleuniqueCode,
         ]);
@@ -53,6 +56,7 @@ class SalesController extends Controller
     // Validate the request data
     $request->validate([
         'maker_id' => 'required|integer|exists:users,id',
+        'Harvest_Id' => 'required|integer|exists:harvests,id',
         'Cycle_Id' => 'required|string|max:255',
         'Sales_Id' => 'required|string|max:255|unique:sales,Sales_Id',
         'Customer_Id' => 'required|integer|exists:customers,id',
@@ -60,8 +64,9 @@ class SalesController extends Controller
         /* 'Lpo_No' => 'required|string|max:255', */
         'Description' => 'required|string',
         'packaging_option' => 'required|string|max:255',
-        'Quantity' => 'required|numeric|min:0',
-        'Unit_Price' => 'required|numeric|min:0',
+        'Quantity_of_packages' => 'required|numeric|min:0',
+        'Currency' => 'required|string|max:255',
+        'Unit_Price' => 'required|integer|min:0',
         'Total_Price' => 'required|numeric|min:0',
         'Sale_Date' => 'required|date',
         'Payment_Status' => 'required|string|max:255',
@@ -76,10 +81,12 @@ class SalesController extends Controller
                 'Sales_Id' => $request->Sales_Id,
                 'Customer_Id' => $request->Customer_Id,
                 'Cust_Account_No' => $request->Cust_Account_No,
+                'Harvest_Id' => $request->Harvest_Id,
                 'Cycle_Id' => $request->Cycle_Id,
                 'Lpo_No' => $request->Lpo_No,
                 'Sale_Date' => $request->Sale_Date,
                 'Net_Weight' => $request->Net_Weight,
+                'Currency' => $request->Currency,
                 'Unit_Price' => $request->Unit_Price,
                 'Total_Price' => $request->Total_Price,
                 'Payment_Status' => $request->Payment_Status,
@@ -122,12 +129,13 @@ class SalesController extends Controller
         ]);
     }
 
-    public function generateInvoice(Request $request, string $Sales_Id)
+    public function generateInvoice(Request $request, string $Sales_Id, int $Customer_Id)
     {
         // Retrieve all sales records for the given Sales_Id
         $sales = Sales::where('Sales_Id', $Sales_Id)->get();
 
         $invoiceDetails = Sales::where('Sales_Id', $Sales_Id)->first();
+        $CustomerInvoiceDetails = Customers::where('id', $Customer_Id)->first();
 
         $sale_date = Sales::where('Sales_Id', $Sales_Id)->first();
 
@@ -144,7 +152,7 @@ class SalesController extends Controller
         $pdfName = 'Inv-' . $sale_date->Sale_Date . '.pdf';
 
         // Pass the sales collection to the view
-        $data = compact('sales', 'invoiceDetails');
+        $data = compact('sales', 'invoiceDetails', 'CustomerInvoiceDetails');
 
         // Render the view to HTML
         $html = view('financials.sales.invoice', $data)->render();

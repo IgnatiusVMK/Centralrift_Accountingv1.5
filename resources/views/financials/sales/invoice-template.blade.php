@@ -206,18 +206,25 @@
     </div>
 
     <div class="bank-details-container" style="text-align: center; margin-top: 20px;">
-        <div class="bank-details" style="display: inline-block; text-align: left; width: 400px; border: 1px solid black; padding: 10px; font-size: 0.9em;">
-            <p><b>PIN NO: [NUMBER]</b></p>
-            <table style="width: 100%; border-collapse: collapse;">
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Name</td><td style="padding: 2px 4px; border: 1px solid #ddd;">Centralrift Fresh Produce Kenya</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[BANK NAME]</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Currency</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CURRENCY]</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[NUMBER]</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[BRANCH NAME]</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CODE]</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CODE]</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Swift Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">[CODE]</td></tr>
-            </table>
+        <div class="bank-details-container" style="text-align: center; margin-top: 20px;">
+            <div class="bank-details" style="display: inline-block; text-align: left; width: 400px; border: 1px solid black; padding: 10px; font-size: 0.9em;">
+                <p><b>{{-- PIN NO: [NUMBER] --}}</b></p>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Name</td><td style="padding: 2px 4px; border: 1px solid #ddd;">Centralrift Fresh Produce (K) Limited</td></tr>
+                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank</td><td style="padding: 2px 4px; border: 1px solid #ddd;">Diamond Trust Bank</td></tr>
+                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Currency</td><td style="padding: 2px 4px; border: 1px solid #ddd;">{{$sale->Currency}}</td></tr>
+                    @if ($sale->Currency === 'KES')
+                        <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">0264200001</td></tr>
+                    @elseif ($sale->Currency === 'EUR')
+                        <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">0264200003</td></tr>
+                    @elseif ($sale->Currency === 'GBP')
+                        <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">0264200006</td></tr>
+                    @endif
+                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Branch</td><td style="padding: 2px 4px; border: 1px solid #ddd;">DTB Centre</td></tr>
+                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">052</td></tr>
+                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Swift Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">DTKEKENA</td></tr>
+                </table>
+            </div>
         </div>
     </div>
 </body>

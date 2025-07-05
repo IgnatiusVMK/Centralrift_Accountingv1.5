@@ -46,7 +46,7 @@ class AuthenticatedSessionController extends Controller
             // Save OTP in Session
             session(['otp'=> $otp]);
 
-            //Log OTP for offline testing purposes
+            //Log OTP for development testing purposes
             Log::info('Generated OTP for user '. Auth::user()->email.' : ' .$otp);
 
             $user = Auth::user();

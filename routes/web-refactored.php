@@ -1,19 +1,51 @@
 <?php
 
+use App\Http\Controllers\AdvanceController;
+use App\Http\Controllers\CapitalExpensesController;
+use App\Http\Controllers\CapitalWithdrawalController;
 use App\Http\Controllers\CashBookController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckerController;
 use App\Http\Controllers\CreditController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerSalesController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CycleAllocationsController;
+use App\Http\Controllers\CyclesAdvancesController;
+use App\Http\Controllers\CyclesController;
+use App\Http\Controllers\CycleDetailsController;
+use App\Http\Controllers\CyclesMaintenanceController;
+use App\Http\Controllers\CyclesSalaryController;
+use App\Http\Controllers\CyclesTransportcontroller;
+use App\Http\Controllers\CyclesWagesController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartmentsController;
+use App\Http\Controllers\ElectrictyController;
+use App\Http\Controllers\ExpendituresController;
+use App\Http\Controllers\HarvestsController;
+use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\MakerController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\OtpVerificationController;
+use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfitLossController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\RoleUserController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\ScheduleMaintenanceController;
+use App\Http\Controllers\StocksController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\Transportcontroller;
+use App\Http\Controllers\UserRolePermissionsController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
-use App\Http\Controllers\OtpVerificationController;
-use App\Http\Controllers\RoleUserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,74 +57,68 @@ use App\Http\Controllers\RoleUserController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+// Basic routes
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Authentication related routes
 Route::get('otp-verify', [OtpVerificationController::class, 'index'])->name('otp-authform');
-
 Route::post('otp-verify', [OtpVerificationController::class, 'verify'])->name('otp.verification');
 
+// Routes that require authentication, verification, and OTP verification
 Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function () {
     
-        // Routes that require authentication and verified email
+    // Routes that require authentication and verified email
+    Route::get('no-access', function () {
+        return view('no-access');
+    })->name('no-access');
 
-        Route::get('no-access', function () {
-            return view('no-access');
-        })->name('no-access');
-
-        Route::get('dashboard', [App\Http\Controllers\DashboardController::class,'index'])
-            ->name('dashboard');
-
-        Route::get('add-order', [App\Http\Controllers\DashboardController::class,'create'])
-            ->name('add-order');
-
-        Route::post('add-order/create', [App\Http\Controllers\DashboardController::class,'store'])
-            ->name('add-order.create');
-
-        Route::get('cycles', [App\Http\Controllers\CyclesController::class,'index'])
-            ->name('cycles');
-        Route::get('new/cycle', [App\Http\Controllers\CyclesController::class,'create'])
-            ->name('cycle.create');
-        Route::get('inventory/allocate-cycle', [App\Http\Controllers\CycleAllocationsController::class,'index'])
-            ->name('cycle.allocate');
-        Route::post('cycles/create', [App\Http\Controllers\CyclesController::class,'store'])
-            ->name('cycles.store');
-        Route::get('cycles/{Cycle_Id}', [App\Http\Controllers\CycleDetailsController::class,'index'])
-            ->name('cycles.details.index');
-
-        Route::get('harvests', [App\Http\Controllers\HarvestsController::class,'index'])
-            ->name('harvests');
-        Route::get('new/harvest', [App\Http\Controllers\HarvestsController::class,'create'])
-            ->name('harvests.create');
-        Route::post('harvest/create', [App\Http\Controllers\HarvestsController::class,'store'])
-            ->name('harvests.store');
-
-        Route::get('cycles/{Cycle_Id}/expenditures/create', [App\Http\Controllers\CyclesWagesController::class, 'index'])->name('cycle.wages.create');
-        Route::get('cycles/{Cycle_Id}/salaries/create', [App\Http\Controllers\CyclesSalaryController::class, 'index'])->name('cycle.salaries.create');
-        Route::get('cycles/{Cycle_Id}/advance/create', [App\Http\Controllers\CyclesAdvancesController::class, 'index'])->name('cycle.advance.create');
-        Route::get('cycles/{Cycle_Id}/transport/create', [App\Http\Controllers\CyclesTransportcontroller::class, 'index'])->name('cycle.transport.create');
-        Route::get('cycles/{Cycle_Id}/chemicals/create', [App\Http\Controllers\CyclesWagesController::class, 'index'])->name('cycle.chemicals.create');
-        Route::get('cycles/{Cycle_Id}/seeds/create', [App\Http\Controllers\CyclesSalaryController::class, 'index'])->name('cycle.seeds.create');
-        Route::get('cycles/{Cycle_Id}/capital-expenses/create', [App\Http\Controllers\CyclesAdvancesController::class, 'index'])->name('cycle.capital-expenses.create');
-        Route::get('cycles/{Cycle_Id}/maintenance/create', [App\Http\Controllers\CyclesMaintenanceController::class, 'index'])->name('cycle.maintenance.create');
-        Route::get('cycles/{Cycle_Id}/capital-withdrawal/create', [App\Http\Controllers\CapitalWithdrawalController::class, 'create'])->name('cycle.capital-withdrawal.create');
-        Route::get('cycles/{Cycle_Id}/capital-expenses/create', [App\Http\Controllers\CapitalExpensesController::class, 'create'])->name('cycle.capital-expenses.create');
-        Route::get('cycles/{Cycle_Id}/electricity/create', [App\Http\Controllers\ElectrictyController::class, 'create'])->name('cycle.electricity.create');
-        Route::get('cycles/{Cycle_Id}/sales/create', [App\Http\Controllers\SalesController::class, 'create'])->name('cycle.sales.create');
-
-
-        //Checker Validation Route
-        Route::post('/checker/harvest/{Harvest_Id}/approve', [App\Http\Controllers\CheckerController::class,'approveNewHarvest'])->name('checker.approveNewHarvest');
-
-        Route::get('/checker', [App\Http\Controllers\CheckerController::class,'index'])->name('checker.index');
-        Route::get('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'viewCycleDetails'])->name('checker.details');
-        Route::post('/checker/{Cycle_Id}/validate', [App\Http\Controllers\CheckerController::class,'approveCycle'])->name('checker.approveCycles');
-        Route::post('/checker/{Sales_Id}/{id}/validate', [App\Http\Controllers\CheckerController::class, 'approveSale'])->name('checker.approveSales');
-        Route::post('/checker/{Cycle_Id}/{Fin_Id_Id}/{id}/validate', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveFinancials');
-        Route::post('/checker/harvest/{Harvest_Id}/approve', [App\Http\Controllers\CheckerController::class,'approveNewHarvest'])->name('checker.approveNewHarvest');
-        Route::post('/checker/salaries/{Cycle_Id}/{Fin_Id_Id}/{id}/approve', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveSalaries');
+    // ========================================
+    // Dashboard and Order Management
+    // ========================================
+    Route::get('dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+    Route::get('add-order', [DashboardController::class, 'create'])
+        ->name('add-order');
+    Route::post('add-order/create', [DashboardController::class, 'store'])
+        ->name('add-order.create');
+    // ========================================
+    // Cycles and Harvests Management
+    // ========================================
+    // Cycle routes
+    Route::get('cycles', [CyclesController::class, 'index'])
+        ->name('cycles');
+    Route::get('new/cycle', [CyclesController::class, 'create'])
+        ->name('cycle.create');
+    Route::get('inventory/allocate-cycle', [CycleAllocationsController::class, 'index'])
+        ->name('cycle.allocate');
+    Route::post('cycles/create', [CyclesController::class, 'store'])
+        ->name('cycles.store');
+    Route::get('cycles/{Cycle_Id}', [CycleDetailsController::class, 'index'])
+        ->name('cycles.details.index');
+        
+    // Harvest routes
+    Route::get('harvests', [HarvestsController::class, 'index'])
+        ->name('harvests');
+    Route::get('new/harvest', [HarvestsController::class, 'create'])
+        ->name('harvests.create');
+    Route::post('harvest/create', [HarvestsController::class, 'store'])
+        ->name('harvests.store');
+        
+    // Cycle-related expense routes
+    Route::get('cycles/{Cycle_Id}/expenditures/create', [CyclesWagesController::class, 'index'])->name('cycle.wages.create');
+    Route::get('cycles/{Cycle_Id}/salaries/create', [CyclesSalaryController::class, 'index'])->name('cycle.salaries.create');
+    Route::get('cycles/{Cycle_Id}/advance/create', [CyclesAdvancesController::class, 'index'])->name('cycle.advance.create');
+    Route::get('cycles/{Cycle_Id}/transport/create', [CyclesTransportcontroller::class, 'index'])->name('cycle.transport.create');
+    Route::get('cycles/{Cycle_Id}/chemicals/create', [CyclesWagesController::class, 'index'])->name('cycle.chemicals.create');
+    Route::get('cycles/{Cycle_Id}/seeds/create', [CyclesSalaryController::class, 'index'])->name('cycle.seeds.create');
+    Route::get('cycles/{Cycle_Id}/capital-expenses/create', [CyclesAdvancesController::class, 'index'])->name('cycle.capital-expenses.create');
+    Route::get('cycles/{Cycle_Id}/maintenance/create', [CyclesMaintenanceController::class, 'index'])->name('cycle.maintenance.create');
+    Route::get('cycles/{Cycle_Id}/capital-withdrawal/create', [CapitalWithdrawalController::class, 'create'])->name('cycle.capital-withdrawal.create');
+    Route::get('cycles/{Cycle_Id}/capital-expenses/create', [CapitalExpensesController::class, 'create'])->name('cycle.capital-expenses.create');
+    Route::get('cycles/{Cycle_Id}/electricity/create', [ElectrictyController::class, 'create'])->name('cycle.electricity.create');
+    Route::get('cycles/{Cycle_Id}/sales/create', [SalesController::class, 'create'])->name('cycle.sales.create');
         Route::post('/checker/advances/{Cycle_Id}/{Fin_Id_Id}/{id}/approve', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveAdvances');
         Route::post('/checker/transport/{Cycle_Id}/{Fin_Id_Id}/{id}/approve', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveTransport');
         Route::post('/checker/maintenance/{Cycle_Id}/{Fin_Id_Id}/{id}/approve', [App\Http\Controllers\CheckerController::class, 'approveFinancial'])->name('checker.approveMaintenance');
@@ -213,7 +239,7 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
 
         Route::get('sales', [App\Http\Controllers\SalesController::class,'index'])->name('sales');
         Route::post('sales/{Cycle_Id}/create', [App\Http\Controllers\SalesController::class, 'store'])->name('sales.store');
-        Route::get('/sales/{Sales_Id}/{Customer_Id}/generate-invoice', [SalesController::class, 'generateInvoice'])->name('sales.generateInvoice');
+        Route::get('/sales/{Sales_Id}/generate-invoice', [SalesController::class, 'generateInvoice'])->name('sales.generateInvoice');
 
         Route::get('purchases/view', [App\Http\Controllers\PurchaseController::class,'index'])->name('purchase');
         Route::get('purchase/create', [App\Http\Controllers\PurchaseController::class,'create'])->name('purchase.create');

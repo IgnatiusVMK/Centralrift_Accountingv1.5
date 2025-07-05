@@ -17,17 +17,18 @@ return new class extends Migration
                 $table->string('Cycle_Id');
                 $table->string('Sales_Id')->unique();
                 $table->unsignedBigInteger('Customer_Id');
-                $table->bigInteger('Cust_Account_No');
+                $table->unsignedBigInteger('Harvest_Id');
+                $table->bigInteger('Cust_Account_No')->nullable();
                 $table->string('Lpo_No')->nullable();
                 $table->date('Sale_Date');
                 $table->integer('Net_Weight')->nullable();
+                $table->string('Currency')->nullable();
                 $table->decimal('Unit_Price', 10, 2);
                 $table->decimal('Total_Price', 10, 2);
-                /* $table->string('Payment_Method')->nullable(); */
                 $table->string('Payment_Status');
                 $table->string('packaging_option');
                 $table->string('Description')->nullable();
-                $table->decimal('Quantity', 10, 2)->nullable();/* No_of_boxes */
+                $table->decimal('Quantity_of_packages', 10, 2)->nullable();/* No_of_boxes */
                 $table->string('Status')->default('pending');
                 $table->unsignedBigInteger('checker_id')->nullable();
                 $table->unsignedBigInteger('maker_id')->nullable();
@@ -37,8 +38,9 @@ return new class extends Migration
                 $table->foreign('maker_id')->references('id')->on('users')->onDelete('cascade');
 
                 // Foreign key constraints (assuming you have users and customers tables)
-                $table->foreign('Customer_Id')->references('id')->on('customers')->onDelete('cascade');
+                $table->foreign('Customer_Id')->references(columns: 'id')->on('customers')->onDelete('cascade');
                 $table->foreign('Cycle_Id')->references('Cycle_Id')->on('cycles')->onDelete('cascade');
+                $table->foreign('Harvest_Id')->references(columns: 'id')->on('harvests')->onDelete('cascade');
             });
         }
     }

@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <!-- Add a responsive wrapper around the table -->
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th style="font-size: 22px">Description</th>
@@ -65,8 +65,10 @@
         datasets: [
             {
                 label: 'Total Stock',
-                backgroundColor: 'rgba(135,206,250,0.5)',
-                data: @json($totalQuantities), // Dynamic total quantities
+                backgroundColor: 'rgba(135,206,250,0.7)', // Slightly more opaque
+                data: @json($totalQuantities),
+                barPercentage: 0.7, 
+                categoryPercentage: 0.6 // Adjust the spacing between groups
             },
             {
                 label: 'Allocated Stock',
@@ -86,30 +88,40 @@
     data: stockData,
     options: {
         responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Quantity',
-                    font: {
-                        size: 18 
-                    }
-                },
-                ticks: {
-                    font: {
-                        size: 14
-                    }
+    scales: {
+        y: {
+            type: 'logarithmic', // Change the y-axis type to logarithmic
+            beginAtZero: true,
+            title: {
+                display: true,
+                text: 'Quantity (Logarithmic Scale)',
+                font: {
+                    size: 18
                 }
             },
-            x: {
-                ticks: {
-                    font: {
-                        size: 14 // Font size for X-axis labels (stock names)
+            ticks: {
+                callback: function (value, index, values) {
+                    if (value === 0) return 0;
+                    const logValue = Math.log10(value);
+                    if (Number.isInteger(logValue)) {
+                        return value; // Show powers of 10 as integers
                     }
+                    return ''; // Hide other fractional log values
                 }
             }
         },
+        x: {
+            ticks: {
+                font: {
+                    size: 12 // Adjust as needed
+                },
+                autoSkip: true, // Prevent labels from overlapping
+                maxRotation: 90, // Rotate labels up to 90 degrees
+                minRotation: 45, // Start rotating if needed
+                align: 'right' // Adjust alignment after rotation
+            }
+        }
+    },
         plugins: {
             legend: {
                 labels: {

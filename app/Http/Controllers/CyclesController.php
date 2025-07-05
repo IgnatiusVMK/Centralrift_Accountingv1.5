@@ -58,7 +58,6 @@ class CyclesController extends Controller
         $validatedData = $request->validate([
             'Block_Id' => 'required|max:255|integer',
             'Product' => 'required|max:255|string',
-            /* 'Client_Name' => 'max:255|string', */
             'Cycle_Name' => 'required|max:255|string',
             'Cycle_Start' => 'required|date',
             'Cycle_End' => 'required|date',
@@ -77,7 +76,7 @@ class CyclesController extends Controller
             'Block_Id' => $request->Block_Id,
             'Category_Id' => $categoryId,
             'Product' => $request->Product,
-            'Client_Name' => $request->Client_Name,
+            //'Client_Name' => $request->Client_Name,
             'Cycle_Name' => $request->Cycle_Name,
             'Cycle_Start' => $request->Cycle_Start,
             'Cycle_End' => $request->Cycle_End,
@@ -86,7 +85,7 @@ class CyclesController extends Controller
 
         HarvestOrder::create([
             'Cycle_Id' => $CycleCode,
-            'company_name' => $request->Client_Name,
+            //'company_name' => $request->Client_Name,
             'order_date' => now(),
             'planting_date' => $request->Cycle_Start,
             'harvest_date' => $request->Cycle_End,

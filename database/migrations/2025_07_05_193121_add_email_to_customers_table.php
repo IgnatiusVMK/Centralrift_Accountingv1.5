@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->id();
-            $table->string('Customer_Name', 255);
-            $table->bigInteger('Cust_Account_No')->nullable();
-            $table->string('Address', 255);
-            $table->timestamps();
-            
+        Schema::table('customers', function (Blueprint $table) {
+            // Add email column
+            $table->string('email')->unique()->nullable()->after('Cust_Account_No');
         });
     }
 
@@ -26,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::table('customers', function (Blueprint $table) {
+            $table->dropColumn('email');
+        });
     }
 };

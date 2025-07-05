@@ -16,21 +16,21 @@ class CustomerSalesController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index(Request $request, $Customer_Id)
+    public function index(Request $request, $customer)
     {
         // Fetch all customers with their salespersons
         $customers = Customers::with('salespersons')->get();
-        $customers_details =  Customers::where('id', $Customer_Id)->first();
+        $customers_details =  Customers::where('id', $customer)->first();
 
-        $custom_sales = Sales::where('Customer_Id', $Customer_Id)->get();
+        $custom_sales = Sales::where('Customer_Id', $customer)->get();
         $dates = $custom_sales->pluck('Sale_Date');
 
-        // Get the Customer_Id from the request
-        $Customer_Id = $request->route('id');
+        // Get the customer from the request
+        $customer = $request->route('id');
         $Sales_Id = $request->route('Sales_Id');
 
-        // Fetch the customer name based on the Customer_Id
-        $Customer_Name = Customers::where('id', $Customer_Id)->value('Customer_Name');
+        // Fetch the customer name based on the customer
+        $Customer_Name = Customers::where('id', $customer)->value('Customer_Name');
 
         
         /* dd($custom_sales); */

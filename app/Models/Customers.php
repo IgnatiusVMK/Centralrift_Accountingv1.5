@@ -14,8 +14,14 @@ class Customers extends Model
     protected $fillable = [
         'Customer_Name',
         'Cust_Account_No',
-        'Address',
-        // Add other fields if necessary, like 'is_active'
+        'email',
+        'AddressLine1',
+        'AddressLine2',
+        'City',
+        'Region_State',
+        'PostalCode',
+        'Country',
+        'AttentionTo'
     ];
 
     // Define the relationship with the Sales model

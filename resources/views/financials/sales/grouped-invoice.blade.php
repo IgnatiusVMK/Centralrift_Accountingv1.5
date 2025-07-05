@@ -123,13 +123,51 @@
             <h3>CUSTOMER INVOICE</h3>
         </div>        
         <div>
-            <p><strong>Consignee:</strong></p>
-            <p>{{$CustomerInvoiceDetails->Customer_Name}}</p>
+           <p><strong>Invoice To:</strong></p>
+            {{-- Customer Name (usually not null) --}}
+            @if($CustomerInvoiceDetails->Customer_Name)
+                <p><b>{{ trim($CustomerInvoiceDetails->Customer_Name) }}</b></p>
+            @endif
+
+            {{-- Attention To (skip if null) --}}
+            @if($CustomerInvoiceDetails->AttentionTo)
+                <p><b>{{ trim($CustomerInvoiceDetails->AttentionTo) }},</b></p>
+            @endif
+
+            {{-- Address Line 1 (usually not null) --}}
+            @if($CustomerInvoiceDetails->AddressLine1)
+                <p><b>{{ trim($CustomerInvoiceDetails->AddressLine1) }},</b></p>
+            @endif
+
+            {{-- Address Line 2 (skip if null) --}}
+            @if($CustomerInvoiceDetails->AddressLine2)
+                <p><b>{{ trim($CustomerInvoiceDetails->AddressLine2) }},</b></p>
+            @endif
+
+            {{-- City (usually not null) --}}
+            @if($CustomerInvoiceDetails->City)
+                <p><b>{{ trim($CustomerInvoiceDetails->City) }},</b></p>
+            @endif
+
+            {{-- Postal Code (skip if null) --}}
+            @if($CustomerInvoiceDetails->PostalCode)
+                <p><b>{{ trim($CustomerInvoiceDetails->PostalCode) }},</b></p>
+            @endif
+
+            {{-- Region/State (skip if null) --}}
+            @if($CustomerInvoiceDetails->Region_State)
+                <p><b>{{ trim($CustomerInvoiceDetails->Region_State) }},</b></p>
+            @endif
+
+            {{-- Country (usually not null) --}}
+            @if($CustomerInvoiceDetails->Country)
+                <p><b>{{ trim($CustomerInvoiceDetails->Country) }}</b></p>
+            @endif
         </div>
         
         <div class="invoice-details">
             <div>
-                <p><b>CUSTOMER INVOICE NO:</b>{{$invoiceDetails->id}}</p>
+                <p><b>CUSTOMER INVOICE NO:</b> 1{{-- {{$invoiceDetails->id}} --}}</p>
                 <p><b>LPO NUMBER:</b> {{-- {{ $invoiceDetails->Lpo_No }} --}}</p>
                 <p><b>DELIVERY DATE: </b>{{ $invoiceDetails->Sale_Date }} </p>
             </div>
@@ -142,14 +180,14 @@
                     @if ($sales->isNotEmpty())
                         @if ($sales->first()->packaging_option === '30 * 1 Tray')
                             <th>Quantity</th>
-                        @elseif ($sales->first()->packaging_option === '1Kg (100gms x 10)' || $sales->first()->packaging_option === '3Kg (30gms x 100)')
-                            <th>No. of Cartons</th>
+                        @elseif ($sales->first()->packaging_option === '1Kg (100gms x 10)' || $sales->first()->packaging_option === '3Kg (30gms x 100)' || $sales->first()->packaging_option === '1.5Kg (150gms x 10)')
+                            <th>No. of Boxes</th>
                         @endif
                         <th>Packaging</th>
                         <th>Description of Goods</th>
                         @if ($sales->first()->packaging_option === '30 * 1 Tray')
                             <th>Net Tray(s)</th>
-                        @elseif ($sales->first()->packaging_option === '1Kg (100gms x 10)' || $sales->first()->packaging_option === '3Kg (30gms x 100)')
+                        @elseif ($sales->first()->packaging_option === '1Kg (100gms x 10)' || $sales->first()->packaging_option === '1.5Kg (150gms x 10)' ||$sales->first()->packaging_option === '3Kg (30gms x 100)')
                             <th>Net Weight (kgs)</th>
                         @endif
                         <th>Unit Price</th>
@@ -166,22 +204,22 @@
                         <td style="text-align: right;">{{ $loop->iteration }}</td>
                         <td style="text-align: right;">
                             @if ($sale->packaging_option === '30 * 1 Tray')
-                                {{ $sale->Quantity }}
-                            @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
-                                {{-- Calculate and display the number of cartons here if applicable --}}
+                                {{-- {{ $sale->Quantity_of_packages }} --}}
+                            @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '1.5Kg (150gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)')
+                                {{ $sale->Quantity_of_packages }}
                             @endif
                         </td>
-                        <td style="text-align: right;">{{-- {{ $sale->packaging_option }} --}}</td>
+                        <td style="text-align: right;">{{ $sale->packaging_option }}</td>
                         <td style="text-align: right;">{{ $sale->Description }}</td>
                         <td style="text-align: right;">
                             @if ($sale->packaging_option === '30 * 1 Tray')
                                 {{ $sale->Quantity }} Trays
-                            @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === 'Crates')
+                            @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '1.5Kg (150gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === 'Crates')
                                 {{ $sale->Net_Weight }} Kg
                             @endif
                         </td>
                         <td style="text-align: right;">{{ $sale->Unit_Price }}</td>
-                        <td style="text-align: right;">Ksh {{ number_format($sale->Total_Price, 0, '.', ',') }}</td>
+                        <td style="text-align: right;">Ksh {{ number_format($sale->Total_Price, 2, '.', ',') }}</td>
                         @php
                             $totalPrice += $sale->Total_Price; // Accumulate total price
                         @endphp
@@ -190,7 +228,7 @@
                 <tr>
                     <td colspan="5" style="text-align: left;"><b>Total</b></td>
                     <td style="text-align: right;"></td>
-                    <td style="text-align: right;">Ksh {{ number_format($totalPrice, 0, '.', ',') }}</td>
+                    <td style="text-align: right;">Ksh {{ number_format($totalPrice, 2, '.', ',') }}</td>
                 </tr>
             </tbody>
         </table>
@@ -228,12 +266,17 @@
             <table style="width: 100%; border-collapse: collapse;">
                 <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Name</td><td style="padding: 2px 4px; border: 1px solid #ddd;">Centralrift Fresh Produce (K) Limited</td></tr>
                 <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank</td><td style="padding: 2px 4px; border: 1px solid #ddd;">Diamond Trust Bank</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Currency</td><td style="padding: 2px 4px; border: 1px solid #ddd;">KES</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">0264200001</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch</td><td style="padding: 2px 4px; border: 1px solid #ddd;">DTB Centre</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">{{-- [CODE] --}}</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">{{-- [CODE] --}}</td></tr>
-                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Swift Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">{{-- [CODE] --}}</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Currency</td><td style="padding: 2px 4px; border: 1px solid #ddd;">{{$sale->Currency}}</td></tr>
+                @if ($sale->Currency === 'KES')
+                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">0264200001</td></tr>
+                @elseif ($sale->Currency === 'EUR')
+                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">0264200003</td></tr>
+                @elseif ($sale->Currency === 'GBP')
+                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">0264200006</td></tr>
+                @endif
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Branch</td><td style="padding: 2px 4px; border: 1px solid #ddd;">DTB Centre</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">052</td></tr>
+                <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Swift Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">DTKEKENA</td></tr>
             </table>
         </div>
     </div>

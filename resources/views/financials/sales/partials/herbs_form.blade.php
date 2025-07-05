@@ -8,27 +8,34 @@
 
     <div class="mb-3">
         <label>Packaging Options</label>
-        <div class="form-check">
+        <div class="form-check" style="padding-left: 50px">
             <input type="radio" id="option1-herbs" name="packaging_option" value="3Kg (30gms x 100)" class="form-check-input" onclick="calculateCartonsHerbs()" />
             <label for="option1-herbs" class="form-check-label">3Kg (30gms x 100)</label>
         </div>
-        <div class="form-check">
+        <div class="form-check" style="padding-left: 50px">
             <input type="radio" id="option2-herbs" name="packaging_option" value="1Kg (100gms x 10)" class="form-check-input" onclick="calculateCartonsHerbs()" />
             <label for="option2-herbs" class="form-check-label">1Kg (100gms x 10)</label>
+        </div>
+        <div class="form-check" style="padding-left: 50px">
+            <input type="radio" id="option3-herbs" name="packaging_option" value="1.5Kg (150gms x 10)" class="form-check-input" onclick="calculateCartonsHerbs()" />
+            <label for="option3-herbs" class="form-check-label">1.5Kg (150gms x 10)</label>
         </div>
         @error('packaging_option') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="mb-3">
         <label>Net Weight (Kg)</label>
-        <input type="number" id="netWeight-herbs" name="Net_Weight" class="form-control" value="{{ old('Net_Weight') }}" oninput="calculateCartonsHerbs()" />
+        <input type="number" id="netWeight-herbs" name="Net_Weight" class="form-control"
+            value="{{ old('Net_Weight') }}"
+            oninput="calculateCartonsHerbs(); calculateTotalPrice();" 
+            onwheel="this.blur()"/>
         @error('Net_Weight') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="mb-3">
         <label>No. of Cartons</label>
-        <input type="number" id="numCartons-herbs" name="Quantity" class="form-control" value="{{ old('Quantity') }}" readonly />
-        @error('Quantity') <span class="text-danger">{{ $message }}</span> @enderror
+        <input type="number" id="numCartons-herbs" name="Quantity_of_packages" class="form-control" value="{{ old('Quantity_of_packages') }}" readonly />
+        @error('Quantity_of_packages') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="mb-3">
@@ -42,14 +49,36 @@
     </div>
 
     <div class="mb-3">
+        <label>Currency</label>
+        <div class="form-check" style="padding-left: 50px">
+            <input type="radio" id="option1-Currency" name="Currency" value="KES" class="form-check-input" />
+            <label for="option1-Currency" class="form-check-label">KES</label>
+        </div>
+        <div class="form-check" style="padding-left: 50px">
+            <input type="radio" id="option2-Currency" name="Currency" value="EUR" class="form-check-input"/>
+            <label for="option2-Currency" class="form-check-label">EUR</label>
+        </div>
+        <div class="form-check" style="padding-left: 50px">
+            <input type="radio" id="option3-Currency" name="Currency" value="USD" class="form-check-input"/>
+            <label for="option3-Currency" class="form-check-label">USD</label>
+        </div>
+        <div class="form-check" style="padding-left: 50px">
+            <input type="radio" id="option4-Currency" name="Currency" value="GBP" class="form-check-input"/>
+            <label for="option4-Currency" class="form-check-label">GBP</label>
+        </div>
+        @error('Currency') <span class="text-danger">{{ $message }}</span> @enderror
+    </div>
+
+    
+    <div class="mb-3">
         <label>Unit Price</label>
-        <input type="number" name="Unit_Price" class="form-control" value="{{ old('Unit_Price') }}" />
+        <input type="number" id="unitPrice" name="Unit_Price" class="form-control" value="{{ old('Unit_Price') }}" oninput="calculateTotalPrice()" step="1" />
         @error('Unit_Price') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="mb-3">
         <label>Amount</label>
-        <input type="number" name="Total_Price" class="form-control" value="{{ old('Total_Price') }}" />
+        <input type="number" id="totalPrice" name="Total_Price" class="form-control" value="{{ old('Total_Price') }}" readonly />
         @error('Total_Price') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
@@ -123,5 +152,13 @@
         } else {
             document.getElementById('herbs-fields').style.display = 'none';
         }
+</script>
+<script>
+    function calculateTotalPrice() {
+        const netWeight = parseFloat(document.getElementById('netWeight-herbs').value) || 0;
+        const unitPrice = parseFloat(document.getElementById('unitPrice').value) || 0;
+        const total = netWeight * unitPrice;
+        document.getElementById('totalPrice').value = total.toFixed(2);
+    }
 </script>
 

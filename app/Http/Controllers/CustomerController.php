@@ -25,8 +25,16 @@ class CustomerController extends Controller
     // Validate the customer and salesperson data
     $request->validate([
         'Customer_Name' => 'required|string|max:255',
-        'Cust_Account_No' => 'required|string|max:255',
-        'Address' => 'required|string|max:255',
+        'AttentionTo' => 'nullable|string|max:255', // Added for detailed address
+        'Cust_Account_No' => 'numeric|digits_between:5,10',
+        'email' => 'required|string|max:255',
+        'AddressLine1' => 'nullable|string|max:255',
+        'AddressLine2' => 'nullable|string|max:255',
+        'City' => 'nullable|string|max:100',
+        'Region_State' => 'nullable|string|max:100',
+        'PostalCode' => 'nullable|string|max:20',
+        'Country' => 'nullable|string|max:100',
+        
         'salespersons' => 'required|array', // Expecting multiple salespersons
         'salespersons.*.first_name' => 'required|string|max:255',
         'salespersons.*.last_name' => 'required|string|max:255',
@@ -36,8 +44,15 @@ class CustomerController extends Controller
     // Create the customer
     $customer = Customers::create([
         'Customer_Name' => $request->Customer_Name,
+        'AttentionTo' => $request->AttentionTo, // Added for detailed address
         'Cust_Account_No' => $request->Cust_Account_No,
-        'Address'=> $request->Address,
+        'email'=> $request->Address,
+        'AddressLine1' => $request->AddressLine1,
+        'AddressLine2' => $request->AddressLine2,
+        'City' => $request->City,
+        'Region_State' => $request->Region_State,
+        'PostalCode' => $request->PostalCode,
+        'Country' => $request->Country,
         'Status' => 'pending', // or any other status
     ]);
 
@@ -81,7 +96,7 @@ class CustomerController extends Controller
     $validated = $request->validate([
         'Customer_Name' => 'required|max:255|string',
         'Cust_Account_No' => 'required|numeric',
-        'Address' => 'required|string|max:255',
+        'email' => 'required|string|max:255',
         'salespersons.*.first_name' => 'required|string|max:255',
         'salespersons.*.last_name' => 'required|string|max:255',
         'salespersons.*.email' => 'required|email',
@@ -95,7 +110,7 @@ class CustomerController extends Controller
     $customer->update([
         'Customer_Name' => $validated['Customer_Name'],
         'Cust_Account_No' => $validated['Cust_Account_No'],
-        'Address' => $validated['Address'],
+        'email' => $validated['email'],
         'is_active' => $request->has('is_active') ? 1 : 0,
     ]);
 
@@ -120,7 +135,7 @@ class CustomerController extends Controller
         $customer->update([
             'Customer_Name' => $validated['Customer_Name'],
             'Cust_Account_No' => $validated['Cust_Account_No'],
-            'Address' => $validated['Address'],
+            'email' => $validated['email'],
             'is_active' => $request->has('is_active') ? 1 : 0,
         ]);
     
@@ -155,8 +170,15 @@ public function update(Request $request, int $id)
     // Validate the request
     $validated = $request->validate([
         'Customer_Name' => 'required|max:255|string',
-        'Cust_Account_No' => 'required|numeric',
-        'Address' => 'required|string|max:255',
+        'AttentionTo' => 'nullable|string|max:255',
+        'Cust_Account_No' => 'numeric',
+        'email' => 'required|string|max:255',
+        'AddressLine1' => 'nullable|string|max:255',
+        'AddressLine2' => 'nullable|string|max:255',
+        'City' => 'nullable|string|max:100',
+        'Region_State' => 'nullable|string|max:100',
+        'PostalCode' => 'nullable|string|max:20',
+        'Country' => 'nullable|string|max:100',
         'salespersons.*.first_name' => 'required|string|max:255',
         'salespersons.*.last_name' => 'required|string|max:255',
         'salespersons.*.email' => 'required|email',
@@ -169,8 +191,15 @@ public function update(Request $request, int $id)
     // Update customer details
     $customer->update([
         'Customer_Name' => $validated['Customer_Name'],
+        'AttentionTo' => $validated['AttentionTo'],
         'Cust_Account_No' => $validated['Cust_Account_No'],
-        'Address' => $validated['Address'],
+        'email' => $validated['email'],
+        'AddressLine1' => $validated['AddressLine1'],
+        'AddressLine2' => $validated['AddressLine2'],
+        'City' => $validated['City'],
+        'Region_State' => $validated['Region_State'],
+        'PostalCode' => $validated['PostalCode'],
+        'Country' => $validated['Country'],
         'is_active' => $request->has('is_active') ? 1 : 0,
     ]);
 

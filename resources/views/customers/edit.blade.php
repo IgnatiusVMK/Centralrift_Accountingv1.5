@@ -21,29 +21,69 @@
 
                             <!-- Customer Fields -->
                             <div class="mb-3">
-                                <label>First Name</label>
-                                <input type="text" name="Customer_Name" class="form-control" value="{{ old('Customer_Name', $customer->Customer_Name) }}" />
+                                <label>Full Name</label>
+                                <input type="text" name="Customer_Name" class="form-control" value="{{ old('Customer_Name') }}" />
                                 @error('Customer_Name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
+
+                            <div class="mb-3">
+                                <label>Attention To (e.g., C/O Company)</label>
+                                <input type="text" name="AttentionTo" class="form-control" value="{{ old('AttentionTo') }}" />
+                                @error('AttentionTo') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+
                             <div class="mb-3">
                                 <label>Account No.</label>
-                                <input type="number" name="Cust_Account_No" class="form-control" value="{{ old('Cust_Account_No', $customer->Cust_Account_No) }}" />
+                                <input type="number" name="Cust_Account_No" class="form-control" value="{{ old('Cust_Account_No') }}" />
                                 @error('Cust_Account_No') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                            {{-- <div class="mb-3">
+
+                            <div class="mb-3">
                                 <label>Email</label>
-                                <input type="email" name="Email" class="form-control" value="{{ old('Email', $customer->Email) }}" />
-                                @error('Email') <span class="text-danger">{{ $message }}</span> @enderror
+                                <input type="email" name="Email" class="form-control" value="{{ old('email') }}" />
+                                @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
+
                             <div class="mb-3">
                                 <label>Contact</label>
-                                <input type="text" name="Contact" class="form-control" value="{{ old('Contact', $customer->Contact) }}" />
+                                <input type="text" name="Contact" class="form-control" value="{{ old('Contact') }}" />
                                 @error('Contact') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div> --}}
+                            </div>
+
                             <div class="mb-3">
-                                <label>Address</label>
-                                <input type="text" name="Address" class="form-control" value="{{ old('Address', $customer->Address) }}" />
-                                @error('Address') <span class="text-danger">{{ $message }}</span> @enderror
+                                <label>Address Line 1</label>
+                                <input type="text" name="AddressLine1" class="form-control" value="{{ old('AddressLine1') }}" />
+                                @error('AddressLine1') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Address Line 2 (Optional)</label>
+                                <input type="text" name="AddressLine2" class="form-control" value="{{ old('AddressLine2') }}" />
+                                @error('AddressLine2') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label>City</label>
+                                <input type="text" name="City" class="form-control" value="{{ old('City') }}" />
+                                @error('City') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Region / State</label>
+                                <input type="text" name="Region_State" class="form-control" value="{{ old('Region_State') }}" />
+                                @error('Region_State') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Postal Code</label>
+                                <input type="text" name="PostalCode" class="form-control" value="{{ old('PostalCode') }}" />
+                                @error('PostalCode') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Country</label>
+                                <input type="text" name="Country" class="form-control" value="{{ old('Country') }}" />
+                                @error('Country') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <br>
 

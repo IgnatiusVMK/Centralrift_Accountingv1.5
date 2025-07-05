@@ -317,7 +317,7 @@ $currentDate= new DateTime();
                                       </td>
                                       <td>
                                         {{$completed->product_name}}
-                                        <p class="mb-0 text-small text-muted">Harvested On: {{$completed->harvest_date}}</p>
+                                        <p class="mb-0 text-small text-muted">Cycle Start: {{$completed->planting_date}}</p>
                                       </td>
                                       <td>
                                         <div class="badge badge-opacity-success float-end">Completed</div>

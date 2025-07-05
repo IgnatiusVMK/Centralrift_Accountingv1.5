@@ -2,7 +2,7 @@
 
 
 @section('content')
-      <div class="main-panel">
+      <div {{-- class="main-panel" --}}>
         <div class="content-wrapper">
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
@@ -17,7 +17,7 @@
                     </div>
                   
                   <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-bordered">
                       <thead>
                         <tr>
                           <th>

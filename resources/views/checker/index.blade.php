@@ -11,6 +11,11 @@
                   <a class="nav-link active ps-0" id="Cycles-tab" data-bs-toggle="tab" href="#Cycles" role="tab" aria-controls="Cycles" aria-selected="true" onclick="openForm(event, 'Cycles')">Cycles</a>
               </li>
               @endif
+              @if ($harvestCount >= 1)
+              <li class="nav-item">
+                  <a class="nav-link active ps-0" id="Harvests-tab" data-bs-toggle="tab" href="#Harvests" role="tab" aria-controls="Harvests" aria-selected="true" onclick="openForm(event, 'Harvests')">Harvests</a>
+              </li>
+              @endif
               @if ($creditCount >= 1)
               <li class="nav-item">
                   <a class="nav-link active ps-0" id="Credits-tab" data-bs-toggle="tab" href="#Credits" role="tab" aria-controls="Credits" aria-selected="true" onclick="openForm(event, 'Credits')">Credits</a>
@@ -97,9 +102,9 @@
       </div>
     </div>
   </div>
-  <div class="main-panel">
-    @if ($pendingCyclesCount >= 1 || $creditCount >=1 ||  $wagesCount >= 1 || $salariesCount >= 1 || $advanceCount >= 1  || $transportCount >= 1 || $chemicalsCount >= 1 ||  $seedsCount >= 1 || $cpexpensesCount >= 1 || $maintenanceCount >= 1 || $salesCount >=1 || $purchaseCount >=1 || $stocksCount >= 1 || $cycAllocateCount >= 1 || $withdrawalCount >= 1 || $electricityCount >= 1)
-      <div class="content-wrapper">
+  <div {{-- class="main-panel" --}}>
+    @if ($pendingCyclesCount >= 1 || $harvestCount>=1 || $creditCount >=1 ||  $wagesCount >= 1 || $salariesCount >= 1 || $advanceCount >= 1  || $transportCount >= 1 || $chemicalsCount >= 1 ||  $seedsCount >= 1 || $cpexpensesCount >= 1 || $maintenanceCount >= 1 || $salesCount >=1 || $purchaseCount >=1 || $stocksCount >= 1 || $cycAllocateCount >= 1 || $withdrawalCount >= 1 || $electricityCount >= 1)
+      <div {{-- class="content-wrapper" --}}>
         <div class="row">
           <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
@@ -175,6 +180,93 @@
                                   @can('create-checker')
                                   <td>
                                       <form action="{{ url('checker/'.$pending->Cycle_Id.'/validate')}}" method="POST">
+                                          @csrf
+                                            <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                                            <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
+                                          <button type="submit" class="btn btn-danger">Approve</button>
+                                        </form>
+                                  </td>
+                                  @endcan
+                              </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                  </div>
+                  @endif
+
+                  @if ($harvestCount >= 1)
+                  <div class="tab-pane fade show active" id="Harvests" role="tabpanel" aria-labelledby="Harvests-tab">
+                    <!-- Harvests form content here -->
+                      <div class="card-body">
+                        @if (session('status'))
+                          <div class="alert alert-danger text-center">{{session('status')}}</div>
+                        @endif
+                        <div class="card-header">
+                          <h4 class="card-title text-center">Harvests
+                          </h4>
+                        </div>
+                        <div class="table-responsive">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>
+                                  Cycle Name
+                                </th>
+                                <th>
+                                  Product
+                                </th>
+                                <th>
+                                  Harvest Date
+                                </th>
+                                <th>
+                                  Quantity Harvested
+                                </th>
+                                <th>
+                                  Quantity Spoilt
+                                </th>
+                                <th>
+                                  Remarks
+                                <th>
+                                  Maker
+                                </th>
+                                @can('create-checker')
+                                <th>
+                                  Edit
+                                </th>
+                                @endcan
+                                <th>
+                                  Created On
+                                </th>
+                                @can('create-checker')
+                                <th>
+                                  Validate
+                                </th>
+                                @endcan
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach ($harvests as $harvest )
+                              <tr>
+                                  <td>{{$harvest->cycle->Cycle_Name}}</td>
+                                  <td>{{$harvest->Product}}</td>
+                                  <td>{{$harvest->harvest_date}}</td>
+                                  <td>{{$harvest->quantity_harvested}}</td>
+                                  <td>{{$harvest->quantity_spoilt}}</td>
+                                  <td>{{$harvest->remarks}}</td>
+                                  <td>
+                                      {{$harvest->maker?->name}}
+                                  </td>
+                                  @can('create-checker')
+                                  <td>
+                                      {{-- <a href="{{ url('checker/'.$harvest->id.'/validate')}}">Modify<i class="mdi mdi-border-color"></i></a> --}}
+                                  </td>
+                                  @endcan
+                                  <td>{{$harvest->created_at}}</td>
+                                  @can('create-checker')
+                                  <td>
+                                      <form action="{{ url('checker/harvest/'.$harvest->id.'/approve')}}" method="POST">
                                           @csrf
                                             <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
                                             <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
@@ -803,15 +895,9 @@
                         <table class="table table-striped">
                           <thead>
                             <tr>
-                              {{-- <th>
-                                Sn No.
-                              </th> --}}
                               <th>
                                 Cycle
                               </th>
-                              {{-- <th>
-                                Sale
-                              </th> --}}
                               <th>
                                 Customer
                               </th>
@@ -858,7 +944,7 @@
                                 <td>
                                   {{$sale->maker?->name}}
                                 </td>
-                                <td>{{$sale->Quantity}} Kg</td>
+                                <td>{{$sale->Net_Weight}} Kg</td>
                                 <td>Ksh {{$sale->Total_Price}}</td>
                                 <td class="@if($sale->Payment_Status == 'Un-paid') text-danger @elseif($sale->Payment_Status == 'Paid') text-success @else text-warning @endif">
                                   {{$sale->Payment_Status}}

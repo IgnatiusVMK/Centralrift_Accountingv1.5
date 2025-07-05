@@ -8,6 +8,7 @@ use App\Models\CapitalWithdrawal;
 use App\Models\Cycles;
 use App\Models\Financial;
 use App\Models\HarvestOrder;
+use App\Models\Harvests;
 use App\Models\Product;
 use App\Models\Sales;
 use Illuminate\Http\Request;
@@ -22,6 +23,9 @@ class MakerController extends Controller
 
         $pendingCycles = Cycles::where('Status', 'pending')->get();
         $pendingCyclesCount = Cycles::where('Status', 'pending')->get()->count();
+
+        $harvest = Harvests::where('Status', 'pending')->get();
+        $harvestCount = Harvests::where('Status', 'pending')->get()->count();
 
         $wages = Financial::where('type', 'expenditure')->where('Status', 'pending')->get();
 
@@ -56,6 +60,8 @@ class MakerController extends Controller
         //
         return view('maker.index', [
             'pendingCycles'=>$pendingCycles,
+            'harvestCount'=>$harvestCount,
+            'harvest'=>$harvest,
             'pendingCyclesCount'=>$pendingCyclesCount,
             'wages'=> $wages,
             'salaries'=> $salaries,

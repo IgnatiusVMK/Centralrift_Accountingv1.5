@@ -12,9 +12,8 @@
       </ul>
       <div>
         <div class="btn-wrapper">
-          <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
           <a href="{{ ('/cashbook/export-pdf') }}" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
-          {{-- <a href="{{ ('/cashbook/send-email') }}" class="btn btn-primary text-white me-0"><i class="icon-download"></i>Mail --}}
+          {{-- Send as Mail --}}
           <form action="{{url('cashbook/send-email')}}" method="post">
               @csrf
               {{-- Mail_to --}}
@@ -36,8 +35,8 @@
     </div>
   </div>
 </div>
-      <div class="main-panel">
-        <div class="content-wrapper">
+      <div {{-- class="main-panel" --}}>
+        <div {{-- class="content-wrapper" --}}>
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
@@ -50,17 +49,17 @@
                   </h4>
                   </div>
                   <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-bordered">
                       <thead>
                         <tr>
                           <th>
                             Sn No.
                           </th>
-                          <th>
+                          {{-- <th>
                             Transaction ID
-                          </th>
+                          </th> --}}
                           <th>
-                            Cycle ID
+                            Production Cycle
                           </th>
                           {{-- <th>
                             Reason
@@ -86,8 +85,9 @@
                         @foreach ($cashbook as $cbk )
                         <tr>
                           <td>{{$cbk->id}}</td>
-                          <td>{{$cbk->Transaction_Id}}</td>
-                          <td>{{$cbk->Cycle_Id}}</td>
+                          {{-- <td>{{$cbk->Transaction_Id}}</td> --}}
+                          {{-- <td>{{$cbk->Cycle_Id}}</td> --}}
+                          <td>{{$cbk->cycle->Cycle_Name ?? 'N/A' }}</td>
                           <td>{{$cbk->Description}}</td>
                           <td>Ksh {{$cbk->Crd_Amnt}}</td>
                           <td>Ksh {{$cbk->Dbt_Amt}}</td>

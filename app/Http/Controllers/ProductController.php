@@ -42,7 +42,7 @@ class ProductController extends Controller
             'Price' => 'required|integer',
             'Category_Id' => 'required|integer',
             'Supplier_Id' => 'required|integer',
-            'Created_Date' => 'required|date'
+            #'Created_Date' => 'required|date'
             ]);
     
         Product::create([
@@ -51,7 +51,7 @@ class ProductController extends Controller
             'Price' => $request->Price,
             'Category_Id' => $request->Category_Id,
             'Supplier_Id' => $request->Supplier_Id,
-            'Created_Date' => $request->Created_Date,
+            #'Created_Date' => $request->Created_Date,
         ]);
     
         return redirect('products/create')->with('success','New Product Created');

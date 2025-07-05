@@ -12,9 +12,11 @@
                       <div class="alert alert-danger text-center">{{session('status')}}</div>
                     @endif
                     <div class="card-header">
-                      <h4 class="card-title">Cycles
-                      {{-- <a href="{{ url('cycles/new') }}" class="btn btn-primary float-end">+ New Cycle</a> --}}
-                      </h4>
+                        <h4 class="card-title">Harvests
+                          @can('create-users')
+                            <a href="{{ url('new/harvest') }}" class="btn btn-primary float-end">+ Harvest</a>
+                          @endcan
+                        </h4>
                     </div>
                   
                   <div class="table-responsive">
@@ -22,62 +24,59 @@
                       <thead>
                         <tr>
                           <th>
-                            Cycle ID
+                            Sn No.
                           </th>
                           <th>
                             Cycle Name
                           </th>
-                          {{-- <th>
-                            Customer
-                          </th> --}}
                           <th>
                             Product
                           </th>
                           <th>
-                            Block
+                            Customer
                           </th>
                           <th>
-                            Start of Cycle
+                            Harvest Date
                           </th>
                           <th>
-                            End of Cycle
+                            Quantity Harvested (KGS)
                           </th>
-                          @can('view-cycles')
-                          {{-- <th>
+                          <th>
+                            Quantity Spoilt (KGS)
+                          </th>
+                          <th>
+                            Remarks
+                          </th>
+                          {{-- @can('view-cycles')
+                          <th>
                             Actions
-                          </th> --}}
-                          @endcan
+                          </th>
+                          @endcan --}}
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($cycles as $cyc)
+                        @foreach ($harvests as $harvest)
                         <tr>
                           <td>
-                            {{$cyc->Cycle_Id}}
+                            {{$harvest->id}}
                            </td>
+                           <td>
+                            {{$harvest->cycle->Cycle_Name}}
+                           </td>
+                           <td>
+                            {{$harvest->cycle->Product}}
+                           </td>
+                           <td>
+                            {{$harvest->Customer_Name}}
+                           </td>
+                           <td>
+                            {{$harvest->harvest_date}}
+                           </td>
+                          <td>{{$harvest->quantity_harvested}} Kgs</td>
+                          <td>{{$harvest->quantity_spoilt}} Kgs</td>
                           <td>
-                            @can('view-cycles')
-                              <a href="{{ url('cycles/'.$cyc->Cycle_Id)}}" class="">
-                                <i class="mdi mdi-border-color"></i> 
-                            @endcan
-                            {{$cyc->Cycle_Name}}</a>
+                            <div>{{$harvest->remarks}}</div>
                           </td>
-                           {{-- <td>
-                            {{$cyc->Client_Name}}
-                           </td> --}}
-                          <td>{{$cyc->Product}}</td>
-                          <td>{{$cyc->block->Block_Name}}</td>
-                          <td>
-                            <div>{{$cyc->Cycle_Start}}</div>
-                          </td>
-                          <td>
-                            <div>{{$cyc->Cycle_End}}</div>
-                          </td>
-                          {{-- <td>
-                            @can('view-cycles')
-                              <a href="" class="btn btn-warning"><i class="mdi mdi-border-color"></i>Update</a>
-                            @endcan
-                          </td> --}}
                         </tr>
                         @endforeach
                       </tbody>

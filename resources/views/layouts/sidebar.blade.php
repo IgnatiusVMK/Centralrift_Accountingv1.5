@@ -69,7 +69,7 @@
           @endcan
           <!--Cycles-->
           @can('access-cycles')
-          <li class="nav-item nav-category">Cycles</li>
+          <li class="nav-item nav-category">Production Cycles</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#cycles" aria-expanded="false" aria-controls="cycles">
                 <i class="menu-icon mdi mdi-calendar-clock"></i>
@@ -80,10 +80,13 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{ route('cycles') }}">All Cycles</a></li>
                 @can('create-cycles')
-                <li class="nav-item"> <a class="nav-link" href="{{ route('cycle.create') }}">New Cycles</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('cycle.create') }}">Create Cycle</a></li>
                 @endcan    
                 @can('create-cycles')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('cycle.allocate') }}">Allocate Inventory</a></li>
+                @endcan    
+                @can('create-cycles')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('harvests') }}">Harvests</a></li>
                 @endcan    
               </ul>
             </div>
@@ -91,7 +94,7 @@
           @endcan
           <!--Checker-->
           @can('access-checker')
-          <li class="nav-item nav-category">Checker Validation</li>
+          <li class="nav-item nav-category">Approval Workflow</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#checker" aria-expanded="false" aria-controls="checker">
               <i class="menu-icon mdi {{-- mdi-folder-plus --}} mdi-playlist-plus"></i>
@@ -127,7 +130,7 @@
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#finance" aria-expanded="false" aria-controls="finance">
               <i class="menu-icon mdi mdi-cash-multiple"></i>
-              <span class="menu-title">Monthly Expenses</span>
+              <span class="menu-title">All Expenses</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="finance">
@@ -196,7 +199,7 @@
           @endcan
           <!--Stock-->
           @can('access-stock')
-          <li class="nav-item nav-category">StockS & Inventory</li>
+          <li class="nav-item nav-category">Inventory</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#stock" aria-expanded="false" aria-controls="stock">
               <i class="menu-icon mdi mdi-store-plus"></i>
@@ -216,7 +219,7 @@
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#financial-statements" aria-expanded="false" aria-controls="financial-statements">
               <i class="menu-icon mdi mdi-factory"></i>
-              <span class="menu-title">Financials</span>
+              <span class="menu-title">Statements Overview</span>
               <i class="menu-arrow"></i> 
             </a>
             <div class="collapse" id="financial-statements">
@@ -233,7 +236,7 @@
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="reports">
               <i class="menu-icon mdi mdi-file-chart"></i>
-              <span class="menu-title">Reports</span>
+              <span class="menu-title">View Reports</span>
               <i class="menu-arrow"></i> 
             </a>
             <div class="collapse" id="reports">
@@ -247,16 +250,16 @@
           </li>
           @endcan
           <!--Profile-->
-          <li class="nav-item nav-category">PROFILE</li>
+          <li class="nav-item nav-category">Account Management</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="menu-icon mdi mdi-account-network-outline"></i>
-              <span class="menu-title">User Pages</span>
+              <span class="menu-title">User Profile</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#"> User Profile </a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">Account</a></li>
                 <li class="nav-item"> 
                   <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

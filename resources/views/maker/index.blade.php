@@ -11,6 +11,11 @@
                   <a class="nav-link active ps-0" id="Cycles-tab" data-bs-toggle="tab" href="#Cycles" role="tab" aria-controls="Cycles" aria-selected="true" onclick="openForm(event, 'Cycles')">Cycles</a>
               </li>
               @endif
+              @if ($harvestCount >= 1)
+              <li class="nav-item">
+                  <a class="nav-link active ps-0" id="Harvests-tab" data-bs-toggle="tab" href="#Harvests" role="tab" aria-controls="Harvests" aria-selected="true" onclick="openForm(event, 'Harvests')">Harvests</a>
+              </li>
+              @endif
               @if ($wagesCount >= 1)
               <li class="nav-item">
                   <a class="nav-link" id="Expenditures-tab" data-bs-toggle="tab" href="#Expenditures" role="tab" aria-controls="Expenditures" aria-selected="false" onclick="openForm(event, 'Expenditures')">Wages</a>
@@ -78,7 +83,7 @@
     </div>
   </div>
   <div class="main-panel">
-    @if ($pendingCyclesCount >= 1 || $wagesCount >= 1 || $salariesCount >= 1 || $advanceCount >= 1 || $chemicalsCount >= 1 ||  $seedsCount >= 1 || $cpexpensesCount >= 1 || $maintenanceCount >= 1 || $salesCount || $withdrawalCount >= 1 || $electricityCount >= 1)
+    @if ($pendingCyclesCount >= 1 || $harvestCount>=1 || $wagesCount >= 1 || $salariesCount >= 1 || $advanceCount >= 1 || $chemicalsCount >= 1 ||  $seedsCount >= 1 || $cpexpensesCount >= 1 || $maintenanceCount >= 1 || $salesCount || $withdrawalCount >= 1 || $electricityCount >= 1)
       <div class="content-wrapper">
         <div class="row">
           <div class="col-lg-12 grid-margin stretch-card">
@@ -155,6 +160,90 @@
                                   @can('create-approval')
                                   <td>
                                       <form action="{{ url('checker/'.$pending->id.'/validate')}}" method="POST">
+                                          @csrf
+                                            <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
+                                            <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>
+                                          <button type="submit" class="btn btn-danger">Approve</button>
+                                        </form>
+                                  </td>
+                                  @endcan
+                              </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                  </div>
+                  @endif
+
+                  @if ($harvestCount >= 1)
+                  <div class="tab-pane fade show active" id="Harvests" role="tabpanel" aria-labelledby="Harvests-tab">
+                    <!-- Harvests form content here -->
+                      <div class="card-body">
+                        @if (session('status'))
+                          <div class="alert alert-danger text-center">{{session('status')}}</div>
+                        @endif
+                        <div class="card-header">
+                          <h4 class="card-title text-center">Harvests
+                          </h4>
+                        </div>
+                        <div class="table-responsive">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>
+                                  Cycle ID
+                                </th>
+                                <th>
+                                  Cycle Name
+                                </th>
+                                <th>
+                                  Block
+                                </th>
+                                <th>
+                                  Product
+                                </th>
+                                <th>
+                                  Customer
+                                </th>
+                                <th>
+                                  Maker
+                                </th>
+                                @can('create-checker')
+                                <th>
+                                  Edit
+                                </th>
+                                @endcan
+                                <th>
+                                  Created On
+                                </th>
+                                @can('create-checker')
+                                <th>
+                                  Validate
+                                </th>
+                                @endcan
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach ($pendingCycles as $pending )
+                              <tr>
+                                  <td>{{$pending->Cycle_Id}}</td>
+                                  <td>{{$pending->Cycle_Name}}</td>
+                                  <td>{{$pending->block->Block_Name}}</td>
+                                  <td>{{$pending->Product}}</td>
+                                  <td>{{$pending->Client_Name}}</td>
+                                  <td>
+                                      {{$pending->maker->name}}
+                                  </td>
+                                  @can('create-checker')
+                                  <td>
+                                      <a href="{{ url('checker/'.$pending->id.'/validate')}}">Modify<i class="mdi mdi-border-color"></i></a>
+                                  </td>
+                                  @endcan
+                                  <td>{{$pending->created_at}}</td>
+                                  @can('create-checker')
+                                  <td>
+                                      <form action="{{ url('checker/'.$pending->Cycle_Id.'/validate')}}" method="POST">
                                           @csrf
                                             <input type="hidden" name="checker_id" class="form-control" value="{{ Auth::user()->id}}" readonly/>
                                             <input type="hidden" name="Status" class="form-control" value="{{ ('approved')}}" readonly/>

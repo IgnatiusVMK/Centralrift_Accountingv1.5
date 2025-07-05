@@ -2,8 +2,8 @@
 
 
 @section('content')
-      <div class="main-panel">
-        <div class="content-wrapper">
+      <div {{-- class="main-panel" --}}>
+        <div {{-- class="content-wrapper" --}}>
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
@@ -20,7 +20,7 @@
                     </div>
                   @can('view-users')
                   <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-bordered">
                       <thead>
                         <tr>
                           <th>
@@ -43,10 +43,7 @@
                             System-User Role
                           </th>
                           <th>
-                            Date Added
-                          </th>
-                          <th>
-                            Status
+                            Account Status
                           </th>
                           @can('modify-users')
                           <th>
@@ -57,6 +54,9 @@
                           <th>
                             Delete
                           </th>
+                          {{-- <th>
+                            Date Added
+                          </th> --}}
                           @endcan
                         </tr>
                       </thead>
@@ -69,7 +69,18 @@
                           {{-- <td class="py-1">
                             <img src="{{ asset('/images/marley.png')}}" alt="image"/>
                           </td> --}}
-                          <td>{{$user->name}}</td>
+                          <td>
+                            {{$user->name}}
+                            <br>
+                            <div><br>
+                                <b>OTP</b>
+                                @if ($user->otp_enabled)
+                                    <span style="color: green; font-size: 1.2em;">&#10004;</span>
+                                @else
+                                    <span style="color: red; font-size: 1.2em;">&#10006;</span>
+                                @endif
+                            </div>
+                          </td>
                           <td>
                             <div>{{$user->email}}</div><br>
                             <div>712345678</div>
@@ -84,7 +95,7 @@
                             @endforeach
                             </div>
                             <br>
-                            <div><b>Auth: </b> {{$user->role }}</div>
+                            <div><b>Authorization: </b> {{$user->role }}</div>
                           </td>
                           <td>
                             @can('modify-users')
@@ -96,27 +107,25 @@
                               {{-- {{$user->roles}} --}}
                             </a>
                           </td>
-                          <td>{{$user->created_at}}</td>
                           <td>
-                            @if ($user->is_active)
-                              <button class="btn btn-success">
-                                Active
-                              </button>    
-                            @else
-                              <button class="btn btn-danger">
-                                In-active
-                              </button>
-                            @endif
+                            <div>
+                              @if ($user->is_active)
+                                <b style="color: green">Active</b>
+                              @else
+                                <b style="color: red">In-active</b>
+                              @endif
+                            </div>
                           </td>
                           @can('modify-users')
                           <td>
-                              <a href="{{ url('users/'.$user->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i> Edit</a>
+                              <a href="{{ url('users/'.$user->id.'/edit')}}" class="btn btn-warning"><i class="mdi mdi-border-color"></i>{{-- Edit --}}</a>
                           </td>
                           @endcan
                           @can('delete-users')
                           <td>
-                              <a href="{{ url('users/'.$user->id.'/delete')}}" class="btn btn-danger">Delete<i class="mdi mdi-shredder"></i></a>
+                              <a href="{{ url('users/'.$user->id.'/delete')}}" class="btn btn-danger">{{-- Delete --}}<i class="mdi mdi-shredder"></i></a>
                           </td>
+                          {{-- <td>{{$user->created_at}}</td> --}}
                           @endcan
                         </tr>
                         @endforeach
