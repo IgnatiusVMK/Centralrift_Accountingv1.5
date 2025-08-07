@@ -20,6 +20,14 @@
             <input type="radio" id="option3-herbs" name="packaging_option" value="1.5Kg (150gms x 10)" class="form-check-input" onclick="calculateCartonsHerbs()" />
             <label for="option3-herbs" class="form-check-label">1.5Kg (150gms x 10)</label>
         </div>
+        <div class="form-check" style="padding-left: 50px">
+            <input type="radio" id="option4-herbs" name="packaging_option" value="2.1Kg (150gms x 14)" class="form-check-input" onclick="calculateCartonsHerbs()" />
+            <label for="option4-herbs" class="form-check-label">2.1Kg (150gms x 14)</label>
+        </div>
+        <div class="form-check" style="padding-left: 50px">
+            <input type="radio" id="option5-herbs" name="packaging_option" value="1Kg (75gms x 14)" class="form-check-input" onclick="calculateCartonsHerbs()" />
+            <label for="option5-herbs" class="form-check-label">1Kg (75gms x 14)</label>
+        </div>
         @error('packaging_option') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 
@@ -72,7 +80,7 @@
     
     <div class="mb-3">
         <label>Unit Price</label>
-        <input type="number" id="unitPrice" name="Unit_Price" class="form-control" value="{{ old('Unit_Price') }}" oninput="calculateTotalPrice()" step="1" />
+        <input type="number" id="unitPrice" name="Unit_Price" class="form-control" value="{{ old('Unit_Price') }}" oninput="calculateTotalPrice()" step="0.01" min="0"/>
         @error('Unit_Price') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 

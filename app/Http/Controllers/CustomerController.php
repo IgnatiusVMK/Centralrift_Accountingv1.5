@@ -6,6 +6,7 @@ use App\Models\CustomerContacts;
 use App\Models\Customers;
 use App\Models\SalesPerson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CustomerController extends Controller
@@ -21,62 +22,76 @@ class CustomerController extends Controller
     }
 
     public function store(Request $request)
-{
-    // Validate the customer and salesperson data
-    $request->validate([
-        'Customer_Name' => 'required|string|max:255',
-        'AttentionTo' => 'nullable|string|max:255', // Added for detailed address
-        'Cust_Account_No' => 'numeric|digits_between:5,10',
-        'email' => 'required|string|max:255',
-        'AddressLine1' => 'nullable|string|max:255',
-        'AddressLine2' => 'nullable|string|max:255',
-        'City' => 'nullable|string|max:100',
-        'Region_State' => 'nullable|string|max:100',
-        'PostalCode' => 'nullable|string|max:20',
-        'Country' => 'nullable|string|max:100',
-        
-        'salespersons' => 'required|array', // Expecting multiple salespersons
-        'salespersons.*.first_name' => 'required|string|max:255',
-        'salespersons.*.last_name' => 'required|string|max:255',
-        'salespersons.*.email' => 'required|email|unique:salespersons,email',
-    ]);
+    {
+        Log::debug('Raw input:', $request->all());
 
-    // Create the customer
-    $customer = Customers::create([
-        'Customer_Name' => $request->Customer_Name,
-        'AttentionTo' => $request->AttentionTo, // Added for detailed address
-        'Cust_Account_No' => $request->Cust_Account_No,
-        'email'=> $request->Address,
-        'AddressLine1' => $request->AddressLine1,
-        'AddressLine2' => $request->AddressLine2,
-        'City' => $request->City,
-        'Region_State' => $request->Region_State,
-        'PostalCode' => $request->PostalCode,
-        'Country' => $request->Country,
-        'Status' => 'pending', // or any other status
-    ]);
+        $validated = $request->validate([
+            'Customer_Name' => 'required|string|max:255',
+            'AttentionTo' => 'nullable|string|max:255',
+            'Cust_Account_No' => 'required|numeric|digits_between:5,10',
+            'email' => 'required|email|max:255',  // Changed to match form field name
+            'Contact' => 'nullable|string',
+            'AddressLine1' => 'required|string|max:255',
+            'AddressLine2' => 'nullable|string|max:255',
+            'City' => 'nullable|string|max:100',
+            'Region_State' => 'required|string|max:100',
+            'PostalCode' => 'required|string|max:20',
+            'Country' => 'required|string|max:100',
+            
+            'salespersons' => 'required|array',
+            'salespersons.*.first_name' => 'required|string|max:255',
+            'salespersons.*.last_name' => 'required|string|max:255',
+            'salespersons.*.email' => 'required|email|unique:salespersons,email',
+            'salespersons.*.phone' => 'nullable|string',
+        ]);
 
-    // Loop through each salesperson entry
-    foreach ($request->salespersons as $salespersonData) {
-        // Check if salesperson already exists by email
-        $salesperson = SalesPerson::where('email', $salespersonData['email'])->first();
+        try {
+            DB::beginTransaction();
 
-        if (!$salesperson) {
-            // If the salesperson does not exist, create a new one
-            $salesperson = SalesPerson::create([
-                'first_name' => $salespersonData['first_name'],
-                'last_name' => $salespersonData['last_name'],
-                'email' => $salespersonData['email'],
-                'phone' => $salespersonData['phone'] ?? null,
+            // Create customer - field names match validated data
+            $customer = Customers::create([
+                'Customer_Name' => $validated['Customer_Name'],
+                'AttentionTo' => $validated['AttentionTo'],
+                'Cust_Account_No' => $validated['Cust_Account_No'],
+                'email' => $validated['email'],  // Matches form field
+                'Contact' => $validated['Contact'],
+                'AddressLine1' => $validated['AddressLine1'],
+                'AddressLine2' => $validated['AddressLine2'],
+                'City' => $validated['City'],
+                'Region_State' => $validated['Region_State'],
+                'PostalCode' => $validated['PostalCode'],
+                'Country' => $validated['Country'],
+                'Status' => 'pending',
             ]);
+
+            // Handle salespersons
+            foreach ($validated['salespersons'] as $salespersonData) {
+                $salesperson = SalesPerson::firstOrCreate(
+                    ['email' => $salespersonData['email']],
+                    [
+                        'first_name' => $salespersonData['first_name'],
+                        'last_name' => $salespersonData['last_name'],
+                        'phone' => $salespersonData['phone'] ?? null,
+                    ]
+                );
+
+                $customer->salespersons()->syncWithoutDetaching([$salesperson->id]);
+            }
+
+            DB::commit();
+
+            return redirect()->route('customers.create')
+                ->with('success', 'Customer created successfully!');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error creating customer: '.$e->getMessage());
+            
+            return back()
+                ->withInput()
+                ->with('error', 'Error: '.$e->getMessage());
         }
-
-        // Attach the salesperson to the customer
-        $customer->salespersons()->attach($salesperson->id);
     }
-
-    return redirect()->route('customers.create')->with('success', 'Customer and salespersons added successfully.');
-}
 
 
     public function edit(int $id){

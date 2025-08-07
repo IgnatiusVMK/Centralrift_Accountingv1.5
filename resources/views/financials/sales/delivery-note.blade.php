@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centralrift {{$CustomerInvoiceDetails->Customer_Name}} Inv-{{$invoiceDetails->Sale_Date}}</title>
+    <title>Delivery Note-{{$CustomerInvoiceDetails->Customer_Name}} Inv-{{$invoiceDetails->Sale_Date}}</title>
     <style>
         @page {
             margin: 15px;
@@ -119,120 +119,113 @@
                 <p>Tel: +254 733 506881</p>
             </div>
         </div>
+        
         <div style="text-align: center; text-decoration: underline;">
             <h3>DELIVERY NOTE</h3>
         </div>        
+        
         <div>
             <p><strong>Consignee:</strong></p>
-            {{-- Customer Name (usually not null) --}}
             @if($CustomerInvoiceDetails->Customer_Name)
                 <p><b>{{ trim($CustomerInvoiceDetails->Customer_Name) }}</b></p>
             @endif
 
-            {{-- Attention To (skip if null) --}}
             @if($CustomerInvoiceDetails->AttentionTo)
                 <p><b>{{ trim($CustomerInvoiceDetails->AttentionTo) }},</b></p>
             @endif
 
-            {{-- Address Line 1 (usually not null) --}}
             @if($CustomerInvoiceDetails->AddressLine1)
                 <p><b>{{ trim($CustomerInvoiceDetails->AddressLine1) }},</b></p>
             @endif
 
-            {{-- Address Line 2 (skip if null) --}}
             @if($CustomerInvoiceDetails->AddressLine2)
                 <p><b>{{ trim($CustomerInvoiceDetails->AddressLine2) }},</b></p>
             @endif
 
-            {{-- City (usually not null) --}}
             @if($CustomerInvoiceDetails->City)
                 <p><b>{{ trim($CustomerInvoiceDetails->City) }},</b></p>
             @endif
 
-            {{-- Postal Code (skip if null) --}}
             @if($CustomerInvoiceDetails->PostalCode)
                 <p><b>{{ trim($CustomerInvoiceDetails->PostalCode) }},</b></p>
             @endif
 
-            {{-- Region/State (skip if null) --}}
             @if($CustomerInvoiceDetails->Region_State)
                 <p><b>{{ trim($CustomerInvoiceDetails->Region_State) }},</b></p>
             @endif
 
-            {{-- Country (usually not null) --}}
             @if($CustomerInvoiceDetails->Country)
                 <p><b>{{ trim($CustomerInvoiceDetails->Country) }}</b></p>
             @endif
+        </div>
         
         <div class="invoice-details">
             <div>
-                <p><b>DELIVERY DATE: </b>{{ $invoiceDetails->Sale_Date }} </p>
+                <p><b>DELIVERY DATE: </b>{{ $invoiceDetails->Sale_Date }}</p>
             </div>
         </div>
         
         <table style="text-align: right">
             <thead>
-                @foreach($sales as $sale)
                 <tr>
                     <th>Ref</th>
-                    @if ($sale->packaging_option === '30 * 1 Tray')
-                        <th>Quantity</th>
+                    @foreach($sales as $sale)
+                        @if ($sale->packaging_option === '30 * 1 Tray')
+                            <th>Quantity</th>
                     @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === '2Kg (150gms x 14)' || $sale->packaging_option === '1Kg (75gms x 14)' || $sale->packaging_option === '1.5Kg (150gms x 10)' || $sale->packaging_option === 'Crates')
-                        <th>No.of Boxes</th>
-                    @endif
-                    <th>Packaging</th>
-                    <th>Description of Goods</th>
-                    @if ($sale->packaging_option === '30 * 1 Tray')
-                        <th>Net Tray(s)</th>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === '2Kg (150gms x 14)' || $sale->packaging_option === '1Kg (75gms x 14)' || $sale->packaging_option === '1.5Kg (150gms x 10)' || $sale->packaging_option === 'Crates')
-                        <th>Net Weight (kgs)</th>
-                    @endif
-                    <th>Unit Price</th>
-                    <th>Total Price</th>
+                            <th>No.of Boxes</th>
+                        @endif
+                        <th>Packaging</th>
+                        <th>Description of Goods</th>
+                        @if ($sale->packaging_option === '30 * 1 Tray')
+                            <th>Net Tray(s)</th>
+                        @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === '2Kg (150gms x 14)' || $sale->packaging_option === '1Kg (75gms x 14)' || $sale->packaging_option === '1.5Kg (150gms x 10)' || $sale->packaging_option === 'Crates')
+                            <th>Net Weight (kgs)</th>
+                        @endif
+                    @endforeach
                 </tr>
             </thead>
             <tbody>
+                @foreach($sales as $sale)
                 <tr>
-                    {{-- @foreach($sales as $sale) --}}
                     <td style="text-align: right;">1</td>
                     <td style="text-align: right;">{{ $sale->Quantity_of_packages }}</td>
                     <td style="text-align: right;">
-                        @if($sale->packaging_option === '3Kg (30gms x 100)')
-                            30gms * 100
-                        @elseif($sale->packaging_option === '1Kg (100gms x 10)')
-                            100gms * 10
-                        @elseif($sale->packaging_option === '1.5Kg (150gms x 10)')
-                            150gms * 10
-                        @elseif($sale->packaging_option === '1Kg (75gms x 14)')
-                            75gms * 14
-                        @elseif($sale->packaging_option === '2.1Kg (150gms x 14)')
-                            150gms * 14
-                        @elseif ($sale->packaging_option === '30 * 1 Tray')
-                            Tray(s)
-                        @else
-                            {{-- {{ $sale->packaging_option }} --}}
-                        @endif
-                    </td>                                      
+                        @switch($sale->packaging_option)
+                            @case('1Kg (100gms x 10)')
+                                100gms * 10
+                                @break
+                            @case('1.5Kg (150gms x 10)')
+                                150gms * 10
+                                @break
+                            @case('1Kg (75gms x 14)')
+                                75gms * 14
+                                @break
+                            @case('2.1Kg (150gms x 14)')
+                                150gms * 14
+                                @break
+                            @default
+                                {{ $sale->packaging_option }}
+                        @endswitch
+                    </td>
                     <td style="text-align: right;">{{ $sale->Description }}</td>
                     @if ($sale->packaging_option === '30 * 1 Tray')
                         <td style="text-align: right;">{{ $sale->Quantity }} Trays</td>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === '1.5Kg (150gms x 10)' ||$sale->packaging_option === 'Crates')
+                    @else
                         <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
                     @endif
-                    <td style="text-align: right;">{{$sale->Currency}} {{ $sale->Unit_Price }}</td>
-                    <td style="text-align: right;">{{$sale->Currency}} {{ number_format($sale->Total_Price, 2, '.', ',') }}</td>
-                </tr>
-                <tr>
-                    <td colspan="4">Total</td>
-                    @if ($sale->packaging_option === '30 * 1 Tray')
-                        <td style="text-align: right;">{{ $sale->Quantity }} Trays</td>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === '1.5Kg (150gms x 10)' || $sale->packaging_option === 'Crates')
-                        <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
-                    @endif
-                    <td></td>
-                    <td style="text-align: right;">{{$sale->Currency}} {{ number_format($sale->Total_Price, 2, '.', ',') }}</td>
                 </tr>
                 @endforeach
+                <tr>
+                    <td colspan="4">Total</td>
+                    @foreach($sales as $sale)
+                        @if ($sale->packaging_option === '30 * 1 Tray')
+                            <td style="text-align: right;">{{ $sale->Quantity }} Trays</td>
+                        @else
+                            <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
+                        @endif
+                    @endforeach
+                </tr>
             </tbody>
         </table>
         
@@ -254,32 +247,10 @@
                 <span style="display: inline-block; width: 30%; border-bottom: 1px solid black; margin-top: 5px;"></span>
             </div>
         </div>
+        
         <div class="notes">
             <p>Please note that any claims should be made within 48 hours of receiving the produce.</p>
             <p>Any claims raised after 48 hours will not be honoured</p>
-        </div>
-    </div>
-
-    <div class="bank-details-container" style="text-align: center; margin-top: 20px;">
-        <div class="bank-details-container" style="text-align: center; margin-top: 20px;">
-            <div class="bank-details" style="display: inline-block; text-align: left; width: 400px; border: 1px solid black; padding: 10px; font-size: 0.9em;">
-                <p><b>{{-- PIN NO: [NUMBER] --}}</b></p>
-                <table style="width: 100%; border-collapse: collapse;">
-                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Name</td><td style="padding: 2px 4px; border: 1px solid #ddd;">Centralrift Fresh Produce (K) Limited</td></tr>
-                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Bank</td><td style="padding: 2px 4px; border: 1px solid #ddd;">Diamond Trust Bank</td></tr>
-                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Currency</td><td style="padding: 2px 4px; border: 1px solid #ddd;">{{$sale->Currency}}</td></tr>
-                    @if ($sale->Currency === 'KES')
-                        <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">0264200001</td></tr>
-                    @elseif ($sale->Currency === 'EUR')
-                        <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">0264200003</td></tr>
-                    @elseif ($sale->Currency === 'GBP')
-                        <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Number</td><td style="padding: 2px 4px; border: 1px solid #ddd;">0264200006</td></tr>
-                    @endif
-                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Account Branch</td><td style="padding: 2px 4px; border: 1px solid #ddd;">DTB Centre</td></tr>
-                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Branch Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">052</td></tr>
-                    <tr><td style="font-weight: bold; width: 40%; padding: 2px 4px; border: 1px solid #ddd;">Swift Code</td><td style="padding: 2px 4px; border: 1px solid #ddd;">DTKEKENA</td></tr>
-                </table>
-            </div>
         </div>
     </div>
 </body>

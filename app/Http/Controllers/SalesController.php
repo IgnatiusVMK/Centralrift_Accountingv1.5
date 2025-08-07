@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\GenerateInvoicesDelivery;
 use App\Models\Account;
 use App\Models\Customers;
 use App\Models\Cycles;
 use App\Models\Harvests;
 use App\Models\ProductsSales;
 use App\Models\Sales;
-use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;  // Note the lowercase 'Pdf'use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class SalesController extends Controller
 {
@@ -66,7 +69,7 @@ class SalesController extends Controller
         'packaging_option' => 'required|string|max:255',
         'Quantity_of_packages' => 'required|numeric|min:0',
         'Currency' => 'required|string|max:255',
-        'Unit_Price' => 'required|integer|min:0',
+        'Unit_Price' => 'required|decimal:2|min:0',
         'Total_Price' => 'required|numeric|min:0',
         'Sale_Date' => 'required|date',
         'Payment_Status' => 'required|string|max:255',
@@ -162,7 +165,7 @@ class SalesController extends Controller
         $dompdf->setPaper('A4', 'portrait');
 
         // If you need custom margins, use the following to set margins (not set_option):
-        $dompdf->set_option('isRemoteEnabled', true); // Make sure remote content (like images) is allowed
+        $dompdf->set_option('isRemoteEnabled', true);
         $dompdf->render();
 
         // Return the PDF as a download
@@ -172,6 +175,175 @@ class SalesController extends Controller
             ->header('Content-Length', strlen($dompdf->output()));
     }
 
+    public function generateMultipleInvoices(Request $request)
+{
+    Log::info('Starting document generation', $request->all());
+
+    try {
+        // Validate request
+        $validated = $request->validate([
+            'selected_invoices' => 'required|string',
+            'generate_invoice' => 'sometimes|accepted',
+            'generate_delivery_note' => 'sometimes|accepted',
+        ]);
+
+        Log::debug('Validated data:', $validated);
+
+        // Decode selected invoices
+        $selectedInvoices = json_decode($request->selected_invoices, true);
+        Log::debug('Decoded invoices:', $selectedInvoices);
+
+        if (empty($selectedInvoices)) {
+            throw new \Exception("No invoices selected");
+        }
+
+        // Get sales records
+        $sales = Sales::whereIn('Sales_Id', $selectedInvoices)->get();
+        Log::debug('Found sales records:', $sales->pluck('Sales_Id')->toArray());
+
+        $documents = [];
+
+        // Generate invoices if requested
+        if ($request->has('generate_invoice')) {
+            Log::info('Generating invoices...');
+            foreach ($sales as $sale) {
+                $pdf = Pdf::loadView('financials.sales.invoice', [
+                    'sales' => [$sale],
+                    'invoiceDetails' => $sale,
+                    'CustomerInvoiceDetails' => $sale->customer
+                ]);
+                $documents['invoices'][$sale->Sales_Id] = $pdf->output();
+                Log::debug("Generated invoice for {$sale->Sales_Id}");
+            }
+        }
+
+        // Generate delivery notes if requested
+        if ($request->has('generate_delivery_note')) {
+            Log::info('Generating delivery notes...');
+            foreach ($sales as $sale) {
+                $pdf = Pdf::loadView('financials.sales.delivery-note', [
+                    // 'sales' => $sales,
+                    // 'CustomerInvoiceDetails' => $sales->first()->customer,
+                    // 'invoiceDetails' => $sales->first()
+                    'sales' => [$sale],
+                    'CustomerInvoiceDetails' => $sale->customer,
+                    'invoiceDetails' => $sale
+                ]);
+                $documents['delivery_notes'][$sale->Sales_Id] = $pdf->output();
+                Log::debug("Generated delivery note for {$sale->Sales_Id}");
+            }
+        }
+
+        if (empty($documents)) {
+            throw new \Exception("No documents generated - check options");
+        }
+
+        // Store in session
+        session(['generated_documents' => $documents]);
+        Log::info('Documents generated successfully', array_keys($documents));
+
+        return redirect()->route('documents.selection')
+            ->with('success', count($documents) . ' documents generated!');
+
+    } catch (\Exception $e) {
+        Log::error("Document generation failed: " . $e->getMessage());
+        return redirect()->back()
+            ->with('error', 'Failed to generate documents: ' . $e->getMessage());
+    }
+}
+
+    public function documentsSelection()
+    {
+        // Log::info('Checking session for documents:', session()->all());
+        
+        if (!session()->has('generated_documents')) {
+            // Log::warning('No generated_documents in session');
+            return redirect()->back()->with('error', 'Document generation failed or no documents were created.');
+        }
+        
+        $documents = session('generated_documents');
+        
+        if (empty($documents['invoices']) && empty($documents['delivery_notes'])) {
+            // Log::warning('Empty documents array in session');
+            return redirect()->back()->with('error', 'No documents were generated.');
+        }
+        
+        return view('documents.selection', compact('documents'));
+    }
+
+    public function downloadDocuments($type, $id)
+    {
+        // Validate document type
+        $validTypes = ['invoices', 'delivery_notes'];
+        if (!in_array($type, $validTypes)) {
+            abort(404, 'Invalid document type');
+        }
+
+        // Check session for document
+        if (!session()->has("generated_documents.{$type}.{$id}")) {
+            abort(404, 'Document not found');
+        }
+
+        $content = session("generated_documents.{$type}.{$id}");
+        $filename = "{$type}_{$id}.pdf";
+        $tempPath = tempnam(sys_get_temp_dir(), 'doc_');
+        file_put_contents($tempPath, $content);
+
+        return response()->download($tempPath, $filename)
+            ->deleteFileAfterSend(true);
+    }
+
+public function downloadAllDocuments($type)
+{
+    // Validate type
+    $validTypes = ['invoices', 'delivery_notes', 'all'];
+    if (!in_array($type, $validTypes)) {
+        abort(404, 'Invalid document type');
+    }
+
+    $zipFileName = "Invoice&DeliveryNote_{$type}.zip";
+    $zipPath = storage_path("app/temp/{$zipFileName}");
+
+    // Create temp directory if it doesn't exist
+    if (!file_exists(dirname($zipPath))) {
+        mkdir(dirname($zipPath), 0755, true);
+    }
+
+    $zip = new ZipArchive();
+    if ($zip->open($zipPath, ZipArchive::CREATE) !== true) {
+        abort(500, 'Cannot create zip file');
+    }
+
+    // Add files to zip based on type
+    $documents = session('generated_documents', []);
+    
+    if ($type === 'all') {
+        foreach (['invoices', 'delivery_notes'] as $docType) {
+            $this->addDocumentsToZip($zip, $documents[$docType] ?? [], $docType);
+        }
+    } else {
+        $this->addDocumentsToZip($zip, $documents[$type] ?? [], $type);
+    }
+
+    $zip->close();
+
+    return response()->download($zipPath)
+        ->deleteFileAfterSend(true);
+}
+
+    protected function addDocumentsToZip($zip, $documents, $type)
+    {
+        foreach ($documents as $id => $content) {
+            $tempPath = tempnam(sys_get_temp_dir(), 'doc_');
+            file_put_contents($tempPath, $content);
+            $zip->addFile($tempPath, "{$type}/{$type}_{$id}.pdf");
+        }
+    }
+
+    protected function getDocumentPath($type, $id)
+    {
+        return "documents/{$type}/{$id}.pdf";
+    }
 
     public function getNextTransactionId()
     {

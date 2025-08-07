@@ -62,7 +62,7 @@
                             <td>{{ $sale->customer->Customer_Name }}</td>
                             <td>{{ $sale->Description }}</td>
                             <td>{{ $sale->Net_Weight }} Kg</td>
-                            <td>Ksh {{ $sale->Total_Price }}</td>
+                            <td>{{$sale->Currency}} {{ $sale->Total_Price }}</td>
                             <td class="@if($sale->Payment_Status == 'Un-paid') text-danger @elseif($sale->Payment_Status == 'Paid') text-success @else text-warning @endif">
                               {{ $sale->Payment_Status }}
                             </td>

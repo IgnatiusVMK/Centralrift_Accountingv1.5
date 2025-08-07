@@ -945,7 +945,7 @@
                                   {{$sale->maker?->name}}
                                 </td>
                                 <td>{{$sale->Net_Weight}} Kg</td>
-                                <td>Ksh {{$sale->Total_Price}}</td>
+                                <td>{{$sale->Currency}} {{$sale->Total_Price}}</td>
                                 <td class="@if($sale->Payment_Status == 'Un-paid') text-danger @elseif($sale->Payment_Status == 'Paid') text-success @else text-warning @endif">
                                   {{$sale->Payment_Status}}
                                 </td>
@@ -1037,8 +1037,8 @@
                                 @elseif ($purchase->Category_Id == 3)
                                   <td>{{$purchase->Quantity}} Boxes/Kgs</td>
                                 @endif
-                                <td>Ksh {{$purchase->Unit_Cost}}</td>
-                                <td>Ksh {{$purchase->Total_Cost}}</td>
+                                <td>{{$sale->Currency}} {{$purchase->Unit_Cost}}</td>
+                                <td>{{$sale->Currency}} {{$purchase->Total_Cost}}</td>
                                 <td>{{$purchase->maker->name}}</td>
                                 @can('create-checker')
                                   <td>

@@ -212,14 +212,14 @@
                         <td style="text-align: right;">{{ $sale->packaging_option }}</td>
                         <td style="text-align: right;">{{ $sale->Description }}</td>
                         <td style="text-align: right;">
-                            @if ($sale->packaging_option === '30 * 1 Tray')
+                            @if ($sale->packaging_option === '30 * 1 Tray')+
                                 {{ $sale->Quantity }} Trays
                             @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '1.5Kg (150gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === 'Crates')
                                 {{ $sale->Net_Weight }} Kg
                             @endif
                         </td>
                         <td style="text-align: right;">{{ $sale->Unit_Price }}</td>
-                        <td style="text-align: right;">Ksh {{ number_format($sale->Total_Price, 2, '.', ',') }}</td>
+                        <td style="text-align: right;">{{$sale->Currency}} {{ number_format($sale->Total_Price, 2, '.', ',') }}</td>
                         @php
                             $totalPrice += $sale->Total_Price; // Accumulate total price
                         @endphp
@@ -228,7 +228,7 @@
                 <tr>
                     <td colspan="5" style="text-align: left;"><b>Total</b></td>
                     <td style="text-align: right;"></td>
-                    <td style="text-align: right;">Ksh {{ number_format($totalPrice, 2, '.', ',') }}</td>
+                    <td style="text-align: right;">{{$sale->Currency}} {{ number_format($totalPrice, 2, '.', ',') }}</td>
                 </tr>
             </tbody>
         </table>

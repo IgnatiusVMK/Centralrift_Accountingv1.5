@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 use App\Http\Controllers\OtpVerificationController;
 use App\Http\Controllers\RoleUserController;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -215,6 +216,18 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
         Route::post('sales/{Cycle_Id}/create', [App\Http\Controllers\SalesController::class, 'store'])->name('sales.store');
         Route::get('/sales/{Sales_Id}/{Customer_Id}/generate-invoice', [SalesController::class, 'generateInvoice'])->name('sales.generateInvoice');
 
+        Route::post('/sales/generate-multiple-invoices', [SalesController::class, 'generateMultipleInvoices'])
+            ->name('generate.multiple.invoices');
+
+        Route::get('/documents/selection', [SalesController::class, 'documentsSelection'])
+            ->name('documents.selection');
+
+        Route::get('/documents/download/{type}/{id}', [SalesController::class, 'downloadDocuments'])
+            ->name('documents.download');
+
+        Route::get('/documents/download-all/{type}', [SalesController::class, 'downloadAllDocuments'])
+            ->name('documents.download.all');
+
         Route::get('purchases/view', [App\Http\Controllers\PurchaseController::class,'index'])->name('purchase');
         Route::get('purchase/create', [App\Http\Controllers\PurchaseController::class,'create'])->name('purchase.create');
         Route::post('purchase/create', [App\Http\Controllers\PurchaseController::class, 'store'])->name('purchase.store');
@@ -238,12 +251,6 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
         Route::get('/notification/{notification}', [NotificationsController::class, 'show'])->name('notification.show');
         Route::get('/notification/{notificationId}', [NotificationsController::class, 'getNotification']);
         Route::post('/notifications/{notification}/mark-as-read', [NotificationsController::class, 'markAsRead'])->name('notifications.markAsRead');
-
-
-
-
-
-
 
         //Test Routes for Laravel Mail
         /* Route::get('/welcome', [MailController::class, 'index']); */
@@ -275,10 +282,27 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
                 'Lpo_No' => 'NRB4575KE',
                 'Sale_Date' => '2024/09/10',
             ];
+            
+            return view('financials.sales.invoice-template', ['sales' => $sales, 'invoiceDetails' => $invoiceDetails]);
+        });
+        Route::get('/view-delivery', function () {
+            $sales = [
+                'No_of_Boxes'=> '25',
+                'packaging_option' => '3Kg',
+                'Description' => 'Extra Fine French Beans',
+                'Net_Weight'=> '158',
+                'Total_Price' => '17580',
+                'mailData' => 'Mail from ItSolutionStuff.com',
+                'message' => 'Test Message body',
+            ];
+            $invoiceDetails = [
+                'Lpo_No' => 'NRB4575KE',
+                'Sale_Date' => '2024/09/10',
+            ];
 
             
             
-            return view('financials.sales.invoice-template', ['sales' => $sales, 'invoiceDetails' => $invoiceDetails]);
+            return view('financials.sales.delivery', ['sales' => $sales, 'invoiceDetails' => $invoiceDetails]);
         });
 
         Route::get('/system-maintenance', [App\Http\Controllers\ScheduleMaintenanceController::class, 'index'])->name('schedule-maintenance.index');
