@@ -28,14 +28,15 @@ class CustomerController extends Controller
         $validated = $request->validate([
             'Customer_Name' => 'required|string|max:255',
             'AttentionTo' => 'nullable|string|max:255',
-            'Cust_Account_No' => 'required|numeric|digits_between:5,10',
+            /* 'Cust_Account_No' => 'nullable|numeric|digits_between:5,10', */
+            /* 'Address' => 'required|string|max:255', */
             'email' => 'required|email|max:255',  // Changed to match form field name
             'Contact' => 'nullable|string',
-            'AddressLine1' => 'required|string|max:255',
+            'AddressLine1' => 'nullable|string|max:255',
             'AddressLine2' => 'nullable|string|max:255',
             'City' => 'nullable|string|max:100',
-            'Region_State' => 'required|string|max:100',
-            'PostalCode' => 'required|string|max:20',
+            'Region_State' => 'nullable|string|max:100',
+            'PostalCode' => 'nullable|string|max:20',
             'Country' => 'required|string|max:100',
             
             'salespersons' => 'required|array',
@@ -52,14 +53,15 @@ class CustomerController extends Controller
             $customer = Customers::create([
                 'Customer_Name' => $validated['Customer_Name'],
                 'AttentionTo' => $validated['AttentionTo'],
-                'Cust_Account_No' => $validated['Cust_Account_No'],
+                /* 'Cust_Account_No' => $validated['Cust_Account_No'], */
+                /* 'Address' => $validated['Address'], */
                 'email' => $validated['email'],  // Matches form field
-                'Contact' => $validated['Contact'],
+                /* 'Contact' => $validated['Contact'], */
                 'AddressLine1' => $validated['AddressLine1'],
-                'AddressLine2' => $validated['AddressLine2'],
-                'City' => $validated['City'],
+                /* 'AddressLine2' => $validated['AddressLine2'], */
+                /* 'City' => $validated['City'],
                 'Region_State' => $validated['Region_State'],
-                'PostalCode' => $validated['PostalCode'],
+                'PostalCode' => $validated['PostalCode'], */
                 'Country' => $validated['Country'],
                 'Status' => 'pending',
             ]);

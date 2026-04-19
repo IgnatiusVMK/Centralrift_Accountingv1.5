@@ -67,6 +67,33 @@
             </div>
           </li>
           @endcan
+          <!--Invoices-->
+          @can('access-invoices')
+          <li class="nav-item nav-category">Generate Invoices</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#invoices" aria-expanded="false" aria-controls="invoices">
+                <i class="menu-icon mdi mdi-receipt-text-edit-outline"></i>
+                <span class="menu-title">Customer Invoices</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="invoices">
+              <ul class="nav flex-column sub-menu">
+                @can('create-invoices')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('invoice.indexComm') }}">Commercial Invoices</a></li>
+                @endcan    
+                @can('create-invoices')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('invoice.indexProforma') }}">Proforma Invoices</a></li>
+                @endcan    
+                @can('create-invoices')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('invoice.create') }}">New Invoice</a></li>
+                @endcan
+                @can('create-invoices')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('customer-pricing.index') }}">Customer Pricing</a></li>
+                @endcan    
+              </ul>
+            </div>
+          </li>
+          @endcan
           <!--Cycles-->
           @can('access-cycles')
           <li class="nav-item nav-category">Production Cycles</li>
@@ -87,7 +114,7 @@
                 @endcan    
                 @can('create-cycles')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('harvests') }}">Harvests</a></li>
-                @endcan    
+                @endcan 
               </ul>
             </div>
           </li>
@@ -213,17 +240,19 @@
             </div>
           </li>
           @endcan
-          <!--Financial Statements-->
-          @can('access-financials')
-          <li class="nav-item nav-category">Financial Statements</li>
+          <!--Analytics & Summaries-->
+          @can('access-analytics-summaries')
+          <li class="nav-item nav-category">Analytics & Summaries</li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#financial-statements" aria-expanded="false" aria-controls="financial-statements">
-              <i class="menu-icon mdi mdi-factory"></i>
-              <span class="menu-title">Statements Overview</span>
+            <a class="nav-link" data-bs-toggle="collapse" href="#analytics-summaries" aria-expanded="false" aria-controls="analytics-summaries">
+              <i class="menu-icon mdi mdi-home-analytics"></i>
+              <span class="menu-title">Summary Overview</span>
               <i class="menu-arrow"></i> 
             </a>
-            <div class="collapse" id="financial-statements">
+            <div class="collapse" id="analytics-summaries">
               <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{ ('customer-statement')}}">Customer Statement</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{-- {{ ('/produce-summary')}} --}}">Produce Summary</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/cashbook')}}">Cash Book</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ ('/profit-loss')}}">Profit & Loss</a></li>
               </ul>

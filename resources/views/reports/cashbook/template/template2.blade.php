@@ -1,28 +1,8 @@
-<?php
-
-use Carbon\Carbon;
-// Get current date and time
-$days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-$timezone = Carbon::now('Africa/Nairobi');
-$currentDate = new DateTime($timezone);
-
-$day = $days[$currentDate->format('w')];
-$date = $currentDate->format('d');
-$month = $currentDate->format('m');
-$year = $currentDate->format('Y');
-$hours = $currentDate->format('H');
-$minutes = $currentDate->format('i');
-$seconds = $currentDate->format('s');
-
-$currentDateTime = $day . ', ' . $date . '/' . $month . '/' . $year . '<br>' . $hours . ':' . $minutes . ':' . $seconds;
-?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Centralrift-Kenya-LTD</title>
+    <title>CashBook Report</title>
     <style>
         /* Custom inline styles */
         body {
@@ -228,65 +208,48 @@ $currentDateTime = $day . ', ' . $date . '/' . $month . '/' . $year . '<br>' . $
     </style>
 </head>
 <body>
-    <div class="main-panel">
-      <div class="row">
-        <div class="col text-end">
-            <h1 class="items-right">Centralrift-Kenya-LTD</h1>
-            <h2 class="items-right">Kajiado, Kenya.</h2>
-            <h2 style="text-align: right;" id="datetime"><?php echo $currentDateTime; ?></h2>
-        </div>
-      </div>
 
-      <div class="summary-card w-50">
-        <h1 class="summary-card-header text-success" style="color: brown">Summary of Accounts</h1>
-        <div class="card-body">
-          <p>Total Credited Amount: Ksh {{ $totalCredit }}</p>
-          <p>Total Debited Amount: Ksh {{ $totalDebit }}</p>
-          <p>Available Balance: Ksh {{ $balance }}</p>
-        </div>
+    @php
+        $month = \Carbon\Carbon::now()->format('F Y');
+    @endphp
+    
+    <h2>CashBook Report {{ $month }}</h2>
+    <div class="meta">
+        Generated on: {{ now()->format('d M Y, h:i A') }}
     </div>
-        <div class="content-wrapper">
-            <div class="row">
-                <div class="col-lg-12 grid-margin stretch-card">
-                    <div class="card">                      
-                        <div class="card-body">
-                            <div class="card-header">
-                                <h4 class="card-title text-center">CashBook Monthly Reports</h4>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Sn No.</th>
-                                            <th>Transaction ID</th>
-                                            <th>Cycle</th>
-                                            <th>Description</th>
-                                            <th>Credit Amount</th>
-                                            <th>Debit Amount</th>
-                                            {{-- <th>Balance Estimate</th> --}}
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($cashbook as $cbk)
-                                        <tr>
-                                            <td>{{$cbk->id}}</td>
-                                            <td>{{$cbk->Transaction_Id}}</td>
-                                            <td>{{$cbk->Cycle_Id}}</td>
-                                            <td>{{$cbk->Description}}</td>
-                                            <td>Ksh {{$cbk->Crd_Amnt}}</td>
-                                            <td>Ksh {{$cbk->Dbt_Amt}}</td>
-                                            {{-- <td>Ksh {{$cbk->Bal}}</td> --}}
-                                            <td>{{$cbk->created_at}}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sn No.</th>
+                <th>Production Cycle</th>
+                <th>Description</th>
+                <th>Credit Amount</th>
+                <th>Debit Amount</th>
+                <th>Balance Estimate</th>
+                <th>Recorded On</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($cashbook as $cbk)
+                <tr>
+                    <td>{{ $cbk->id }}</td>
+                    <td>{{ $cbk->cycle->Cycle_Name ?? 'N/A' }}</td>
+                    <td>{{ $cbk->Description }}</td>
+                    <td>Ksh {{ number_format($cbk->Crd_Amnt, 2) }}</td>
+                    <td>Ksh {{ number_format($cbk->Dbt_Amt, 2) }}</td>
+                    <td>Ksh {{ number_format($cbk->Bal, 2) }}</td>
+                    <td>{{ \Carbon\Carbon::parse($cbk->created_at)->format('d M Y') }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <div class="footer">
+        © {{ date('Y') }} Centralrift Fresh Produce Kenya LTD. Confidential Report
+        <br>
+        <div>
+            Generated by: {{ Auth::user()->name }}
         </div>
     </div>
 </body>

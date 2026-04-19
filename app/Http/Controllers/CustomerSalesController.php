@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\CustomerContacts;
 use App\Models\Customers;
+use App\Models\Invoice;
 use App\Models\Sales;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Dompdf\Options;
 
 class CustomerSalesController extends Controller
@@ -57,6 +59,118 @@ class CustomerSalesController extends Controller
             'SaleuniqueCode' => $SaleuniqueCode,
         ]);
     }
+
+    public function viewAccount(Request $request)
+    {
+        $customers = Customers::all();
+
+
+        return view('reports.account-summary.index', compact( 'customers'));
+    }
+    public function ajaxSearch(Request $request)
+    {
+        $customerId = $request->input('customer_id');
+        $month = $request->input('month');
+
+        /* $customers = Customers::all(); */
+
+        if (!$customerId || !$month) {
+            return response()->json(['error' => 'Customer and Month are required'], 422);
+        }
+
+        $customer = Customers::find($customerId);
+
+        if (!$customer) {
+            return response()->json(['error' => 'Customer not found'], 404);
+        }
+
+        // Parse month to filter invoices
+        $startDate = $month . '-01';
+        $endDate   = date("Y-m-t", strtotime($startDate));
+
+        $invoices = Invoice::where('customer_id', $customerId)
+                    ->whereBetween('date', [$startDate, $endDate])
+                    ->with('items.product.category')
+                    ->get();
+
+
+        if ($invoices->isEmpty()) {
+            return response()->json(['message' => 'No invoices found'], 404);
+        }
+
+        $pdf = Pdf::loadView('reports.account-summary.statement', [
+            'invoices' => $invoices,
+            'customer' => $customer,
+        ]);
+
+        return response($pdf->output(), 200)
+            ->header('Content-Type', 'application/pdf');
+    }
+
+
+    public function exportStatement(Request $request)
+    {
+        $customer = Customers::find($request->customer_id);
+
+        if (!$customer) {
+            return back()->with('error', 'Customer not found.');
+        }
+
+        $invoices = $customer->invoices()
+            ->with('items.product.category')
+            ->orderBy('invoice_number', 'asc')
+            ->get();
+
+        $pdf = Pdf::loadView('reports.account-summary.statement', [
+            'invoices' => $invoices,
+            'customer' => $customer,
+        ])->setPaper('a4', 'portrait')
+        ->setOption([
+            'margin-left' => 20,
+            'margin-right' => 20,
+            'margin-top' => 20,
+            'margin-bottom' => 20,
+        ]);
+
+        $pdfName = str_replace(' ', '_', $customer->Customer_Name) . '_Statement_of_Accounts.pdf';
+
+
+        return $pdf->stream($pdfName);
+    }
+
+    public function downloadStatement(Request $request)
+    {
+        $customer = Customers::find($request->customer_id);
+
+        if (!$customer) {
+            return back()->with('error', 'Customer not found.');
+        }
+
+        $invoices = $customer->invoices()
+            ->with('items.product.category')
+            ->orderBy('invoice_number', 'asc')
+            ->get();
+
+        $pdf = Pdf::loadView('reports.account-summary.statement', [
+            'invoices' => $invoices,
+            'customer' => $customer,
+        ])->setPaper('a4', 'portrait')
+        ->setOption([
+            'margin-left' => 20,
+            'margin-right' => 20,
+            'margin-top' => 20,
+            'margin-bottom' => 20,
+        ]);
+
+        $pdfName = str_replace(' ', '_', $customer->Customer_Name) . '_Statement_of_Accounts.pdf';
+
+        // 🔹 Force download
+        return $pdf->download($pdfName);
+    }
+
+
+
+
 
     public function generateGroupedInvoice(Request $request, string $Customer_Id )
     {

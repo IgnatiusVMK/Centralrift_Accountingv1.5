@@ -21,6 +21,7 @@ class Customers extends Model
         'Region_State',
         'PostalCode',
         'Country',
+        'invoicable',
         'AttentionTo'
     ];
 
@@ -35,4 +36,20 @@ class Customers extends Model
     {
         return $this->belongsToMany(SalesPerson::class, 'customer_salesperson', 'customer_id', 'sales_person_id');
     }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class, 'customer_id', 'id');
+    }
+
+    public function pricing()
+    {
+        return $this->hasMany(CustomerProductPricing::class, 'customer_id');
+    }
+
+    public function invoiceAddress()
+    {
+        return $this->hasOne(CustomerInvoiceAddress::class, 'customer_id', 'id');
+    }
+
 }

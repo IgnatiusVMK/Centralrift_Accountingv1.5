@@ -121,19 +121,19 @@ class PermissionsTableSeeder extends Seeder
 
             // Permissions for Monthly Expenses
             [
-                'Name'=> 'access_financials',
+                'Name'=> 'access_analytics_summaries',
             ],
             [
-                'Name'=> 'view_financials',
+                'Name'=> 'view_analytics_summaries',
             ],
             [
-                'Name'=> 'create_financials',
+                'Name'=> 'create_analytics_summaries',
             ],
             [
-                'Name'=> 'modify_financials',
+                'Name'=> 'modify_analytics_summaries',
             ],
             [
-                'Name'=> 'delete_financials',
+                'Name'=> 'delete_analytics_summaries',
             ],
 
             // Permissions for purchases

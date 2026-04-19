@@ -33,11 +33,11 @@
                         @error('AttentionTo') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label>Account No.</label>
                         <input type="number" name="Cust_Account_No" class="form-control" value="{{ old('Cust_Account_No') }}" />
                         @error('Cust_Account_No') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label>Email</label>
@@ -45,10 +45,16 @@
                         @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label>Contact</label>
                         <input type="text" name="Contact" class="form-control" value="{{ old('Contact') }}" />
                         @error('Contact') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div> --}}
+
+                    <div class="mb-3">
+                        <label>Address</label>
+                        <input type="text" name="Address" class="form-control" value="{{ old('Address') }}" />
+                        @error('Address') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="mb-3">
@@ -57,13 +63,13 @@
                         @error('AddressLine1') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label>Address Line 2 (Optional)</label>
                         <input type="text" name="AddressLine2" class="form-control" value="{{ old('AddressLine2') }}" />
                         @error('AddressLine2') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
+                    </div> --}}
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label>City</label>
                         <input type="text" name="City" class="form-control" value="{{ old('City') }}" />
                         @error('City') <span class="text-danger">{{ $message }}</span> @enderror
@@ -73,13 +79,13 @@
                         <label>Region / State</label>
                         <input type="text" name="Region_State" class="form-control" value="{{ old('Region_State') }}" />
                         @error('Region_State') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
+                    </div> --}}
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label>Postal Code</label>
                         <input type="text" name="PostalCode" class="form-control" value="{{ old('PostalCode') }}" />
                         @error('PostalCode') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label>Country</label>

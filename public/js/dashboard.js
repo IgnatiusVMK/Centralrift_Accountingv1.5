@@ -636,7 +636,26 @@
     }
     if ($("#leaveReport").length) {
       var leaveReportChart = document.getElementById("leaveReport").getContext('2d');
-      var leaveReportData = {
+      // If the backend provides real data, use it; otherwise fall back to demo data.
+      var hasRealLeaveData = (window.leaveReportLabels && window.leaveReportLabels.length);
+      var leaveReportData = hasRealLeaveData ? {
+          labels: window.leaveReportLabels,
+          datasets: [{
+              label: 'Sales',
+              data: (window.leaveReportSales || []).map(Number),
+              backgroundColor: "#4CAF50",
+              borderColor: ['#4CAF50'],
+              borderWidth: 0,
+              fill: true,
+          }, {
+              label: 'Purchases',
+              data: (window.leaveReportPurchases || []).map(Number),
+              backgroundColor: "#F44336",
+              borderColor: ['#F44336'],
+              borderWidth: 0,
+              fill: true,
+          }]
+      } : {
           labels: ["Jan","Feb", "Mar", "Apr", "May"],
           datasets: [{
               label: 'Last week',

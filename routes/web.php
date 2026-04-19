@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\CashBookController;
 use App\Http\Controllers\CreditController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerProductPricingController;
 use App\Http\Controllers\CustomerSalesController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
@@ -157,6 +160,13 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
         Route::get('customers/sales/{id}', [App\Http\Controllers\CustomerSalesController::class, 'index'])->name('customers.showSales');
         Route::post('customer/{id}/generate-groupedinvoice', [CustomerSalesController::class, 'generateGroupedInvoice'])->name('customer.generateGroupedInvoice');
 
+        // Customer Product Pricing Routes
+        Route::get('customer-pricing', [CustomerProductPricingController::class, 'index'])->name('customer-pricing.index');
+        Route::get('customer-pricing/{customerId}/edit', [CustomerProductPricingController::class, 'edit'])->name('customer-pricing.edit');
+        Route::put('customer-pricing/{customerId}', [CustomerProductPricingController::class, 'update'])->name('customer-pricing.update');
+        Route::post('customer-pricing', [CustomerProductPricingController::class, 'store'])->name('customer-pricing.store');
+        Route::delete('customer-pricing/{id}', [CustomerProductPricingController::class, 'destroy'])->name('customer-pricing.destroy');
+
 
         Route::get('suppliers', [App\Http\Controllers\SupplierController::class,'index'])->name('suppliers');
         Route::get('suppliers/create', [App\Http\Controllers\SupplierController::class, 'create'])->name('suppliers.create');
@@ -213,6 +223,8 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
         Route::post('products-categories/create', [App\Http\Controllers\CategoryController::class, 'store'])->name('products-categories.store');
 
         Route::get('sales', [App\Http\Controllers\SalesController::class,'index'])->name('sales');
+        Route::get('/sales/ajax-search', [SalesController::class, 'ajaxSearch'])->name('sales.ajaxSearch');
+
         Route::post('sales/{Cycle_Id}/create', [App\Http\Controllers\SalesController::class, 'store'])->name('sales.store');
         Route::get('/sales/{Sales_Id}/{Customer_Id}/generate-invoice', [SalesController::class, 'generateInvoice'])->name('sales.generateInvoice');
 
@@ -237,14 +249,31 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
         // {{-- {{ url('allocate/'.$stock->id.'/'.$cycles->Cycle_Id) }} --}}
 
     
+        //============================================================= Reports Routes =============================================================/
 
+        //========= 1. CashBook =========//
         Route::get('cashbook', [App\Http\Controllers\CashBookController::class,'index'])->name('cashbook');
 
-        Route::get('cashbook/export-pdf', [CashBookController::class, 'exportPdf']);
-        Route::post('/cashbook/send-email', [App\Http\Controllers\CashBookController::class, 'sendAsMail']);
+        Route::get('cashbook/export-pdf', [CashBookController::class, 'exportPdf'])->name('cashbook.exportPdf');
 
+        Route::post('/cashbook/send-email', [App\Http\Controllers\CashBookController::class, 'sendAsMail'])->name('cashbook.sendEmail');
+
+        //========= 2. Profit & Loss =========//
         Route::get('/profit-loss', [App\Http\Controllers\ProfitLossController::class, 'index'])->name('profit-loss');
         Route::get('/profit-loss/{Cycle_Id}', [App\Http\Controllers\ProfitLossController::class, 'show'])->name('profit-loss.show');
+
+        //========= 3. Customer Account Statement =========//
+        Route::get('/customer-statement', [CustomerSalesController::class, 'viewAccount'])->name('customerstatement.viewAccount');
+        Route::get('/customer-statement/search', [CustomerSalesController::class, 'ajaxSearch'])->name('customerstatement.ajaxSearch');
+
+        Route::post('/customer-statement/export', [CustomerSalesController::class, 'exportStatement'])->name('customerstatement.exportPdf');
+        Route::post('/customer-statement/export-pdf', [CustomerSalesController::class, 'downloadStatement'])
+            ->name('customerstatement.downloadPdf');
+
+
+       //=========================================================== End of Reports Routes ===========================================================/
+
+        
 
         // Route to show notification details
         Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
@@ -317,7 +346,30 @@ Route::group(['middleware' => ['auth', 'verified', 'otp.verified']], function ()
         Route::middleware('admin.maintenance')->get('/test-maintenance', function () {
             return 'You are allowed to access this route.';
         });
-    
+
+        //======================== Invoices =================================/
+
+        /*
+        The idea behind this module is to manage sales invoices efficiently.Both proforma and commercial as requested
+        */
+
+        Route::get('/commercial-invoices', [App\Http\Controllers\InvoiceController::class,'indexComm'])->name('invoice.indexComm');
+        Route::get('/proforma-invoices', [App\Http\Controllers\InvoiceController::class,'indexProforma'])->name('invoice.indexProforma');
+        Route::get('invoice/view/{customer_id}/{invoice_number}', [App\Http\Controllers\InvoiceController::class,'show'])->name('invoice.show');
+        Route::post('invoice/review', [App\Http\Controllers\InvoiceController::class,'review'])->name('invoice.review');
+
+        Route::get('/invoices/commercial-search', [InvoiceController::class, 'ajaxSearchComm'])->name('invoices.ajaxSearchComm');
+        Route::get('/invoices/proforma-search', [InvoiceController::class, 'ajaxSearchProforma'])->name('invoices.ajaxSearchProforma');
+
+        Route::get('new-invoice', [App\Http\Controllers\InvoiceController::class,'create'])->name('invoice.create');
+        Route::post('new-invoice', [App\Http\Controllers\InvoiceController::class,'store'])->name('invoice.store');
+
+        Route::post('/invoice/generate-multiple-commercial-invoices', [InvoiceController::class, 'downloadSelectedCommercialInvoicesZip'])
+            ->name('generate.commercialinvoices.multiple');
+
+        Route::post('/invoice/generate-multiple-proforma-invoices', [InvoiceController::class, 'downloadSelectedProformaInvoicesZip'])
+            ->name('generate.proformainvoices.multiple');
+
 });
 
 Route::middleware('auth')->group(function () {
@@ -326,12 +378,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-/* Route::get('/role-test', function () {
-    $user = Auth::user();
-    Log::info('User role:', ['role' => $user ? $user->role : 'No authenticated user']);
-    return $user ? $user->role : 'No authenticated user';
-});
-
+/* 
 Route::middleware('admin.maintenance')->get('/test-role', function () {
     $role = Auth::user()->role;
     return 'Role check passed.' . $role;

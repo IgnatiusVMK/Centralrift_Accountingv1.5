@@ -38,34 +38,34 @@ $currentDate= new DateTime();
                       <div class="col-sm-12">
                         <div class="statistics-details d-flex align-items-center justify-content-between">
                           <div>
-                            <p class="statistics-title">Today's Date</p>
-                            <h3 class="rate-percentage">{{$currentDate->format('Y-m-d')}}</h3>
-                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.5%</span></p>
+                            <p class="statistics-title">Total Customers</p>
+                            <h3 class="rate-percentage">{{ number_format($totalCustomers) }}</h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-account"></i><span>Active</span></p>
                           </div>
                           <div>
-                            <p class="statistics-title">Last Login</p>
-                            <h3 class="rate-percentage">7,682</h3>
-                            <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+0.1%</span></p>
+                            <p class="statistics-title">Total Invoices</p>
+                            <h3 class="rate-percentage">{{ number_format($totalInvoices) }}</h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-file-document"></i><span>All Time</span></p>
                           </div>
                           <div>
-                            <p class="statistics-title">New Sessions</p>
-                            <h3 class="rate-percentage">68.8</h3>
-                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p>
+                            <p class="statistics-title">Total Revenue</p>
+                            <h3 class="rate-percentage">${{ number_format($totalRevenue, 2) }}</h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-currency-usd"></i><span>Sales</span></p>
                           </div>
                           <div class="d-none d-md-block">
-                            <p class="statistics-title">Avg. Time on Site</p>
-                            <h3 class="rate-percentage">2m:35s</h3>
-                            <p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>+0.8%</span></p>
+                            <p class="statistics-title">Total Purchases</p>
+                            <h3 class="rate-percentage">${{ number_format($totalPurchases, 2) }}</h3>
+                            <p class="text-danger d-flex"><i class="mdi mdi-cart"></i><span>Expenses</span></p>
                           </div>
                           <div class="d-none d-md-block">
-                            <p class="statistics-title">New Sessions</p>
-                            <h3 class="rate-percentage">68.8</h3>
-                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p>
+                            <p class="statistics-title">Total Sales</p>
+                            <h3 class="rate-percentage">{{ number_format($countSales) }}</h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-chart-line"></i><span>Approved</span></p>
                           </div>
                           <div class="d-none d-md-block">
-                            <p class="statistics-title">Avg. Time on Site</p>
-                            <h3 class="rate-percentage">2m:35s</h3>
-                            <p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>+0.8%</span></p>
+                            <p class="statistics-title">Account Balance</p>
+                            <h3 class="rate-percentage">${{ number_format($balance, 2) }}</h3>
+                            <p class="text-{{ $balance >= 0 ? 'success' : 'danger' }} d-flex"><i class="mdi mdi-wallet"></i><span>Current</span></p>
                           </div>
                         </div>
                       </div>
@@ -83,7 +83,7 @@ $currentDate= new DateTime();
                                   </div>
                                   <div id="performance-line-legend"></div>
                                 </div>
-                                <div class="chartjs-wrapper mt-5">
+                                <div class="chartjs-wrapper mt-5" style="position: relative;">
                                   <canvas id="performaneLine"></canvas>
                                 </div>
                               </div>
@@ -148,48 +148,58 @@ $currentDate= new DateTime();
                               <div class="card-body">
                                 <div class="d-sm-flex justify-content-between align-items-start">
                                   <div>
-                                    <h4 class="card-title card-title-dash">Market Overview</h4>
-                                   <p class="card-subtitle card-subtitle-dash">Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
+                                    <h4 class="card-title card-title-dash">Financial Summary</h4>
+                                   <p class="card-subtitle card-subtitle-dash">Overview of your financial status</p>
                                   </div>
-                                  @can('view-financials')
-                                  <div>
-                                    <div class="dropdown">
-                                      <button class="btn btn-secondary dropdown-toggle toggle-dark btn-lg mb-0 me-0" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> This month </button>
-                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                        <h6 class="dropdown-header">Settings</h6>
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
+                                @can('view-financials')
+                                <div class="row mt-4">
+                                  <div class="col-md-4">
+                                    <div class="card bg-primary text-white">
+                                      <div class="card-body">
+                                        <h6 class="card-title">Total Credit</h6>
+                                        <h3 class="mb-0">${{ number_format($totalCredit, 2) }}</h3>
                                       </div>
                                     </div>
                                   </div>
-                                  @endcan
+                                  <div class="col-md-4">
+                                    <div class="card bg-danger text-white">
+                                      <div class="card-body">
+                                        <h6 class="card-title">Total Debit</h6>
+                                        <h3 class="mb-0">${{ number_format($totalDebit, 2) }}</h3>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="card bg-{{ $balance >= 0 ? 'success' : 'warning' }} text-white">
+                                      <div class="card-body">
+                                        <h6 class="card-title">Account Balance</h6>
+                                        <h3 class="mb-0">${{ number_format($balance, 2) }}</h3>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
-                                @can('view-financials')
-                                <div class="d-sm-flex align-items-center mt-1 justify-content-between">
-                                  <div class="d-sm-flex align-items-center mt-4 justify-content-between"><h2 class="me-2 fw-bold">$36,2531.00</h2><h4 class="me-2">USD</h4><h4 class="text-success">(+1.37%)</h4></div>
-                                  <div class="me-3"><div id="marketing-overview-legend"></div></div>
-                                </div>
-                                <div class="chartjs-bar-wrapper mt-3">
-                                  <canvas id="marketingOverview"></canvas>
+                                <div class="row mt-3">
+                                  <div class="col-md-6">
+                                    <div class="card">
+                                      <div class="card-body">
+                                        <h6>Total Revenue</h6>
+                                        <h4 class="text-success">${{ number_format($totalRevenue, 2) }}</h4>
+                                        <small class="text-muted">From approved sales</small>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="card">
+                                      <div class="card-body">
+                                        <h6>Total Expenses</h6>
+                                        <h4 class="text-danger">${{ number_format($totalPurchases, 2) }}</h4>
+                                        <small class="text-muted">From approved purchases</small>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                                 @endcan
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row flex-grow">
-                          <div class="col-12 grid-margin stretch-card">
-                            <div class="card card-rounded table-darkBGImg">
-                              <div class="card-body">
-                                <div class="col-sm-8">
-                                  <h3 class="text-white upgrade-info mb-0">
-                                    Enhance your <span class="fw-bold">Campaign</span> for better outreach
-                                  </h3>
-                                  <a href="#" class="btn btn-info upgrade-btn">Market Your Business with Us!</a>
-                                </div>
                               </div>
                             </div>
                           </div>
@@ -340,52 +350,27 @@ $currentDate= new DateTime();
                             <div class="card card-rounded">
                               <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                  <h4 class="card-title card-title-dash">Activities</h4>
-                                  <p class="mb-0">20 finished, 5 remaining</p>
+                                  <h4 class="card-title card-title-dash">Recent Activities</h4>
+                                  <p class="mb-0">{{ count($recentActivities) }} activities</p>
                                 </div>
                                 <ul class="bullet-line-list">
-                                  <li>
-                                    <div class="d-flex justify-content-between">
-                                      <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
-                                      <p>Just now</p>
-                                    </div>
-                                  </li>
-                                  <li>
-                                    <div class="d-flex justify-content-between">
-                                      <div><span class="text-light-green">Oliver Noah</span> assign you a task</div>
-                                      <p>1h</p>
-                                    </div>
-                                  </li>
-                                  <li>
-                                    <div class="d-flex justify-content-between">
-                                      <div><span class="text-light-green">Jack William</span> assign you a task</div>
-                                      <p>1h</p>
-                                    </div>
-                                  </li>
-                                  <li>
-                                    <div class="d-flex justify-content-between">
-                                      <div><span class="text-light-green">Leo Lucas</span> assign you a task</div>
-                                      <p>1h</p>
-                                    </div>
-                                  </li>
-                                  <li>
-                                    <div class="d-flex justify-content-between">
-                                      <div><span class="text-light-green">Thomas Henry</span> assign you a task</div>
-                                      <p>1h</p>
-                                    </div>
-                                  </li>
-                                  <li>
-                                    <div class="d-flex justify-content-between">
-                                      <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
-                                      <p>1h</p>
-                                    </div>
-                                  </li>
-                                  <li>
-                                    <div class="d-flex justify-content-between">
-                                      <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
-                                      <p>1h</p>
-                                    </div>
-                                  </li>
+                                  @forelse($recentActivities as $activity)
+                                    <li>
+                                      <div class="d-flex justify-content-between">
+                                        <div>
+                                          <i class="mdi mdi-{{ $activity['type'] === 'invoice' ? 'file-document' : 'cash' }} mr-2"></i>
+                                          <span class="text-light-green">{{ $activity['description'] }}</span>
+                                        </div>
+                                        <p>{{ $activity['time'] }}</p>
+                                      </div>
+                                    </li>
+                                  @empty
+                                    <li>
+                                      <div class="d-flex justify-content-between">
+                                        <div><span>No recent activities</span></div>
+                                      </div>
+                                    </li>
+                                  @endforelse
                                 </ul>
                                 <div class="list align-items-center pt-3">
                                   <div class="wrapper w-100">
@@ -465,16 +450,7 @@ $currentDate= new DateTime();
                                   <div class="col-lg-12">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                       <div>
-                                        <h4 class="card-title card-title-dash">Leave Report</h4>
-                                      </div>
-                                      <div>
-                                        <div class="dropdown">
-                                          <button class="btn btn-secondary dropdown-toggle toggle-dark btn-lg mb-0 me-0" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Month Wise </button>
-                                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                                            <h6 class="dropdown-header">week Wise</h6>
-                                            <a class="dropdown-item" href="#">Year Wise</a>
-                                          </div>
-                                        </div>
+                                        <h4 class="card-title card-title-dash">Sales vs Purchases ({{ $yearlySalesPurchases['year'] ?? date('Y') }})</h4>
                                       </div>
                                     </div>
                                     <div class="mt-3">
@@ -525,38 +501,155 @@ $currentDate= new DateTime();
                   </div>
                 </div>
               </div>
+              
+              <!-- Performance Line Chart Script -->
               <script>
-                var ctx = document.getElementById('myChart').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Total Credit Amount', 'Total Debit Amount', 'Balance'],
-                        datasets: [{
-                            label: 'Amount',
-                            data: [{!! $totalCredit !!}, {!! $totalDebit !!}, {!! $balance !!}],
-                            backgroundColor: [
-                              'rgba(0, 0, 255, 0.8)', 
-                              'rgba(255, 0, 0, 0.8)', 
-                              'rgba(0, 180, 0, 0.8)'
-                            ]
-                        }]
-                    },
-                    options: {
-                        legend: {
-                            display: true,
-                            position: 'bottom',
-                            labels: {
-                                boxWidth: 20,
-                                fontStyle: 'bold'
+                $(document).ready(function() {
+                    if ("#performaneLine" && $("#performaneLine").length) {
+                        var performanceCanvasEl = document.getElementById("performaneLine");
+                        var performanceLineCanvas = performanceCanvasEl.getContext('2d');
+
+                        // Expect ISO date strings (YYYY-MM-DD) from controller
+                        var salesLabels = {!! json_encode($monthlySalesData['labels']) !!} || [];
+                        var salesData = {!! json_encode($monthlySalesData['data']) !!} || [];
+                        var purchasesLabels = {!! json_encode($monthlyPurchasesData['labels']) !!} || [];
+                        var purchasesData = {!! json_encode($monthlyPurchasesData['data']) !!} || [];
+
+                        // Combine labels and sort chronologically
+                        var allLabels = Array.from(new Set([...salesLabels, ...purchasesLabels]));
+                        allLabels.sort(function(a, b) { return new Date(a) - new Date(b); });
+
+                        // Map data to combined labels
+                        var salesMapped = allLabels.map(function(label) {
+                            var index = salesLabels.indexOf(label);
+                            return index !== -1 ? salesData[index] : 0;
+                        });
+
+                        var purchasesMapped = allLabels.map(function(label) {
+                            var index = purchasesLabels.indexOf(label);
+                            return index !== -1 ? purchasesData[index] : 0;
+                        });
+
+                        // If no meaningful data, show a friendly message instead of an empty chart
+                        var totalSales = salesMapped.reduce(function(a,b){return a+b;}, 0);
+                        var totalPurchases = purchasesMapped.reduce(function(a,b){return a+b;}, 0);
+
+                        if (totalSales === 0 && totalPurchases === 0) {
+                            // create overlay message
+                            var parent = performanceCanvasEl.parentNode;
+                            if (!parent.querySelector('.no-data-overlay')) {
+                                var msg = document.createElement('div');
+                                msg.className = 'no-data-overlay';
+                                msg.style.cssText = 'position:absolute;left:0;right:0;top:40px;bottom:0;display:flex;align-items:center;justify-content:center;color:#666;pointer-events:none;';
+                                msg.innerText = 'No sales or purchases data for the selected period';
+                                parent.appendChild(msg);
                             }
+                            return; // don't draw empty chart
                         }
+
+                        // Format labels for display (e.g., 'Dec 30')
+                        var displayLabels = allLabels.map(function(d) {
+                            var dt = new Date(d);
+                            return dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                        });
+
+                        var performanceData = {
+                            labels: displayLabels,
+                            datasets: [
+                                {
+                                    label: 'Sales',
+                                    data: salesMapped,
+                                    borderColor: '#4CAF50',
+                                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                                    borderWidth: 2,
+                                    fill: true,
+                                    tension: 0.4
+                                },
+                                {
+                                    label: 'Purchases',
+                                    data: purchasesMapped,
+                                    borderColor: '#F44336',
+                                    backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                                    borderWidth: 2,
+                                    fill: true,
+                                    tension: 0.4
+                                }
+                            ]
+                        };
+
+                        var maxVal = Math.max.apply(null, salesMapped.concat(purchasesMapped));
+                        var suggestedMax = maxVal > 0 ? Math.ceil(maxVal * 1.1) : undefined;
+
+                        var performanceLineChart = new Chart(performanceLineCanvas, {
+                            type: 'line',
+                            data: performanceData,
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'top'
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        suggestedMax: suggestedMax,
+                                        ticks: {
+                                            callback: function(value) {
+                                                return '$' + value.toLocaleString();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
                     }
                 });
+              </script>
+              
+              <script>
+                if (document.getElementById('myChart')) {
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Total Credit Amount', 'Total Debit Amount', 'Balance'],
+                            datasets: [{
+                                label: 'Amount',
+                                data: [{!! $totalCredit ?? 0 !!}, {!! $totalDebit ?? 0 !!}, {!! $balance ?? 0 !!}],
+                                backgroundColor: [
+                                  'rgba(0, 0, 255, 0.8)', 
+                                  'rgba(255, 0, 0, 0.8)', 
+                                  'rgba(0, 180, 0, 0.8)'
+                                ]
+                            }]
+                        },
+                        options: {
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'bottom',
+                                    labels: {
+                                        boxWidth: 20,
+                                        font: { weight: 'bold' }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
             </script>
             <script>
-              window.labels = {!! json_encode($dates->map(function($date) {
-                  return (new DateTime($date))->format('M-d'); // Convert string to DateTime
-              })) !!}; // Keep as Collection
+              // Data for yearly bar chart (leaveReport) — consumed by public/js/dashboard.js
+              window.leaveReportLabels = {!! json_encode($yearlySalesPurchases['labels'] ?? []) !!};
+              window.leaveReportSales = {!! json_encode($yearlySalesPurchases['sales'] ?? []) !!};
+              window.leaveReportPurchases = {!! json_encode($yearlySalesPurchases['purchases'] ?? []) !!};
+            </script>
+            <script>
+              // Pass raw ISO dates to JS; formatting will be done client-side
+              window.labels = {!! json_encode($dates) !!};
               window.totalAccCredit = {!! json_encode($totalAccCredit) !!};
               window.totalAccDebit = {!! json_encode($totalAccDebit) !!};
           </script>
@@ -576,12 +669,19 @@ $currentDate= new DateTime();
                     debitGradient.addColorStop(0, 'rgba(244, 67, 54, 0.4)');   // Starting shade (semi-transparent)
                     debitGradient.addColorStop(1, 'rgba(244, 67, 54, 0.02)'); // Fading to transparent
             
+                    // Format x-axis labels from ISO dates to short month-day
+                    var creditData = Array.isArray(window.totalAccCredit) ? window.totalAccCredit.map(Number) : [];
+                    var debitData = Array.isArray(window.totalAccDebit) ? window.totalAccDebit.map(Number) : [];
+
                     var statusData = {
-                        labels: window.labels,  // Use the global variable for labels
+                        labels: (window.labels || []).map(function(d) { 
+                            var dt = new Date(d); 
+                            return dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                        }),
                         datasets: [
                             {
                                 label: 'Credit Amount',
-                                data: window.totalAccCredit,  // Use the global variable here
+                                data: creditData,  // Use the global variable here
                                 backgroundColor: creditGradient,  // Use gradient for fill
                                 borderColor: '#4CAF50',
                                 borderWidth: 1.5,
@@ -591,7 +691,7 @@ $currentDate= new DateTime();
                             },
                             {
                                 label: 'Debit Amount',
-                                data: window.totalAccDebit,  // Use the global variable here
+                                data: debitData,  // Use the global variable here
                                 backgroundColor: debitGradient,  // Use gradient for fill
                                 borderColor: '#F44336',
                                 borderWidth: 1.5,
@@ -601,6 +701,24 @@ $currentDate= new DateTime();
                             }
                         ]
                     };
+
+                    // If no data available, show a friendly message instead of an empty chart
+                    var totalCredit = creditData.reduce(function(a,b){return a+b;}, 0);
+                    var totalDebit = debitData.reduce(function(a,b){return a+b;}, 0);
+                    if (totalCredit === 0 && totalDebit === 0) {
+                        var parent = statusSummaryChartCanvas.canvas.parentNode;
+                        if (!parent.querySelector('.no-data-overlay')) {
+                            var msg = document.createElement('div');
+                            msg.className = 'no-data-overlay';
+                            msg.style.cssText = 'position:absolute;left:0;right:0;top:40px;bottom:0;display:flex;align-items:center;justify-content:center;color:#666;pointer-events:none;';
+                            msg.innerText = 'No account activity in the selected period';
+                            parent.appendChild(msg);
+                        }
+                        return;
+                    }
+
+                    var maxVal = Math.max.apply(null, creditData.concat(debitData));
+                    var suggestedMax = maxVal > 0 ? Math.ceil(maxVal * 1.1) : undefined;
             
                     var statusSummaryChart = new Chart(statusSummaryChartCanvas, {
                         type: 'line',

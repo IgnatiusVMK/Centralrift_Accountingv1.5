@@ -10,6 +10,7 @@ class Product extends Model
     use HasFactory;
 
     protected $table = 'products';
+    protected $primaryKey = 'Product_Id';
 
     protected $fillable = [
         'Product_Name',
@@ -22,7 +23,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'Category_Id');
+        return $this->belongsTo(Category::class, 'Category_Id', 'Category_Id');
     }
 
     public function supplier()
@@ -38,5 +39,15 @@ class Product extends Model
     public function supplies()
     {
         return $this->hasMany(Supply::class, 'Product_Id');
+    }
+
+    public function pricing()
+    {
+        return $this->hasMany(CustomerProductPricing::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(InvoiceItem::class);
     }
 }

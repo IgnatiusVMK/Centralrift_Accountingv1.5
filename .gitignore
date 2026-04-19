@@ -1,12 +1,9 @@
 /.phpunit.cache
 /node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
 /vendor
 .env
 .env.backup
+.env.encrypted
 .env.production
 .phpunit.result.cache
 Homestead.json
@@ -21,4 +18,6 @@ Centralrift_Accountingv1.5.zip
 Localhost.sql
 Centralrift-LTDv2.0.session.sql
 error_log
+WARP.md
 worker.log
+Centralrift_AccountingV1.5.zip

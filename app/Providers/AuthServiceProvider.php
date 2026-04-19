@@ -75,6 +75,17 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Admin') || $user->hasPermission('create_maker');
         });
         
+        // Invoice Model
+        Gate::define('access-invoices', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('access_invoices');
+        });
+        Gate::define('view-invoices', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('view_invoices');
+        });
+        Gate::define('create-invoices', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('create_invoices');
+        });
+
         // Cycles Model
         Gate::define('access-cycles', function ($user) {
             return $user->hasRole('Admin') || $user->hasPermission('access_cycles');
@@ -142,20 +153,20 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // Expenses Model
-        Gate::define('access-financials', function ($user) {
-            return $user->hasRole('Admin') || $user->hasPermission('access_financials');
+        Gate::define('access-analytics-summaries', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('access_analytics_summaries');
         });  
-        Gate::define('view-financials', function ($user) {
-            return $user->hasRole('Admin') || $user->hasPermission('view_financials');
+        Gate::define('view-analytics-summaries', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('view_analytics_summaries');
         });  
-        Gate::define('create-financials', function ($user) {
-            return $user->hasRole('Admin') || $user->hasPermission('create_financials');
+        Gate::define('create-analytics-summaries', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('create_analytics_summaries');
         });  
-        Gate::define('modify-financials', function ($user) {
-            return $user->hasRole('Admin') || $user->hasPermission('modify_financials');
+        Gate::define('modify-analytics-summaries', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('modify_analytics_summaries');
         });  
-        Gate::define('delete-financials', function ($user) {
-            return $user->hasRole('Admin') || $user->hasPermission('delete_financials');
+        Gate::define('delete-analytics-summaries', function ($user) {
+            return $user->hasRole('Admin') || $user->hasPermission('delete_analytics_summaries');
         });  
 
         // Purchase Model

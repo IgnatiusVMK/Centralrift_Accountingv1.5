@@ -34,6 +34,35 @@ class SalesController extends Controller
         ]);
     }
 
+    public function ajaxSearch(Request $request)
+    {
+        $search = $request->input('search');
+        $month = $request->input('month', date('Y-m'));
+
+        $query = Sales::with('customer');
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('Sales_Id', 'like', "%$search%")
+                ->orWhereHas('customer', function ($q2) use ($search) {
+                    $q2->where('Customer_Name', 'like', "%$search%");
+                });
+            });
+        }
+
+        if ($month) {
+            $query->whereYear('Sale_Date', substr($month, 0, 4))
+                ->whereMonth('Sale_Date', substr($month, 5, 2));
+        }
+
+        $sales = $query->get();
+
+        $html = view('financials.sales.partials.sales_rows', compact('sales'))->render();
+
+        return response()->json(['html' => $html]);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -222,9 +251,6 @@ class SalesController extends Controller
             Log::info('Generating delivery notes...');
             foreach ($sales as $sale) {
                 $pdf = Pdf::loadView('financials.sales.delivery-note', [
-                    // 'sales' => $sales,
-                    // 'CustomerInvoiceDetails' => $sales->first()->customer,
-                    // 'invoiceDetails' => $sales->first()
                     'sales' => [$sale],
                     'CustomerInvoiceDetails' => $sale->customer,
                     'invoiceDetails' => $sale

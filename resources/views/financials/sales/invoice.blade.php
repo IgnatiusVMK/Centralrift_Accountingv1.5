@@ -120,53 +120,85 @@
             </div>
         </div>
         <div style="text-align: center; text-decoration: underline;">
-            <h3>DELIVERY NOTE</h3>
+            <h3>INVOICE</h3>
         </div>        
-        <div>
-            <p><strong>Consignee:</strong></p>
+        <div style="text-align: right">
+            <p><strong>Ship To:</strong></p>
             {{-- Customer Name (usually not null) --}}
             @if($CustomerInvoiceDetails->Customer_Name)
-                <p><b>{{ trim($CustomerInvoiceDetails->Customer_Name) }}</b></p>
+                <p>{{ trim($CustomerInvoiceDetails->Customer_Name) }}</p>
             @endif
 
             {{-- Attention To (skip if null) --}}
             @if($CustomerInvoiceDetails->AttentionTo)
-                <p><b>{{ trim($CustomerInvoiceDetails->AttentionTo) }},</b></p>
+                <p>{{ trim($CustomerInvoiceDetails->AttentionTo) }},</p>
             @endif
 
             {{-- Address Line 1 (usually not null) --}}
             @if($CustomerInvoiceDetails->AddressLine1)
-                <p><b>{{ trim($CustomerInvoiceDetails->AddressLine1) }},</b></p>
+                <p>{{ trim($CustomerInvoiceDetails->AddressLine1) }},</p>
             @endif
 
             {{-- Address Line 2 (skip if null) --}}
             @if($CustomerInvoiceDetails->AddressLine2)
-                <p><b>{{ trim($CustomerInvoiceDetails->AddressLine2) }},</b></p>
+                <p>{{ trim($CustomerInvoiceDetails->AddressLine2) }},</p>
             @endif
 
             {{-- City (usually not null) --}}
             @if($CustomerInvoiceDetails->City)
-                <p><b>{{ trim($CustomerInvoiceDetails->City) }},</b></p>
+                <p>{{ trim($CustomerInvoiceDetails->City) }},</p>
             @endif
 
             {{-- Postal Code (skip if null) --}}
             @if($CustomerInvoiceDetails->PostalCode)
-                <p><b>{{ trim($CustomerInvoiceDetails->PostalCode) }},</b></p>
+                <p>{{ trim($CustomerInvoiceDetails->PostalCode) }},</p>
             @endif
 
             {{-- Region/State (skip if null) --}}
             @if($CustomerInvoiceDetails->Region_State)
-                <p><b>{{ trim($CustomerInvoiceDetails->Region_State) }},</b></p>
+                <p>{{ trim($CustomerInvoiceDetails->Region_State) }},</p>
             @endif
 
             {{-- Country (usually not null) --}}
             @if($CustomerInvoiceDetails->Country)
-                <p><b>{{ trim($CustomerInvoiceDetails->Country) }}</b></p>
+                <p>{{ trim($CustomerInvoiceDetails->Country) }}</p>
             @endif
         
-        <div class="invoice-details">
+
+        <div style="text-align: left">
+            <p><strong>Invoice To:</strong></p>
+            {{-- Customer Name (usually not null) --}}
+            @if($CustomerInvoiceDetails->Customer_Name)
+                <p>{{ trim($CustomerInvoiceDetails->Customer_Name) }}</p>
+            @endif
+
+            {{-- Address Line 1 (usually not null) --}}
+            @if($CustomerInvoiceDetails->AddressLine1)
+                <p>Compass Building;Al Shohada Road</p>
+            @endif
+
+            {{-- Postal Code (skip if null) --}}
+            @if($CustomerInvoiceDetails->PostalCode)
+                <p>AL HAMRA INDUSTRIAL ZONE-FZ; RAS AL KHAIMAH</p>
+            @endif
+
+            {{-- Region/State (skip if null) --}}
+            @if($CustomerInvoiceDetails->Region_State)
+                <p>UNITED ARAB EMIR</p>
+            @endif
+
+            {{-- Country (usually not null) --}}
+            @if($CustomerInvoiceDetails->Country)
+                <p>Tax No:</p>
+            @endif
+        </div>
+       <div class="invoice-details">
             <div>
-                <p><b>DELIVERY DATE: </b>{{ $invoiceDetails->Sale_Date }} </p>
+                <p><b>Invoice No:</b> 00143</p>
+                <p><b>Date:</b> {{ $invoiceDetails->Sale_Date }} </p>
+                <p><b>Order No:</b> 0072</p>
+                <p><b>Delivery No:</b> 0001</p>
+                <p><b>Product:</b> 0001</p>
             </div>
         </div>
         
@@ -216,7 +248,7 @@
                     <td style="text-align: right;">{{ $sale->Description }}</td>
                     @if ($sale->packaging_option === '30 * 1 Tray')
                         <td style="text-align: right;">{{ $sale->Quantity }} Trays</td>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === '1.5Kg (150gms x 10)' ||$sale->packaging_option === 'Crates')
+                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === '2Kg (150gms x 14)' || $sale->packaging_option === '1Kg (75gms x 14)' || $sale->packaging_option === '1.5Kg (150gms x 10)' || $sale->packaging_option === 'Crates')
                         <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
                     @endif
                     <td style="text-align: right;">{{$sale->Currency}} {{ $sale->Unit_Price }}</td>
@@ -226,7 +258,7 @@
                     <td colspan="4">Total</td>
                     @if ($sale->packaging_option === '30 * 1 Tray')
                         <td style="text-align: right;">{{ $sale->Quantity }} Trays</td>
-                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === '1.5Kg (150gms x 10)' || $sale->packaging_option === 'Crates')
+                    @elseif ($sale->packaging_option === '1Kg (100gms x 10)' || $sale->packaging_option === '3Kg (30gms x 100)' || $sale->packaging_option === '2Kg (150gms x 14)' || $sale->packaging_option === '1Kg (75gms x 14)' || $sale->packaging_option === '1.5Kg (150gms x 10)' || $sale->packaging_option === 'Crates')
                         <td style="text-align: right;">{{ $sale->Net_Weight }} Kg</td>
                     @endif
                     <td></td>

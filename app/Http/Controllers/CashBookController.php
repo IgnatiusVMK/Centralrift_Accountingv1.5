@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\SendMail;
 use App\Models\Account;
 use App\Models\Financial;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -27,7 +28,7 @@ class CashBookController extends Controller
 
     $cashbook = Account::where('Status', 'approved')->with('cycle')->get();/* ->simplePaginate(15); */
 
-    return view('cashbook.cashbook', [
+    return view('reports.cashbook.index', [
         'cashbook'=> $cashbook,
         'totalCredit' => $totalCredit,
         'totalDebit' => $totalDebit,
@@ -38,6 +39,24 @@ class CashBookController extends Controller
     }
 
     public function exportPdf()
+    {
+        /* $cashbook = Account::with('cycle')->get(); */
+        // Calculate the summary
+    $totalCredit = Account::sum('Crd_Amnt');
+    $totalDebit = Account::sum('Dbt_Amt');
+    $balance = Account::orderBy('id', 'desc')->value('Bal');
+
+    $cashbook = Account::where('Status', 'approved')->with('cycle')->get();/* ->simplePaginate(15); */
+
+        $pdf = Pdf::loadView('reports.cashbook.template.pdf', compact('cashbook', 'totalCredit', 'totalDebit', 'balance'))
+                ->setPaper('a4', 'portrait');
+
+        $month = Carbon::now()->format('F Y');
+
+        return $pdf->stream('Centralrift-'.$month.'-cashbook.pdf'); // Inline viewer
+    }
+
+    /* public function exportPdf()
     {
 
          // Calculate the summary
@@ -68,7 +87,7 @@ class CashBookController extends Controller
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'attachment; filename="' . $pdfName . '"')
             ->header('Content-Length', strlen($dompdf->output()));
-    }
+    } */
 
     public function sendAsMail(Request $request)
     {
@@ -91,8 +110,9 @@ class CashBookController extends Controller
 
         dispatch(new SendMail($dispatchData, $user));
 
-        toastr()->success('Mail sent successfully');
-        return redirect('/cashbook');
+        /* toastr()->success('Mail sent successfully'); */
+        return redirect()->back()
+        ->with('success', 'Mail sent successfully');
     }
 
     public function create()

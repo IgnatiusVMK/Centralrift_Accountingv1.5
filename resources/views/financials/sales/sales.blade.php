@@ -1,6 +1,42 @@
 @extends('layouts.app')
+
 @section('content')
-@include('layouts.export')
+<div class="col-sm-12">
+    <div class="home-tab">
+        <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+                </li>
+            </ul>
+            <div>
+                <div class="btn-wrapper">
+                   <div class="row mb-3">
+                        <div class="col-md-6">
+                            <input
+                                type="text"
+                                id="searchInput"
+                                name="search"
+                                class="form-control"
+                                placeholder="Search sales or customers..."
+                                value="{{ request('search') }}"
+                            >
+                        </div>
+                        <div class="col-md-5">
+                            <input
+                                type="month"
+                                id="monthInput"
+                                name="month"
+                                class="form-control"
+                                value="{{ request('month', date('Y-m')) }}"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div {{-- class="main-panel" --}}>
     <div {{-- class="content-wrapper" --}}>
         <div class="row">
@@ -160,4 +196,60 @@
     });
 });
 </script>
+
+<script>
+$(document).ready(function() {
+    let debounceTimer;
+
+    function fetchSales() {
+        const search = $('#searchInput').val();
+        const month = $('#monthInput').val();
+
+        $.ajax({
+            url: "{{ route('sales.ajaxSearch') }}",
+            method: 'GET',
+            data: { search: search, month: month },
+            success: function(response) {
+                $('tbody').html(response.html);
+                updateSelectedCount();
+            },
+            error: function() {
+                alert('Error fetching sales data.');
+            }
+        });
+    }
+
+    $('#searchInput').on('keyup', function() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(fetchSales, 500);
+    });
+
+    $('#monthInput').on('change', function() {
+        fetchSales();
+    });
+
+    // Checkbox logic for dynamically loaded rows
+    function updateSelectedCount() {
+        const selectedCount = $('.invoice-checkbox:checked').length;
+        $('#selectedCount').text(selectedCount + ' selected');
+        $('#generateInvoicesBtn').prop('disabled', selectedCount === 0);
+    }
+
+    $('#selectAll').change(function () {
+        $('.invoice-checkbox').prop('checked', this.checked);
+        updateSelectedCount();
+    });
+
+    $(document).on('change', '.invoice-checkbox', function () {
+        if (!this.checked) {
+            $('#selectAll').prop('checked', false);
+        }
+        updateSelectedCount();
+    });
+
+    // Initialize counts on page load
+    updateSelectedCount();
+});
+</script>
+
 @endsection

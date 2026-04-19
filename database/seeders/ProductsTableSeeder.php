@@ -13,16 +13,156 @@ class ProductsTableSeeder extends Seeder
         $products = [
             [
                 'Product_Id' => 1,
-                'Product_Name' => 'F/Beans',
-                'Description' => 'Fine Beans',
-                'Price' => 80.00,
-                'Category_Id' => 2,
+                'Product_Name' => 'Basil',
+                'Description' => 'Sweet Basil',
+                'Price' => 1.15,
+                'Category_Id' => 1,
                 'Supplier_Id' => 2,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'Product_Id' => 2,
+                'Product_Name' => 'Thai Basil',
+                'Description' => 'Thai Basil',
+                'Price' => 1.15,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 3,
+                'Product_Name' => 'Tarragon',
+                'Description' => 'Bushy Aromatic Herb',
+                'Price' => 1.25,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 4,
+                'Product_Name' => 'Thyme',
+                'Description' => 'Thyme',
+                'Price' => 1.05,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 5,
+                'Product_Name' => 'Sage',
+                'Description' => 'Sage',
+                'Price' => 0.95,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 6,
+                'Product_Name' => 'Marjoram',
+                'Description' => 'Marjoram',
+                'Price' => 0.90,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 7,
+                'Product_Name' => 'Oregano',
+                'Description' => 'Oregano',
+                'Price' => 0.90,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 8,
+                'Product_Name' => 'Rosemary',
+                'Description' => 'Rosemary',
+                'Price' => 0.75,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 9,
+                'Product_Name' => 'Chives',
+                'Description' => 'Chives',
+                'Price' => 1.35,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 10,
+                'Product_Name' => 'Chervil',
+                'Description' => 'Chervil',
+                'Price' => 1.30,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 11,
+                'Product_Name' => 'Coriander',
+                'Description' => 'A sweet aromatic flavor and smell',
+                'Price' => 00.80,
+                'Category_Id' => 1,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 12,
+                'Product_Name' => 'Fine Beans',
+                'Description' => 'Fine Beans',
+                'Price' => 1.10,
+                'Category_Id' => 2,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 13,
+                'Product_Name' => 'Extra Fine Beans',
+                'Description' => 'Extra Fine Beans',
+                'Price' => 1.25,
+                'Category_Id' => 2,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 14,
+                'Product_Name' => 'Sugar Snap',
+                'Description' => 'Sugar Snap Peas',
+                'Price' => 1.10,
+                'Category_Id' => 2,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 15,
+                'Product_Name' => 'Snow Peas',
+                'Description' => 'Snow Peas',
+                'Price' => 0.95,
+                'Category_Id' => 2,
+                'Supplier_Id' => 2,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'Product_Id' => 16,
                 'Product_Name' => 'Tomatoes',
                 'Description' => 'An excellent determinate tomato with perfect oval shape- wilt tolerant variety',
                 'Price' => 00.00,
@@ -32,7 +172,7 @@ class ProductsTableSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'Product_Id' => 3,
+                'Product_Id' => 17,
                 'Product_Name' => 'Melon',
                 'Description' => 'A superior watermelon with high yield and excellent storage ability',
                 'Price' => 00.00,
@@ -41,18 +181,9 @@ class ProductsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
+            
             [
-                'Product_Id' => 4,
-                'Product_Name' => 'Coriander',
-                'Description' => 'A sweet aromatic flavor and smell',
-                'Price' => 00.00,
-                'Category_Id' => 2,
-                'Supplier_Id' => 2,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'Product_Id' => 5,
+                'Product_Id' => 18,
                 'Product_Name' => 'Capsicum',
                 'Description' => 'Bell Pepper(Green, Red and Yellow)',
                 'Price' => 00.00,
@@ -60,49 +191,9 @@ class ProductsTableSeeder extends Seeder
                 'Supplier_Id' => 2,
                 'created_at' => now(),
                 'updated_at' => now()
-            ],
+            ],            
             [
-                'Product_Id' => 6,
-                'Product_Name' => 'Basil',
-                'Description' => 'Aroma Type',
-                'Price' => 300.00,
-                'Category_Id' => 1,
-                'Supplier_Id' => 2,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'Product_Id' => 7,
-                'Product_Name' => 'Tarragon',
-                'Description' => 'Bushy Aromatic Herb',
-                'Price' => 380.00,
-                'Category_Id' => 1,
-                'Supplier_Id' => 2,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'Product_Id' => 8,
-                'Product_Name' => 'Oregano',
-                'Description' => 'Oregano',
-                'Price' => 320.00,
-                'Category_Id' => 1,
-                'Supplier_Id' => 2,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'Product_Id' => 9,
-                'Product_Name' => 'Marjoram',
-                'Description' => 'Marjoram',
-                'Price' => 350.00,
-                'Category_Id' => 1,
-                'Supplier_Id' => 2,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'Product_Id' => 10,
+                'Product_Id' => 19,
                 'Product_Name' => 'Lovage',
                 'Description' => 'Lovage',
                 'Price' => 00.00,
@@ -110,29 +201,9 @@ class ProductsTableSeeder extends Seeder
                 'Supplier_Id' => 2,
                 'created_at' => now(),
                 'updated_at' => now()
-            ],
+            ],            
             [
-                'Product_Id' => 11,
-                'Product_Name' => 'Thyme',
-                'Description' => 'Thyme',
-                'Price' => 300.00,
-                'Category_Id' => 1,
-                'Supplier_Id' => 2,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'Product_Id' => 12,
-                'Product_Name' => 'Rosemary',
-                'Description' => 'Rosemary',
-                'Price' => 300.00,
-                'Category_Id' => 1,
-                'Supplier_Id' => 2,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'Product_Id' => 13,
+                'Product_Id' => 20,
                 'Product_Name' => 'Eggs',
                 'Description' => 'Layers & Kienyeji',
                 'Price' => 500.00,
@@ -142,7 +213,7 @@ class ProductsTableSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'Product_Id' => 14,
+                'Product_Id' => 21,
                 'Product_Name' => 'White Meat',
                 'Description' => 'Poultry: Chicken',
                 'Price' => 500.00,

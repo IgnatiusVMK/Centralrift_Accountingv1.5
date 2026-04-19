@@ -38,6 +38,8 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
 
+        <link href="https://cdn.materialdesignicons.com/7.2.96/css/materialdesignicons.min.css" rel="stylesheet" />
+
 
     <!-- Bootstrap JS Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -45,20 +47,24 @@
 <body class="font-sans antialiased">
     <div class="container-scroller">
         @include('layouts.navbar')
-        <div class="container-fluid page-body-wrapper">
-        @include('layouts.settings-panel')
 
-        @include('layouts.sidebar')
+        <div class="container-fluid page-body-wrapper" style="display: flex; height: 100vh; overflow: hidden;">
+            
+            {{-- Sidebar --}}
+            <div style="width: 250px; overflow-y: auto;">
+                @include('layouts.sidebar')
+            </div>
 
-        <!-- Page Content -->
-        <div class="main-panel">
-            <div class="content-wrapper">
-                <div class="row">
-                    @yield('content') 
+            {{-- Main Content --}}
+            <div class="main-panel" style="flex: 1; overflow-y: auto;">
+                <div class="content-wrapper">
+                    <div class="row">
+                        @yield('content') 
+                    </div>
                 </div>
             </div>
-        </div>        
-    </div>
+
+        </div>
     </div>
 
 

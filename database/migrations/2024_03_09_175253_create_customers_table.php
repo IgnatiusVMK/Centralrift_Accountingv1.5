@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('Customer_Name', 255);
             $table->bigInteger('Cust_Account_No')->nullable();
-            $table->string('Address', 255);
             $table->timestamps();
             
         });
